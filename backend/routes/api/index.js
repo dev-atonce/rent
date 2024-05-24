@@ -1,0 +1,23 @@
+const router = require("express").Router();
+
+//// page ////
+router.use("/page/service", require("./page/servicePage"));
+router.use("/page/seo", require("./page/seoPage"));
+router.use("/page/email", require("./page/emailPage"));
+router.use("/page/position", require("./page/positionPage"));
+
+//////////////
+
+// webpanel //
+router.use("/webpanel/service", require("./webpanel/servicePanel"));
+router.use("/webpanel/seo", require("./webpanel/seoPanel"));
+router.use("/webpanel/users", require("./webpanel/userPanel"));
+router.use("/webpanel/log", require("./webpanel/logPanel"));
+router.use("/webpanel/product", require("./webpanel/productPanel"));
+router.use("/webpanel/contact", require("./webpanel/contactPanel"));
+router.use("/webpanel/subject", require("./webpanel/emailSubjectPanel"));
+router.use("/webpanel/position", require("./webpanel/positionPanel"));
+
+//////////////
+
+module.exports = router;

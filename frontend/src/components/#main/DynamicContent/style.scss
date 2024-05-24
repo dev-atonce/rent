@@ -1,0 +1,16 @@
+.dynamic-content {
+  table {
+    tr {
+      td {
+        border: 1px solid #dadada;
+        min-width: 2em;
+        padding: 0.4em;
+        -webkit-user-select: text;
+        -moz-user-select: text;
+        -ms-user-select: text;
+        user-select: text;
+        vertical-align: middle;
+      }
+    }
+  }
+}

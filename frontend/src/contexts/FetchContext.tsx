@@ -1,0 +1,456 @@
+"use client";
+
+import { createContext } from "react";
+import { useRouter } from "next/navigation";
+import Swal from "sweetalert2";
+
+export const FetchContext = createContext({});
+
+export default function FetchProvider({ children, user, token }: any) {
+  const router = useRouter();
+  const userId = user?.id;
+
+  const serviceRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/service`;
+  const serviceSeoRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/service/seo`;
+  const serviceSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/service/sort`;
+  const serviceStatusRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/service/status`;
+  const userRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/users`;
+  const seoRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/seo`;
+  const logRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/log`;
+  const addressRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact`;
+  const addressSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact/sort`;
+  const subjectRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/subject`;
+  const subjectSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/subject/sort`;
+  const positionRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/position`;
+  const positionSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/position/sort`;
+
+  const onFetchOne = async (type: any, id: any) => {
+    let route = "";
+    if (id) {
+      if (type === "service") {
+        route = `${serviceRoute}/${id}`;
+      } else if (type === "user") {
+        route = `${userRoute}/${id}`;
+      } else if (type === "address") {
+        route = `${addressRoute}/${id}`;
+      } else if (type === "subject") {
+        route = `${subjectRoute}/${id}`;
+      } else if (type === "position") {
+        route = `${positionRoute}/${id}`;
+      }
+    } else {
+      if (type === "service") {
+        route = serviceRoute;
+      } else if (type === "user") {
+        route = userRoute;
+      } else if (type === "seo") {
+        route = seoRoute;
+      } else if (type === "log") {
+        route = logRoute;
+      } else if (type === "address") {
+        route = addressRoute;
+      } else if (type === "subject") {
+        route = subjectRoute;
+      } else if (type === "position") {
+        route = positionRoute;
+      }
+    }
+    try {
+      const response = await fetch(route, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+      return data;
+
+      // console.log("Data received:", data);
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  };
+  const onSave = (
+    data: any,
+    method: any,
+    id: any,
+    type: any,
+    activity: any
+  ) => {
+    let route = "";
+    if (type == "service") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${serviceRoute}/${id}`;
+      } else if (method.toUpperCase() == "POST") {
+        route = serviceRoute;
+      }
+    } else if (type == "address") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${addressRoute}/${id}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = addressRoute;
+      }
+    } else if (type == "subject") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${subjectRoute}/${id}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = subjectRoute;
+      }
+    } else if (type == "position") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${positionRoute}/${id}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = positionRoute;
+      }
+    } else if (type == "serviceSeo") {
+      route = `${serviceSeoRoute}/${id}`;
+    } else if (type == "serviceSort") {
+      route = `${serviceSortRoute}/${id}`;
+    } else if (type == "serviceStatus") {
+      route = `${serviceStatusRoute}/${id}`;
+    } else if (type == "user") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${userRoute}/${id}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = userRoute;
+      }
+    } else if (type == "seo") {
+      if (method.toUpperCase() === "PUT") {
+        route = `${seoRoute}/${id}`;
+      }
+    }
+
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton:
+          "border-2 border-green-600 rounded-xl p-4 text-green-600 font-bold mx-1",
+        cancelButton: "bg-red rounded-xl p-4 text-white font-bold",
+      },
+      buttonsStyling: false,
+    });
+    swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Save Changes!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const response = await fetch(`${route}`, {
+              method: method?.toUpperCase(),
+              headers: {
+                "Content-Type": "application/json",
+              },
+
+              body: JSON.stringify(data),
+            });
+
+            const res = await response?.json();
+
+            if (res?.error) {
+              let msg = res?.error?.message;
+              // error message conditions
+              if (res?.error?.message.includes("`serviceUrl` to be unique")) {
+                msg = "Service URL has been used!, try a new one.";
+              } else if (
+                res.error.message.includes("`username` to be unique")
+              ) {
+                msg = `This username is already registered.`;
+              } else if (res.error.message.includes("`email` to be unique")) {
+                msg = `This email is already registered.`;
+              }
+              Swal.fire({
+                position: "top-right",
+                toast: true,
+                icon: "error",
+                title: msg,
+                showConfirmButton: false,
+                timer: 2500,
+              });
+            } else {
+              const logRes = onInsertLog(
+                res?.id,
+                userId,
+                type,
+                `${user?.username}-${activity}`
+              );
+              //  @ts-ignore
+              if (!logRes?.error) {
+                Swal.fire({
+                  position: "top-right",
+                  toast: true,
+                  icon: "success",
+                  title: "Your Changes have been saved!",
+                  showConfirmButton: false,
+                  timer: 2500,
+                });
+
+                if (method?.toUpperCase() === "POST") {
+                  if (type === "service") {
+                    setTimeout(() => {
+                      router.push(`/webpanel/service/edit/${res?.id}`);
+                    }, 2000);
+                  } else if (type === "user") {
+                    setTimeout(() => {
+                      router.push("/webpanel/settings/user");
+                    }, 2000);
+                  } else if (type === "address") {
+                    setTimeout(() => {
+                      router.push("/webpanel/contact");
+                    }, 2000);
+                  } else if (type === "subject") {
+                    setTimeout(() => {
+                      router.push("/webpanel/contact");
+                    }, 2000);
+                  } else if (type == "position") {
+                    setTimeout(() => {
+                      router.push("/webpanel/career");
+                    }, 2000);
+                  }
+                } else if (method?.toUpperCase() === "PUT") {
+                  if (type === "user") {
+                    setTimeout(() => {
+                      router.push("/webpanel/settings/user");
+                    }, 2000);
+                  }
+                  if (type === "address") {
+                    setTimeout(() => {
+                      router.push("/webpanel/contact");
+                    }, 2000);
+                  } else if (type === "subject") {
+                    setTimeout(() => {
+                      router.push("/webpanel/contact");
+                    }, 2000);
+                  } else if (type == "position") {
+                    setTimeout(() => {
+                      router.push("/webpanel/career");
+                    }, 2000);
+                  }
+                }
+                return "ok";
+              }
+            }
+          } catch (err) {
+            console.log(err);
+          }
+        } else if (
+          /* Read more about handling dismissals below */
+          result.dismiss === Swal.DismissReason.cancel
+        ) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "Your Cancelled the changes! :)",
+            icon: "error",
+          });
+        }
+      });
+  };
+
+  const onChangeStatus = async (
+    status: any,
+    id: any,
+    type: any,
+    activity: any
+  ) => {
+    let route = "";
+    if (type == "service") {
+      route = `${serviceStatusRoute}/${id}`;
+    }
+    try {
+      const response = await fetch(route, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({ status: status }),
+      });
+
+      onInsertLog(id, userId, type, activity);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onSort = async (order: any, id: any, type: any, activity: any) => {
+    let route = "";
+    if (type == "service") {
+      route = `${serviceSortRoute}/${id}`;
+    } else if (type == "address") {
+      route = `${addressSortRoute}/${id}`;
+    } else if (type == "subject") {
+      route = `${subjectSortRoute}/${id}`;
+    } else if (type == "position") {
+      route = `${positionSortRoute}/${id}`;
+    }
+
+    try {
+      const response = await fetch(route, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify({ sort: order }),
+      });
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const onInsertLog = async (
+    itemId: any,
+    userId: any,
+    type: any,
+    activity: any
+  ) => {
+    const data = {
+      itemId,
+      userId,
+      type,
+      activity,
+    };
+
+    const logRes = await fetch(
+      `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/log/`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+
+        body: JSON.stringify(data),
+      }
+    );
+
+    return await logRes.json();
+  };
+
+  const onDelete = async (id: any, type: any, activity: any) => {
+    let route = "";
+
+    if (type === "position") {
+      route = `${positionRoute}/${id}`;
+    } else if (type === "user") {
+      route = `${userRoute}/${id}`;
+    } else if (type === "service") {
+      route = `${serviceRoute}/${id}`;
+    } else if (type === "subject") {
+      route = `${subjectRoute}/${id}`;
+    } else if (type === "address") {
+      route = `${addressRoute}/${id}`;
+    }
+
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton:
+          "border-2 border-green-600 rounded-xl p-4 text-green-600 font-bold mx-1",
+        cancelButton: "bg-red rounded-xl p-4 text-white font-bold",
+      },
+      buttonsStyling: false,
+    });
+
+    return swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Delete Item!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const response = await fetch(route, { method: "DELETE" });
+            const res = await response.json();
+
+            if (res?.error) {
+              const msg = res?.error?.message;
+              Swal.fire({
+                position: "top-right",
+                toast: true,
+                icon: "error",
+                title: msg,
+                showConfirmButton: false,
+                timer: 2500,
+              });
+              return { error: true, message: msg };
+            } else {
+              const logRes = await onInsertLog(
+                id,
+                userId,
+                type,
+                `${user?.username}-${activity}: ${id}`
+              );
+
+              if (!logRes?.error) {
+                Swal.fire({
+                  position: "top-right",
+                  toast: true,
+                  icon: "success",
+                  title: "Your changes have been saved!",
+                  showConfirmButton: false,
+                  timer: 2500,
+                });
+                return { success: true, message: "ok" };
+              } else {
+                Swal.fire({
+                  position: "top-right",
+                  toast: true,
+                  icon: "error",
+                  title: "Log insertion failed",
+                  showConfirmButton: false,
+                  timer: 2500,
+                });
+                return { error: true, message: "Log insertion failed" };
+              }
+            }
+          } catch (err) {
+            console.log("Error during onDelete:", err);
+            Swal.fire({
+              position: "top-right",
+              toast: true,
+              icon: "error",
+              title: "An unexpected error occurred",
+              showConfirmButton: false,
+              timer: 2500,
+            });
+            return { error: true, message: "An unexpected error occurred" };
+          }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "You cancelled the changes! :)",
+            icon: "error",
+          });
+          return { error: true, message: "Cancelled by user" };
+        }
+      });
+  };
+
+  return (
+    <FetchContext.Provider
+      value={{
+        onSave,
+        onFetchOne,
+        onInsertLog,
+        onChangeStatus,
+        onSort,
+        onDelete,
+      }}
+    >
+      {children}
+    </FetchContext.Provider>
+  );
+}

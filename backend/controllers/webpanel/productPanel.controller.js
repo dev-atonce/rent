@@ -1,0 +1,110 @@
+const Product = require("../../services/webpanel/productPanel.service");
+const { checkAllowFields } = require("../../helpers/field.helper");
+
+const allowFields = {
+    update: [
+        "productNameTH",
+        "productNameEN",
+        "productDescriptionTH",
+        "productDescriptionEN",
+        "productDetailTH",
+        "productDetailEN",
+        "productUrl",
+    ],
+
+    updateSeo: ["productSeo"],
+
+    updateStatus: ["status"],
+
+    updateSort: ["sort"],
+};
+
+const methods = {
+    async onGetAll(req, res) {
+        try {
+            let result = await Product.findAll(req);
+            res.success(result);
+        } catch (error) {
+            res.error(error);
+        }
+    },
+
+    async onGetById(req, res) {
+        try {
+            let result = await Product.findById(req.params.id);
+            res.success(result);
+        } catch (error) {
+            res.error(error);
+        }
+    },
+
+    async onInsert(req, res) {
+        try {
+            let result = await Product.insert(req, res);
+            res.success(result, 201);
+        } catch (error) {
+            res.error(error);
+        }
+    },
+
+    async onUpdate(req, res) {
+        try {
+            // checkAllowFields(req.body, allowFields.update);
+            const result = await Product.update(req.params.id, req.body);
+            res.success(result);
+        } catch (error) {
+            res.error(error);
+        }
+    },
+
+    async onUpdateSeo(req, res) {
+        try {
+            // checkAllowFields(req.body, allowFields.updateSeo);
+            const result = await Product.update(req.params.id, req.body);
+            res.success(result);
+        } catch (error) {
+            res.error(error);
+        }
+    },
+
+    async onUpdateSort(req, res) {
+        try {
+            // checkAllowFields(req.body, allowFields.updateSort);
+            const result = await Product.update(req.params.id, req.body);
+            res.success(result);
+        } catch (error) {
+            res.error(error);
+        }
+    },
+
+    async onUpdateStatus(req, res) {
+        try {
+            // checkAllowFields(req.body, allowFields.updateStatus);
+            const result = await Product.update(req.params.id, req.body);
+            res.success(result);
+        } catch (error) {
+            res.error(error);
+        }
+    },
+
+    async onDelete(req, res) {
+        try {
+            await Product.delete(req.params.id);
+            res.success("success", 204);
+        } catch (error) {
+            res.error(error);
+        }
+    },
+
+    async onInsertGallery(req, res) {
+        try {
+            let result = await Product.insertGallery(req, res);
+            res.success(result, 201);
+        } catch (error) {
+            res.error(error);
+        }   
+    }
+
+};
+
+module.exports = { ...methods };
