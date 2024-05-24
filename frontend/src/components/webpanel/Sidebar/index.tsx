@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import SidebarLinkGroup from "./SidebarLinkGroup";
-import { Logo } from "@/components/main/Logo/Logo";
+// import { Logo } from "@/components/main/Logo/Logo";
 import { LogInContext } from "@/contexts/LogInContext";
 
 interface SidebarProps {
@@ -79,7 +79,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <Logo color="white" />
+        {/* <Logo color="white" /> */}
 
         <button
           ref={trigger}
