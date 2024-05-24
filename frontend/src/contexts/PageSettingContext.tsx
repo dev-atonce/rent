@@ -12,7 +12,7 @@ import {
 
 // const URL = `${process.env.NEXT_PUBLIC_APP_URL}/api/page-setting`;
 export const PageSettingContext = createContext({});
-const primaryColor = "#002B7F";
+const primaryColor = "#0EA1DB";
 
 export default function PageSettingProvider({
   children,
