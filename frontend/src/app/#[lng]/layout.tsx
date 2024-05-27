@@ -5,7 +5,7 @@ import Header from "@/components/main/Header/Header";
 // import Loading from "@/components/main/Loading/Loading";
 import PageSettingProvider from "@/contexts/PageSettingContext";
 import Footer from "@/components/main/Footer/Footer";
-import { Open_Sans, Prompt } from "next/font/google";
+c
 import Favicon from "../../../public/icon.ico";
 import { dir } from "i18next";
 import { languages } from "../i18n/settings";
