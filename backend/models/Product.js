@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 const uniqueValidator = require("mongoose-unique-validator");
-const { gallery } = require("../validators/product");
 
 const schema = new mongoose.Schema(
   {
