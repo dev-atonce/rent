@@ -1,7 +1,10 @@
 const Product = require("../../models/Product");
 const config = require("../../configs/app");
 const fs = require("fs");
-const { ErrorBadRequest, ErrorNotFound } = require("../../configs/errorMethods");
+const {
+    ErrorBadRequest,
+    ErrorNotFound,
+} = require("../../configs/errorMethods");
 
 const multer = require("multer");
 const storage = multer.diskStorage({
@@ -52,75 +55,74 @@ const methods = {
             }).single("image");
             upload(req, res, async (err) => {
                 if (err) {
-                    reject(ErrorBadRequest(err));
+                    return reject(ErrorBadRequest(err));
                 } else {
-                    // if (!req.file) reject(ErrorBadRequest("Image is required"));
                     try {
                         const data = req.body;
-                        // data.image = req.file.path;
+                        data.image = req.files?.path;
                         const obj = new Product(data);
                         const inserted = await obj.save();
                         resolve(inserted);
                     } catch (error) {
-                        reject(ErrorBadRequest(error.message));
+                        return reject(ErrorBadRequest(error.message));
                     }
                 }
             });
         });
     },
 
-    async insertGallery(req, res) {
+    async update(req, res) {
         return new Promise((resolve, reject) => {
             const upload = multer({
                 storage: storage,
                 limits: { fileSize: config.limitFileSize },
-            }).array("gallery", 3);
+            }).single("image");
             upload(req, res, async (err) => {
                 if (err) {
-                    reject(ErrorBadRequest(err));
+                    return reject(ErrorBadRequest(err));
                 } else {
-                    // if (!req.file) reject(ErrorBadRequest("Image is required"));
                     try {
-                        let gallery = [];
-                        req.files?.map((file) => {
-                            gallery.push(file.filename);
+                        const data = req.body;
+                        const obj = await Product.findById(req.params.id);
+                        if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
+                        if (req.files) {
+                            fs?.unlink("../public/uploads/products/" + obj.image, (err) => {
+                                if (err) {
+                                    return Promise.reject(ErrorNotFound(err));
+                                }
+                            });
+                            data.image = req.files?.path;
+                        }
+                        await Product.updateOne({ _id: req.params.id }, data, {
+                            runValidators: true,
+                            new: true,
                         });
-                        
-                        // const data = req.body;
-                        // data.image = req.file.path;
-                        // const obj = new Product(data);
-                        // const inserted = await obj.save();
-                        // resolve(inserted);
+                        resolve(Object.assign(obj, data));
                     } catch (error) {
-                        reject(ErrorBadRequest(error.message));
+                        return reject(ErrorBadRequest(error.message));
                     }
                 }
             });
         });
-    },
-
-    async update(id, data) {
-        try {
-            const obj = await Product.findById(id);
-            if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
-            await Product.updateOne({ _id: id }, data, {
-                runValidators: true,
-                new: true,
-            });
-            return Object.assign(obj, data);
-        } catch (error) {
-            return Promise.reject(ErrorBadRequest(error.message));
-        }
     },
 
     async delete(id) {
         try {
             const obj = await Product.findOneAndDelete({ _id: id }).exec();
             if (obj?.image) {
-                fs.unlink("../public/uploads/products" + obj.image, (err) => {
+                fs?.unlink("../public/uploads/products/" + obj.image, (err) => {
                     if (err) {
                         return Promise.reject(ErrorNotFound(err));
                     }
+                });
+            }
+            if (obj.gallery?.length) {
+                obj.gallery.map((item) => {
+                    fs?.unlink("../public/uploads/products/" + item, (err) => {
+                        if (err) {
+                            return Promise.reject(ErrorNotFound(err));
+                        }
+                    });
                 });
             }
             return { msg: "deleted success" };
@@ -128,6 +130,64 @@ const methods = {
             return Promise.reject(ErrorBadRequest(error.message));
         }
     },
+
+    async insertGallery(req, res) {
+        return new Promise(async (resolve, reject) => {
+            try {
+                const obj = await Product.findById(req.params.id).exec();
+                if (!obj) return reject(ErrorNotFound("id: not found"));
+                if (obj.gallery?.length >= 3) return reject(ErrorBadRequest("Gallery is full"));
+                const galleryLeft = 3 - obj.gallery.length;
+
+                const upload = multer({
+                    storage: storage,
+                    limits: { fileSize: config.limitFileSize },
+                }).array("gallery", galleryLeft);
+
+                upload(req, res, async (err) => {
+                    if (err?.code === "LIMIT_UNEXPECTED_FILE") {
+                        return reject(ErrorBadRequest(`You can upload ${galleryLeft} picture to the gallery`));
+                    }
+                    if (err) {
+                        return reject(ErrorBadRequest(err));
+                    }
+                    if (!req.files || req.files.length === 0) {
+                        return reject(ErrorBadRequest("Image is required"));
+                    }
+                    try {
+                        req.files.map((file) => {
+                            obj.gallery.push(file.filename);
+                        });
+                        await Product.updateOne({ _id: req.params.id }, { gallery: obj.gallery });
+                        resolve(Object.assign(obj, { gallery: obj.gallery }));
+                    } catch (error) {
+                        return reject(ErrorBadRequest(error.message));
+                    }
+                });
+            } catch (error) {
+                return reject(ErrorBadRequest(error.message));
+            }
+        });
+    },
+
+    async deleteGallery(id, position) {
+        try {
+            const obj = await Product.findById({ _id: id }).exec();
+            if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
+            if (obj.gallery[position]) {
+                fs?.unlink("../public/uploads/products/" + obj.gallery[position], (err) => {
+                    if (err) {
+                        return Promise.reject(ErrorNotFound(err));
+                    }
+                });
+                obj.gallery.splice(position, 1);
+            }
+            await Product.updateOne({ _id: id }, obj);
+            return { msg: "deleted success" };
+        } catch (error) {
+            return reject(ErrorBadRequest(error.message));
+        }
+    }
 };
 
 module.exports = { ...methods };

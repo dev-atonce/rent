@@ -4,11 +4,8 @@ const { checkAllowFields } = require("../../helpers/field.helper");
 const allowFields = {
     update: [
         "productNameTH",
-        "productNameEN",
         "productDescriptionTH",
-        "productDescriptionEN",
         "productDetailTH",
-        "productDetailEN",
         "productUrl",
     ],
 
@@ -49,8 +46,8 @@ const methods = {
 
     async onUpdate(req, res) {
         try {
-            // checkAllowFields(req.body, allowFields.update);
-            const result = await Product.update(req.params.id, req.body);
+            checkAllowFields(req.body, allowFields.update);
+            const result = await Product.update(req, res);
             res.success(result);
         } catch (error) {
             res.error(error);
@@ -103,7 +100,16 @@ const methods = {
         } catch (error) {
             res.error(error);
         }   
-    }
+    },
+
+    async onDeleteGallery(req, res) {
+        try {
+            let result = await Product.deleteGallery(req.params.id, req.params.position);
+            res.success(result);
+        } catch (error) {
+            res.error(error);
+        }
+    },
 
 };
 
