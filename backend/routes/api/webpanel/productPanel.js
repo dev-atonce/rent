@@ -17,21 +17,9 @@ router.post(
   controllers.onInsert
 );
 
-router.post(
-  "/gallery",
-  [validator.product.gallery, validator.check],
-  controllers.onInsertGallery
-);
-
 router.put(
   "/:id",
   [validator.product.update, validator.check],
-  controllers.onUpdate
-);
-
-router.put(
-  "/gallery/:id",
-  [validator.product.updateGallery, validator.check],
   controllers.onUpdate
 );
 
@@ -58,5 +46,21 @@ router.delete(
   [validator.product.deleteById, validator.check],
   controllers.onDelete
 );
+
+///// Gallery Router \\\\\
+
+router.put(
+  "/gallery/:id",
+  [validator.product.updateGallery, validator.check],
+  controllers.onInsertGallery
+);
+
+router.delete(
+  "/gallery/:position/:id",
+  [validator.product.deleteGallery, validator.check],
+  controllers.onDeleteGallery
+);
+
+///// Gallery Router \\\\\
 
 module.exports = router;
