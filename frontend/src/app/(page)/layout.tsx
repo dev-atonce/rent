@@ -31,11 +31,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="th" className={roboto.className}>
-      <ConfigProvider>
+    <html lang="th">
+      <ConfigProvider
+        theme={{
+          token: {
+            fontFamily: roboto.style.fontFamily,
+          },
+        }}
+      >
         <FetchProvider>
           <PageSettingProvider>
-            <body>
+            <body className={roboto.className}>
               <Header />
               {children}
               <Footer />

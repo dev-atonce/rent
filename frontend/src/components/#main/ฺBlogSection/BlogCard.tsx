@@ -24,9 +24,9 @@ const BlogCard = ({ data }: BlogCardProps) => {
               />
             }
           >
-            <h3 className="font-bold line-clamp-1">{item?.title}</h3>
+            <h3 className="font-bold line-clamp-1">{item?.titleTH}</h3>
             <Divider className="mt-3 mb-2" />
-            <p className="line-clamp-2 h-11">{item?.description}</p>
+            <p className="line-clamp-2 h-11">{item?.descriptionTH}</p>
           </Card>
         </a>
       </Col>

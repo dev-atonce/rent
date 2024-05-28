@@ -1,4 +1,5 @@
 "use client";
+
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import { EffectFade } from "swiper/modules";
