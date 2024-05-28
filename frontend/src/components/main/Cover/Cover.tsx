@@ -16,6 +16,9 @@ export default function Cover({ pageName, prevPage }: any) {
         <div className="border-b-2 border-slate-200 py-4 hidden md:block">
           <Breadcrumb pageName={pageName} prevPage={prevPage} />
         </div>
+        <h1 className="py-6 text-2xl font-semibold text-slate-700">
+          {pageName}
+        </h1>
       </div>
     </div>
   );
