@@ -4,11 +4,13 @@ const { validationResult } = require("express-validator");
 const user = require("./user");
 const service = require("./service");
 const product = require("./product");
+const category = require("./category");
 
 const validators = {
   user,
   service,
-  product
+  product,
+  category
 };
 
 module.exports = {
