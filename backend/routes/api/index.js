@@ -17,6 +17,8 @@ router.use("/webpanel/product", require("./webpanel/productPanel"));
 router.use("/webpanel/contact", require("./webpanel/contactPanel"));
 router.use("/webpanel/subject", require("./webpanel/emailSubjectPanel"));
 router.use("/webpanel/position", require("./webpanel/positionPanel"));
+router.use("/webpanel/category-main", require("./webpanel/categoryMainPanel"));
+router.use("/webpanel/category-sub", require("./webpanel/categorySubPanel"));
 
 //////////////
 
