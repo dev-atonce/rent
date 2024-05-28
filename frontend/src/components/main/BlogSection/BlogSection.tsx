@@ -36,7 +36,7 @@ const BlogSection = ({ limit, typeBlog, home }: BlogSectionProps) => {
       ) : (
         <>
           <Row gutter={[16, 16]}>
-            <BlogCard data={blogList}></BlogCard>
+            <BlogCard data={blogList} type={typeBlog}></BlogCard>
           </Row>
           {!home && (
             <AntPagination

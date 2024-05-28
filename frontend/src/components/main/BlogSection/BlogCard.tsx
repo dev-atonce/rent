@@ -3,6 +3,7 @@ import Image from "next/image";
 
 interface BlogCardProps {
   data: any[];
+  type: any;
 }
 function formatDate(dateTimeString: any) {
   // Create a new Date object from the input string
@@ -17,10 +18,16 @@ function formatDate(dateTimeString: any) {
   return `${day}.${month}.${year}`;
 }
 
-const BlogCard = ({ data }: BlogCardProps) => {
+const BlogCard = ({ data, type }: BlogCardProps) => {
   return data?.map((item: any, key: any) => {
     return (
-      <Col xs={24} sm={12} md={12} lg={8} key={key}>
+      <Col
+        xs={24}
+        sm={12}
+        md={12}
+        lg={type?.includes("recruitment") ? 6 : 8}
+        key={key}
+      >
         <a href={item?.url}>
           <Card
             hoverable
@@ -36,16 +43,26 @@ const BlogCard = ({ data }: BlogCardProps) => {
               />
             }
           >
-            <span className="text-slate-400 mb-2">
-              {formatDate(item?.publish)}
-            </span>
-            <h3 className="font-bold line-clamp-1 text-slate-800 mb-2">
-              {item?.titleTH}
-            </h3>
-            {/* <Divider className="mt-3 mb-2" /> */}
-            <p className="line-clamp-2 h-11 text-slate-600">
-              {item?.descriptionTH}
-            </p>
+            <div
+              className={`${type?.includes("recruitment") && "min-h-[60px]"}`}
+            >
+              {!type?.includes("recruitment") && (
+                <span className="text-slate-400 mb-2">
+                  {formatDate(item?.publish)}
+                </span>
+              )}
+              <h3
+                className={`${!type?.includes("recruitment") ? "line-clamp-1" : "line-clamp-2"}  font-bold  text-slate-800 mb-2`}
+              >
+                {item?.titleTH}
+              </h3>
+              {/* <Divider className="mt-3 mb-2" /> */}
+              {!type?.includes("recruitment") && (
+                <p className="line-clamp-2 h-11 text-slate-600">
+                  {item?.descriptionTH}
+                </p>
+              )}
+            </div>
           </Card>
         </a>
       </Col>
