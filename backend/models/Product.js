@@ -3,7 +3,6 @@ const uniqueValidator = require("mongoose-unique-validator");
 
 const schema = new mongoose.Schema(
   {
-    subCategory: { type: mongoose.Schema.Types.ObjectId, ref: 'CategorySubs' },
     productNameTH: { type: String },
     productDescriptionTH: { type: String },
     productDetailTH: { type: String },
@@ -18,6 +17,7 @@ const schema = new mongoose.Schema(
       keywordTH: { type: String },
       descriptionTH: { type: String },
     },
+    subCategory: { type: mongoose.Schema.Types.ObjectId, ref: 'CategorySubs' },
   },
   { timestamps: true }
 );
@@ -40,7 +40,6 @@ schema.pre("save", async function (next) {
 schema.methods.toJSON = function () {
   return {
     id: this._id,
-    subCategory: this.subCategory,
     productNameTH: this.productNameTH,
     productDescriptionTH: this.productDescriptionTH,
     productDetailTH: this.productDetailTH,
@@ -55,6 +54,7 @@ schema.methods.toJSON = function () {
       keywordTH: this.productSeo["keywordTH"],
       descriptionTH: this.productSeo["descriptionTH"],
     },
+    subCategory: this.subCategory,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
   };

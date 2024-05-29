@@ -24,7 +24,7 @@ const methods = {
             const rows = await CategorySub.find()
                 .populate({
                     path: "mainCategory",
-                    select: "nameTH seo",
+                    select: "nameTH",
                 })
                 .sort({ sort: "asc" })
                 .limit(limit)

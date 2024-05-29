@@ -22,6 +22,10 @@ const methods = {
         const offset = +(limit * ((req.query.page || 1) - 1));
         try {
             const rows = await Product.find()
+                .populate({
+                    path: "subCategory",
+                    select: "nameTH",
+                })
                 .sort({ sort: "asc" })
                 .limit(limit)
                 .skip(offset);

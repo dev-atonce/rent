@@ -2,7 +2,6 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema(
     {
-        mainCategory: { type: mongoose.Schema.Types.ObjectId, ref: 'CategoryMains' },
         nameTH: { type: String },
         image: { type: String },
         imageAlt: { type: String },
@@ -11,6 +10,7 @@ const schema = new mongoose.Schema(
             keywordTH: { type: String },
             descriptionTH: { type: String },
         },
+        mainCategory: { type: mongoose.Schema.Types.ObjectId, ref: 'CategoryMains' },
     },
     { timestamps: true }
 );
@@ -19,7 +19,6 @@ const schema = new mongoose.Schema(
 schema.methods.toJSON = function () {
     return {
         id: this._id,
-        mainCategory: this.mainCategory,
         nameTH: this.nameTH,
         image: this.image,
         imageAlt: this.imageAlt,
@@ -28,6 +27,7 @@ schema.methods.toJSON = function () {
             keywordTH: this.seo["keywordTH"],
             descriptionTH: this.seo["descriptionTH"],
         },
+        mainCategory: this.mainCategory,
         createdAt: this.createdAt,
         updatedAt: this.updatedAt,
     };

@@ -3,7 +3,7 @@ const controllers = require("../../../controllers/webpanel/categorySubPanel.cont
 const auth = require("../../auth");
 const validator = require("../../../validators");
 
-router.get("/", auth.required, controllers.onGetAll);
+router.get("/", controllers.onGetAll);
 router.get(
     "/:id",
     [validator.category.findById, validator.check],
