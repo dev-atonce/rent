@@ -56,8 +56,8 @@ const methods = {
 
     async onUpdateSeo(req, res) {
         try {
-            // checkAllowFields(req.body, allowFields.updateSeo);
-            const result = await Product.update(req.params.id, req.body);
+            checkAllowFields(req.body, allowFields.updateSeo);
+            const result = await Product.update(req, res);
             res.success(result);
         } catch (error) {
             res.error(error);
@@ -66,8 +66,8 @@ const methods = {
 
     async onUpdateSort(req, res) {
         try {
-            // checkAllowFields(req.body, allowFields.updateSort);
-            const result = await Product.update(req.params.id, req.body);
+            checkAllowFields(req.body, allowFields.updateSort);
+            const result = await Product.update(req, res);
             res.success(result);
         } catch (error) {
             res.error(error);
@@ -76,8 +76,8 @@ const methods = {
 
     async onUpdateStatus(req, res) {
         try {
-            // checkAllowFields(req.body, allowFields.updateStatus);
-            const result = await Product.update(req.params.id, req.body);
+            checkAllowFields(req.body, allowFields.updateStatus);
+            const result = await Product.update(req, res);
             res.success(result);
         } catch (error) {
             res.error(error);
