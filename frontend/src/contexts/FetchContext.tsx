@@ -23,6 +23,13 @@ export default function FetchProvider({ children, user, token }: any) {
   const subjectSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/subject/sort`;
   const positionRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/position`;
   const positionSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/position/sort`;
+  const productRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product`;
+  const productStatusRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product/status`;
+  const productSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product/sort`;
+  const mainCategoryRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/category-main`;
+  const mainCategorySortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/category-main/sort`;
+  const subCategoryRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/category-sub`;
+  const subCategorySortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/category-sub/sort`;
 
   const onFetchOne = async (type: any, id: any) => {
     let route = "";
@@ -37,6 +44,12 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${subjectRoute}/${id}`;
       } else if (type === "position") {
         route = `${positionRoute}/${id}`;
+      } else if (type === "product") {
+        route = `${productRoute}/${id}`;
+      } else if (type === "mainCategory") {
+        route = `${mainCategoryRoute}/${id}`;
+      } else if (type === "subCategory") {
+        route = `${subCategoryRoute}/${id}`;
       }
     } else {
       if (type === "service") {
@@ -53,6 +66,12 @@ export default function FetchProvider({ children, user, token }: any) {
         route = subjectRoute;
       } else if (type === "position") {
         route = positionRoute;
+      } else if (type === "product") {
+        route = productRoute;
+      } else if (type === "mainCategory") {
+        route = mainCategoryRoute;
+      } else if (type === "subCategory") {
+        route = subCategoryRoute;
       }
     }
     try {
@@ -264,6 +283,8 @@ export default function FetchProvider({ children, user, token }: any) {
     let route = "";
     if (type == "service") {
       route = `${serviceStatusRoute}/${id}`;
+    } else if (type == "product") {
+      route = `${productStatusRoute}/${id}`;
     }
     try {
       const response = await fetch(route, {
@@ -283,6 +304,7 @@ export default function FetchProvider({ children, user, token }: any) {
 
   const onSort = async (order: any, id: any, type: any, activity: any) => {
     let route = "";
+
     if (type == "service") {
       route = `${serviceSortRoute}/${id}`;
     } else if (type == "address") {
@@ -291,6 +313,12 @@ export default function FetchProvider({ children, user, token }: any) {
       route = `${subjectSortRoute}/${id}`;
     } else if (type == "position") {
       route = `${positionSortRoute}/${id}`;
+    } else if (type == "product") {
+      route = `${productSortRoute}/${id}`;
+    } else if (type == "subCategory") {
+      route = `${subCategorySortRoute}/${id}`;
+    } else if (type == "mainCategory") {
+      route = `${mainCategorySortRoute}/${id}`;
     }
 
     try {

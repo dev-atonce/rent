@@ -100,7 +100,7 @@ const Header = (props: {
               />
             </div>
           </form> */}
-          Hankyu Hanshin (Thailand) Website Management System
+          Rent.co.th Website Management System
         </div>
 
         <div className="flex items-center gap-3 2xsm:gap-7">

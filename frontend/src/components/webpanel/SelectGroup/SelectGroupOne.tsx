@@ -8,6 +8,8 @@ const SelectGroupOne: React.FC = ({
   status,
   setSelectedOption,
   keyProp,
+  topLabel,
+  field,
 }: any) => {
   // const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
@@ -18,12 +20,14 @@ const SelectGroupOne: React.FC = ({
 
   return (
     <div className="mb-4.5">
-      <label className="mb-2.5 block text-black dark:text-white">{label}</label>
+      <label className="mb-2.5 block text-black dark:text-white">
+        {topLabel != false && `${label} `}
+      </label>
 
       <div className="relative z-20 bg-transparent dark:bg-form-input">
         <select
-          value={selectedOption?.status}
-          onChange={(e) => {
+          value={selectedOption[keyProp]}
+          onChange={(e: any) => {
             setSelectedOption(e.target.value, keyProp);
             changeTextColor();
           }}
@@ -40,7 +44,7 @@ const SelectGroupOne: React.FC = ({
               value={i?.value}
               className="text-body dark:text-bodydark uppercase"
             >
-              {i?.title}
+              {field ? i?.[field] : i?.title}
             </option>
           ))}
         </select>

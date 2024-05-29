@@ -10,6 +10,8 @@ import { FetchContext } from "@/contexts/FetchContext";
 import AddressRecord from "./AddressRecord";
 import SubjectRecord from "./SubjectRecord";
 import PositionRecord from "./positionRecord";
+import ProductRecord from "./ProductRecord";
+import MainCatRecord from "./MainCatRecord";
 
 const TableThree = ({
   data,
@@ -33,7 +35,7 @@ const TableThree = ({
   };
 
   const onChangeStatus = async (id: any, status: any) => {
-    onStatus(status, id, type, "Change Service Status");
+    onStatus(status, id, type, `Change ${type} Status`);
   };
 
   const handleSort = () => {
@@ -99,6 +101,21 @@ const TableThree = ({
                   onDelete={onDelete}
                 />
               ))}
+            {type === "product" &&
+              data?.map((i: any, key: any) => (
+                <ProductRecord
+                  i={i}
+                  index={key}
+                  modal={modal}
+                  drag={drag}
+                  onDragEnd={handleSort}
+                  dragItem={dragItem}
+                  dragOverItem={dragOverItem}
+                  onChangeStatus={onChangeStatus}
+                  key={key}
+                  onDelete={onDelete}
+                />
+              ))}
             {type === "history" &&
               data?.map((i: any, key: any) => (
                 <HistoryRecord i={i} index={key} modal={modal} key={key} />
@@ -130,6 +147,23 @@ const TableThree = ({
               data?.map((i: any, key: any) => {
                 return (
                   <SubjectRecord
+                    i={i}
+                    index={key}
+                    modal={modal}
+                    key={key}
+                    drag={drag}
+                    onDragEnd={handleSort}
+                    dragItem={dragItem}
+                    dragOverItem={dragOverItem}
+                    onChangeStatus={onChangeStatus}
+                    onDelete={onDelete}
+                  />
+                );
+              })}
+            {type === "mainCategory" &&
+              data?.map((i: any, key: any) => {
+                return (
+                  <MainCatRecord
                     i={i}
                     index={key}
                     modal={modal}
