@@ -1,7 +1,10 @@
 const Service = require("../../models/Service");
 const config = require("../../configs/app");
 const fs = require("fs");
-const { ErrorBadRequest, ErrorNotFound } = require("../../configs/errorMethods");
+const {
+  ErrorBadRequest,
+  ErrorNotFound,
+} = require("../../configs/errorMethods");
 
 const multer = require("multer");
 const storage = multer.diskStorage({
@@ -54,10 +57,10 @@ const methods = {
         if (err) {
           reject(ErrorBadRequest(err));
         } else {
-          // if (!req.file) reject(ErrorBadRequest("Image is required"));
+          if (!req.files) reject(ErrorBadRequest("Image is required"));
           try {
             const data = req.body;
-            // data.image = req.file.path;
+            data.image = req.file.path;
             const obj = new Service(data);
             const inserted = await obj.save();
             resolve(inserted);
@@ -69,25 +72,46 @@ const methods = {
     });
   },
 
-  async update(id, data) {
-    try {
-      const obj = await Service.findById(id);
-      if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
-      await Service.updateOne({ _id: id }, data, {
-        runValidators: true,
-        new: true,
+  async update(req, res) {
+    return new Promise((resolve, reject) => {
+      const upload = multer({
+        storage: storage,
+        limits: { fileSize: config.limitFileSize },
+      }).single("image");
+      upload(req, res, async (err) => {
+        if (err) {
+          return reject(ErrorBadRequest(err));
+        } else {
+          try {
+            const data = req.body;
+            const obj = await Service.findById(req.params.id);
+            if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
+            if (req.files) {
+              fs?.unlink("../public/uploads/services/" + obj.image, (err) => {
+                if (err) {
+                  return Promise.reject(ErrorNotFound(err));
+                }
+              });
+              data.image = req.files?.path;
+            }
+            await Service.updateOne({ _id: req.params.id }, data, {
+              runValidators: true,
+              new: true,
+            });
+            resolve(Object.assign(obj, data));
+          } catch (error) {
+            return reject(ErrorBadRequest(error.message));
+          }
+        }
       });
-      return Object.assign(obj, data);
-    } catch (error) {
-      return Promise.reject(ErrorBadRequest(error.message));
-    }
+    });
   },
 
   async delete(id) {
     try {
       const obj = await Service.findOneAndDelete({ _id: id }).exec();
       if (obj?.image) {
-        fs.unlink("../public/uploads/services" + obj.image, (err) => {
+        fs.unlink("../public/uploads/services/" + obj.image, (err) => {
           if (err) {
             return Promise.reject(ErrorNotFound(err));
           }

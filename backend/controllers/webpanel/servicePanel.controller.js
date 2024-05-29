@@ -50,7 +50,7 @@ const methods = {
   async onUpdate(req, res) {
     try {
       checkAllowFields(req.body, allowFields.update);
-      const result = await Service.update(req.params.id, req.body);
+      const result = await Service.update(req, res);
       res.success(result);
     } catch (error) {
       res.error(error);

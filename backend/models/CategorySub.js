@@ -21,6 +21,18 @@ const schema = new mongoose.Schema(
   { timestamps: true }
 );
 
+schema.pre("save", async function (next) {
+  if (!this.sort) {
+    try {
+      const maxSort = await this.constructor.findOne().sort("-sort").exec();
+      this.sort = maxSort ? maxSort.sort + 1 : 0;
+      next();
+    } catch (error) {
+      next(error);
+    }
+  }
+});
+
 // Custom JSON Response
 schema.methods.toJSON = function () {
   return {
