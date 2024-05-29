@@ -24,7 +24,11 @@ const methods = {
             const rows = await Product.find()
                 .populate({
                     path: "subCategory",
-                    select: "nameTH",
+                    select: "nameTH mainCategory",
+                    populate: {
+                        path: "mainCategory",
+                        select: "nameTH",
+                    }
                 })
                 .sort({ sort: "asc" })
                 .limit(limit)
@@ -44,10 +48,14 @@ const methods = {
     async findById(id) {
         try {
             const obj = await Product.findById(id)
-                .populate({
-                    path: "subCategory",
+            .populate({
+                path: "subCategory",
+                select: "nameTH mainCategory",
+                populate: {
+                    path: "mainCategory",
                     select: "nameTH",
-                });
+                }
+            });
             if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
             return obj;
         } catch (error) {

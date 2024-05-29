@@ -7,8 +7,8 @@ module.exports = {
     body("productNameTH").notEmpty().withMessage("is empty"),
     body("productDescriptionTH").notEmpty().withMessage("is empty"),
     body("productUrl").notEmpty().withMessage("is empty"),
-    body("image").notEmpty().withMessage("is empty"),
-    body("imageAlt").notEmpty().withMessage("is empty"),
+    // body("image").notEmpty().withMessage("is empty"),
+    // body("imageAlt").notEmpty().withMessage("is empty"),
   ],
 
   update: [

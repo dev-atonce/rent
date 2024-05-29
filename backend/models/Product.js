@@ -10,6 +10,7 @@ const schema = new mongoose.Schema(
     image: { type: String },
     imageAlt: { type: String },
     gallery: { type: Array },
+    type: { type: String },
     sort: { type: Number },
     status: { type: Boolean, default: false },
     productSeo: {
@@ -47,6 +48,7 @@ schema.methods.toJSON = function () {
     image: this.image,
     imageAlt: this.imageAlt,
     gallery: this.gallery,
+    type: this.type,
     sort: this.sort,
     status: this.status,
     productSeo: {
