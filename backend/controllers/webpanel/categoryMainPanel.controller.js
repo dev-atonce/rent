@@ -1,7 +1,11 @@
 const CategoryMain = require("../../services/webpanel/categoryMainPanel.service");
 const { checkAllowFields } = require("../../helpers/field.helper");
 
-const allowFields = {};
+const allowFields = {
+    updateStatus: ["status"],
+
+    updateSort: ["sort"],
+};
 
 const methods = {
     async onGetAll(req, res) {
@@ -43,6 +47,26 @@ const methods = {
     async onDelete(req, res) {
         try {
             const result = await CategoryMain.delete(req.params.id);
+            res.success(result);
+        } catch (error) {
+            res.error(error);
+        }
+    },
+
+    async onUpdateSort(req, res) {
+        try {
+            checkAllowFields(req.body, allowFields.updateSort);
+            const result = await CategoryMain.update(req.params.id, req.body);
+            res.success(result);
+        } catch (error) {
+            res.error(error);
+        }
+    },
+
+    async onUpdateStatus(req, res) {
+        try {
+            checkAllowFields(req.body, allowFields.updateStatus);
+            const result = await CategoryMain.update(req.params.id, req.body);
             res.success(result);
         } catch (error) {
             res.error(error);

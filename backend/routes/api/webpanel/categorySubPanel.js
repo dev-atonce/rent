@@ -25,4 +25,14 @@ router.delete(
     controllers.onDelete
 );
 
+router.put(
+    "/sort/:id",
+    [validator.category.sort, validator.check],
+    controllers.onUpdateSort
+);
+router.put(
+    "/status/:id",
+    [validator.category.status, validator.check],
+    controllers.onUpdateStatus
+);
 module.exports = router;
