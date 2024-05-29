@@ -1,5 +1,6 @@
 import Link from "next/link";
 import BlogSection from "../BlogSection/BlogSection";
+import { FaAngleDoubleRight } from "react-icons/fa";
 
 export default function Blog() {
   return (
@@ -8,8 +9,11 @@ export default function Blog() {
         <h4 className="text-slate-600 text-2xl font-semibold">
           ข่าวสาร <span className="text-[#0DA1DB]">/ กิจกรรม</span>
         </h4>
-        <Link href="/news-activity" className="text-sm text-orange-500">
-          ดูทั้งหมด
+        <Link
+          href="/news-activity"
+          className="text-sm text-orange-500 flex items-center "
+        >
+          ดูทั้งหมด <FaAngleDoubleRight className="translate-y-[2px]" />
         </Link>
       </div>
       <div className="py-6">

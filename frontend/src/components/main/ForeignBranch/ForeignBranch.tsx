@@ -24,20 +24,20 @@ export default function ForeignBranch({ title, color }: any) {
       <h3 className="text-2xl font-semibold py-6" style={{ color: `${color}` }}>
         {title}
       </h3>
-      <div className="grid grid-cols-4 gap-4   ">
+      <div className="grid grid-cols-4 sm:gap-2 gap-2   ">
         {data.map((item: any, index: any) => (
           <a
             key={index}
             href={item.url}
             target="_blank"
-            className="col-span-4 sm:col-span-2 lg:col-span-1"
+            className="col-span-4 sm:col-span-2 lg:col-span-1 rounded-lg overflow-hidden shadow-lg "
           >
             <Image
               src={item.image}
               alt="partners"
               width={400}
               height={400}
-              className="rounded-lg w-full"
+              className=" w-full"
             />
           </a>
         ))}
