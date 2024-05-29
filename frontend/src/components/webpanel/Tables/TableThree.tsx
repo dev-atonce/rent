@@ -12,6 +12,7 @@ import SubjectRecord from "./SubjectRecord";
 import PositionRecord from "./positionRecord";
 import ProductRecord from "./ProductRecord";
 import MainCatRecord from "./MainCatRecord";
+import SubCatRecord from "./SubCatRecord";
 
 const TableThree = ({
   data,
@@ -164,6 +165,25 @@ const TableThree = ({
               data?.map((i: any, key: any) => {
                 return (
                   <MainCatRecord
+
+                  
+                    i={i}
+                    index={key}
+                    modal={modal}
+                    key={key}
+                    drag={drag}
+                    onDragEnd={handleSort}
+                    dragItem={dragItem}
+                    dragOverItem={dragOverItem}
+                    onChangeStatus={onChangeStatus}
+                    onDelete={onDelete}
+                  />
+                );
+              })}
+            {type === "subCategory" &&
+              data?.map((i: any, key: any) => {
+                return (
+                  <SubCatRecord
                     i={i}
                     index={key}
                     modal={modal}

@@ -185,19 +185,21 @@ export default function ProductPage() {
                 </Link>
               </div>
             </div>
-            <TableThree
-              onDelete={onDeleteItem}
-              drag={subCatDragState}
-              setData={setSubCatDragState}
-              type="address"
-              data={subCatData}
-              col={[
-                { title: "Branch", minWidth: "" },
-                { title: "Action", minWidth: "" },
-              ]}
-            />
+            <div className="max-h-[50vh] overflow-scroll">
+              <TableThree
+                onDelete={onDeleteItem}
+                drag={subCatDragState}
+                type="subCategory"
+                data={subCatData}
+                setData={setSubCatData}
+                col={[
+                  { title: "Sub-Category", minWidth: "" },
+                  { title: "Main-Category", minWidth: "" },
+                  { title: "Action", minWidth: "" },
+                ]}
+              />
+            </div>
           </div>
-          {/* Color Form */}
         </div>
       </div>
       <>
