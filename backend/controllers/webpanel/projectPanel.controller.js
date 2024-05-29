@@ -1,18 +1,18 @@
-const Service = require("../../services/webpanel/servicePanel.service");
+const Project = require("../../services/webpanel/projectPanel.service");
 const { checkAllowFields } = require("../../helpers/field.helper");
 
 const allowFields = {
   update: [
-    "serviceNameTH",
-    "serviceNameEN",
-    "serviceDescriptionTH",
-    "serviceDescriptionEN",
-    "serviceDetailTH",
-    "serviceDetailEN",
-    "serviceUrl",
+    "projectNameTH",
+    "projectNameEN",
+    "projectDescriptionTH",
+    "projectDescriptionEN",
+    "projectDetailTH",
+    "projectDetailEN",
+    "projectUrl",
   ],
 
-  updateSeo: ["serviceSeo"],
+  updateSeo: ["projectSeo"],
 
   updateStatus: ["status"],
 
@@ -22,7 +22,7 @@ const allowFields = {
 const methods = {
   async onGetAll(req, res) {
     try {
-      let result = await Service.findAll(req);
+      let result = await Project.findAll(req);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -31,7 +31,7 @@ const methods = {
 
   async onGetById(req, res) {
     try {
-      let result = await Service.findById(req.params.id);
+      let result = await Project.findById(req.params.id);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -40,7 +40,7 @@ const methods = {
 
   async onInsert(req, res) {
     try {
-      let result = await Service.insert(req, res);
+      let result = await Project.insert(req, res);
       res.success(result, 201);
     } catch (error) {
       res.error(error);
@@ -50,7 +50,7 @@ const methods = {
   async onUpdate(req, res) {
     try {
       checkAllowFields(req.body, allowFields.update);
-      const result = await Service.update(req, res);
+      const result = await Project.update(req, res);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -60,7 +60,7 @@ const methods = {
   async onUpdateSeo(req, res) {
     try {
       checkAllowFields(req.body, allowFields.updateSeo);
-      const result = await Service.update(req.params.id, req.body);
+      const result = await Project.update(req.params.id, req.body);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -70,7 +70,7 @@ const methods = {
   async onUpdateSort(req, res) {
     try {
       checkAllowFields(req.body, allowFields.updateSort);
-      const result = await Service.update(req.params.id, req.body);
+      const result = await Project.update(req.params.id, req.body);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -80,7 +80,7 @@ const methods = {
   async onUpdateStatus(req, res) {
     try {
       checkAllowFields(req.body, allowFields.updateStatus);
-      const result = await Service.update(req.params.id, req.body);
+      const result = await Project.update(req.params.id, req.body);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -89,7 +89,7 @@ const methods = {
 
   async onDelete(req, res) {
     try {
-      const result = await Service.delete(req.params.id);
+      const result = await Project.delete(req.params.id);
       res.success(result);
     } catch (error) {
       res.error(error);

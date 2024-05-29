@@ -2,13 +2,13 @@ const { validationResult } = require("express-validator");
 
 // Import Validators
 const user = require("./user");
-const service = require("./service");
+const project = require("./project");
 const product = require("./product");
 const category = require("./category");
 
 const validators = {
   user,
-  service,
+  project,
   product,
   category
 };

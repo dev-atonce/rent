@@ -1,9 +1,9 @@
-const Service = require("../../services/page/servicePage.service");
+const Project = require("../../services/page/projectPage.service");
 
 const methods = {
   async onGet(req, res) {
     try {
-      let result = await Service.find(req);
+      let result = await Project.find(req);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -12,7 +12,7 @@ const methods = {
 
   async onGetByUrl(req, res) {
     try {
-      let result = await Service.findByUrl(req.params.url);
+      let result = await Project.findByUrl(req.params.url);
       res.success(result);
     } catch (error) {
       res.error(error);

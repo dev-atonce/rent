@@ -1,42 +1,42 @@
 const router = require("express").Router();
-const controllers = require("../../../controllers/webpanel/servicePanel.controller");
+const controllers = require("../../../controllers/webpanel/projectPanel.controller");
 const auth = require("../../auth");
 const validator = require("../../../validators");
 
 router.get("/all/", controllers.onGetAll);
 router.get(
   "/:id",
-  [validator.service.findById, validator.check],
+  [validator.project.findById, validator.check],
   controllers.onGetById
 );
 router.post(
   "/",
-  [validator.service.create, validator.check],
+  [validator.project.create, validator.check],
   controllers.onInsert
 );
 router.put(
   "/:id",
-  [validator.service.update, validator.check],
+  [validator.project.update, validator.check],
   controllers.onUpdate
 );
 router.put(
   "/seo/:id",
-  [validator.service.seo, validator.check],
+  [validator.project.seo, validator.check],
   controllers.onUpdateSeo
 );
 router.put(
   "/sort/:id",
-  [validator.service.sort, validator.check],
+  [validator.project.sort, validator.check],
   controllers.onUpdateSort
 );
 router.put(
   "/status/:id",
-  [validator.service.status, validator.check],
+  [validator.project.status, validator.check],
   controllers.onUpdateStatus
 );
 router.delete(
   "/:id",
-  [validator.service.deleteById, validator.check],
+  [validator.project.deleteById, validator.check],
   controllers.onDelete
 );
 

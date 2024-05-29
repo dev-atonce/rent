@@ -1,7 +1,7 @@
 const router = require("express").Router();
 
 //// page ////
-router.use("/page/service", require("./page/servicePage"));
+router.use("/page/project", require("./page/projectPage"));
 router.use("/page/seo", require("./page/seoPage"));
 router.use("/page/email", require("./page/emailPage"));
 router.use("/page/position", require("./page/positionPage"));
@@ -9,7 +9,7 @@ router.use("/page/position", require("./page/positionPage"));
 //////////////
 
 // webpanel //
-router.use("/webpanel/service", require("./webpanel/servicePanel"));
+router.use("/webpanel/project", require("./webpanel/projectPanel"));
 router.use("/webpanel/seo", require("./webpanel/seoPanel"));
 router.use("/webpanel/users", require("./webpanel/userPanel"));
 router.use("/webpanel/log", require("./webpanel/logPanel"));

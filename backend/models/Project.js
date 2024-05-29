@@ -3,18 +3,18 @@ const uniqueValidator = require("mongoose-unique-validator");
 
 const schema = new mongoose.Schema(
   {
-    serviceNameTH: { type: String },
-    serviceNameEN: { type: String },
-    serviceDescriptionTH: { type: String },
-    serviceDescriptionEN: { type: String },
-    serviceDetailTH: { type: String },
-    serviceDetailEN: { type: String },
-    serviceUrl: { type: String, unique: true, required: true },
+    projectNameTH: { type: String },
+    projectNameEN: { type: String },
+    projectDescriptionTH: { type: String },
+    projectDescriptionEN: { type: String },
+    projectDetailTH: { type: String },
+    projectDetailEN: { type: String },
+    projectUrl: { type: String, unique: true, required: true },
     // image: { type: String },
     // imageAlt: { type: String },
     sort: { type: Number },
     status: { type: Boolean, default: false },
-    serviceSeo: {
+    projectSeo: {
       titleTH: { type: String },
       titleEN: { type: String },
       keywordTH: { type: String },
@@ -56,28 +56,28 @@ schema.pre("save", async function (next) {
 schema.methods.toJSON = function () {
   return {
     id: this._id,
-    serviceNameTH: this.serviceNameTH,
-    serviceNameEN: this.serviceNameEN,
-    serviceDescriptionTH: this.serviceDescriptionTH,
-    serviceDescriptionEN: this.serviceDescriptionEN,
-    serviceDetailTH: this.serviceDetailTH,
-    serviceDetailEN: this.serviceDetailEN,
-    serviceUrl: this.serviceUrl,
+    projectNameTH: this.projectNameTH,
+    projectNameEN: this.projectNameEN,
+    projectDescriptionTH: this.projectDescriptionTH,
+    projectDescriptionEN: this.projectDescriptionEN,
+    projectDetailTH: this.projectDetailTH,
+    projectDetailEN: this.projectDetailEN,
+    projectUrl: this.projectUrl,
     // image: this.image,
     // imageAlt: this.imageAlt,
     sort: this.sort,
     status: this.status,
-    serviceSeo: {
-      titleTH: this.serviceSeo["titleTH"],
-      titleEN: this.serviceSeo["titleEN"],
-      keywordTH: this.serviceSeo["keywordTH"],
-      keywordEN: this.serviceSeo["keywordEN"],
-      descriptionTH: this.serviceSeo["descriptionTH"],
-      descriptionEN: this.serviceSeo["descriptionEN"],
+    projectSeo: {
+      titleTH: this.projectSeo["titleTH"],
+      titleEN: this.projectSeo["titleEN"],
+      keywordTH: this.projectSeo["keywordTH"],
+      keywordEN: this.projectSeo["keywordEN"],
+      descriptionTH: this.projectSeo["descriptionTH"],
+      descriptionEN: this.projectSeo["descriptionEN"],
     },
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,
   };
 };
 
-module.exports = mongoose.model("Services", schema);
+module.exports = mongoose.model("Projects", schema);

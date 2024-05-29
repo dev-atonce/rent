@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const { sort } = require("../validators/service");
 
 const schema = new mongoose.Schema(
     {

@@ -1,4 +1,4 @@
-const Service = require("../../models/Service");
+const Service = require("../../models/Project");
 const config = require("../../configs/app");
 
 const { ErrorNotFound } = require("../../configs/errorMethods");
