@@ -152,8 +152,8 @@ const methods = {
             try {
                 const obj = await Product.findById(req.params.id).exec();
                 if (!obj) return reject(ErrorNotFound("id: not found"));
-                if (obj.gallery?.length >= 3) return reject(ErrorBadRequest("Gallery is full"));
-                const galleryLeft = 3 - obj.gallery.length;
+                if (obj.gallery?.length >= 6) return reject(ErrorBadRequest("Gallery is full"));
+                const galleryLeft = 6 - obj.gallery.length;
 
                 const upload = multer({
                     storage: storage,
