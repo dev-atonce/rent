@@ -53,9 +53,6 @@ export default function SubCatRecord({
             <p className="text-xs">{i?.nameEN}</p>
             <p className="text-xs">{i?.nameTH}</p>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11 text-start">
-            <p className="text-xs">{i?.email}</p>
-          </td>
 
           <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <div className="flex items-center gap-1">
@@ -82,7 +79,7 @@ export default function SubCatRecord({
             <p className="text-xs">{i?.nameTH}</p>
           </td>
           <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11 text-start">
-            <p className="text-xs">{i?.email}</p>
+            <p className="text-xs">{i?.mainCategory?.nameTH}</p>
           </td>
 
           <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
