@@ -43,7 +43,11 @@ const methods = {
 
     async findById(id) {
         try {
-            const obj = await Product.findById(id);
+            const obj = await Product.findById(id)
+                .populate({
+                    path: "subCategory",
+                    select: "nameTH",
+                });
             if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
             return obj;
         } catch (error) {

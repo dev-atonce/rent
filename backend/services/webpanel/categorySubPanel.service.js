@@ -46,7 +46,7 @@ const methods = {
             const obj = await CategorySub.findById(id)
                 .populate({
                     path: "mainCategory",
-                    select: "nameTH seo",
+                    select: "nameTH",
                 });
             if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
             return obj;
