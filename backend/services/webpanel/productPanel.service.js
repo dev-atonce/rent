@@ -132,7 +132,7 @@ const methods = {
                     }
                 });
             }
-            if (obj.gallery?.length) {
+            if (obj?.gallery) {
                 obj.gallery.map((item) => {
                     fs?.unlink("../public/uploads/products/" + item, (err) => {
                         if (err) {
