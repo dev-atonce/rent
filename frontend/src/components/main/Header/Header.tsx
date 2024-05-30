@@ -29,7 +29,7 @@ export default function Header() {
             <div className="logo">
               <Logo color={primaryColor} />
             </div>
-            <div className="flex social-icon">
+            <div className="flex items-center social-icon">
               <a href="https://www.facebook.com" target="_blank" className="rounded-full p-2 bg-sky-400">
                 <FaFacebookF fontSize="1.2em" color="white" />
               </a>
