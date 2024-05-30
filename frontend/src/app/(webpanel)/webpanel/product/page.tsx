@@ -131,7 +131,7 @@ export default function ProductPage() {
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
           <div>
-            <div className="flex justify-between">
+            <div className="flex justify-between py-4">
               <h4 className=" text-xl">Main Category</h4>
               <div className="flex items-center justify-end gap-1">
                 <button
@@ -142,7 +142,7 @@ export default function ProductPage() {
                 </button>
 
                 <Link
-                  href="contact/subject/create"
+                  href="product/maincat/create"
                   className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
                 >
                   CREATE MAIN-CATEGORY
@@ -167,7 +167,7 @@ export default function ProductPage() {
 
         <div className="flex flex-col gap-9">
           <div className="">
-            <div className="flex justify-between">
+            <div className="flex justify-between py-4">
               <h4 className=" text-xl">Sub-Category</h4>
               <div className="flex items-center justify-end gap-1">
                 <button
@@ -178,7 +178,7 @@ export default function ProductPage() {
                 </button>
 
                 <Link
-                  href="contact/create"
+                  href="product/subcat/create"
                   className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
                 >
                   CREATE SUB-CATEGORY

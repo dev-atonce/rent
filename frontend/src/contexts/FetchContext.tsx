@@ -101,6 +101,10 @@ export default function FetchProvider({ children, user, token }: any) {
     activity: any
   ) => {
     let route = "";
+    let modifiedData = { ...data };
+
+    data?.image && delete modifiedData?.image;
+
     if (type == "service") {
       if (method.toUpperCase() == "PUT") {
         route = `${serviceRoute}/${id}`;
@@ -124,6 +128,18 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${positionRoute}/${id}`;
       } else if (method?.toUpperCase() == "POST") {
         route = positionRoute;
+      }
+    } else if (type == "mainCategory") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${mainCategoryRoute}/${id}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = mainCategoryRoute;
+      }
+    } else if (type == "subCategory") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${subCategoryRoute}/${id}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = subCategoryRoute;
       }
     } else if (type == "serviceSeo") {
       route = `${serviceSeoRoute}/${id}`;
@@ -170,7 +186,7 @@ export default function FetchProvider({ children, user, token }: any) {
                 "Content-Type": "application/json",
               },
 
-              body: JSON.stringify(data),
+              body: JSON.stringify(modifiedData),
             });
 
             const res = await response?.json();
@@ -204,6 +220,15 @@ export default function FetchProvider({ children, user, token }: any) {
               );
               //  @ts-ignore
               if (!logRes?.error) {
+                // upload image
+                if (data?.image) {
+                  let imgRoute = route;
+                  if (method?.toUpperCase() == "POST") {
+                    imgRoute = `${route}/${res?.id}`;
+                  }
+
+                  await onUploadImage(data?.image, "PUT", imgRoute);
+                }
                 Swal.fire({
                   position: "top-right",
                   toast: true,
@@ -272,6 +297,31 @@ export default function FetchProvider({ children, user, token }: any) {
           });
         }
       });
+  };
+
+  const onUploadImage = async (image: any, method: any, route: any) => {
+    // @ts-ignore
+
+    const formData = new FormData();
+
+    formData.append("image", image);
+
+    try {
+      // Use fetch to send the form data to the server
+      const response = await fetch(`${route}`, {
+        method: method,
+        body: formData,
+      });
+      if (!response.ok) {
+        throw new Error("Failed to update category");
+      }
+      const result = await response.json();
+      console.log("Success:", result);
+      // Call onSave if necessary (depends on your implementation)
+      // onSave(result, 'PUT', id, 'mainCategory', `Edit Main Category ${data?.nameTH}`);
+    } catch (error) {
+      console.error("Error:", error);
+    }
   };
 
   const onChangeStatus = async (
