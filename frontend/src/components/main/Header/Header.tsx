@@ -36,7 +36,7 @@ export default function Header() {
               <a href="https://line.me/th" target="_blank" className="rounded-full p-2 bg-green-500 ml-1">
                 <FaLine fontSize="1.2em" color="white"/>
               </a>
-              <a href="https://www.youtube.com" target="_blank" className="rounded-full p-2 bg-rose-500 ml-1">
+              <a href="https://www.youtube.com" target="_blank" className="rounded-full p-2 bg-red ml-1">
                 <FaYoutube fontSize="1.2em" color="white" className="bg-red-500"/>
               </a>
             </div>
