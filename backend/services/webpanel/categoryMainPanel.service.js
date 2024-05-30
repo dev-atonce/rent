@@ -54,7 +54,7 @@ const methods = {
         } else {
           try {
             const data = req.body;
-            data.image = req.files?.path;
+            data.image = req.files?.filename;
             const obj = new CategoryMain(data);
             const inserted = await obj.save();
             resolve(inserted);
@@ -89,7 +89,7 @@ const methods = {
                   }
                 }
               );
-              data.image = req.files?.path;
+              data.image = req.files?.filename;
             }
 
             await CategoryMain.updateOne({ _id: req.params.id }, data, {
