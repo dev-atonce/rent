@@ -73,7 +73,7 @@ const methods = {
     return new Promise((resolve, reject) => {
       const upload = multer({
         storage: storage,
-        limits: { fileSize: config.limitFileSize },
+        // limits: { fileSize: config.limitFileSize },
       }).single("image");
       upload(req, res, async (err) => {
         if (err) {
@@ -83,16 +83,19 @@ const methods = {
             const data = req.body;
             const obj = await CategoryMain.findById(req.params.id);
             if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
-            if (req.files) {
-              fs?.unlink(
-                "../public/uploads/categoryMain/" + obj.image,
-                (err) => {
-                  if (err) {
-                    return Promise.reject(ErrorNotFound(err));
+            if (req.file) {
+              if (obj?.image) {
+                fs?.unlink(
+                  "../public/uploads/categoryMain/" + obj.image,
+                  (err) => {
+                    if (err) {
+                      return Promise.reject(ErrorNotFound(err));
+                    }
                   }
-                }
-              );
-              data.image = req.files?.filename;
+                );
+              }
+
+              data.image = req.file?.filename;
             }
 
             await CategoryMain.updateOne({ _id: req.params.id }, data, {
@@ -101,7 +104,7 @@ const methods = {
             });
             resolve(Object.assign(obj, data));
           } catch (error) {
-            return reject(ErrorBadRequest(error.message));
+            reject(ErrorBadRequest(error.message));
           }
         }
       });
