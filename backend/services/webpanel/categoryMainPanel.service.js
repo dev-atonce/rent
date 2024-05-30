@@ -1,7 +1,10 @@
 const CategoryMain = require("../../models/CategoryMain.js");
 const config = require("../../configs/app");
 const fs = require("fs");
-
+const {
+  ErrorBadRequest,
+  ErrorNotFound,
+} = require("../../configs/errorMethods");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
