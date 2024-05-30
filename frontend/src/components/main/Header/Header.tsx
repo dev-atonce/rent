@@ -3,6 +3,9 @@ import Link from "next/link";
 import { Logo } from "../Logo/Logo";
 import { useEffect, useContext } from "react";
 import { PageSettingContext } from "@/contexts/PageSettingContext";
+import { FaFacebookF } from "react-icons/fa";
+import { FaLine } from "react-icons/fa";
+import { FaYoutube } from "react-icons/fa";
 
 export default function Header() {
   const { primaryColor }: any = useContext(PageSettingContext);
@@ -26,10 +29,16 @@ export default function Header() {
             <div className="logo">
               <Logo color={primaryColor} />
             </div>
-            <div className="social-icon">
-              <div>facebook</div>
-              <div>line</div>
-              <div>youtube</div>
+            <div className="flex social-icon">
+              <a href="https://www.facebook.com" target="_blank" className="rounded-full p-2 bg-sky-400">
+                <FaFacebookF fontSize="1.2em" color="white" />
+              </a>
+              <a href="https://line.me/th" target="_blank" className="rounded-full p-2 bg-green-500 ml-1">
+                <FaLine fontSize="1.2em" color="white"/>
+              </a>
+              <a href="https://www.youtube.com" target="_blank" className="rounded-full p-2 bg-rose-500 ml-1">
+                <FaYoutube fontSize="1.2em" color="white" className="bg-red-500"/>
+              </a>
             </div>
           </div>
         </div>
