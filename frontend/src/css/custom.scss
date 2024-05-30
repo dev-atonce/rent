@@ -1,3 +1,6 @@
+:root{
+    --active-color: rgb(255, 72, 0);
+}
 a.btn-link{
     display: flex;
     width: fit-content;
@@ -49,8 +52,42 @@ ol.decimal
             font-size: 18px;
             transition: all 0.675s;
         }
+        li[data-toggle='true']{
+            background-color: var(--active-color);
+        }
         .nav-button:hover{
-            background-color: white;
+            background-color: var(--active-color);
+            color: white;
+            a{
+                color:white;
+            }
+        }
+        li.nav-button{
+            cursor: pointer;
+            list-style-type: none;
+        }
+        li.nav-button.active,
+        .nav-button.active{
+            background-color: var(--active-color) !important;
+        }
+        .dropdown{
+            box-shadow: 0 1px 3px 1px #c4c4c4 !important;
+        }
+        li.show.dropdown{
+            margin: 0;
+            top: 0;
+            left: 0;
+            display: block;
+        }
+        li.nav-button .dropdown ul li{
+            border-bottom: 1px solid #dedede;
+        }
+        li.nav-button .dropdown ul li:last-child{
+            border-bottom: unset;
+        }
+        li.nav-button .dropdown ul li a{
+            color: black;
+            // border-bottom: 1px solid #dedede;
         }
     }
 }

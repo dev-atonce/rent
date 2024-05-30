@@ -1,14 +1,19 @@
 "use client";
 import Link from "next/link";
 import { Logo } from "../Logo/Logo";
-import { useEffect, useContext } from "react";
+import { useEffect, useContext,useRef,useState } from "react";
 import { PageSettingContext } from "@/contexts/PageSettingContext";
 import { FaFacebookF } from "react-icons/fa";
 import { FaLine } from "react-icons/fa";
 import { FaYoutube } from "react-icons/fa";
+import NavDropDown from "./NavDropdown";
+import { useSelectedLayoutSegment } from 'next/navigation'
 
 export default function Header() {
   const { primaryColor }: any = useContext(PageSettingContext);
+  const menuRef = useRef<HTMLUListElement>(null);
+  const [active, setActive] = useState<Element>();
+
   useEffect(() => {
     const hoverStyle = `.nav-button:hover { color: ${primaryColor};  }`;
     const styleElement = document.createElement("style");
@@ -16,8 +21,19 @@ export default function Header() {
 
     document.head.appendChild(styleElement);
 
+    const handleClickOutside = (event:any) => {
+      if(typeof event.target.closest('[data-toggle]') ==  null){
+        event.target.classList.remove('active');
+      }
+      event.target.closest('.nav-menu').querySelector('.active')?.classList.remove('active');
+      
+      event.target.classList.add('active');
+      setActive(event.target);
+    }
+    document.addEventListener('click', handleClickOutside);
     return () => {
       document.head.removeChild(styleElement);
+      document.body.removeEventListener('click',handleClickOutside);
     };
   }, [primaryColor]);
 
@@ -30,7 +46,7 @@ export default function Header() {
               <Logo color={primaryColor} />
             </div>
             <div className="flex items-center social-icon">
-              <a href="https://www.facebook.com" target="_blank" className="rounded-full p-2 bg-sky-400">
+              <a href="https://www.facebook.com" target="_blank" className="rounded-full p-2 bg-blue-600">
                 <FaFacebookF fontSize="1.2em" color="white" />
               </a>
               <a href="https://line.me/th" target="_blank" className="rounded-full p-2 bg-green-500 ml-1">
@@ -45,31 +61,37 @@ export default function Header() {
       </div>
       <div className="section-2">
         <div className="container mx-auto">
-          <div className="nav-menu flex justify-center">
-            <Link href="/" className="p-4 nav-button hover:text-white">
+          <div className="nav-menu flex justify-center" ref={menuRef}>
+            <Link href="/" className="p-4 nav-button hover:text-white" >
               หน้าแรก
             </Link>
-            <Link href="/about-us" className="p-4 nav-button hover:text-white">
-              เกี่ยวกับเรา
-            </Link>
+            <NavDropDown
+              title="เกี่ยวกับเรา" 
+              dropdownItems={
+                [
+                  {"title":"ผังองค์กร","href":'/about-us/organizational-chart'},
+                  {"title":"ประวัติบริษัท","href":'/about-us/company-history'},
+                  {"title":"เงื่อนไขและข้อตกลง","href":"/about-us/terms-conditions"}
+                ]
+            }/>
             <Link
               href="/rental-product"
-              className="p-4 nav-button hover:text-white"
+              className={`p-4 nav-button hover:text-white`}
             >
               สินค้าเช่า
             </Link>
             <Link
               href="/sale-product"
-              className="p-4 nav-button hover:text-white"
+              className={`p-4 nav-button hover:text-white`}
             >
               สินค้าขาย
             </Link>
-            <Link
-              href="/other-service"
-              className="p-4 nav-button hover:text-white"
-            >
-              บริการอื่นๆ
-            </Link>
+            <NavDropDown title="บริการอื่นๆ" dropdownItems={
+              [
+                {"title":"การฝึกอบรมความปลอดภัยในการใช้เครื่องจักร","href":'/service/safety-training-in-using-machinery'},
+                {"title":"ความคุ้มครองเครื่องจักร","href":'/service/machinery-coverage'},
+              ]
+            }/>
             <Link
               href="/news-activity"
               className="p-4 nav-button hover:text-white"
