@@ -1,7 +1,10 @@
 const CategoryMain = require("../../models/CategoryMain.js");
 const config = require("../../configs/app");
 const fs = require("fs");
-
+const {
+  ErrorBadRequest,
+  ErrorNotFound,
+} = require("../../configs/errorMethods");
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -54,7 +57,7 @@ const methods = {
         } else {
           try {
             const data = req.body;
-            data.image = req.files?.path;
+            data.image = req.files?.filename;
             const obj = new CategoryMain(data);
             const inserted = await obj.save();
             resolve(inserted);
@@ -89,7 +92,7 @@ const methods = {
                   }
                 }
               );
-              data.image = req.files?.path;
+              data.image = req.files?.filename;
             }
 
             await CategoryMain.updateOne({ _id: req.params.id }, data, {

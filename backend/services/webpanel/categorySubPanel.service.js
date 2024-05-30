@@ -67,7 +67,7 @@ const methods = {
                 } else {
                     try {
                         const data = req.body;
-                        data.image = req.files?.path;
+                        data.image = req.files?.filename;
                         const obj = new CategorySub(data);
                         const inserted = await obj.save();
                         resolve(inserted);
@@ -99,7 +99,7 @@ const methods = {
                                     return Promise.reject(ErrorNotFound(err));
                                 }
                             });
-                            data.image = req.files?.path;
+                            data.image = req.files?.filename;
                         }
                         await CategorySub.updateOne({ _id: req.params.id }, data, {
                             runValidators: true,
