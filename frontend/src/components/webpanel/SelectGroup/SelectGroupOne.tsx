@@ -10,6 +10,7 @@ const SelectGroupOne: React.FC = ({
   keyProp,
   topLabel,
   field,
+  saveId,
 }: any) => {
   // const [selectedOption, setSelectedOption] = useState<string>("");
   const [isOptionSelected, setIsOptionSelected] = useState<boolean>(false);
@@ -18,12 +19,13 @@ const SelectGroupOne: React.FC = ({
     setIsOptionSelected(true);
   };
 
+  console.log(selectedOption);
+
   return (
     <div className="mb-4.5">
       <label className="mb-2.5 block text-black dark:text-white">
         {topLabel != false && `${label} `}
       </label>
-
       <div className="relative z-20 bg-transparent dark:bg-form-input">
         <select
           value={selectedOption[keyProp]}
@@ -35,13 +37,14 @@ const SelectGroupOne: React.FC = ({
             isOptionSelected ? "text-black dark:text-white" : ""
           }`}
         >
-          <option value="0" disabled className="text-body dark:text-bodydark">
+          <option value="0" className="text-body dark:text-bodydark">
             Select {label}
           </option>
+
           {list?.map((i: any, k: any) => (
             <option
               key={k}
-              value={i?.value}
+              value={saveId ? i?.id : i?.value}
               className="text-body dark:text-bodydark uppercase"
             >
               {field ? i?.[field] : i?.title}

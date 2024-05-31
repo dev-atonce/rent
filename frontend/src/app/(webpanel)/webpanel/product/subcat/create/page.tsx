@@ -6,30 +6,38 @@ import MainCatForm from "@/components/webpanel/MainCatForm/MainCatForm";
 import { FetchContext } from "@/contexts/FetchContext";
 import { useContext, useEffect, useState } from "react";
 
-export default function MainCatCreatePage({ params: { id } }: any) {
+export default function SubCatEditPage({ params: { id } }: any) {
   const [data, setData] = useState({});
-  const { onFetchOne, onSave }: any = useContext(FetchContext);
+  const { onSave }: any = useContext(FetchContext);
+
   const envLangs = process.env.NEXT_PUBLIC_LANGUAGES;
   //   @ts-ignore
   const languages = envLangs.split(",").map((i: any) => i.toUpperCase());
 
-  const onCreate = async () => {
+  const onSaveSeo = () => {
     // @ts-ignore
-    const modifiedData = { ...data };
+    const modifiedState = { seo: { ...data?.seo } };
 
+    onSave(modifiedState, "PUT", id, "subCategory", "update Sub Category SEO");
+  };
+
+  const onCreate = async () => {
+    console.log(data);
     onSave(
-      modifiedData,
+      // @ts-ignore
+      data,
       "POST",
-      null,
-      "mainCategory",
+      id,
+      "subCategory",
       //   @ts-ignore
-      `Create New Category:${data?.nameTH}`
+      `Create Sub Category ${data?.nameTH}`
     );
   };
 
   const onChangeState = (e: any, field: string) => {
     setData((prevState: any) => ({ ...prevState, [field]: e }));
   };
+
   const onChangeSeoState = (e: any, field: string) => {
     setData((prevState: any) => ({
       ...prevState,
@@ -40,17 +48,18 @@ export default function MainCatCreatePage({ params: { id } }: any) {
   return (
     <DefaultLayout>
       <Breadcrumb
-        pageName={`Create New Main Category`}
+        pageName={`Create New Sub-Category`}
         prevPage={{ pageName: `Product`, url: "/webpanel/product" }}
       />
 
       <MainCatForm
-        mainCat={true}
+        mainCat={false}
         languages={languages}
         onSave={onCreate}
         data={data}
         onChangeState={onChangeState}
         id={id}
+        onSaveSeo={onCreate}
         onChangeSeoState={onChangeSeoState}
       />
     </DefaultLayout>

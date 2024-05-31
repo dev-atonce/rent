@@ -4,7 +4,7 @@ import ImageComponent from "@/components/common/ImageComponent/ImageComponent";
 import SelectGroupOne from "../SelectGroup/SelectGroupOne";
 import { FetchContext } from "@/contexts/FetchContext";
 
-export default function MainCatForm({
+export default function ProductForm({
   data,
   onSave,
   languages,
@@ -16,33 +16,50 @@ export default function MainCatForm({
 }: any) {
   const { onFetchOne }: any = useContext(FetchContext);
   const [mainCatData, setMainCatData] = useState([]);
+  const [subCatData, setSubCatData] = useState([]);
+  const [filteredSubCat, setFilteredSubCat] = useState([]);
   const [showEditCat, setShowEditCat] = useState(false);
 
   const onFetchMainCat = async () => {
     const data = await onFetchOne("mainCategory", null);
+    const subCat = await onFetchOne("subCategory", null);
     setMainCatData(data?.rows);
+    setSubCatData(subCat?.rows);
+  };
+
+  const onSelectMainCat = () => {
+    const filtered = subCatData?.filter(
+      (i: any) => i?.mainCategory?.id == data?.mainCategory
+    );
+    setFilteredSubCat(filtered);
   };
 
   useEffect(() => {
     onFetchMainCat();
-    if (data) {
-      console.log(data);
-    }
-    // onChangeState(data?.mainCategory?.nameTH, "mainCategory");
   }, []);
+
+  useEffect(() => {
+    onSelectMainCat();
+  }, [data?.mainCategory]);
 
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div className="flex flex-col gap-4 ">
         {!mainCat && (
           <div className="rounded-lg border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark h-full py-2 px-6">
-            {data?.curMainCat ? (
+            {data?.curSubCat ? (
               <>
                 <div className="flex justify-between">
-                  <span>
-                    Main Category:
-                    <span className="font-semibold">{data?.curMainCat}</span>
-                  </span>
+                  <div className="flex flex-col">
+                    <span>
+                      Main Category:
+                      <span className="font-semibold">{data?.curMainCat}</span>
+                    </span>
+                    <span>
+                      Sub-Category:
+                      <span className="font-semibold">{data?.curSubCat}</span>
+                    </span>
+                  </div>
                   <button
                     className="border-yellow-500 px-2 rounded-md text-yellow-500 border"
                     onClick={() => setShowEditCat(!showEditCat)}
@@ -51,48 +68,78 @@ export default function MainCatForm({
                   </button>
                 </div>
                 {showEditCat && (
-                  <SelectGroupOne
-                    // @ts-ignore
-                    topLabel={false}
-                    // @ts-ignore
-                    label={"Main Category"}
-                    // @ts-ignore
-                    list={mainCatData}
-                    selectedOption={data}
-                    setSelectedOption={onChangeState}
-                    keyProp="mainCategory"
-                    field="nameTH"
-                    saveId={true}
-                  />
+                  <>
+                    <SelectGroupOne
+                      // @ts-ignore
+                      topLabel={false}
+                      // @ts-ignore
+                      label={"Main Category"}
+                      // @ts-ignore
+                      list={mainCatData}
+                      selectedOption={data}
+                      setSelectedOption={onChangeState}
+                      keyProp="mainCategory"
+                      field="nameTH"
+                      saveId={true}
+                    />
+                    <SelectGroupOne
+                      // @ts-ignore
+                      topLabel={false}
+                      // @ts-ignore
+                      label={"Sub-Category"}
+                      // @ts-ignore
+                      list={filteredSubCat}
+                      selectedOption={data}
+                      setSelectedOption={onChangeState}
+                      keyProp="subCategory"
+                      field="nameTH"
+                      saveId={true}
+                    />
+                  </>
                 )}
               </>
             ) : (
-              <SelectGroupOne
-                // @ts-ignore
-                topLabel={true}
-                // @ts-ignore
-                label={"Main Category"}
-                // @ts-ignore
-                list={mainCatData}
-                selectedOption={data}
-                setSelectedOption={onChangeState}
-                keyProp="mainCategory"
-                field="nameTH"
-                saveId={true}
-              />
+              <>
+                <SelectGroupOne
+                  // @ts-ignore
+                  topLabel={true}
+                  // @ts-ignore
+                  label={"Main Category"}
+                  // @ts-ignore
+                  list={mainCatData}
+                  selectedOption={data}
+                  setSelectedOption={onChangeState}
+                  keyProp="mainCategory"
+                  field="nameTH"
+                  saveId={true}
+                />
+                <SelectGroupOne
+                  // @ts-ignore
+                  topLabel={true}
+                  // @ts-ignore
+                  label={"Sub-Category"}
+                  // @ts-ignore
+                  list={mainCatData}
+                  selectedOption={data}
+                  setSelectedOption={onChangeState}
+                  keyProp="mainCategory"
+                  field="nameTH"
+                  saveId={true}
+                />
+              </>
             )}
           </div>
         )}
         <FormGroup
           //   onSave={onSave}
-          formLabel={mainCat ? "Main Category" : "Sub-Category"}
+          formLabel={"Product"}
           inputBox={[
             {
-              label: mainCat ? "Main Category Name" : "Sub-Category Name",
-              placeHolder: mainCat ? "Main Category Name" : "Sub-Category Name",
+              label: "Product Name",
+              placeHolder: "Product Name",
               state: data,
               setState: onChangeState,
-              keyProp: "name",
+              keyProp: "productName",
               type: "input",
               languages: languages,
               required: true,
@@ -124,6 +171,7 @@ export default function MainCatForm({
       </div>
 
       <div className="flex flex-col gap-9">
+        {/* to do seo */}
         <FormGroup
           // modalState={show}
           id={id}
@@ -133,7 +181,7 @@ export default function MainCatForm({
             {
               label: "Title",
               placeHolder: "Page Title",
-              state: data?.seo,
+              state: data,
               setState: onChangeSeoState,
               keyProp: "title",
               type: "input",
@@ -142,7 +190,7 @@ export default function MainCatForm({
             {
               label: "Keywords",
               placeHolder: "META Keywords",
-              state: data?.seo,
+              state: data,
               setState: onChangeSeoState,
               keyProp: "keyword",
               type: "input",
@@ -151,7 +199,7 @@ export default function MainCatForm({
             {
               label: "Description",
               placeHolder: "META Description",
-              state: data?.seo,
+              state: data,
               setState: onChangeSeoState,
               keyProp: "description",
               type: "textArea",

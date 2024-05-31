@@ -98,9 +98,29 @@ export default function ProductPage() {
     return filteredData;
   };
 
-  const onDeleteItem = async (id: any) => {
+  const onDeleteMainCat = async (id: any) => {
     try {
-      const res = await onDelete(id, "service", "Delete Service");
+      const res = await onDelete(id, "mainCategory", "Delete Main Category");
+      if (res.success) {
+        fetchData();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const onDeleteSubCat = async (id: any) => {
+    try {
+      const res = await onDelete(id, "subCategory", "Delete Sub Category");
+      if (res.success) {
+        fetchData();
+      }
+    } catch (err) {
+      console.log(err);
+    }
+  };
+  const onDeleteProduct = async (id: any) => {
+    try {
+      const res = await onDelete(id, "product", "Delete Product");
       if (res.success) {
         fetchData();
       }
@@ -151,7 +171,7 @@ export default function ProductPage() {
             </div>
             <div className="max-h-[50vh] overflow-scroll">
               <TableThree
-                onDelete={onDeleteItem}
+                onDelete={onDeleteMainCat}
                 drag={mainCatDragState}
                 type="mainCategory"
                 data={mainCatData}
@@ -187,7 +207,7 @@ export default function ProductPage() {
             </div>
             <div className="max-h-[50vh] overflow-scroll">
               <TableThree
-                onDelete={onDeleteItem}
+                onDelete={onDeleteSubCat}
                 drag={subCatDragState}
                 type="subCategory"
                 data={subCatData}
@@ -267,7 +287,7 @@ export default function ProductPage() {
           </div>
         </div>
         <TableThree
-          onDelete={onDeleteItem}
+          onDelete={onDeleteProduct}
           drag={dragState}
           type="product"
           modal={{ modalState, setModalState }}

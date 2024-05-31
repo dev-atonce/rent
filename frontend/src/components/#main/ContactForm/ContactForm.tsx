@@ -58,7 +58,6 @@ export default function Contactform({ lng }: any) {
               <select
                 {...register("topic", { required: true })}
                 value={formState?.title}
-                // value={formState?.title}
                 onChange={(e) => {
                   setFormState((prev: any) => ({
                     ...prev,
