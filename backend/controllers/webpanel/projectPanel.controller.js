@@ -98,12 +98,15 @@ const methods = {
 
   async onDeleteGallery(req, res) {
     try {
-        let result = await Project.deleteGallery(req.params.id, req.params.position);
-        res.success(result);
+      let result = await Project.deleteGallery(
+        req.params.id,
+        req.params.position
+      );
+      res.success(result);
     } catch (error) {
-        res.error(error);
+      res.error(error);
     }
-},
+  },
 };
 
 module.exports = { ...methods };
