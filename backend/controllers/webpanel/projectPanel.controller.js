@@ -2,16 +2,6 @@ const Project = require("../../services/webpanel/projectPanel.service");
 const { checkAllowFields } = require("../../helpers/field.helper");
 
 const allowFields = {
-  update: [
-    "projectNameTH",
-    "projectNameEN",
-    "projectDescriptionTH",
-    "projectDescriptionEN",
-    "projectDetailTH",
-    "projectDetailEN",
-    "projectUrl",
-  ],
-
   updateSeo: ["projectSeo"],
 
   updateStatus: ["status"],
@@ -49,18 +39,7 @@ const methods = {
 
   async onUpdate(req, res) {
     try {
-      checkAllowFields(req.body, allowFields.update);
       const result = await Project.update(req, res);
-      res.success(result);
-    } catch (error) {
-      res.error(error);
-    }
-  },
-
-  async onUpdateSeo(req, res) {
-    try {
-      checkAllowFields(req.body, allowFields.updateSeo);
-      const result = await Project.update(req.params.id, req.body);
       res.success(result);
     } catch (error) {
       res.error(error);
