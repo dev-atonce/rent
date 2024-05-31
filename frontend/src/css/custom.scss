@@ -41,19 +41,40 @@ ol.decimal
             width: 35px;
         }
     }
-    .section-2{
+
+    .section-2
+    {
         background-color: #0EA1DB;
         color: white;
         // .nav-menu{
         //     padding: 12px 0;
         //     margin: 0 auto;
         // }
-        .nav-button{
+        .nav-menu
+        {
+            list-style: none;
+            .menu-item
+            {
+                float: left;
+                height: 100%;
+                .nav-button 
+                {
+                    display: flex;
+                }
+            }
+        }
+        
+        li.menu-item{
+            position: relative;
             font-size: 18px;
             transition: all 0.675s;
         }
-        li[data-toggle='true']{
+        li[data-toggle="true"]{
             background-color: var(--active-color);
+        }
+        .nav-button{
+            font-size: 18px;
+            transition: all 0.675s;
         }
         .nav-button:hover{
             background-color: var(--active-color);
@@ -62,13 +83,24 @@ ol.decimal
                 color:white;
             }
         }
-        li.nav-button{
+        .nav-button{
             cursor: pointer;
             list-style-type: none;
         }
-        li.nav-button.active,
+        .nav-button.active,
         .nav-button.active{
             background-color: var(--active-color) !important;
+        }
+        
+        .nav-button .dropdown ul li{
+            border-bottom: 1px solid #dedede;
+        }
+        .nav-button .dropdown ul li:last-child{
+            border-bottom: unset;
+        }
+        .nav-button .dropdown ul li a{
+            color: black;
+            // border-bottom: 1px solid #dedede;
         }
         .dropdown{
             box-shadow: 0 1px 3px 1px #c4c4c4 !important;
@@ -79,15 +111,32 @@ ol.decimal
             left: 0;
             display: block;
         }
-        li.nav-button .dropdown ul li{
-            border-bottom: 1px solid #dedede;
+    }
+}
+.terms-conditions
+{
+    .ant-tabs-nav-list
+    {
+        .ant-tabs-tab {
+            font-size: 18px !important;
+            background-color: #eeeeee;
+            color: #FA5505;
+            border-radius: 8px;
+            padding: 10px;
+            // border: 3px solid transparent;
         }
-        li.nav-button .dropdown ul li:last-child{
-            border-bottom: unset;
+        .ant-tabs-tab:hover {
+            color: #FA5505;
+            // border: 3px solid #FA5505;
         }
-        li.nav-button .dropdown ul li a{
-            color: black;
-            // border-bottom: 1px solid #dedede;
+        .ant-tabs-tab-active{
+            border-right: unset !important;
         }
+        .ant-tabs-ink-bar{
+            background-color: transparent !important;
+        }
+    }
+    .ant-tabs-content-holder{
+        border-left: unset !important;
     }
 }

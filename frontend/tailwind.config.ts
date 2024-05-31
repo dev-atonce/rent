@@ -12,10 +12,10 @@ const config: Config = {
     container:{
       padding: {
         DEFAULT: '1rem',
-        sm: '4rem',
-        lg: '6rem',
-        xl: '7rem',
-        '2xl': '8rem',
+        sm: '7rem',
+        lg: '8rem',
+        xl: '9rem',
+        '2xl': '12rem',
       }
     },
     fontFamily: {

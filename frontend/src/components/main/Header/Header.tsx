@@ -13,6 +13,7 @@ export default function Header() {
   const { primaryColor }: any = useContext(PageSettingContext);
   const menuRef = useRef<HTMLUListElement>(null);
   const [active, setActive] = useState<Element>();
+  const activeSegment = useSelectedLayoutSegment();
 
   useEffect(() => {
     const hoverStyle = `.nav-button:hover { color: ${primaryColor};  }`;
@@ -21,19 +22,8 @@ export default function Header() {
 
     document.head.appendChild(styleElement);
 
-    const handleClickOutside = (event:any) => {
-      if(typeof event.target.closest('[data-toggle]') ==  null){
-        event.target.classList.remove('active');
-      }
-      event.target.closest('.nav-menu').querySelector('.active')?.classList.remove('active');
-      
-      event.target.classList.add('active');
-      setActive(event.target);
-    }
-    document.addEventListener('click', handleClickOutside);
     return () => {
       document.head.removeChild(styleElement);
-      document.body.removeEventListener('click',handleClickOutside);
     };
   }, [primaryColor]);
 
@@ -61,49 +51,68 @@ export default function Header() {
       </div>
       <div className="section-2">
         <div className="container mx-auto">
-          <div className="nav-menu flex justify-center" ref={menuRef}>
-            <Link href="/" className="p-4 nav-button hover:text-white" >
-              หน้าแรก
-            </Link>
-            <NavDropDown
-              title="เกี่ยวกับเรา" 
-              dropdownItems={
-                [
-                  {"title":"ผังองค์กร","href":'/about-us/organizational-chart'},
-                  {"title":"ประวัติบริษัท","href":'/about-us/company-history'},
-                  {"title":"เงื่อนไขและข้อตกลง","href":"/about-us/terms-conditions"}
-                ]
-            }/>
-            <Link
-              href="/rental-product"
-              className={`p-4 nav-button hover:text-white`}
-            >
-              สินค้าเช่า
-            </Link>
-            <Link
-              href="/sale-product"
-              className={`p-4 nav-button hover:text-white`}
-            >
-              สินค้าขาย
-            </Link>
-            <NavDropDown title="บริการอื่นๆ" dropdownItems={
-              [
-                {"title":"การฝึกอบรมความปลอดภัยในการใช้เครื่องจักร","href":'/service/safety-training-in-using-machinery'},
-                {"title":"ความคุ้มครองเครื่องจักร","href":'/service/machinery-coverage'},
-              ]
-            }/>
-            <Link
-              href="/news-activity"
-              className="p-4 nav-button hover:text-white"
-            >
-              ข่าวสาร และกิจกรรม
-            </Link>
-            <Link href="/career" className="p-4 nav-button hover:text-white">
-              ร่วมงานกับเรา
-            </Link>
-            <Link href="/contact" className="p-4 nav-button hover:text-white">
-              ติดต่อเรา
-            </Link>
+          <div className="flex justify-center">
+            <ul className="nav-menu">
+              <li className="menu-item">
+                <Link href="/" className={`p-4 nav-button hover:text-white ${activeSegment=='/'?`active`:''}`} >
+                  หน้าแรก
+                </Link>
+              </li>
+              <li className="menu-item">
+                <NavDropDown
+                  title="เกี่ยวกับเรา" 
+                  dropdownItems={
+                    [
+                      {"title":"ผังองค์กร","href":'/about-us/organizational-chart'},
+                      {"title":"ประวัติบริษัท","href":'/about-us/company-history'},
+                      {"title":"เงื่อนไขและข้อตกลง","href":"/about-us/terms-conditions"}
+                    ]
+                }/>
+
+              </li>
+              <li className="menu-item">
+                <Link
+                  href="/rental-product"
+                  className={`p-4 nav-button hover:text-white`}
+                >
+                  สินค้าเช่า
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link
+                  href="/sale-product"
+                  className={`p-4 nav-button hover:text-white`}
+                >
+                  สินค้าขาย
+                </Link>
+              </li>
+              <li className="menu-item">
+                <NavDropDown title="บริการอื่นๆ" dropdownItems={
+                  [
+                    {"title":"การฝึกอบรมความปลอดภัยในการใช้เครื่องจักร","href":'/service/safety-training-in-using-machinery'},
+                    {"title":"ความคุ้มครองเครื่องจักร","href":'/service/machinery-coverage'},
+                  ]
+                }/>
+              </li>
+              <li className="menu-item">
+                <Link
+                  href="/news-activity"
+                  className="p-4 nav-button hover:text-white"
+                >
+                  ข่าวสาร และกิจกรรม
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link href="/career" className="p-4 nav-button hover:text-white">
+                  ร่วมงานกับเรา
+                </Link>
+              </li>
+              <li className="menu-item">
+                <Link href="/contact" className="p-4 nav-button hover:text-white">
+                  ติดต่อเรา
+                </Link>
+              </li>
+            </ul>
           </div>
         </div>
       </div>
