@@ -259,6 +259,14 @@ export default function FetchProvider({ children, user, token }: any) {
                     setTimeout(() => {
                       router.push("/webpanel/career");
                     }, 2000);
+                  } else if (
+                    type == "mainCategory" ||
+                    type == "subCategory" ||
+                    type == "product"
+                  ) {
+                    setTimeout(() => {
+                      router.push("/webpanel/product");
+                    }, 2000);
                   }
                 } else if (method?.toUpperCase() === "PUT") {
                   if (type === "user") {
@@ -277,6 +285,14 @@ export default function FetchProvider({ children, user, token }: any) {
                   } else if (type == "position") {
                     setTimeout(() => {
                       router.push("/webpanel/career");
+                    }, 2000);
+                  } else if (
+                    type == "mainCategory" ||
+                    type == "subCategory" ||
+                    type == "product"
+                  ) {
+                    setTimeout(() => {
+                      router.push("/webpanel/product");
                     }, 2000);
                   }
                 }
@@ -426,6 +442,12 @@ export default function FetchProvider({ children, user, token }: any) {
       route = `${subjectRoute}/${id}`;
     } else if (type === "address") {
       route = `${addressRoute}/${id}`;
+    } else if (type === "mainCategory") {
+      route = `${mainCategoryRoute}/${id}`;
+    } else if (type === "subCategory") {
+      route = `${subCategoryRoute}/${id}`;
+    } else if (type === "product") {
+      route = `${productRoute}/${id}`;
     }
 
     const swalWithBootstrapButtons = Swal.mixin({

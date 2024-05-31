@@ -11,23 +11,9 @@ router.get(
   controllers.onGetById
 );
 
-router.post(
-  "/",
-  [validator.product.create, validator.check],
-  controllers.onInsert
-);
+router.post("/", controllers.onInsert);
 
-router.put(
-  "/:id",
-  [validator.product.update, validator.check],
-  controllers.onUpdate
-);
-
-router.put(
-  "/seo/:id",
-  [validator.product.seo, validator.check],
-  controllers.onUpdateSeo
-);
+router.put("/:id", controllers.onUpdate);
 
 router.put(
   "/sort/:id",
@@ -47,20 +33,10 @@ router.delete(
   controllers.onDelete
 );
 
-///// Gallery Router \\\\\
-
-router.put(
-  "/gallery/:id",
-  [validator.product.updateGallery, validator.check],
-  controllers.onInsertGallery
-);
-
 router.delete(
   "/gallery/:position/:id",
   [validator.product.deleteGallery, validator.check],
   controllers.onDeleteGallery
 );
-
-///// Gallery Router \\\\\
 
 module.exports = router;

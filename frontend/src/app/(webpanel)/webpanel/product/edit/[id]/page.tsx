@@ -3,54 +3,81 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 
 import Breadcrumb from "@/components/webpanel/Breadcrumbs/Breadcrumb";
 import MainCatForm from "@/components/webpanel/MainCatForm/MainCatForm";
+import ProductForm from "@/components/webpanel/ProductForm/ProductForm";
 import { FetchContext } from "@/contexts/FetchContext";
 import { useContext, useEffect, useState } from "react";
 
-export default function MainCatCreatePage({ params: { id } }: any) {
+export default function ProductEditPage({ params: { id } }: any) {
   const [data, setData] = useState({});
   const { onFetchOne, onSave }: any = useContext(FetchContext);
+
   const envLangs = process.env.NEXT_PUBLIC_LANGUAGES;
   //   @ts-ignore
   const languages = envLangs.split(",").map((i: any) => i.toUpperCase());
 
-  const onCreate = async () => {
-    // @ts-ignore
-    const modifiedData = { ...data };
+  const onFetch = async () => {
+    const data = await onFetchOne("product", id);
+    const { subCategory, ...restData } = data;
 
+    setData({
+      ...restData,
+      initialName: data?.productNameTH,
+      curMainCat: data?.subCategory?.mainCategory?.nameTH,
+      curSubCat: data?.subCategory?.nameTH,
+    });
+  };
+
+  const onSaveSeo = () => {
+    // @ts-ignore
+    const modifiedState = { seo: { ...data?.seo } };
+
+    onSave(modifiedState, "PUT", id, "subCategory", "update Sub Category SEO");
+  };
+
+  const onEdit = async () => {
+    console.log(data);
     onSave(
-      modifiedData,
-      "POST",
-      null,
-      "mainCategory",
+      // @ts-ignore
+      data,
+      "PUT",
+      id,
+      "subCategory",
       //   @ts-ignore
-      `Create New Category:${data?.nameTH}`
+      `Edit Sub Category ${data?.nameTH}`
     );
   };
 
   const onChangeState = (e: any, field: string) => {
     setData((prevState: any) => ({ ...prevState, [field]: e }));
   };
+
   const onChangeSeoState = (e: any, field: string) => {
     setData((prevState: any) => ({
       ...prevState,
-      seo: { ...prevState?.seo, [field]: e },
+      productSeo: { ...prevState?.ProductSeo, [field]: e },
     }));
   };
 
+  useEffect(() => {
+    onFetch();
+  }, []);
+  console.log(data);
   return (
     <DefaultLayout>
       <Breadcrumb
-        pageName={`Create New Main Category`}
+        //   @ts-ignore
+        pageName={`Edit Product: ${data?.initialName}`}
         prevPage={{ pageName: `Product`, url: "/webpanel/product" }}
       />
 
-      <MainCatForm
-        mainCat={true}
+      <ProductForm
+        mainCat={false}
         languages={languages}
-        onSave={onCreate}
+        onSave={onEdit}
         data={data}
         onChangeState={onChangeState}
         id={id}
+        onSaveSeo={onEdit}
         onChangeSeoState={onChangeSeoState}
       />
     </DefaultLayout>

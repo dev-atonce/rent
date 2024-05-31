@@ -16,12 +16,6 @@ router.post("/", controllers.onInsert);
 router.put("/:id", controllers.onUpdate);
 
 router.put(
-  "/seo/:id",
-  [validator.project.seo, validator.check],
-  controllers.onUpdateSeo
-);
-
-router.put(
   "/sort/:id",
   [validator.project.sort, validator.check],
   controllers.onUpdateSort

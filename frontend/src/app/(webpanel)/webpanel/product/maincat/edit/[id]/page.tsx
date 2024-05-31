@@ -68,6 +68,7 @@ export default function MainCatEditPage({ params: { id } }: any) {
       />
 
       <MainCatForm
+        mainCat={true}
         languages={languages}
         onSave={onEdit}
         data={data}
