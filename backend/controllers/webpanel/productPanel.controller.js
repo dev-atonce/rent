@@ -2,13 +2,6 @@ const Product = require("../../services/webpanel/productPanel.service");
 const { checkAllowFields } = require("../../helpers/field.helper");
 
 const allowFields = {
-    update: [
-        "productNameTH",
-        "productDescriptionTH",
-        "productDetailTH",
-        "productUrl",
-    ],
-
     updateSeo: ["productSeo"],
 
     updateStatus: ["status"],
@@ -46,17 +39,6 @@ const methods = {
 
     async onUpdate(req, res) {
         try {
-            checkAllowFields(req.body, allowFields.update);
-            const result = await Product.update(req, res);
-            res.success(result);
-        } catch (error) {
-            res.error(error);
-        }
-    },
-
-    async onUpdateSeo(req, res) {
-        try {
-            checkAllowFields(req.body, allowFields.updateSeo);
             const result = await Product.update(req, res);
             res.success(result);
         } catch (error) {
