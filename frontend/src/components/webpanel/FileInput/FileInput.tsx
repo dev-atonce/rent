@@ -26,7 +26,9 @@ export default function FileInput({
       for (let i = 0; i < e.target.files?.length; i++) {
         file1.push(e.target.files?.[i]);
       }
-      setFile(file1);
+      // setFile(file1);
+
+      setState(file1, keyProp);
     } else {
       //   setSingleFile(e.target.files?.[0]);
       //   setState((prev: any) => ({ ...prev, ["abc"]: e.target.files?.[0] }));
@@ -169,10 +171,11 @@ export default function FileInput({
             )}
           </div>
         ) : (
-          <div>
+          <div className="flex gap-2 flex-wrap">
             {selectedImages &&
               selectedImages.map((i: any, index: any) => (
                 <div
+                  key={index}
                   className={`bg-slate-100  mb-2  rounded-md overflow-hidden`}
                   style={{ height: height, aspectRatio: ratio }}
                 >

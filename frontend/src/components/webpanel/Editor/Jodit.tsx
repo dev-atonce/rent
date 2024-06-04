@@ -26,6 +26,7 @@ export default function Jodit({ placeholder, onChange, prop, state }: any) {
   return (
     <div className="relative z-10">
       <JoditEditor
+        className="h-[100vh]"
         ref={editor}
         value={state[prop]}
         // value={state?.prop}
