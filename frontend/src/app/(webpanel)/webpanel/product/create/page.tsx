@@ -1,13 +1,18 @@
 "use client";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-
+import dynamic from "next/dynamic";
 import Breadcrumb from "@/components/webpanel/Breadcrumbs/Breadcrumb";
 import MainCatForm from "@/components/webpanel/MainCatForm/MainCatForm";
-import ProductForm from "@/components/webpanel/ProductForm/ProductForm";
+
 import { FetchContext } from "@/contexts/FetchContext";
 import { useContext, useEffect, useState } from "react";
 
-export default function ProductEditPage({ params: { id } }: any) {
+const ProductForm = dynamic(
+  () => import("@/components/webpanel/ProductForm/ProductForm"),
+  { ssr: false }
+);
+
+export default function ProductCreatePage({ params: { id } }: any) {
   const [data, setData] = useState({});
   const { onFetchOne, onSave, onDeleteGallery }: any = useContext(FetchContext);
 
@@ -25,7 +30,6 @@ export default function ProductEditPage({ params: { id } }: any) {
       initialName: data?.productNameTH,
       curMainCat: data?.subCategory?.mainCategory?.nameTH,
       curSubCat: data?.subCategory?.nameTH,
-      curType: data?.type,
     });
   };
 
@@ -36,15 +40,15 @@ export default function ProductEditPage({ params: { id } }: any) {
     onSave(modifiedState, "PUT", id, "subCategory", "update Sub Category SEO");
   };
 
-  const onEdit = async () => {
+  const onCreate = async () => {
     onSave(
       // @ts-ignore
       data,
-      "PUT",
+      "POST",
       id,
       "product",
       //   @ts-ignore
-      `Edit Product ${data?.productNameTH}`
+      `Create Product ${data?.productNameTH}`
     );
   };
   const onDeleteImageGallery = async (position: any) => {
@@ -75,26 +79,26 @@ export default function ProductEditPage({ params: { id } }: any) {
     }));
   };
 
-  useEffect(() => {
-    onFetch();
-  }, []);
-  console.log(data);
+  //   useEffect(() => {
+  //     onFetch();
+  //   }, []);
+
   return (
     <DefaultLayout>
       <Breadcrumb
         //   @ts-ignore
-        pageName={`Edit Product: ${data?.initialName}`}
+        pageName={`Create New Product`}
         prevPage={{ pageName: `Product`, url: "/webpanel/product" }}
       />
 
       <ProductForm
         mainCat={false}
         languages={languages}
-        onSave={onEdit}
+        onSave={onCreate}
         data={data}
         onChangeState={onChangeState}
         id={id}
-        onSaveSeo={onEdit}
+        onSaveSeo={onCreate}
         onChangeSeoState={onChangeSeoState}
         onDeleteImageGallery={onDeleteImageGallery}
       />

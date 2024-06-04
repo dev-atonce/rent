@@ -12,6 +12,11 @@ const nextConfig = {
         hostname: "cdn.dummyjson.com",
         port: "",
       },
+      {
+        protocol: "http",
+        hostname: "rent.at-once.info",
+        port: "",
+      },
     ],
   },
 };

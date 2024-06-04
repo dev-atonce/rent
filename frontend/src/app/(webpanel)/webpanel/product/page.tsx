@@ -279,7 +279,7 @@ export default function ProductPage() {
               )}
 
             <Link
-              href="service/create"
+              href="product/create"
               className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
             >
               CREATE PRODUCT

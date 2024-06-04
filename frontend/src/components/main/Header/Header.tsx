@@ -107,8 +107,8 @@ export default function Header() {
               <li className="menu-item">
                 <NavDropDown title="บริการอื่นๆ" dropdownItems={
                   [
-                    {"title":"การฝึกอบรมความปลอดภัยในการใช้เครื่องจักร","href":'/service/safety-training-in-using-machinery'},
-                    {"title":"ความคุ้มครองเครื่องจักร","href":'/service/machinery-coverage'},
+                    {"title":"บริการอบรมใช้งานเครื่องจักร","href":'/other-service/training'},
+                    {"title":"บริการทดสอบรอก","href":'/other-service/equipment-inspection'},
                   ]
                 }/>
               </li>

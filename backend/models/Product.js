@@ -6,7 +6,7 @@ const schema = new mongoose.Schema(
     productNameTH: { type: String },
     productDescriptionTH: { type: String },
     productDetailTH: { type: String },
-    productUrl: { type: String, unique: true, required: true },
+    productUrl: { type: String },
     image: { type: String },
     imageAlt: { type: String },
     gallery: { type: Array },
@@ -18,7 +18,7 @@ const schema = new mongoose.Schema(
       keywordTH: { type: String },
       descriptionTH: { type: String },
     },
-    subCategory: { type: mongoose.Schema.Types.ObjectId, ref: 'CategorySubs' },
+    subCategory: { type: mongoose.Schema.Types.ObjectId, ref: "CategorySubs" },
   },
   { timestamps: true }
 );
