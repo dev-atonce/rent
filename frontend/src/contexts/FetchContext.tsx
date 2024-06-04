@@ -310,9 +310,8 @@ export default function FetchProvider({ children, user, token }: any) {
                     }, 2000);
                   } else if (
                     type == "mainCategory" ||
-                    type == "subCategory"
-                    // ||
-                    // type == "product"
+                    type == "subCategory" ||
+                    type == "product"
                   ) {
                     setTimeout(() => {
                       router.push("/webpanel/product");
