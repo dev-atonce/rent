@@ -144,3 +144,38 @@ ol.decimal
         border-left: unset !important;
     }
 }
+
+@media screen and (min-width: 768px)
+{
+    .social-section{
+        max-height: 800px;
+    }
+}
+.social-section
+{
+    overflow: hidden;
+
+    .video-list{
+        display: grid;
+    }
+    .video-list::-webkit-scrollbar{
+        border-radius: 10px;
+        width: 6px;
+        background: transparent;
+    }
+    .video-list::-webkit-scrollbar-track{
+        background: transparent;
+    }
+    .video-list::-webkit-scrollbar-thumb{
+        border-radius: 10px;
+        background: #999;
+    }
+    .video-list:hover::-webkit-scrollbar{
+        width: 10px;
+    }
+    // .video-list:hover::-webkit-scrollbar-thumb {
+    //     width: 8px;
+    //     background: #777; 
+    //     border-radius: 10px;
+    // }
+}

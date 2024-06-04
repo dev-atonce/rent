@@ -30,9 +30,9 @@ const methods = {
             select: "nameTH",
           },
         })
-        .sort({ sort: "asc" })
-        .limit(limit)
-        .skip(offset);
+        .sort({ sort: "asc" });
+      // .limit(limit)
+      // .skip(offset);
       const count = await Product.countDocuments();
       return {
         total: count,

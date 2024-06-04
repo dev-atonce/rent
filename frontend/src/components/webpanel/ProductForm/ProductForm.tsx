@@ -57,6 +57,12 @@ export default function ProductForm({
                   <div className="flex justify-between">
                     <div className="flex flex-col">
                       <span>
+                        Type:
+                        <span className="font-semibold uppercase">
+                          {data?.curType}
+                        </span>
+                      </span>
+                      <span>
                         Main Category:
                         <span className="font-semibold">
                           {data?.curMainCat}
@@ -67,12 +73,14 @@ export default function ProductForm({
                         <span className="font-semibold">{data?.curSubCat}</span>
                       </span>
                     </div>
-                    <button
-                      className="border-yellow-500 px-2 rounded-md text-yellow-500 border"
-                      onClick={() => setShowEditCat(!showEditCat)}
-                    >
-                      Change
-                    </button>
+                    <div className="flex items-center">
+                      <button
+                        className="border-yellow-500 px-2 rounded-md text-yellow-500 border py-1"
+                        onClick={() => setShowEditCat(!showEditCat)}
+                      >
+                        Change
+                      </button>
+                    </div>
                   </div>
                   {showEditCat && (
                     <>
@@ -102,6 +110,22 @@ export default function ProductForm({
                         field="nameTH"
                         saveId={true}
                       />
+                      <SelectGroupOne
+                        // @ts-ignore
+                        topLabel={false}
+                        // @ts-ignore
+                        label={"Type"}
+                        // @ts-ignore
+                        list={[
+                          { title: "rent", value: "rent" },
+                          { title: "sale", value: "sale" },
+                        ]}
+                        selectedOption={data}
+                        setSelectedOption={onChangeState}
+                        keyProp="type"
+                        // field="nameTH"
+                        saveId={false}
+                      />
                     </>
                   )}
                 </>
@@ -126,12 +150,28 @@ export default function ProductForm({
                     // @ts-ignore
                     label={"Sub-Category"}
                     // @ts-ignore
-                    list={mainCatData}
+                    list={filteredSubCat}
                     selectedOption={data}
                     setSelectedOption={onChangeState}
-                    keyProp="mainCategory"
+                    keyProp="subCategory"
                     field="nameTH"
                     saveId={true}
+                  />
+                  <SelectGroupOne
+                    // @ts-ignore
+                    topLabel={true}
+                    // @ts-ignore
+                    label={"Type"}
+                    // @ts-ignore
+                    list={[
+                      { title: "rent", value: "rent" },
+                      { title: "sale", value: "sale" },
+                    ]}
+                    selectedOption={data}
+                    setSelectedOption={onChangeState}
+                    keyProp="type"
+                    // field="nameTH"
+                    saveId={false}
                   />
                 </>
               )}
@@ -218,9 +258,12 @@ export default function ProductForm({
         </div>
         <div className="w-full  sm:col-span-2 py-2 flex flex-col gap-y-2">
           <span>Gallery</span>
-          <div className="flex flex-wrap gap-2">
+          <div className=" flex flex-wrap gap-2 rounded-lg border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark h-full py-2 px-6">
             {data?._gallery?.map((item: any, index: any) => (
-              <div className="h-[200px] rounded-lg overflow-hidden relative">
+              <div
+                key={index}
+                className="h-[200px] rounded-lg overflow-hidden relative"
+              >
                 <div
                   onClick={() => onDeleteImageGallery(index)}
                   className="absolute top-2 right-2 p-2 bg-red rounded-full hover:cursor-pointer text-white"
