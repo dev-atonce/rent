@@ -28,40 +28,43 @@ export default function FacebookEmbed({url}) {
       title:'Auto chisel A300 Nitto Kohki | RENT'
     },
   ]
+  const containterWidth = document.querySelector('.container')?.clientWidth;
+  const facebookContent = document.getElementById('facebook-content')?.clientWidth;
   const [screenWidth, setScreenWidth] = useState<number>(window.innerWidth);
   const [listHeight, setListHeight] = useState<number>(429);
   useEffect(() => {
-    const mediaQueryList = window.matchMedia("(orientation: portrait)");
+    // const mediaQueryList = window.matchMedia("(orientation: portrait)");
     function handleOrientationChange() {
-      setScreenWidth(window.innerWidth)
       let h = 830 - (32 + 14 + 310);
-      let youtubeContent = document.getElementById('youtube-content');
-      let title = youtubeContent?.querySelector('h3')?.clientHeight || 16;
-      let preview = youtubeContent?.querySelector('.video-responsive')?.clientHeight || 311;
+      // setScreenWidth(containterWidth)
+      let youtubeContent = document.getElementById("youtube-content");
+      let title = youtubeContent?.querySelector("h3")?.clientHeight || 16;
+      let preview =
+        youtubeContent?.querySelector(".video-responsive")?.clientHeight || 311;
       let calc = Number(800 - (title + preview + 76));
       setListHeight(calc);
+      setScreenWidth(window.innerWidth);
+      console.log(document.getElementById('facebook-content')?.clientWidth)
     }
     handleOrientationChange();
-    mediaQueryList.addEventListener("change", handleOrientationChange);
+    window.addEventListener("orientationchange", handleOrientationChange);
 
-    if (window.FB) {
-      window.FB.XFBML.parse();
+    if ((window as any).FB) {
+      (window as any).FB.XFBML.parse();
     } else {
       const interval = setInterval(() => {
-        if (window.FB) {
+        if ((window as any).FB) {
           clearInterval(interval);
-          window.FB.XFBML.parse();
+          (window as any).FB.XFBML.parse();
         }
       }, 1000);
     }
-
-   
-  },[url,screenWidth]);
+  }, [screenWidth]);
 
   return <>
     <div className="bg-gradient-to-r bg-slate-50 rounded-xl p-4 social-section">
       <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
-        <div className="col-span-6">
+        <div className="col-span-6" id="facebook-content">
             <h3 className="font-bold text-2xl mb-4">
               <div className="flex">
                   <span className="bg-blue-500 rounded-lg p-1">
@@ -73,7 +76,7 @@ export default function FacebookEmbed({url}) {
             <div 
               className="fb-page rounded-lg overflow-hidden" 
               data-href={url}
-              data-width={screenWidth >= 780 ? 500 : 450}
+              data-width={`${screenWidth}`}
               data-height="700"
               data-tabs="timeline"
               data-show-facepile="true"

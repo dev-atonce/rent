@@ -24,10 +24,11 @@ const YouTubeEmbed = ({ list, width, height }) => {
                 `}</style>
             </div>
             {list.length > 0 && <div className="border border-slate-300 rounded-lg video-list" style={{height:height,overflowY:'scroll'}}>
-                {list.map((v,k)=>{ 
+                {list.map((v:any,k:number)=>{ 
                     return (
                     <div key={k} className="video-item flex cursor-pointer p-2 hover:text-blue-500" onClick={()=>setVideo(v.videoId)}>
                         <img 
+                            title={v.title}
                             className="rounded-lg"
                             src={`https://img.youtube.com/vi/${v.videoId}/hqdefault.jpg`} 
                             width={100}
