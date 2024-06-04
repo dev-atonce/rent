@@ -9,7 +9,7 @@ import { useContext, useEffect, useState } from "react";
 
 export default function ProductEditPage({ params: { id } }: any) {
   const [data, setData] = useState({});
-  const { onFetchOne, onSave }: any = useContext(FetchContext);
+  const { onFetchOne, onSave, onDeleteGallery }: any = useContext(FetchContext);
 
   const envLangs = process.env.NEXT_PUBLIC_LANGUAGES;
   //   @ts-ignore
@@ -17,10 +17,11 @@ export default function ProductEditPage({ params: { id } }: any) {
 
   const onFetch = async () => {
     const data = await onFetchOne("product", id);
-    const { subCategory, ...restData } = data;
+    const { subCategory, gallery, ...restData } = data;
 
     setData({
       ...restData,
+      _gallery: gallery,
       initialName: data?.productNameTH,
       curMainCat: data?.subCategory?.mainCategory?.nameTH,
       curSubCat: data?.subCategory?.nameTH,
@@ -35,16 +36,31 @@ export default function ProductEditPage({ params: { id } }: any) {
   };
 
   const onEdit = async () => {
-    console.log(data);
     onSave(
       // @ts-ignore
       data,
       "PUT",
       id,
-      "subCategory",
+      "product",
       //   @ts-ignore
-      `Edit Sub Category ${data?.nameTH}`
+      `Edit Product ${data?.productNameTH}`
     );
+  };
+  const onDeleteImageGallery = async (position: any) => {
+    const res = await onDeleteGallery(
+      id,
+      "product",
+      position,
+      "Delete Product Gallery"
+    );
+    if (res?.success) {
+      setData((prevState: any) => ({
+        ...prevState,
+        _gallery: prevState._gallery.filter(
+          (i: any, index: any) => index !== position
+        ),
+      }));
+    }
   };
 
   const onChangeState = (e: any, field: string) => {
@@ -54,7 +70,7 @@ export default function ProductEditPage({ params: { id } }: any) {
   const onChangeSeoState = (e: any, field: string) => {
     setData((prevState: any) => ({
       ...prevState,
-      productSeo: { ...prevState?.ProductSeo, [field]: e },
+      productSeo: { ...prevState?.productSeo, [field]: e },
     }));
   };
 
@@ -79,6 +95,7 @@ export default function ProductEditPage({ params: { id } }: any) {
         id={id}
         onSaveSeo={onEdit}
         onChangeSeoState={onChangeSeoState}
+        onDeleteImageGallery={onDeleteImageGallery}
       />
     </DefaultLayout>
   );

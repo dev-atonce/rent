@@ -91,14 +91,14 @@ const methods = {
           try {
             const data = req.body;
             const obj = await CategorySub.findById(req.params.id);
-            if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
+            if (!obj) return reject(ErrorNotFound("id: not found"));
             if (req.file) {
               if (obj?.image) {
                 fs?.unlink(
                   "../public/uploads/categorySub/" + obj.image,
                   (err) => {
                     if (err) {
-                      return Promise.reject(ErrorNotFound(err));
+                      return reject(ErrorNotFound(err));
                     }
                   }
                 );

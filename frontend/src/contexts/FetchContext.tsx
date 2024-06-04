@@ -104,6 +104,7 @@ export default function FetchProvider({ children, user, token }: any) {
     let modifiedData = { ...data };
 
     data?.image && delete modifiedData?.image;
+    data?.gallery && delete modifiedData?.gallery;
 
     if (type == "service") {
       if (method.toUpperCase() == "PUT") {
@@ -140,6 +141,12 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${subCategoryRoute}/${id}`;
       } else if (method?.toUpperCase() == "POST") {
         route = subCategoryRoute;
+      }
+    } else if (type == "product") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${productRoute}/${id}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = productRoute;
       }
     } else if (type == "serviceSeo") {
       route = `${serviceSeoRoute}/${id}`;
@@ -227,8 +234,23 @@ export default function FetchProvider({ children, user, token }: any) {
                     imgRoute = `${route}/${res?.id}`;
                   }
 
-                  await onUploadImage(data?.image, "PUT", imgRoute);
+                  await onUploadImage("image", data?.image, "PUT", imgRoute);
                 }
+                if (data?.gallery) {
+                  let imgRoute = route;
+
+                  if (method?.toUpperCase() == "POST") {
+                    imgRoute = `${route}/${res?.id}`;
+                  }
+
+                  await onUploadImage(
+                    "gallery",
+                    data?.gallery,
+                    "PUT",
+                    imgRoute
+                  );
+                }
+
                 Swal.fire({
                   position: "top-right",
                   toast: true,
@@ -288,8 +310,9 @@ export default function FetchProvider({ children, user, token }: any) {
                     }, 2000);
                   } else if (
                     type == "mainCategory" ||
-                    type == "subCategory" ||
-                    type == "product"
+                    type == "subCategory"
+                    // ||
+                    // type == "product"
                   ) {
                     setTimeout(() => {
                       router.push("/webpanel/product");
@@ -315,12 +338,23 @@ export default function FetchProvider({ children, user, token }: any) {
       });
   };
 
-  const onUploadImage = async (image: any, method: any, route: any) => {
+  const onUploadImage = async (
+    type: any,
+    image: any,
+    method: any,
+    route: any
+  ) => {
     // @ts-ignore
 
     const formData = new FormData();
 
-    formData.append("image", image);
+    if (type == "image") {
+      formData.append(type, image);
+    } else {
+      for (let i = 0; i < image.length; i++) {
+        formData.append(type, image[i]);
+      }
+    }
 
     try {
       // Use fetch to send the form data to the server
@@ -329,7 +363,7 @@ export default function FetchProvider({ children, user, token }: any) {
         body: formData,
       });
       if (!response.ok) {
-        throw new Error("Failed to update category");
+        throw new Error("Failed to Upload Image");
       }
       const result = await response.json();
       console.log("Success:", result);
@@ -539,6 +573,109 @@ export default function FetchProvider({ children, user, token }: any) {
       });
   };
 
+  const onDeleteGallery = async (
+    id: any,
+    type: any,
+    position: any,
+    activity: any
+  ) => {
+    let route = "";
+
+    if (type === "product") {
+      route = `${productRoute}/gallery/${position}/${id}`;
+    } else if (type === "project") {
+      route = `${userRoute}/${id}`;
+    }
+
+    const swalWithBootstrapButtons = Swal.mixin({
+      customClass: {
+        confirmButton:
+          "border-2 border-green-600 rounded-xl p-4 text-green-600 font-bold mx-1",
+        cancelButton: "bg-red rounded-xl p-4 text-white font-bold",
+      },
+      buttonsStyling: false,
+    });
+
+    return swalWithBootstrapButtons
+      .fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes, Delete Item!",
+        cancelButtonText: "No, cancel!",
+        reverseButtons: true,
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          try {
+            const response = await fetch(route, { method: "DELETE" });
+            const res = await response.json();
+
+            if (res?.error) {
+              const msg = res?.error?.message;
+              Swal.fire({
+                position: "top-right",
+                toast: true,
+                icon: "error",
+                title: msg,
+                showConfirmButton: false,
+                timer: 2500,
+              });
+              return { error: true, message: msg };
+            } else {
+              const logRes = await onInsertLog(
+                id,
+                userId,
+                type,
+                `${user?.username}-${activity}: ${id}`
+              );
+
+              if (!logRes?.error) {
+                Swal.fire({
+                  position: "top-right",
+                  toast: true,
+                  icon: "success",
+                  title: "Your changes have been saved!",
+                  showConfirmButton: false,
+                  timer: 2500,
+                });
+                return { success: true, message: "ok" };
+              } else {
+                Swal.fire({
+                  position: "top-right",
+                  toast: true,
+                  icon: "error",
+                  title: "Log insertion failed",
+                  showConfirmButton: false,
+                  timer: 2500,
+                });
+                return { error: true, message: "Log insertion failed" };
+              }
+            }
+          } catch (err) {
+            console.log("Error during onDelete:", err);
+            Swal.fire({
+              position: "top-right",
+              toast: true,
+              icon: "error",
+              title: "An unexpected error occurred",
+              showConfirmButton: false,
+              timer: 2500,
+            });
+            return { error: true, message: "An unexpected error occurred" };
+          }
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          swalWithBootstrapButtons.fire({
+            title: "Cancelled",
+            text: "You cancelled the changes! :)",
+            icon: "error",
+          });
+          return { error: true, message: "Cancelled by user" };
+        }
+      });
+  };
+
   return (
     <FetchContext.Provider
       value={{
@@ -548,6 +685,7 @@ export default function FetchProvider({ children, user, token }: any) {
         onChangeStatus,
         onSort,
         onDelete,
+        onDeleteGallery,
       }}
     >
       {children}
