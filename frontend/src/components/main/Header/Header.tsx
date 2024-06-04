@@ -1,7 +1,7 @@
 "use client";
 import Link from "next/link";
 import { Logo } from "../Logo/Logo";
-import { useEffect, useContext,useRef,useState } from "react";
+import { useEffect, useContext } from "react";
 import { PageSettingContext } from "@/contexts/PageSettingContext";
 import { FaFacebookF } from "react-icons/fa";
 import { FaLine } from "react-icons/fa";
@@ -11,15 +11,33 @@ import { useSelectedLayoutSegment } from 'next/navigation'
 
 export default function Header() {
   const { primaryColor }: any = useContext(PageSettingContext);
-  const menuRef = useRef<HTMLUListElement>(null);
-  const [active, setActive] = useState<Element>();
   const activeSegment = useSelectedLayoutSegment();
 
   useEffect(() => {
+
+    const loadFacebookSDK = () => {
+      if (document.getElementById('facebook-jssdk')) {
+        return;
+      }
+      const script = document.createElement('script');
+      script.id = 'facebook-jssdk';
+      script.src = 'https://connect.facebook.net/en_US/sdk.js';
+      script.async = true;
+      script.defer = true;
+      script.crossOrigin = "anonymous";
+      script.onload = () => {
+        window.FB.init({
+          xfbml: true,
+          version: 'v20.0',
+        });
+      };
+      document.body.appendChild(script);
+    };
+    loadFacebookSDK();
+
     const hoverStyle = `.nav-button:hover { color: ${primaryColor};  }`;
     const styleElement = document.createElement("style");
     styleElement.innerHTML = hoverStyle;
-
     document.head.appendChild(styleElement);
 
     return () => {
