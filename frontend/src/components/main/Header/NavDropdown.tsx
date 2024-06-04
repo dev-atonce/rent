@@ -25,7 +25,7 @@ export default function NavDropdown({title,dropdownItems}:any)
                 className="nav-button p-4 md:border-0  md:p-4 flex items-center justify-between w-full md:w-auto"
             >{title} 
                 <FaChevronDown className={`text-sm ml-2 transition-all ${toggle?`rotate-90`:``}`}/>
-                <div id="dropdownNavbar" className={`absolute ${show} dropdown z-10 bg-white overflow-hidden top-15 left-0 w-100`}>
+                <div id="dropdownNavbar" className={`absolute ${show} dropdown z-10 bg-white overflow-hidden left-0 w-100`}>
                     <ul aria-labelledby="dropdownLargeButton">
                         {dropdownItems.map((v,k)=>{
                         return <li key={k} className="divide-x divide-violet-50">

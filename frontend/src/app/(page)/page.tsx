@@ -6,26 +6,28 @@ import About from "@/components/main/Home/About";
 import TrainingBanner from "@/components/main/Home/TrainingBanner";
 import ProjectSwiper from "@/components/main/Home/ProjectSwiper";
 import Blog from "@/components/main/Home/Blog";
+import FacebookYoutube from "@/components/main/Social/FacebookYoutube";
 
 export default function Home() {
   const subjectColor = "#455A64";
   return (
     <>
-      <Loading />
-      {/* cover */}
-      <CoverSwiper />
-      {/* About Us */}
-      <About />
-      {/* Project Swiper */}
-      <ProjectSwiper />
-      {/* Safety Training */}
-      <TrainingBanner />
-      <div className="container mx-auto">
-        {/* Blog */}
-        <Blog />
-        {/*FB & YT */}
-        <ForeignBranch title="บริษัทในเครือ" color={subjectColor} />
-      </div>
+        <Loading />
+        {/* cover */}
+        <CoverSwiper />
+        {/* About Us */}
+        <About />
+        {/* Project Swiper */}
+        <ProjectSwiper />
+        {/* Safety Training */}
+        <TrainingBanner />
+        <div className="container mx-auto">
+            {/* Blog */}
+            <Blog />
+            {/*FB & YT */}
+            <FacebookYoutube />
+            <ForeignBranch title="บริษัทในเครือ" color={subjectColor} />
+        </div>
     </>
   );
 }
