@@ -32,27 +32,17 @@ export default function FacebookEmbed({url}) {
   const [listHeight, setListHeight] = useState<number>(429);
   useEffect(() => {
     const mediaQueryList = window.matchMedia("(orientation: portrait)");
-    function handleOrientationChange(mql) {
+    function handleOrientationChange() {
       setScreenWidth(window.innerWidth)
       let h = 830 - (32 + 14 + 310);
       let youtubeContent = document.getElementById('youtube-content');
       let title = youtubeContent?.querySelector('h3')?.clientHeight || 16;
       let preview = youtubeContent?.querySelector('.video-responsive')?.clientHeight || 311;
       let calc = Number(800 - (title + preview + 76));
-      console.log(calc)
-      // 485
       setListHeight(calc);
     }
-    handleOrientationChange(mediaQueryList);
+    handleOrientationChange();
     mediaQueryList.addEventListener("change", handleOrientationChange);
-
-    // if (window.matchMedia("(orientation: portrait)").matches) {
-    //   setScreenWidth(window.innerWidth)
-    // }
-   
-    // if (window.matchMedia("(orientation: landscape)").matches) {
-    //   setScreenWidth(window.innerWidth)
-    // }
 
     if (window.FB) {
       window.FB.XFBML.parse();
@@ -81,7 +71,7 @@ export default function FacebookEmbed({url}) {
               </div>
             </h3>
             <div 
-              className="fb-page md:w-full" 
+              className="fb-page rounded-lg overflow-hidden" 
               data-href={url}
               data-width={screenWidth >= 780 ? 500 : 450}
               data-height="700"
