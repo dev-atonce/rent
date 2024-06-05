@@ -11,7 +11,7 @@ const config: Config = {
   theme: {
     container:{
       padding: {
-        DEFAULT: '1rem',
+        DEFAULT: '0.5rem',
         sm: '7rem',
         lg: '8rem',
         xl: '9rem',
