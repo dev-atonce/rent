@@ -26,11 +26,11 @@ export default function AddressForm({
             },
 
             {
-              label: "Branch URL",
-              placeHolder: "Branch URL",
+              label: "Fax",
+              placeHolder: "Fax",
               state: data,
               setState: onChangeState,
-              keyProp: "url",
+              keyProp: "fax",
               type: "input",
               required: true,
             },

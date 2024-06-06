@@ -1,8 +1,8 @@
 import { Row } from "antd";
 import ContactCard from "./Card";
 
-export default function Contact() {
-  const list = [
+export default function Contact({ data }: any) {
+  const imgs = [
     {
       thumbnail: "/branch/branch_0.png",
       branch: "สาขาชลบุรี",
@@ -44,8 +44,28 @@ export default function Contact() {
       telephone: "โทร. 02-017-7217",
     },
   ];
+  console.log(data);
+
+  const initList = data?.map((i: any, key: any) => ({
+    ...i,
+    thumbnail: imgs[key].thumbnail,
+  }));
+
+  const list = [
+    ...initList,
+    {
+      thumbnail: "/branch/branch_7.png",
+      nameTH: "บริษัท เร้นท์ เทรด แอนด์ เซอร์วิส",
+      tel: "02-017-7217",
+      id: "rts",
+    },
+  ];
+
   return (
     <div>
+      <h3 className="text-2xl font-semibold py-6 text-[#0EA3DC]">
+        สาขาในประเทศ
+      </h3>
       <Row gutter={[16, 16]}>
         {/* @ts-ignore */}
         <ContactCard data={list}></ContactCard>

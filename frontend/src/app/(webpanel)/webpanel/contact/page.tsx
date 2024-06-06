@@ -194,28 +194,7 @@ export default function EditContactPage() {
             />
           </div>
           {/* Color Form */}
-          <FormGroup
-            // onSave={onSave}
-            formLabel="Logos"
-            inputBox={[
-              {
-                label: "Header Logo",
-                placeHolder: "Page Header",
-                // state: homePageState?.header,
-                // setState: onChangeState,
-                keyProp: "header",
-                type: "image",
-              },
-              {
-                label: "Footer Logo",
-                placeHolder: "Page Sub-Header",
-                // state: homePageState?.subHeader,
-                // setState: onChangeState,
-                keyProp: "subHeader",
-                type: "image",
-              },
-            ]}
-          />
+
           {/* <!-- Sign Up Form --> */}
         </div>
       </div>

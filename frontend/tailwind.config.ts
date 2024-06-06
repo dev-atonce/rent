@@ -7,16 +7,21 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
+  variants: {
+    extend: {
+      display: ["group-hover"],
+    },
+  },
   darkMode: "class",
   theme: {
-    container:{
+    container: {
       padding: {
-        DEFAULT: '0.5rem',
-        sm: '7rem',
-        lg: '8rem',
-        xl: '9rem',
-        '2xl': '12rem',
-      }
+        DEFAULT: "0.5rem",
+        sm: "7rem",
+        lg: "8rem",
+        xl: "9rem",
+        "2xl": "12rem",
+      },
     },
     fontFamily: {
       satoshi: ["Satoshi", "sans-serif"],

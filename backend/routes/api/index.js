@@ -5,6 +5,7 @@ router.use("/page/project", require("./page/projectPage"));
 router.use("/page/seo", require("./page/seoPage"));
 router.use("/page/email", require("./page/emailPage"));
 router.use("/page/position", require("./page/positionPage"));
+router.use("/page/contact", require("./page/contactPage"));
 
 //////////////
 
