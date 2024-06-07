@@ -1,7 +1,7 @@
 import { Row } from "antd";
 import TrainingCourseCard from "./TraningCourseCard";
 
-const CourseList = [
+const CourseList: any = [
     {
         id: 1,
         price: 500,
