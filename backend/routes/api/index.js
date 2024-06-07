@@ -6,6 +6,9 @@ router.use("/page/seo", require("./page/seoPage"));
 router.use("/page/email", require("./page/emailPage"));
 router.use("/page/position", require("./page/positionPage"));
 router.use("/page/contact", require("./page/contactPage"));
+router.use("/page/product", require("./page/productPage"));
+router.use("/page/category-main", require("./page/categoryMainPage"));
+router.use("/page/category-sub", require("./page/categorySubPage"));
 
 //////////////
 
