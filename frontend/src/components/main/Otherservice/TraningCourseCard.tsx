@@ -1,15 +1,24 @@
 import { Card, Col } from "antd";
 import Image from "next/image";
 
+interface TrainingCourse {
+    id: string;
+    price: number;
+    title: string;
+    time: string;
+    duration: string;
+    place: string;
+}
+
 interface TraningCourseCardProps {
-    data: any[];
+    data: TrainingCourse[];
 }
 
 const TraningCourseCard = ({ data }: TraningCourseCardProps) => {
-    return data?.map((item: any, key: any) => {
+    return data?.map((item: TrainingCourse, key: number) => {
         return (
             <Col xs={24} sm={12} md={12} lg={8} key={key}>
-                <a href={item?.id}>
+                <a href={`training/${item?.id}`}>
                     <Card
                         hoverable
                         cover={
