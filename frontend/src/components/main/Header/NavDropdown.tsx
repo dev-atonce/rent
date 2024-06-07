@@ -27,7 +27,7 @@ export default function NavDropdown({ title, dropdownItems }: any) {
         id="dropdownNavbarLink"
         data-dropdown-toggle="dropdownNavbar"
         data-dropdown-offset-skidding="100"
-        className="nav-button p-4 md:border-0  md:p-4 flex items-center justify-between w-full md:w-auto"
+        className="menu-item nav-button p-4 md:border-0 md:p-4 flex items-center justify-between w-full md:w-auto relative"
       >
         {title}
         <FaChevronDown
@@ -35,7 +35,7 @@ export default function NavDropdown({ title, dropdownItems }: any) {
         />
         <div
           id="dropdownNavbar"
-          className={`absolute ${show} dropdown z-10 bg-white overflow-hidden left-0 w-100`}
+          className={`absolute ${show} dropdown z-20 bg-white overflow-hidden left-0 w-100`}
         >
           <ul aria-labelledby="dropdownLargeButton">
             {dropdownItems.map((v: any, k: any) => {
