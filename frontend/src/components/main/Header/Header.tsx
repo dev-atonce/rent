@@ -11,10 +11,6 @@ import {
     FaLine 
 } from "react-icons/fa";
 import SideBar from "./SideBar";
-import NavDropDown from "./NavDropdown";
-import { useSelectedLayoutSegment } from 'next/navigation';
-// import { title } from "process";
-// import menuItem from './menuItem.json';
 import NavBar from "./NavBar";
 
 export default function Header() 
@@ -151,10 +147,16 @@ export default function Header()
         </div>
         <div className="section-2 hidden md:block">
             <div className="container mx-auto">
-                <div className="flex">
-                    <div className="more-menu absolute left-0" id="scroll-left" onClick={scrollToLeft}><FaChevronLeft/></div>
-                    <div className="" ref={scrollableContent}><NavBar /></div>
-                    <div className="more-menu absollute right-0" id="scroll-right" onClick={scrollToRight}><FaChevronRight color="black"/></div>
+                <div className="responsive-nav">
+                    <div className="more-menu left" id="scroll-left" onClick={scrollToLeft}>
+                        <div className="py-4 px-2 bg-sky-600 hover:bg-sky-700"><FaChevronLeft/></div>
+                    </div>
+                    <div className="flex" ref={scrollableContent}><NavBar /></div>
+                    <div className="more-menu right" id="scroll-right" onClick={scrollToRight}>
+                        <div className="py-4 px-2 bg-sky-600 hover:bg-sky-700">
+                            <FaChevronRight/>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
