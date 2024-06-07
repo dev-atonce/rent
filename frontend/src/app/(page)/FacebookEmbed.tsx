@@ -33,9 +33,7 @@ export default function FacebookEmbed({url}) {
   const fbRef = useRef(null);
   useEffect(() => {
     const adjust = () => {
-      if (fbRef.current) {
-        setScreenWidth((fbRef.current as Element).clientWidth);
-      }
+      if (fbRef.current)  setScreenWidth((fbRef.current as Element).clientWidth);
       let youtubeContent = document.getElementById("youtube-content");
       let title = youtubeContent?.querySelector("h3")?.clientHeight || 16;
       let preview =
@@ -65,41 +63,41 @@ export default function FacebookEmbed({url}) {
 
   return <>
     <div className="bg-gradient-to-r bg-slate-50 rounded-xl p-4 social-section">
-      <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
-        <div className="col-span-6" id="facebook-content" ref={fbRef}>
-            <h3 className="font-bold text-2xl mb-4">
-              <div className="flex">
-                  <span className="bg-blue-500 rounded-lg p-1">
-                    <FaFacebookF className="text-slate-100"/>
-                  </span>
-                  <span className="ml-1">Facebook</span>
-              </div>
-            </h3>
-            <div className="rounded-lg overflow-hidden iframe-content">
-              <div 
-                className="fb-page" 
-                data-href={url}
-                data-width={`${screenWidth}`}
-                data-height="700"
-                data-tabs="timeline"
-                data-show-facepile="true"
-              ></div>
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4">
+            <div className="col-span-6" id="facebook-content" ref={fbRef}>
+                <h3 className="font-bold text-2xl mb-4">
+                    <div className="flex">
+                        <span className="bg-blue-500 rounded-lg p-1">
+                            <FaFacebookF className="text-slate-100"/>
+                        </span>
+                        <span className="ml-1">Facebook</span>
+                    </div>
+                </h3>
+                <div className="rounded-lg overflow-hidden iframe-content">
+                    <div 
+                        className="fb-page" 
+                        data-href={url}
+                        data-width={`${screenWidth}`}
+                        data-height="700"
+                        data-tabs="timeline"
+                        data-show-facepile="true"
+                    ></div>
+                </div>
+            </div>
+            <div className="col-span-6" id="youtube-content">
+                <h3 className="font-bold text-2xl mb-4">
+                    <div className="flex">
+                        <span className="bg-red rounded-lg py-2 pl-3 pr-2 flex items-center text-center">
+                        <FaPlay className="text-white text-sm"/>
+                        </span>
+                        <span className="ml-1">Youtube</span>
+                    </div>
+                </h3>
+                <div>
+                    <YouTubeEmbed list={ytList} width={screenWidth>= 780 ?`100%`:screenWidth-20} height={listHeight}/>
+                </div>
             </div>
         </div>
-        <div className="col-span-6" id="youtube-content">
-          <h3 className="font-bold text-2xl mb-4">
-            <div className="flex">
-                <span className="bg-red rounded-lg py-2 pl-3 pr-2 flex items-center text-center">
-                  <FaPlay className="text-white text-sm"/>
-                </span>
-                <span className="ml-1">Youtube</span>
-            </div>
-          </h3>
-          <div>
-            <YouTubeEmbed list={ytList} width={screenWidth>= 780 ?`100%`:screenWidth-20} height={listHeight}/>
-          </div>
-        </div>
-      </div>
     </div>
   </>;
 }

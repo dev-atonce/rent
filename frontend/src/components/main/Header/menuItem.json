@@ -1,0 +1,21 @@
+[
+    {"title": "หน้าแรก","href": "/"},
+    {"title" : "เกี่ยวกับเรา","href" : "/other-service",
+        "subMenu" : [
+            {"title":"ผังองค์กร","href":"/about-us/organizational-chart"},
+            {"title":"ประวัติบริษัท","href":"/about-us/company-history"},
+            {"title":"เงื่อนไขและข้อตกลง","href":"/about-us/terms-conditions"}
+        ]
+    },
+    {"title" : "สินค้าเช่า", "href" : "/rental-product"},
+    {"title" : "สินค้าขาย", "href" : "/sale-product"},
+    {"title" : "บริการอื่นๆ", "href" : "/other-service",
+        "subMenu": [
+            {"title":"บริการอบรมใช้งานเครื่องจักร","href":"/other-service/training"},
+            {"title":"บริการทดสอบรอก","href":"/other-service/equipment-inspection"}
+        ]
+    },
+    {"title" : "ข่าวสาร และกิจกรรม", "href" : "/news-activity" },
+    {"title" : "ร่วมงานกับเรา", "href" : "/career"},
+    {"title" : "ติดต่อเรา", "href" : "/contact"}
+]
