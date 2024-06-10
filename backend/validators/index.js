@@ -5,12 +5,14 @@ const user = require("./user");
 const project = require("./project");
 const product = require("./product");
 const category = require("./category");
+const trainingCourse = require("./trainingCourse");
 
 const validators = {
   user,
   project,
   product,
-  category
+  category,
+  trainingCourse
 };
 
 module.exports = {

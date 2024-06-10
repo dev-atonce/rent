@@ -1,45 +1,28 @@
+"use client";
 import { Row } from "antd";
 import TrainingCourseCard from "./TraningCourseCard";
-
-const CourseList: any = [
-    {
-        id: 1,
-        price: 500,
-        title: "Safety Training for AWP",
-        time: "9.00 - 16.00",
-        duration: "1 วัน",
-        place: "ที่บริษัทเร้นท์ สาขาที่ลูกค้าสะดวก ",
-    },
-    {
-        id: 2,
-        price: 600,
-        title: "Safety Training for Forklift",
-        time: "9.00 - 16.00",
-        duration: "1 วัน",
-        place: "ที่บริษัทเร้นท์ สาขาที่ลูกค้าสะดวก",
-    },
-    {
-        id: 3,
-        price: 2000,
-        title: "Safety Training for Backhoe",
-        time: "9.00 - 16.30",
-        duration: "2 วัน",
-        place: "ที่บริษัทเร้นท์ สาขาสมุทรปราการ",
-    },
-    {
-        id: 4,
-        price: 1000,
-        title: "Safety Training for Backhoe",
-        time: "9.00 - 17.30",
-        duration: "1 วัน",
-        place: "ที่บริษัทเร้นท์ สาขาที่ลูกค้าสะดวก",
-    }
-]
+import { useEffect, useState } from "react";
+import AntPagination from "@/components/common/AntPagination/AntPagination";
 
 const Training = () => {
+    const [page, setPage] = useState<number>(1);
+    const [courseList, setCourseList] = useState([]);
+    const [total, setTotal] = useState<number>(0);
+
+    const courseFetch = async () => {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/training-course`);
+        const data = await res.json();
+        setCourseList(data.rows);
+        setTotal(data.total);
+    };
+
+    useEffect(() => {
+        courseFetch();
+    }, [page]);
+    
     return (
         <>
-            <h2>1. คอร์สอบรมการใช้งานเครื่องจักรอย่างปลอดภัย Machine Safety Training</h2>
+            <h2 className="font-bold">1. คอร์สอบรมการใช้งานเครื่องจักรอย่างปลอดภัย Machine Safety Training</h2>
             <p>บริษัทเร้นท์ (ประเทศไทย) จำกัด ส่งเสริมด้านความปลอดภัยในการใช้เครื่องจักร เรามีบริการอบรม Machine Safety Training</p>
             <p>สำหรับเครื่องจักรดังนี้</p>
             <p>- รถกระเช้า AWP รถบูมลิฟต์ เอ็กซ์ลิฟต์ สกายมาสเตอร์ (Aerial Work Platform, Boom Lift, X-Lift, Sky Master)</p>
@@ -62,8 +45,16 @@ const Training = () => {
             <p>- กรณีอบรมที่ไซต์ของท่าน จะต้องมีสถานที่สำหรับอบรมทั้งภาคทฤษฎีและปฏิบัติ และมีเครื่องจักรของเร้นท์สำหรับอบรมภาคปฏิบัติ</p>
 
             <Row gutter={[16, 16]}>
-                <TrainingCourseCard data={CourseList} />
+                <TrainingCourseCard data={courseList} />
             </Row>
+
+            {total > Number(process.env.NEXT_PUBLIC_perPage) &&
+                <AntPagination
+                    total={total}
+                    currentPage={page}
+                    setCurrentPage={setPage}
+                />
+            }
         </>
     );
 };
