@@ -7,7 +7,7 @@ export default function Product({ type }: any) {
   const [mainCat, setMainCat] = useState([]);
   const [subCat, setSubCat] = useState([]);
   const [initSubCat, setInitSubCat] = useState([]);
-  const [filter, setFilter] = useState({});
+  const [filter, setFilter] = useState({ subCategory: "" });
 
   const fetchCat = async () => {
     const res = await fetch(
@@ -24,20 +24,31 @@ export default function Product({ type }: any) {
   };
   // to do sub cat list
   const onChangeFilter = (e: any, prop: any) => {
-    prop === "mainCat" &&
-      setSubCat(
-        // @ts-ignore
-        initSubCat?.filter((i: any) => i?.mainCategory?.id == filter?.mainCat)
-      );
     setFilter((prev: any) => ({ ...prev, [prop]: e }));
+
+    if (prop == "mainCategory") {
+      if (filter?.subCategory) {
+        setFilter((prev: any) => ({
+          ...prev,
+          subCategory: "",
+        }));
+      }
+      const filtered = initSubCat?.filter(
+        // @ts-ignore
+        (i: any) => i?.mainCategory?.id == e
+      );
+      console.log(filtered);
+
+      setSubCat(filtered);
+    }
   };
 
   useEffect(() => {
     fetchCat();
   }, []);
-  useEffect(() => {
-    // @ts-ignore
-  }, [filter?.mainCat]);
+
+  console.log(initSubCat);
+  console.log(filter);
 
   return (
     <div>
@@ -47,7 +58,7 @@ export default function Product({ type }: any) {
         filter={filter}
         setFilter={onChangeFilter}
       />
-      <ProductGrid data={mainCat} />
+      <ProductGrid data={mainCat} type={type} urlPre={"/main-category"} />
     </div>
   );
 }

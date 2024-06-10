@@ -2,8 +2,10 @@ const Product = require("../../services/page/productPage.service");
 
 const methods = {
   async onGet(req, res) {
+    console.log("sdf");
     try {
       let result = await Product.find(req);
+      console.log(result);
       res.success(result);
     } catch (error) {
       res.error(error);

@@ -46,7 +46,6 @@
     "react-pageflip": "^2.0.3",
     "react-pdf": "^8.0.2",
     "sass": "^1.77.0",
-    "sharp": "^0.33.4",
     "sweetalert2": "^11.10.8",
     "swiper": "^11.1.1"
   },

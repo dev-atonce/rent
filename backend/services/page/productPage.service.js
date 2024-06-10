@@ -4,38 +4,69 @@ const config = require("../../configs/app");
 const { ErrorNotFound } = require("../../configs/errorMethods");
 
 const methods = {
-    async find(req) {
-        const limit = +(req.query.size || config.pageLimit);
-        const offset = +(limit * ((req.query.page || 1) - 1));
-        try {
-            const rows = await Product.find({ status: true })
-                .sort({ sort: "asc" })
-                .limit(limit)
-                .skip(offset);
-            const count = await Product.countDocuments({ status: true });
-            return {
-                total: count,
-                lastPage: Math.ceil(count / limit),
-                currPage: +req.query.page || 1,
-                rows: rows,
-            };
-        } catch (error) {
-            return Promise.reject(ErrorNotFound(error.message));
-        }
-    },
+  //   async find(req) {
+  //     const limit = +(req.query.size || config.pageLimit);
+  //     const offset = +(limit * ((req.query.page || 1) - 1));
+  //     try {
+  //       const rows = await Product.find({ status: true })
+  //         .sort({ sort: "asc" })
+  //         .limit(limit)
+  //         .skip(offset);
+  //       const count = await Product.countDocuments({ status: true });
 
-    async findByUrl(url) {
-        try {
-            const obj = await Product.findOne({
-                serviceUrl: url,
-                status: true,
-            }).exec();
-            if (!obj) return Promise.reject(ErrorNotFound("url: not found"));
-            return obj;
-        } catch (error) {
-            return Promise.reject(ErrorNotFound("url: not found"));
-        }
-    },
+  //       return {
+  //         total: count,
+  //         lastPage: Math.ceil(count / limit),
+  //         currPage: +req.query.page || 1,
+  //         rows: rows,
+  //       };
+  //     } catch (error) {
+  //       return Promise.reject(ErrorNotFound(error.message));
+  //     }
+  //   },
+
+  async find(req) {
+    const limit = +(req.query.size || config.pageLimit);
+    const offset = +(limit * ((req.query.page || 1) - 1));
+    try {
+      const rows = await Product.find()
+        .populate({
+          path: "subCategory",
+          select: "nameTH mainCategory",
+          populate: {
+            path: "mainCategory",
+            select: "nameTH",
+          },
+        })
+        .sort({ sort: "asc" });
+      // .limit(limit)
+      // .skip(offset);
+      const count = await Product.countDocuments();
+      console.log(rows);
+
+      return {
+        total: count,
+        lastPage: Math.ceil(count / limit),
+        currPage: +req.query.page || 1,
+        rows: rows,
+      };
+    } catch (error) {
+      return Promise.reject(ErrorNotFound(error.message));
+    }
+  },
+
+  async findByUrl(url) {
+    try {
+      const obj = await Product.findOne({
+        serviceUrl: url,
+        status: true,
+      }).exec();
+      if (!obj) return Promise.reject(ErrorNotFound("url: not found"));
+      return obj;
+    } catch (error) {
+      return Promise.reject(ErrorNotFound("url: not found"));
+    }
+  },
 };
 
 module.exports = { ...methods };

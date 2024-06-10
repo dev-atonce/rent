@@ -1,9 +1,13 @@
 import Image from "next/image";
 import Link from "next/link";
-export default function ProductCard({ item }: any) {
+export default function ProductCard({ item, type, urlPre }: any) {
   return (
     <Link
-      href={`/product/main-category/${item?.id}`}
+      href={
+        type === "rent"
+          ? `/rental-product${urlPre}/${item?.id}`
+          : `/sale-product${urlPre}/${item?.id}`
+      }
       className="group  border border-slate-100 pb-4 transition-all duration-500 col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 rounded-lg overflow-hidden"
     >
       <Image
