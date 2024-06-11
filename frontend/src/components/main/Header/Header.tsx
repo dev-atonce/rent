@@ -20,6 +20,8 @@ export default function Header()
     const [openLang, setOpenLang] = useState<Boolean>(false);
     const {primaryColor}: any = useContext(PageSettingContext);
     const [openSubMenu, setOpenSubMenu] = useState<Boolean>(false);
+    const [section3,setSection3] = useState<String>('');
+   
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
@@ -37,12 +39,13 @@ export default function Header()
             setTimeout
             e.currentTarget.closest('.menu-item').classList.toggle('active');
             const icon = e.currentTarget.parentElement?.querySelector(".plus-icon");
-            icon?.classList.toggle('rotate-45');
+            icon?.classList.toggle('rotate-135');
             subMenu?.classList.toggle("open");
         }else{
             closeSideBar()
         }
     };
+
     const adjust = () => {
         if (window.innerWidth > 768) {
             closeSideBar()
@@ -53,14 +56,7 @@ export default function Header()
         setOpenLang(false); 
         setLng(e.currentTarget.innerText);
     }
-    const scrollableContent = useRef<HTMLDivElement>(null);
-    const scrollAmount = 200;
-    
-    const scrollToLeft = () => { if(scrollableContent.current) scrollableContent.current.scrollBy({ left: -scrollAmount, behavior: 'smooth' }) }
-    const scrollToRight = () => { if(scrollableContent.current) scrollableContent.current.scrollBy({ left: scrollAmount, behavior: 'smooth' }) }
 
-    
-    // const activeSegment = useSelectedLayoutSegment();
 
     useEffect(() => {
 
@@ -89,8 +85,6 @@ export default function Header()
         styleElement.innerHTML = hoverStyle;
         document.head.appendChild(styleElement);
         
-        
-        
         window.addEventListener("resize", adjust);
 
         return () => {
@@ -103,14 +97,11 @@ export default function Header()
     <>
     <div className="flex">
         <div className={`fixed top-0 left-0 h-full w-80 text-black bg-slate-200 transition-transform duration-300 z-40 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-            <div className="p-4 grid content-stretch">
-                <div>
-                    <SideBar 
-                        sideBar={{ toggleSubMenu, closeSideBar }}
-                        language={{ lng, setLng, openLang, setOpenLang, toggleLanguage, setLanguage }}
-                    />
-                </div>
-                
+            <div className="grid content-stretch">
+                <SideBar 
+                    sideBar={{ toggleSubMenu, closeSideBar }}
+                    language={{ lng, setLng, openLang, setOpenLang, toggleLanguage, setLanguage }}
+                />
             </div>
         </div>
     </div>
@@ -133,7 +124,7 @@ export default function Header()
                     </div>
                     <div className="hidden md:flex items-center social-icon">
                         <a href="https://www.facebook.com" target="_blank" className="rounded-full p-2 bg-blue-600">
-                        <   FaFacebookF fontSize="1.2em" color="white" />
+                            <FaFacebookF fontSize="1.2em" color="white" />
                         </a>
                         <a href="https://line.me/th" target="_blank" className="rounded-full p-2 bg-green-500 ml-1">
                             <FaLine fontSize="1.2em" color="white"/>
@@ -148,18 +139,35 @@ export default function Header()
         <div className="section-2 hidden md:block">
             <div className="container mx-auto">
                 <div className="responsive-nav">
-                    <div className="more-menu left" id="scroll-left" onClick={scrollToLeft}>
-                        <div className="py-4 px-2 bg-sky-600 hover:bg-sky-700"><FaChevronLeft/></div>
+                    <div className="flex">
+                        <NavBar section3={section3} setSection3={setSection3}/>
                     </div>
-                    <div className="flex" ref={scrollableContent}><NavBar /></div>
-                    <div className="more-menu right" id="scroll-right" onClick={scrollToRight}>
-                        <div className="py-4 px-2 bg-sky-600 hover:bg-sky-700">
-                            <FaChevronRight/>
-                        </div>
-                    </div>
+                    <div className="more-menu"></div>
                 </div>
             </div>
         </div>
+        {/* <div className="section-3">
+            <div className="container mx-auto relative">
+                <div className={`sub-menu-full bg-white ${section3?`open`:``}`}>
+                    {menuItem.map((item:any,key:number) => {
+                        if(item.subMenu)
+                            return(<div key={key} id={`sub_${key}`} className={`sub ${section3!='' && section3==`sub_${key}`?`active`:``}`}>
+                            <ul className={`flex`}>
+                                {item.subMenu.map((sub:any) =>
+                                    <li>
+                                        <Link 
+                                            href={sub.href} 
+                                            title={sub.title} 
+                                            className="text-slate-600 text-start hover:bg-slate-200 block px-4 py-2"
+                                        >{sub.title}</Link>
+                                    </li>
+                                )}
+                            </ul></div>)
+                        else return;
+                    })}
+                </div>
+            </div>
+        </div> */}
     </div>
     </>
   );
