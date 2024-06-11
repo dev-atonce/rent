@@ -59,8 +59,8 @@ const methods = {
                         const checkDup = await TrainingCourse.findOne({ url: req.body.url });
                         if (checkDup) return reject(ErrorBadRequest("URL is already exist"));
                         const data = req.body;
-                        if (req.file?.image) {
-                            data.image = file.filename;
+                        if (req.file) {
+                            data.image = req.file?.filename;
                         }
                         const obj = new TrainingCourse(data);
                         const inserted = await obj.save();
@@ -86,14 +86,14 @@ const methods = {
                             const data = req.body;
                             const obj = await TrainingCourse.findById(req.params.id).exec();
                             if (!obj) return reject(ErrorNotFound("id: not found"));
-                            if (req.file?.image) {
+                            if (req.file) {
                                 if (obj.image) {
                                     fs?.unlink("../public/uploads/trainingCourse/" + obj.image, (err) => {
                                         if (err) { return Promise.reject(ErrorNotFound(err)); }
                                     }
                                     );
                                 }
-                                data.image = file.filename;
+                                data.image = req.file?.filename;
                             }
                             await TrainingCourse.updateOne({ _id: req.params.id }, data, {
                                 runValidators: true,
