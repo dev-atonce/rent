@@ -26,14 +26,14 @@ const methods = {
           path: "mainCategory",
           select: "nameTH",
         })
-        .sort({ sort: "asc" })
-        .limit(limit)
-        .skip(offset);
+        .sort({ sort: "asc" });
+      // .limit(limit)
+      // .skip(offset);
       const count = await CategorySub.countDocuments();
       return {
         total: count,
-        lastPage: Math.ceil(count / limit),
-        currPage: +req.query.page || 1,
+        // lastPage: Math.ceil(count / limit),
+        // currPage: +req.query.page || 1,
         rows: rows,
       };
     } catch (error) {

@@ -11,7 +11,7 @@ export default function RentPage() {
         prevPage={{ pageName: "หน้าแรก", url: "/" }}
       />
       <div className="container mx-auto">
-        <Product type={"rent"} />/
+        <Product type={"rent"} />
       </div>
     </>
   );

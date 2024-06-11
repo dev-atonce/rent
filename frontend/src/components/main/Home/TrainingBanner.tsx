@@ -32,11 +32,10 @@ export default function TrainingBanner() {
             style={{ textShadow: "white 1px 1px 1px" }}
           >
             Safety Training for Machine
-         
           </h5>
         </div>
         <Link
-          href="/about-us/other-service"
+          href="/other-service/training"
           className=" px-4 py-2 rounded-full text-white bg-[#0DA1DB] "
         >
           ดูรายละเอียด

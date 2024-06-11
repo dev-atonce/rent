@@ -5,6 +5,8 @@ export default function ProductFilter({
   mainCat,
   filter,
   setFilter,
+  onClear,
+  onSearch,
 }: any) {
   return (
     <div className="p-10">
@@ -34,6 +36,7 @@ export default function ProductFilter({
             />
           </div>
           <input
+            value={filter?.keyword}
             onChange={(e: any) => setFilter(e?.target?.value, "keyword")}
             type="text"
             placeholder="คำค้นหา"
@@ -41,10 +44,16 @@ export default function ProductFilter({
           />
         </div>
         <div className="flex flex-col md:flex-row items-center justify-center gap-1 md:gap-3 w-full">
-          <button className="py-2 px-10 bg-orange-500 rounded-lg text-white md:w-fit w-full">
+          <button
+            className="py-2 px-10 bg-orange-500 rounded-lg text-white md:w-fit w-full"
+            onClick={onClear}
+          >
             รีเซ็ต
           </button>
-          <button className="py-2 px-10 bg-[#0DA1DB] rounded-lg text-white md:w-fit w-full">
+          <button
+            className="py-2 px-10 bg-[#0DA1DB] rounded-lg text-white md:w-fit w-full"
+            onClick={onSearch}
+          >
             ค้นหา
           </button>
         </div>
