@@ -20,7 +20,7 @@ export default function NavBar({section3,setSection3}:any) {
                         return <Link 
                             key={key} 
                             href={item.href} 
-                            className={`menu-item p-4 nav-button hover:text-white `}
+                            className={`menu-item px-4 py-3 nav-button hover:text-white `}
                         >{item.title}</Link>
                        
                 })} 

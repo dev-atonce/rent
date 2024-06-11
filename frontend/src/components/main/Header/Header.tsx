@@ -96,7 +96,7 @@ export default function Header()
   return (
     <>
     <div className="flex">
-        <div className={`fixed top-0 left-0 h-full w-80 text-black bg-slate-200 transition-transform duration-300 z-40 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <div className={`fixed block lg:none top-0 left-0 h-full w-80 text-black bg-slate-200 transition-transform duration-300 z-40 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
             <div className="grid content-stretch">
                 <SideBar 
                     sideBar={{ toggleSubMenu, closeSideBar }}
@@ -109,7 +109,7 @@ export default function Header()
         <div className="section-1">
             <div className="container mx-auto">
                 <div className="flex justify-between">
-                    <div className="flex justify-center items-center md:hidden">
+                    <div className="flex justify-center items-center lg:hidden">
                         <div
                             className="cursor-pointer flex flex-col items-center justify-around w-8 h-8 burger"
                             onClick={toggleSidebar}
@@ -136,7 +136,7 @@ export default function Header()
                 </div>
             </div>
         </div>
-        <div className="section-2 hidden md:block">
+        <div className="section-2 hidden lg:block">
             <div className="container mx-auto">
                 <div className="responsive-nav">
                     <div className="flex">
