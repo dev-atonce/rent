@@ -3,7 +3,7 @@ import { FaChevronDown } from "react-icons/fa";
 import Link from "next/link";
 // import { useSelectedLayoutSegment } from "next/navigation";
 
-export default function NavDropdown({ title, dropdownItems, sectionKey,section3, setSection3}: any) {
+export default function NavDropdown({ title, dropdownItems}: any) {
   // const [active, setActive] = useState(false);
   const [show, setShow] = useState<String>("hidden");
   const [toggle, setToggle] = useState<Boolean>(false);
@@ -16,12 +16,10 @@ export default function NavDropdown({ title, dropdownItems, sectionKey,section3,
         onMouseOver={(e) => {
           setShow("show");
           setToggle(true);
-          setSection3(`sub_${sectionKey}`)
         }}
         onMouseLeave={(e) => {
           setShow("hidden");
           setToggle(false);
-          setSection3(``)
         }}
 
         data-dropdown-toggle="dropdownNavbar"

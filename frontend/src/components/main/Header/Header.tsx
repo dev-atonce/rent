@@ -1,27 +1,32 @@
 "use client";
-import Link from "next/link";
+// import Link from "next/link";
 import { Logo } from "../Logo/Logo";
-import { useEffect, useContext, useState, useRef } from "react";
+import { useEffect, useContext, useState } from "react";
 import { PageSettingContext } from "@/contexts/PageSettingContext";
-import { 
-    FaChevronRight,
-    FaChevronLeft,
+import LanguageSwitcher from "../Language/LanguageSwitcher";
+import Script from "next/script";
+import {
     FaFacebookF,
     FaYoutube,
     FaLine 
 } from "react-icons/fa";
 import SideBar from "./SideBar";
 import NavBar from "./NavBar";
+import { getCookie,hasCookie, setCookie } from 'cookies-next';
+
 
 export default function Header() 
 {
-    const [lng, setLng] = useState<string>("th");
-    const [isOpen, setIsOpen] = useState<Boolean>(false);
+    const [currentLanguage, setCurrentLanguage] = useState<string>("th");
     const [openLang, setOpenLang] = useState<Boolean>(false);
+    const [isOpen, setIsOpen] = useState<Boolean>(false);
     const {primaryColor}: any = useContext(PageSettingContext);
     const [openSubMenu, setOpenSubMenu] = useState<Boolean>(false);
-    const [section3,setSection3] = useState<String>('');
    
+    const languages = [
+        {label: 'Thai', value:'th'},
+        {label: `English`, value:'en'}
+    ];
 
     const toggleSidebar = () => {
         setIsOpen(!isOpen);
@@ -52,33 +57,62 @@ export default function Header()
         }
     };
     const toggleLanguage = () =>  setOpenLang(!openLang); 
-    const setLanguage = (e: any) =>  {
-        setOpenLang(false); 
-        setLng(e.currentTarget.innerText);
+
+
+    const switchLanguage = (lng:any) => {
+        lng.preventDefault();
+        if(hasCookie('googtrans')){
+            setCookie('googtrans',decodeURI('/auto/'+lng.target.innerText.toLowerCase()))
+            setCurrentLanguage(lng.target.innerText.toLowerCase())
+        }
+        else{
+            setCookie('googtrans','/auto/'+lng.target.innerText.toLowerCase())
+            setCurrentLanguage(lng.target.innerText.toLowerCase())
+        }
+        window.location.reload()
     }
 
+    const googleTranslateElementInit = () => {
+
+        new window.google.translate.TranslateElement({
+            pageLanguage: 'auto',
+            autoDisplay: false,
+            // includedLanguages: ["th,en"], // If you remove it, by default all google supported language will be included
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        },
+        'google_translate_element');
+    }    
 
     useEffect(() => {
 
         const loadFacebookSDK = () => {
-        if (document.getElementById('facebook-jssdk')) {
-            return;
-        }
-        const script = document.createElement('script');
-        script.id = 'facebook-jssdk';
-        script.src = 'https://connect.facebook.net/en_US/sdk.js';
-        script.async = true;
-        script.defer = true;
-        script.crossOrigin = "anonymous";
-        script.onload = () => {
-            (window.FB as any).init({
-            xfbml: true,
-            version: 'v20.0',
-            });
-        };
-        document.body.appendChild(script);
+            if (document.getElementById('facebook-jssdk')) {
+                return;
+            }
+            const script = document.createElement('script');
+            script.id = 'facebook-jssdk';
+            script.src = 'https://connect.facebook.net/en_US/sdk.js';
+            script.async = true;
+            script.defer = true;
+            script.crossOrigin = "anonymous";
+            script.onload = () => {
+                (window.FB as any).init({
+                xfbml: true,
+                version: 'v20.0',
+                });
+            };
+            document.body.appendChild(script);
         };
         loadFacebookSDK();
+
+        if(hasCookie('googtrans')) setCurrentLanguage(getCookie('googtrans')?.replace('/auto/',''));
+        else setCurrentLanguage('th');
+        
+
+        // var addScript = document.createElement('script');
+        // addScript.setAttribute('src', '//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit');
+        // document.body.appendChild(addScript);
+        window.googleTranslateElementInit = googleTranslateElementInit;
 
         const hoverStyle = `.nav-button:hover { color: ${primaryColor};  }`;
         const styleElement = document.createElement("style");
@@ -88,19 +122,24 @@ export default function Header()
         window.addEventListener("resize", adjust);
 
         return () => {
-        document.head.removeChild(styleElement);
-        document.removeEventListener("resize", adjust);
+            document.head.removeChild(styleElement);
+            document.removeEventListener("resize", adjust);
         };
     }, [primaryColor]);
 
   return (
     <>
+    <div id="google_translate_element" style={{width:'0px',height:'0px',position:'absolute',left:'50%',zIndex:-99999}}></div>
     <div className="flex">
         <div className={`fixed block lg:none top-0 left-0 h-full w-80 text-black bg-slate-200 transition-transform duration-300 z-40 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
+        <Script
+            src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+            strategy="afterInteractive"
+        />
             <div className="grid content-stretch">
                 <SideBar 
                     sideBar={{ toggleSubMenu, closeSideBar }}
-                    language={{ lng, setLng, openLang, setOpenLang, toggleLanguage, setLanguage }}
+                    language={{ currentLanguage, setCurrentLanguage, openLang, setOpenLang, toggleLanguage, languages, switchLanguage}}
                 />
             </div>
         </div>
@@ -123,6 +162,7 @@ export default function Header()
                         <Logo color={primaryColor} />
                     </div>
                     <div className="hidden md:flex items-center social-icon">
+                        <LanguageSwitcher position="bottom" language={{ currentLanguage, setCurrentLanguage, openLang, setOpenLang, toggleLanguage, languages, switchLanguage}}/>
                         <a href="https://www.facebook.com" target="_blank" className="rounded-full p-2 bg-blue-600">
                             <FaFacebookF fontSize="1.2em" color="white" />
                         </a>
@@ -140,34 +180,12 @@ export default function Header()
             <div className="container mx-auto">
                 <div className="responsive-nav">
                     <div className="flex">
-                        <NavBar section3={section3} setSection3={setSection3}/>
+                        <NavBar />
                     </div>
                     <div className="more-menu"></div>
                 </div>
             </div>
         </div>
-        {/* <div className="section-3">
-            <div className="container mx-auto relative">
-                <div className={`sub-menu-full bg-white ${section3?`open`:``}`}>
-                    {menuItem.map((item:any,key:number) => {
-                        if(item.subMenu)
-                            return(<div key={key} id={`sub_${key}`} className={`sub ${section3!='' && section3==`sub_${key}`?`active`:``}`}>
-                            <ul className={`flex`}>
-                                {item.subMenu.map((sub:any) =>
-                                    <li>
-                                        <Link 
-                                            href={sub.href} 
-                                            title={sub.title} 
-                                            className="text-slate-600 text-start hover:bg-slate-200 block px-4 py-2"
-                                        >{sub.title}</Link>
-                                    </li>
-                                )}
-                            </ul></div>)
-                        else return;
-                    })}
-                </div>
-            </div>
-        </div> */}
     </div>
     </>
   );

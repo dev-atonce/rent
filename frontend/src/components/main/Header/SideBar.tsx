@@ -1,13 +1,12 @@
 import Link from "next/link";
 import {
     FaPlus,
-    FaGlobe,
-    FaChevronDown,
     FaFacebookF,
     FaYoutube,
     FaLine,
 } from "react-icons/fa"; 
 import menuItem from './menuItem.json';
+import LanguageSwitcher from "../Language/LanguageSwitcher";
 
 export default function SideBar({sideBar, language}: any)
 {
@@ -39,7 +38,8 @@ export default function SideBar({sideBar, language}: any)
             </ul>
         </div>
         <div className='fixed bottom-0 flex justify-between w-full max-w-90 p-4'>
-            <div className="relative inline-block">
+            <LanguageSwitcher position="top" language={language}/>
+            {/* <div className="relative inline-block">
                 {language.openLang && (
                 <div className="absolute mt-1 w-25 rounded-lg shadow-lg bg-white ring-1 ring-black ring-opacity-5" style={{top:'-78px'}}>
                     <ul>
@@ -54,7 +54,7 @@ export default function SideBar({sideBar, language}: any)
                 >
                     <span className="flex items-center font-bold"><FaGlobe className="mr-1 font-bold"/> {language.lng.toUpperCase()}</span> <FaChevronDown />
                 </button>
-            </div>
+            </div> */}
             <div>
                 <div className="flex social-icon">
                     <a href="https://www.facebook.com" target="_blank" className="rounded-full p-2 bg-blue-600">

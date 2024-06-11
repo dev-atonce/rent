@@ -2,7 +2,7 @@ import Link from "next/link";
 import NavDropDown from "./NavDropdown";
 import menuItem  from './menuItem.json';
 
-export default function NavBar({section3,setSection3}:any) {
+export default function NavBar() {
     return (
         <>
             <div className="nav-menu" id="scrollable-content">
@@ -13,8 +13,6 @@ export default function NavBar({section3,setSection3}:any) {
                             title={item.title} 
                             dropdownItems={item.subMenu}
                             sectionKey={key}
-                            section3={section3}
-                            setSection3={setSection3}
                         />
                     else 
                         return <Link 
