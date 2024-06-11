@@ -9,6 +9,7 @@ router.use("/page/contact", require("./page/contactPage"));
 router.use("/page/product", require("./page/productPage"));
 router.use("/page/category-main", require("./page/categoryMainPage"));
 router.use("/page/category-sub", require("./page/categorySubPage"));
+router.use("/page/training-course", require("./page/traningCoursePage"));
 
 //////////////
 
@@ -23,6 +24,8 @@ router.use("/webpanel/subject", require("./webpanel/emailSubjectPanel"));
 router.use("/webpanel/position", require("./webpanel/positionPanel"));
 router.use("/webpanel/category-main", require("./webpanel/categoryMainPanel"));
 router.use("/webpanel/category-sub", require("./webpanel/categorySubPanel"));
+router.use("/webpanel/training-course", require("./webpanel/trainingCoursePanel"));
+router.use("/webpanel/calendar", require("./webpanel/calendarPanel"));
 
 //////////////
 

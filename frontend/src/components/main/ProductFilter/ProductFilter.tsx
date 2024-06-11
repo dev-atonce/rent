@@ -9,7 +9,7 @@ export default function ProductFilter({
   onSearch,
 }: any) {
   return (
-    <div className="p-10">
+    <div className="p-4">
       <div className="w-full flex flex-col gap-4 border-slate-100 border shadow-md rounded-lg p-6">
         <h5 className="text-2xl text-[#0DA1DB] font-semibold">ค้นหาสินค้า</h5>
         <div className="grid grid-cols-12 gap-4">

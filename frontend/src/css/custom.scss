@@ -52,58 +52,61 @@ ol.decimal
         // }
         .nav-menu
         {
-            list-style: none;
-            float: left;
             .menu-item
             {
                 float: left;
                 text-wrap: nowrap;
-                .nav-button 
+                .menu-item 
                 {
                     display: flex;
                 }
                 .dropdown{
                     top: 0;
-                    margin-top:59px;
+                    // margin-top:59px;
                 }
             }
         }
         
-        li.menu-item{
+        .menu-item{
             position: relative;
-            font-size: 18px;
+            // font-size: 18px;
             transition: all 0.675s;
         }
-        li[data-toggle="true"]{
+        [data-toggle="true"]{
             background-color: var(--active-color);
         }
-        .nav-button{
-            font-size: 18px;
+        .menu-item:hover{
+            background-color:white;
+            color: #0EA1DB;
+        }
+        .menu-item{
+            // font-size: 18px;
             transition: all 0.675s;
+            color:white;
         }
-        .nav-button:hover{
-            background-color: var(--active-color);
-            color: white;
+        .menu-item:hover{
+            // background-color: var(--active-color);
+            // color: #000000;
             a{
                 color:white;
             }
         }
-        .nav-button{
+        .menu-item{
             cursor: pointer;
             list-style-type: none;
         }
-        .nav-button.active,
-        .nav-button.active{
+        .menu-item.active,
+        .menu-item.active{
             background-color: var(--active-color) !important;
         }
         
-        .nav-button .dropdown ul li{
+        .menu-item .dropdown ul li{
             border-bottom: 1px solid #dedede;
         }
-        .nav-button .dropdown ul li:last-child{
+        .menu-item .dropdown ul li:last-child{
             border-bottom: unset;
         }
-        .nav-button .dropdown ul li a{
+        .menu-item .dropdown ul li a{
             color: black;
             // border-bottom: 1px solid #dedede;
         }
@@ -191,14 +194,15 @@ ol.decimal
         -moz-transition: left 300ms ease-in-out;
         -ms-transition: left 300ms ease-in-out;
         transition: left 300ms ease-in-out;
+        position: relative;
         left: 0;
     }
     .nav-open body
     {
-        // -webkit-transition: left 300ms ease-in-out;
-        // -moz-transition: left 300ms ease-in-out;
-        // -ms-transition: left 300ms ease-in-out;
-        // transition: left 300ms ease-in-out;
+        -webkit-transition: left 300ms ease-in-out;
+        -moz-transition: left 300ms ease-in-out;
+        -ms-transition: left 300ms ease-in-out;
+        transition: left 300ms ease-in-out;
         height: 100%;
         overflow: hidden;
         position: relative;
@@ -222,6 +226,19 @@ ol.decimal
         color: white;
     }
 }
+
+.sidebar-wraper::-webkit-scrollbar{
+    border-radius: 10px;
+    width: 8px;
+    background: transparent;
+}
+.sidebar-wraper::-webkit-scrollbar-track{
+    background: transparent;
+}
+.sidebar-wraper::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: rgb(184, 193, 203);
+}
 .more-menu{
     display: none;
     // padding: 5px;
@@ -233,6 +250,9 @@ ol.decimal
 .overflow-x-hidden ul{
     left:unset;
 }
+.section-3{
+    display: none;
+}
 @media screen and (max-width: 1300px)
 {
     .section-2{
@@ -241,7 +261,6 @@ ol.decimal
         }
         .container #scrollable-content{
             position: relative;
-            display: flex;
         }
         .more-menu{
             display: flex;
@@ -251,10 +270,10 @@ ol.decimal
         .responsive-nav
         {
             position: relative;
-            overflow-y: auto;
-            overflow-x: clip;
-            scrollbar-width: none;
+            // overflow-y: auto;
             // overflow-x: clip;
+            // scrollbar-width: none;
+
             .more-menu{
                 position: absolute;
                 height: 100%;
@@ -264,18 +283,24 @@ ol.decimal
                 top: 0;
                 right: 0;
             }
-            .flex{
-                overflow-y: clip;
-                overflow-x: auto;
-                scrollbar-width: none;
-            }
-            ul{
-                padding: 0 32px;
-            }
+            // .flex{
+            //     // position: relative;
+            //     white-space: nowrap;
+            //     overflow-y: clip;
+            //     overflow-x: auto;
+            //     scrollbar-width: none;
+                
+            // }
+            // .nav-menu{
+            //     padding: 0 32px;
+            // }
+            
         }
     }
 }
-
+.rotate-135{
+    transform: rotate(135deg);
+}
 .rotate
 {
     transform: rotate(45deg) translate3d(8px, 8px, 8px);;

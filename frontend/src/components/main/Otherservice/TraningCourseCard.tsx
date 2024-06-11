@@ -4,7 +4,7 @@ import Image from "next/image";
 interface TrainingCourse {
     id: string;
     price: number;
-    title: string;
+    titleTH: string;
     time: string;
     duration: string;
     place: string;
@@ -43,7 +43,7 @@ const TraningCourseCard = ({ data }: TraningCourseCardProps) => {
                                 </p>
                             </span>
                             <h3 className="font-bold  text-slate-800 mb-2 line-clamp-1">
-                                {item?.title}
+                                {item?.titleTH}
                             </h3>
                             <p className="line-clamp-2 h-11 text-slate-600">
                                 {item?.place}

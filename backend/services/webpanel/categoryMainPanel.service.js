@@ -5,6 +5,7 @@ const {
   ErrorBadRequest,
   ErrorNotFound,
 } = require("../../configs/errorMethods");
+
 const multer = require("multer");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -14,6 +15,11 @@ const storage = multer.diskStorage({
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
+
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: config.limitFileSize },
+}).single("image");
 
 const methods = {
   async findAll(req) {
@@ -47,17 +53,13 @@ const methods = {
 
   async insert(req, res) {
     return new Promise((resolve, reject) => {
-      const upload = multer({
-        storage: storage,
-        limits: { fileSize: config.limitFileSize },
-      }).single("image");
       upload(req, res, async (err) => {
         if (err) {
           return reject(ErrorBadRequest(err));
         } else {
           try {
             const data = req.body;
-            data.image = req.files?.filename;
+            data.image = req.file?.filename;
             const obj = new CategoryMain(data);
             const inserted = await obj.save();
             resolve(inserted);
@@ -71,10 +73,6 @@ const methods = {
 
   async update(req, res) {
     return new Promise((resolve, reject) => {
-      const upload = multer({
-        storage: storage,
-        // limits: { fileSize: config.limitFileSize },
-      }).single("image");
       upload(req, res, async (err) => {
         if (err) {
           return reject(ErrorBadRequest(err));

@@ -1,4 +1,4 @@
-const Service = require("../../models/Project");
+const Project = require("../../models/Project");
 const config = require("../../configs/app");
 
 const { ErrorNotFound } = require("../../configs/errorMethods");
@@ -8,11 +8,11 @@ const methods = {
     const limit = +(req.query.size || config.pageLimit);
     const offset = +(limit * ((req.query.page || 1) - 1));
     try {
-      const rows = await Service.find({ status: true })
+      const rows = await Project.find({ status: true })
         .sort({ sort: "asc" })
         .limit(limit)
         .skip(offset);
-      const count = await Service.countDocuments({ status: true });
+      const count = await Project.countDocuments({ status: true });
       return {
         total: count,
         lastPage: Math.ceil(count / limit),
@@ -26,8 +26,8 @@ const methods = {
 
   async findByUrl(url) {
     try {
-      const obj = await Service.findOne({
-        serviceUrl: url,
+      const obj = await Project.findOne({
+        ProjectUrl: url,
         status: true,
       }).exec();
       if (!obj) return Promise.reject(ErrorNotFound("url: not found"));

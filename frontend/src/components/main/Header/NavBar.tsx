@@ -2,18 +2,32 @@ import Link from "next/link";
 import NavDropDown from "./NavDropdown";
 import menuItem  from './menuItem.json';
 
-export default function NavBar() {
+export default function NavBar({section3,setSection3}:any) {
     return (
-        <ul className="nav-menu inline-flex" id="scrollable-content">
-            {menuItem.map((item:any, key:number) => {
-                if(item.subMenu) 
-                    return <NavDropDown title="เกี่ยวกับเรา" dropdownItems={item.subMenu}/>
-                else 
-                    return <li className="menu-item" key={key}>
-                        <Link href={item.href} className={`p-4 nav-button hover:text-white`} >{item.title}</Link>
-                    </li>
-            })} 
-            
-        </ul>
+        <>
+            <div className="nav-menu" id="scrollable-content">
+                {menuItem.map((item:any, key:number) => {
+                    if (item.subMenu) 
+                        return <NavDropDown 
+                            key={key} 
+                            title={item.title} 
+                            dropdownItems={item.subMenu}
+                            sectionKey={key}
+                            section3={section3}
+                            setSection3={setSection3}
+                        />
+                    else 
+                        return <Link 
+                            key={key} 
+                            href={item.href} 
+                            className={`menu-item px-4 py-3 nav-button hover:text-blue-500`}
+                        >{item.title}</Link>
+                       
+                })} 
+            </div>
+            {/* <div className="second-menu">
+                <ul className="inline-flex"></ul>
+            </div> */}
+        </>
     )
 }
