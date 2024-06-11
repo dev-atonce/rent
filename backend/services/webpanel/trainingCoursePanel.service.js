@@ -16,7 +16,10 @@ const storage = multer.diskStorage({
 const upload = multer({
     storage: storage,
     limits: { fileSize: config.limitFileSize },
-}).single("image");
+}).fields([
+    { name: "image", maxCount: 1 },
+    { name: "gallery" },
+]);
 
 const methods = {
     async findAll(req) {
@@ -59,8 +62,16 @@ const methods = {
                         const checkDup = await TrainingCourse.findOne({ url: req.body.url });
                         if (checkDup) return reject(ErrorBadRequest("URL is already exist"));
                         const data = req.body;
-                        if (req.file) {
-                            data.image = req.file?.filename;
+                        if (req.files?.image) {
+                            req.files?.image.map((file) => {
+                                data.image = file.filename;
+                            });
+                        }
+                        if (req.files?.gallery) {
+                            data.gallery = [];
+                            req.files?.gallery.map((file) => {
+                                data.gallery.push(file.filename);
+                            });
                         }
                         const obj = new TrainingCourse(data);
                         const inserted = await obj.save();
@@ -86,14 +97,43 @@ const methods = {
                             const data = req.body;
                             const obj = await TrainingCourse.findById(req.params.id).exec();
                             if (!obj) return reject(ErrorNotFound("id: not found"));
-                            if (req.file) {
+                            if (req.files?.image) {
                                 if (obj.image) {
-                                    fs?.unlink("../public/uploads/trainingCourse/" + obj.image, (err) => {
-                                        if (err) { return Promise.reject(ErrorNotFound(err)); }
-                                    }
+                                    fs?.unlink(
+                                        "../public/uploads/trainingCourse/" + obj.image,
+                                        (err) => {
+                                            if (err) {
+                                                return Promise.reject(ErrorNotFound(err));
+                                            }
+                                        }
                                     );
                                 }
-                                data.image = req.file?.filename;
+                                req.files?.image.map((file) => {
+                                    data.image = file.filename;
+                                });
+                            }
+                            if (req.files?.gallery) {
+                                console.log(req.files.gallery);
+                                if (obj.gallery?.length >= 12)
+                                    return reject(ErrorBadRequest("Gallery is full"));
+                                const galleryLeft = 12 - obj.gallery.length;
+                                if (galleryLeft < req.files.gallery.length)
+                                    return reject(
+                                        ErrorBadRequest(
+                                            `You can upload ${galleryLeft} picture to the gallery`
+                                        )
+                                    );
+                                if (obj.gallery.length > 0) {
+                                    data.gallery = obj.gallery;
+                                    req.files?.gallery.map((file) => {
+                                        data.gallery = [...data.gallery, file.filename];
+                                    });
+                                } else {
+                                    data.gallery = [];
+                                    req.files?.gallery.map((file) => {
+                                        data.gallery = [...data.gallery, file.filename];
+                                    });
+                                }
                             }
                             await TrainingCourse.updateOne({ _id: req.params.id }, data, {
                                 runValidators: true,

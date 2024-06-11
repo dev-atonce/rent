@@ -25,6 +25,7 @@ router.use("/webpanel/position", require("./webpanel/positionPanel"));
 router.use("/webpanel/category-main", require("./webpanel/categoryMainPanel"));
 router.use("/webpanel/category-sub", require("./webpanel/categorySubPanel"));
 router.use("/webpanel/training-course", require("./webpanel/trainingCoursePanel"));
+router.use("/webpanel/calendar", require("./webpanel/calendarPanel"));
 
 //////////////
 

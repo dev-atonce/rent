@@ -6,13 +6,15 @@ const project = require("./project");
 const product = require("./product");
 const category = require("./category");
 const trainingCourse = require("./trainingCourse");
+const calendar = require("./calendar");
 
 const validators = {
   user,
   project,
   product,
   category,
-  trainingCourse
+  trainingCourse,
+  calendar
 };
 
 module.exports = {

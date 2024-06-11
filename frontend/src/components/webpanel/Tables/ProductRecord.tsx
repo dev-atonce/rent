@@ -140,7 +140,11 @@ export default function ServiceRecord({
           <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <div className="flex items-center gap-1">
               <Link
-                href={`/en/service/${i?.serviceUrl}`}
+                href={
+                  i?.type == "rent"
+                    ? `/rental-product/product/${i?.id}`
+                    : `/sale-product/product/${i?.id}`
+                }
                 className="hover:text-white hover:bg-blue-400 text-blue-400 border-blue-400 border p-2 rounded-full"
               >
                 <MdOutlineRemoveRedEye size={20} />
