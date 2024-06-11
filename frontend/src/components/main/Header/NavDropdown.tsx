@@ -26,7 +26,7 @@ export default function NavDropdown({ title, dropdownItems, sectionKey,section3,
 
         data-dropdown-toggle="dropdownNavbar"
         data-dropdown-offset-skidding="100"
-        className="menu-item nav-button px-4 py-3 md:border-0 flex items-center justify-between w-full md:w-auto relative "
+        className="menu-item text-white nav-button px-4 py-3 md:border-0 flex items-center justify-between w-full md:w-auto relative "
       >
         {title}
         <FaChevronDown
