@@ -126,12 +126,12 @@ ol.decimal
     .ant-tabs-nav-list
     {
         .ant-tabs-tab {
-            font-size: 18px !important;
+            // font-size: 18px !important;
             background-color: #eeeeee;
             color: #FA5505;
             border-radius: 8px;
             padding: 10px;
-            // border: 3px solid transparent;
+            border: 3px solid transparent;
         }
         .ant-tabs-tab:hover {
             color: #FA5505;
@@ -186,7 +186,27 @@ ol.decimal
         }
     }
 }
-
+@media screen and (max-width:1023){
+    .terms-conditions
+    {
+        .ant-tabs-nav-list
+        {
+            .ant-tabs-tab 
+            {
+                background-color: unset;
+                color: unset !important;
+                border-radius: unset !important;
+                padding: unset !important;
+                border: unset !important;
+            }
+            .ant-tabs-ink-bar{
+                background-color: unset !important;
+            }
+        }
+        
+    }
+    
+}
 @media screen and (max-width: 1024px)
 {
     body{

@@ -1,12 +1,25 @@
-
+"use client"
+import { useEffect, useState } from "react";
 import Cover from "@/components/main/Cover/Cover";
 import Loading from "@/components/main/Loading/Loading";
 import Image from "next/image";
 
 import { ConfigProvider, Tabs } from 'antd';
 
+type TabPosition = 'left' |'top';
 
 export default function TermsPage() {
+
+    const [tabPosition, setTabPosition] = useState<TabPosition>('left');
+    const adjust = () => {
+        setTabPosition((window.innerWidth > 1024)?'left':'top');
+    }
+    useEffect(() => {
+        window.addEventListener("resize", adjust);
+        return () => {
+            window.removeEventListener("resize", adjust);
+        }
+    }, [tabPosition])  
 
     const tab1 = () => {
         return (<>
@@ -106,12 +119,16 @@ export default function TermsPage() {
             <div className="col-span-12 terms-conditions">
                 <Tabs
                     popupClassName="tabs-item"
-                    tabPosition={`left`}
+                    tabPosition={tabPosition}
+                    tabBarStyle={{
+                        display: "flex",
+                        justifyContent: "space-between",
+                    }}
                     items={tabItem.map((_, i) => {
                         const id = String(i + 1);
                         return {
                             label: `${_.label}`,
-                            className:"p-4 text-lg",
+                            className:"p-4",
                             key: id,
                             children: <_.children/>,
                         };
