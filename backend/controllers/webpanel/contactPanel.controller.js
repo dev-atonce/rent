@@ -3,18 +3,6 @@ const Contact = require("../../services/webpanel/contactPanel.service");
 const { checkAllowFields } = require("../../helpers/field.helper");
 
 const allowFields = {
-  update: [
-    "serviceNameTH",
-    "serviceNameEN",
-    "serviceDescriptionTH",
-    "serviceDescriptionEN",
-    "serviceDetailTH",
-    "serviceDetailEN",
-    "serviceUrl",
-  ],
-
-  updateSeo: ["serviceSeo"],
-
   updateStatus: ["status"],
 
   updateSort: ["sort"],
@@ -39,7 +27,6 @@ const methods = {
   },
 
   async onInsert(req, res) {
-    console.log(req.body);
     try {
       let result = await Contact.insert(req, res);
       res.success(result, 201);
@@ -47,6 +34,7 @@ const methods = {
       res.error(error);
     }
   },
+  
   async onUpdate(req, res) {
     try {
       const result = await Contact.update(req?.params?.id, req.body);

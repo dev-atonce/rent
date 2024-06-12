@@ -1,44 +1,17 @@
 const Contact = require("../../models/Contact");
-// const User = require("../models/User");
 const config = require("../../configs/app");
 const {
   ErrorBadRequest,
   ErrorNotFound,
-  ErrorUnauthorized,
 } = require("../../configs/errorMethods");
 
 const methods = {
-  scopeSearch(req) {
-    $or = [];
-    if (req.query.username)
-      $or.push({ username: { $regex: req.query.username } });
-    if (req.query.email) $or.push({ email: { $regex: req.query.email } });
-    if (req.query.age) $or.push({ age: +req.query.age });
-    const query = $or.length > 0 ? { $or } : {};
-    const sort = { createdAt: -1 };
-    if (req.query.orderByField && req.query.orderBy)
-      sort[req.query.orderByField] =
-        req.query.orderBy.toLowerCase() == "desc" ? -1 : 1;
-    return { query: query, sort: sort };
-  },
-
   async find(req) {
-    const limit = +(req.query.size || config.pageLimit);
-    const offset = +(limit * ((req.query.page || 1) - 1));
-    const _q = methods.scopeSearch(req);
-
     try {
-      const rows = await Contact.find(_q.query)
-        .sort({ sort: 1 })
-        // .populate("userId")
-        .exec(); // Populate the userId field with User document
-      // .limit(limit)
-      // .skip(offset);
-      const count = await Contact.countDocuments(_q.query);
+      const rows = await Contact.find().exec(); // Populate the userId field with User document
+      const count = await Contact.countDocuments();
       return {
         total: count,
-        lastPage: Math.ceil(count / limit),
-        currPage: +req.query.page || 1,
         rows: rows,
       };
     } catch (error) {
@@ -56,9 +29,9 @@ const methods = {
     }
   },
 
-  async insert(data) {
+  async insert(req) {
     try {
-      const obj = new Contact(data.body);
+      const obj = new Contact(req.body);
       const inserted = await obj.save();
       return inserted;
     } catch (error) {

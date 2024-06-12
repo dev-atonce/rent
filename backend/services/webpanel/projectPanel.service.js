@@ -13,6 +13,14 @@ const storage = multer.diskStorage({
   },
 });
 
+const upload = multer({
+  storage: storage,
+  limits: { fileSize: config.limitFileSize },
+}).fields([
+  { name: "image", maxCount: 1 },
+  { name: "gallery", maxCount: 12 },
+]);
+
 const methods = {
   async findAll(req) {
     const limit = +(req.query.size || config.pageLimit);
@@ -46,13 +54,6 @@ const methods = {
 
   async insert(req, res) {
     return new Promise(async (resolve, reject) => {
-      const upload = multer({
-        storage: storage,
-        limits: { fileSize: config.limitFileSize },
-      }).fields([
-        { name: "image", maxCount: 1 },
-        { name: "gallery", maxCount: 12 },
-      ]);
       upload(req, res, async (err) => {
         if (err) {
           return reject(ErrorBadRequest(err));
@@ -86,13 +87,6 @@ const methods = {
   async update(req, res) {
     return new Promise(async (resolve, reject) => {
       try {
-        const upload = multer({
-          storage: storage,
-          limits: { fileSize: config.limitFileSize },
-        }).fields([
-          { name: "image", maxCount: 1 },
-          { name: "gallery", maxCount: 12 },
-        ]);
         upload(req, res, async (err) => {
           if (err) {
             return reject(ErrorBadRequest(err));

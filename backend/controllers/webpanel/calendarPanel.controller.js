@@ -21,7 +21,7 @@ const methods = {
 
     async onInsert(req, res) {
         try {
-            let result = await Calendar.insert(req.body);
+            let result = await Calendar.insert(req, res);
             res.success(result, 201);
         } catch (error) {
             res.error(error);

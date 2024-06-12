@@ -23,21 +23,15 @@ const upload = multer({
 
 const methods = {
   async findAll(req) {
-    // const limit = +(req.query.size || config.pageLimit);
-    // const offset = +(limit * ((req.query.page || 1) - 1));
     try {
       const rows = await CategoryMain.find().sort({ sort: "asc" });
-      // .limit(limit)
-      // .skip(offset);
       const count = await CategoryMain.countDocuments();
       return {
         total: count,
-        // lastPage: Math.ceil(count / limit),
-        // currPage: +req.query.page || 1,
         rows: rows,
       };
     } catch (error) {
-      Promise.reject(ErrorNotFound(error.message));
+      return Promise.reject(ErrorNotFound(error.message));
     }
   },
 
@@ -47,7 +41,7 @@ const methods = {
       if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
       return obj;
     } catch (error) {
-      Promise.reject(ErrorNotFound("id: not found"));
+      return Promise.reject(ErrorNotFound("id: not found"));
     }
   },
 
@@ -92,7 +86,6 @@ const methods = {
                   }
                 );
               }
-
               data.image = req.file?.filename;
             }
 
