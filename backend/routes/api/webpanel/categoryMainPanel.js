@@ -10,8 +10,11 @@ router.get(
   [validator.category.findById, validator.check],
   controllers.onGetById
 );
+
 router.post("/", controllers.onInsert);
+
 router.put("/:id", controllers.onUpdate);
+
 router.delete(
   "/:id",
   [validator.category.deleteById, validator.check],

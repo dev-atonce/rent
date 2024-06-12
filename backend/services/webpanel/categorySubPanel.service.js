@@ -23,8 +23,6 @@ const upload = multer({
 
 const methods = {
   async findAll(req) {
-    const limit = +(req.query.size || config.pageLimit);
-    const offset = +(limit * ((req.query.page || 1) - 1));
     try {
       const rows = await CategorySub.find()
         .populate({
@@ -32,13 +30,9 @@ const methods = {
           select: "nameTH",
         })
         .sort({ sort: "asc" });
-      // .limit(limit)
-      // .skip(offset);
       const count = await CategorySub.countDocuments();
       return {
         total: count,
-        // lastPage: Math.ceil(count / limit),
-        // currPage: +req.query.page || 1,
         rows: rows,
       };
     } catch (error) {

@@ -2,12 +2,13 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema(
     {
-        titleTH: { type: String },
-        startDate: { type: String },
+        titleTH: { type: String, required: true },
+        startDate: { type: String, required: true },
         endDate: { type: String },
         trainingCourse: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "TrainingCourses",
+            required: true
         },
     },
     { timestamps: true }

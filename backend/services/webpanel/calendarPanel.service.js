@@ -25,9 +25,9 @@ const methods = {
         }
     },
 
-    async insert(data) {
+    async insert(req) {
         try {
-            const obj = new Calendar(data);
+            const obj = new Calendar(req.body);
             const inserted = await obj.save();
             return inserted;
         } catch (error) {

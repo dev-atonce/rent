@@ -28,7 +28,8 @@
   },
   "scripts": {
     "dev": "nodemon .",
-    "start": "NODE_ENV=production node ."
+    "start": "node .",
+    "clean": "rm -rf node_modules"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"
