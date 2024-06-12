@@ -1,7 +1,10 @@
 const Project = require("../../models/Project");
 const config = require("../../configs/app");
 const fs = require("fs");
-const { ErrorBadRequest, ErrorNotFound } = require("../../configs/errorMethods");
+const {
+  ErrorBadRequest,
+  ErrorNotFound,
+} = require("../../configs/errorMethods");
 const multer = require("multer");
 
 const storage = multer.diskStorage({
@@ -59,8 +62,11 @@ const methods = {
           return reject(ErrorBadRequest(err));
         } else {
           try {
-            const checkDup = await Project.findOne({ projectUrl: req.body.projectUrl });
-            if (checkDup) return reject(ErrorBadRequest("URL is already exist"));
+            const checkDup = await Project.findOne({
+              projectUrl: req.body.projectUrl,
+            });
+            if (checkDup)
+              return reject(ErrorBadRequest("URL is already exist"));
             const data = req.body;
             if (req.files?.image) {
               req.files?.image.map((file) => {
@@ -92,16 +98,22 @@ const methods = {
             return reject(ErrorBadRequest(err));
           } else {
             try {
-              const checkDup = await Project.findOne({ projectUrl: req.body.projectUrl });
-              if (checkDup) return reject(ErrorBadRequest("URL is already exist"));
+              const checkDup = await Project.findOne({
+                projectUrl: req.body.projectUrl,
+              });
+              // if (checkDup) return reject(ErrorBadRequest("URL is already exist"));
               const data = req.body;
               const obj = await Project.findById(req.params.id).exec();
               if (!obj) return reject(ErrorNotFound("id: not found"));
               if (req.files?.image) {
                 if (obj.image) {
-                  fs?.unlink("../public/uploads/project/" + obj.image, (err) => {
-                    if (err) { return Promise.reject(ErrorNotFound(err)); }
-                  }
+                  fs?.unlink(
+                    "../public/uploads/project/" + obj.image,
+                    (err) => {
+                      if (err) {
+                        return Promise.reject(ErrorNotFound(err));
+                      }
+                    }
                   );
                 }
                 req.files?.image.map((file) => {
@@ -109,9 +121,15 @@ const methods = {
                 });
               }
               if (req.files?.gallery) {
-                if (obj.gallery?.length >= 12) return reject(ErrorBadRequest("Gallery is full"));
+                if (obj.gallery?.length >= 12)
+                  return reject(ErrorBadRequest("Gallery is full"));
                 const galleryLeft = 12 - obj.gallery.length;
-                if (galleryLeft < req.files.gallery.length) return reject(ErrorBadRequest(`You can upload ${galleryLeft} picture to the gallery`));
+                if (galleryLeft < req.files.gallery.length)
+                  return reject(
+                    ErrorBadRequest(
+                      `You can upload ${galleryLeft} picture to the gallery`
+                    )
+                  );
                 if (obj.gallery.length > 0) {
                   data.gallery = obj.gallery;
                   req.files?.gallery.map((file) => {
@@ -152,13 +170,13 @@ const methods = {
       }
       if (obj?.gallery) {
         obj.gallery.map((item) => {
-            fs?.unlink("../public/uploads/project/" + item, (err) => {
-                if (err) {
-                    return Promise.reject(ErrorNotFound(err));
-                }
-            });
+          fs?.unlink("../public/uploads/project/" + item, (err) => {
+            if (err) {
+              return Promise.reject(ErrorNotFound(err));
+            }
+          });
         });
-    }
+      }
       return { msg: "deleted success" };
     } catch (error) {
       return Promise.reject(ErrorBadRequest(error.message));
@@ -170,7 +188,8 @@ const methods = {
       const obj = await Project.findById({ _id: id }).exec();
       if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
       if (obj.gallery[position]) {
-        fs?.unlink("../public/uploads/project/" + obj.gallery[position],
+        fs?.unlink(
+          "../public/uploads/project/" + obj.gallery[position],
           (err) => {
             if (err) {
               return Promise.reject(ErrorNotFound(err));

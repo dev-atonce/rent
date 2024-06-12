@@ -51,7 +51,6 @@ export default function Product({ type }: any) {
         // @ts-ignore
         (i: any) => i?.mainCategory?.id == e
       );
-      console.log(filtered);
 
       setSubCat(filtered);
     }

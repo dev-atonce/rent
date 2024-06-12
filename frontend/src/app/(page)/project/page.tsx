@@ -2,7 +2,18 @@ import Cover from "@/components/main/Cover/Cover";
 import Loading from "@/components/main/Loading/Loading";
 import Project from "@/components/main/Project/Project";
 
-export default function ProjectPage() {
+const fetchProject = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/project/all`
+    // `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/project/`
+  );
+  const data = await res.json();
+  return data.rows;
+};
+
+export default async function ProjectPage() {
+  const data = await fetchProject();
+
   return (
     <>
       <Loading />
@@ -11,11 +22,7 @@ export default function ProjectPage() {
         prevPage={{ pageName: "หน้าแรก", url: "/" }}
       />
       <div className="container mx-auto">
-        <Project
-          limit={12}
-          typeBlog={["general", "customer", "selfedit"]}
-          home={false}
-        />
+        <Project data={data} limit={12} typeBlog={["project"]} home={false} />
       </div>
     </>
   );

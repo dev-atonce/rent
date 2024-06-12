@@ -1,4 +1,5 @@
 import { Divider, Card, Col } from "antd";
+
 import Image from "next/image";
 
 interface BlogCardProps {
@@ -19,6 +20,7 @@ function formatDate(dateTimeString: any) {
 }
 
 const BlogCard = ({ data, type }: BlogCardProps) => {
+  console.log(type);
   return data?.map((item: any, key: any) => {
     return (
       <Col
@@ -35,7 +37,12 @@ const BlogCard = ({ data, type }: BlogCardProps) => {
               <Image
                 className="w-full aspect-[3/2] object-cover"
                 alt="example"
-                src={item?.thumbnail}
+                src={
+                  type?.includes("project")
+                    ? "/img/about_1.png"
+                    : item?.thumbnail
+                }
+                // src={item?.image}
                 width={500}
                 height={300}
                 quality={80}
@@ -46,15 +53,18 @@ const BlogCard = ({ data, type }: BlogCardProps) => {
             <div
               className={`${type?.includes("recruitment") && "min-h-[60px]"}`}
             >
-              {!type?.includes("recruitment") && (
-                <span className="text-slate-400 mb-2">
-                  {formatDate(item?.publish)}
-                </span>
-              )}
+              {!type?.includes("recruitment") ||
+                (!type?.includes("project") && (
+                  <span className="text-slate-400 mb-2">
+                    {formatDate(item?.publish)}
+                  </span>
+                ))}
               <h3
                 className={`${!type?.includes("recruitment") ? "line-clamp-1" : "line-clamp-2"}  font-bold  text-slate-800 mb-2`}
               >
-                {item?.titleTH}
+                {type?.includes("project")
+                  ? item?.projectNameTH
+                  : item?.titleTH}
               </h3>
               {/* <Divider className="mt-3 mb-2" /> */}
               {!type?.includes("recruitment") && (

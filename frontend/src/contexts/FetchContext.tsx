@@ -30,6 +30,7 @@ export default function FetchProvider({ children, user, token }: any) {
   const mainCategorySortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/category-main/sort`;
   const subCategoryRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/category-sub`;
   const subCategorySortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/category-sub/sort`;
+  const projectRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/project`;
 
   const onFetchOne = async (type: any, id: any) => {
     let route = "";
@@ -50,6 +51,8 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${mainCategoryRoute}/${id}`;
       } else if (type === "subCategory") {
         route = `${subCategoryRoute}/${id}`;
+      } else if (type === "project") {
+        route = `${projectRoute}/${id}`;
       }
     } else {
       if (type === "service") {
@@ -147,6 +150,12 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${productRoute}/${id}`;
       } else if (method?.toUpperCase() == "POST") {
         route = productRoute;
+      }
+    } else if (type == "project") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${projectRoute}/${id}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = projectRoute;
       }
     } else if (type == "serviceSeo") {
       route = `${serviceSeoRoute}/${id}`;
@@ -583,7 +592,7 @@ export default function FetchProvider({ children, user, token }: any) {
     if (type === "product") {
       route = `${productRoute}/gallery/${position}/${id}`;
     } else if (type === "project") {
-      route = `${userRoute}/${id}`;
+      route = `${projectRoute}/gallery/${position}/${id}`;
     }
 
     const swalWithBootstrapButtons = Swal.mixin({

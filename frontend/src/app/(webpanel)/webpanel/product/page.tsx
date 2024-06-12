@@ -76,7 +76,7 @@ export default function ProductPage() {
       }
 
       if (category && category !== "all") {
-        categoryMatch = item?.subCategory?.mainCategory?.nameTH == category;
+        categoryMatch = item?.subCategory?.mainCategory?.id == category;
       }
       // @ts-ignore
       if (status !== undefined && status !== "all" && status !== "0") {
@@ -263,6 +263,7 @@ export default function ProductPage() {
                 selectedOption={filterState}
                 setSelectedOption={onSetFilter}
                 keyProp="category"
+                saveId={true}
               />
             </div>
           </div>
