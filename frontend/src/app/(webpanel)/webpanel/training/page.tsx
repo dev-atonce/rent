@@ -15,7 +15,7 @@ import { FetchContext } from "@/contexts/FetchContext";
 //     "This is Next.js Form Layout page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
 // };
 
-export default function ProjectPage() {
+export default function TrainingPage() {
   const { onFetchOne, onDelete }: any = useContext(FetchContext);
   const [data, setData] = useState([]);
   const [initData, setInitData] = useState([]);
@@ -32,7 +32,7 @@ export default function ProjectPage() {
   const [modalState, setModalState] = useState(initialModalState);
 
   async function fetchData() {
-    const data = await onFetchOne("project", "all");
+    const data = await onFetchOne("training", "all");
 
     setInitData(data?.rows);
 
@@ -103,7 +103,7 @@ export default function ProjectPage() {
   return (
     <DefaultLayout>
       <Breadcrumb
-        pageName="Project"
+        pageName="Training Course"
         prevPage={{ pageName: "Dashboard", url: "/webpanel" }}
       />
       <>
@@ -143,7 +143,7 @@ export default function ProjectPage() {
               )}
 
             <Link
-              href="project/create"
+              href="training/create"
               className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
             >
               CREATE PROJECT
@@ -153,19 +153,18 @@ export default function ProjectPage() {
         <TableThree
           onDelete={onDeleteItem}
           drag={dragState}
-          type="project"
+          type="training"
           modal={{ modalState, setModalState }}
           data={data}
           setData={setData}
           col={[
-            { title: "Project", minWidth: "" },
+            { title: "Course", minWidth: "" },
             { title: "Created On", minWidth: "" },
             { title: "Actions", minWidth: "" },
             { title: "Status", minWidth: "" },
           ]}
         />
       </>
-      {/* <Jodit /> */}
     </DefaultLayout>
   );
 }
