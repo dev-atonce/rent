@@ -42,7 +42,7 @@ export default async function RtsPage() {
               <Image src={`/Rectangle 147.png`} alt={`Rectangle 147`} width={834} height={436} quality={100} loading="lazy"/>
             </div>
             <div className="col-span-7">
-              <ul className="list-disc ml-5 text-[#0DA1DB]">
+              <ul className="list-disc ml-6 text-[#0DA1DB]">
                 <li>ให้เช่าเครื่องจักรกลหนัก</li>
                 <li>ให้เช่าเครื่องจักรงานก่อสร้าง</li>
                 <li>ให้เช่าเครื่องจักรอุตสาหกรรม</li>
