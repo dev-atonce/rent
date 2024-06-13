@@ -179,7 +179,7 @@ export default function Header()
         <div className="section-2 hidden lg:block">
             <div className="container mx-auto">
                 <div className="responsive-nav">
-                    <div className="flex">
+                    <div className="flex justify-center">
                         <NavBar />
                     </div>
                     <div className="more-menu"></div>
