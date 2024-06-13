@@ -10,6 +10,7 @@ router.use("/page/product", require("./page/productPage"));
 router.use("/page/category-main", require("./page/categoryMainPage"));
 router.use("/page/category-sub", require("./page/categorySubPage"));
 router.use("/page/training-course", require("./page/traningCoursePage"));
+router.use("/page/calendar", require("./page/calendarPage"));
 
 //////////////
 

@@ -24,36 +24,6 @@ const methods = {
     }
   },
 
-  //   async find(req) {
-  //     const limit = +(req.query.size || config.pageLimit);
-  //     const offset = +(limit * ((req.query.page || 1) - 1));
-  //     try {
-  //       const rows = await Product.find()
-  //         .populate({
-  //           path: "subCategory",
-  //           select: "nameTH mainCategory",
-  //           populate: {
-  //             path: "mainCategory",
-  //             select: "nameTH",
-  //           },
-  //         })
-  //         .sort({ sort: "asc" });
-  //       // .limit(limit)
-  //       // .skip(offset);
-  //       const count = await Product.countDocuments();
-  //       console.log(rows);
-
-  //       return {
-  //         total: count,
-  //         lastPage: Math.ceil(count / limit),
-  //         currPage: +req.query.page || 1,
-  //         rows: rows,
-  //       };
-  //     } catch (error) {
-  //       return Promise.reject(ErrorNotFound(error.message));
-  //     }
-  //   },
-
   async findByUrl(url) {
     try {
       const obj = await Product.findOne({
