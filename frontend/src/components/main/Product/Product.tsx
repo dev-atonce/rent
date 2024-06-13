@@ -13,8 +13,8 @@ export default function Product({ type }: any) {
   const [notFound, setNotFound] = useState(false);
   const fetchProduct = async () => {
     const subCat = await fetch(
-      // `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/product`
-      `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product/all`
+      `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/product`
+      // `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product/all`
     );
     const products = await subCat.json();
     const filteredProducts = products?.rows?.filter(

@@ -15,6 +15,7 @@ export default function TermsPage() {
         setTabPosition((window.innerWidth > 1024)?'left':'top');
     }
     useEffect(() => {
+        adjust();
         window.addEventListener("resize", adjust);
         return () => {
             window.removeEventListener("resize", adjust);

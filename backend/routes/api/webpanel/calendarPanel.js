@@ -11,6 +11,10 @@ router.post("/", controllers.onInsert);
 
 router.put("/:id", controllers.onUpdate);
 
-router.delete("/:id", [validator.calendar.deleteById, validator.check], controllers.onDelete);
+router.delete(
+  "/:id",
+  [validator.calendar.deleteById, validator.check],
+  controllers.onDelete
+);
 
 module.exports = router;

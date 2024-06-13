@@ -22,7 +22,7 @@ const Training = () => {
     
     return (
         <>
-            <h2 className="font-bold">1. คอร์สอบรมการใช้งานเครื่องจักรอย่างปลอดภัย Machine Safety Training</h2>
+            <h1 className="font-bold">1. คอร์สอบรมการใช้งานเครื่องจักรอย่างปลอดภัย Machine Safety Training</h1>
             <div>
                 <p>บริษัทเร้นท์ (ประเทศไทย) จำกัด ส่งเสริมด้านความปลอดภัยในการใช้เครื่องจักร เรามีบริการอบรม Machine Safety Training สำหรับเครื่องจักรดังนี้</p>
                 <ul className="list-inside list-disc">

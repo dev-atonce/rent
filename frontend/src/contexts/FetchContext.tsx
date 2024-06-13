@@ -31,7 +31,9 @@ export default function FetchProvider({ children, user, token }: any) {
   const subCategoryRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/category-sub`;
   const subCategorySortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/category-sub/sort`;
   const projectRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/project`;
-
+  const projectSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/project/sort`;
+  const trainingRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/training-course`;
+  const calendarRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/calendar`;
   const onFetchOne = async (type: any, id: any) => {
     let route = "";
     if (id) {
@@ -53,6 +55,10 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${subCategoryRoute}/${id}`;
       } else if (type === "project") {
         route = `${projectRoute}/${id}`;
+      } else if (type === "training") {
+        route = `${trainingRoute}/${id}`;
+      } else if (type === "calendar") {
+        route = `${calendarRoute}/${id}`;
       }
     } else {
       if (type === "service") {
@@ -75,6 +81,8 @@ export default function FetchProvider({ children, user, token }: any) {
         route = mainCategoryRoute;
       } else if (type === "subCategory") {
         route = subCategoryRoute;
+      } else if (type === "calendar") {
+        route = calendarRoute;
       }
     }
     try {
@@ -89,6 +97,7 @@ export default function FetchProvider({ children, user, token }: any) {
       }
 
       const data = await response.json();
+
       return data;
 
       // console.log("Data received:", data);
@@ -298,6 +307,10 @@ export default function FetchProvider({ children, user, token }: any) {
                     setTimeout(() => {
                       router.push("/webpanel/product");
                     }, 2000);
+                  } else if (type == "project") {
+                    setTimeout(() => {
+                      router.push("/webpanel/project");
+                    }, 2000);
                   }
                 } else if (method?.toUpperCase() === "PUT") {
                   if (type === "user") {
@@ -324,6 +337,10 @@ export default function FetchProvider({ children, user, token }: any) {
                   ) {
                     setTimeout(() => {
                       router.push("/webpanel/product");
+                    }, 2000);
+                  } else if (type == "project") {
+                    setTimeout(() => {
+                      router.push("/webpanel/project");
                     }, 2000);
                   }
                 }
@@ -389,8 +406,8 @@ export default function FetchProvider({ children, user, token }: any) {
     activity: any
   ) => {
     let route = "";
-    if (type == "service") {
-      route = `${serviceStatusRoute}/${id}`;
+    if (type == "project") {
+      route = `${projectRoute}/${id}`;
     } else if (type == "product") {
       route = `${productStatusRoute}/${id}`;
     }
@@ -427,6 +444,8 @@ export default function FetchProvider({ children, user, token }: any) {
       route = `${subCategorySortRoute}/${id}`;
     } else if (type == "mainCategory") {
       route = `${mainCategorySortRoute}/${id}`;
+    } else if (type == "project") {
+      route = `${projectSortRoute}/${id}`;
     }
 
     try {
@@ -490,6 +509,8 @@ export default function FetchProvider({ children, user, token }: any) {
       route = `${subCategoryRoute}/${id}`;
     } else if (type === "product") {
       route = `${productRoute}/${id}`;
+    } else if (type === "project") {
+      route = `${projectRoute}/${id}`;
     }
 
     const swalWithBootstrapButtons = Swal.mixin({

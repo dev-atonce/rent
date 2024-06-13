@@ -6,7 +6,7 @@ export default function About() {
     return Math.floor(Math.random() * 5) + 1;
   }
   return (
-    <div className=" pb-14 pt-20 relative project shadow-md">
+    <div className="mt-6 sm:mt-14 pt-6 sm:pb-14 sm:pt-20 relative project shadow-md">
       <div className="absolute top-0 right-0 bottom-0 left-0 ">
         <Image
           src={`/img/about_${getRandomNumber()}.png`}
@@ -17,16 +17,16 @@ export default function About() {
         />
         <div className="absolute top-0 right-0 bottom-0 left-0 bg-white/90"></div>
       </div>
-      <div className="container mx-auto flex flex-col items-center gap-10 relative">
+      <div className="container mx-auto flex flex-col items-center gap-4 sm:gap-10 relative">
         <div className="flex flex-col items-center gap-4">
           <h1
-            className="text-xl font-semibold text-[#0DA1DB]"
+            className="text-base sm:text-xl font-semibold text-[#0DA1DB]"
             style={{ textShadow: "white 1px 1px 1px" }}
           >
             บริษัท เร้นท์ (ประเทศไทย) จำกัด บริการ ให้เช่าเครื่องจักร
             งานก่อสร้าง
           </h1>
-          <p className="text-slate-700">
+          <p className="text-slate-700 text-sm sm:text-base">
             หากคุณต้องการ เช่าเครื่องจักร และเครื่องมือสำหรับใช้ในงานก่อสร้าง
             เราคือ บริษัทให้บริการเช่าเครื่องจักร งานก่อสร้าง
             ที่มีสินค้าให้เช่ากว่า 460 ประเภท เป็นจำนวนกว่า 5,000 ชิ้น

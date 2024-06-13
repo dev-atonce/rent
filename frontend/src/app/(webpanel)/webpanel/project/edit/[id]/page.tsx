@@ -111,7 +111,6 @@ export default function EditServicePage({
   useEffect(() => {
     fetchData();
   }, []);
-  console.log(serviceState);
 
   return (
     <DefaultLayout>

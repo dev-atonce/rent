@@ -14,6 +14,8 @@ import ProductRecord from "./ProductRecord";
 import MainCatRecord from "./MainCatRecord";
 import SubCatRecord from "./SubCatRecord";
 import ProjectRecord from "./ProjectRecord";
+import TrainingRecord from "./TrainingRecord";
+import CalendarRecord from "./CalendarRecord";
 
 const TableThree = ({
   data,
@@ -118,6 +120,21 @@ const TableThree = ({
                   onDelete={onDelete}
                 />
               ))}
+            {type === "training" &&
+              data?.map((i: any, key: any) => (
+                <TrainingRecord
+                  i={i}
+                  index={key}
+                  modal={modal}
+                  drag={drag}
+                  onDragEnd={handleSort}
+                  dragItem={dragItem}
+                  dragOverItem={dragOverItem}
+                  onChangeStatus={onChangeStatus}
+                  key={key}
+                  onDelete={onDelete}
+                />
+              ))}
             {type === "product" &&
               data?.map((i: any, key: any) => (
                 <ProductRecord
@@ -181,6 +198,23 @@ const TableThree = ({
               data?.map((i: any, key: any) => {
                 return (
                   <MainCatRecord
+                    i={i}
+                    index={key}
+                    modal={modal}
+                    key={key}
+                    drag={drag}
+                    onDragEnd={handleSort}
+                    dragItem={dragItem}
+                    dragOverItem={dragOverItem}
+                    onChangeStatus={onChangeStatus}
+                    onDelete={onDelete}
+                  />
+                );
+              })}
+            {type === "calendar" &&
+              data?.map((i: any, key: any) => {
+                return (
+                  <CalendarRecord
                     i={i}
                     index={key}
                     modal={modal}
