@@ -22,7 +22,7 @@ export default async function RtsPage() {
         prevPage={{ pageName: "หน้าแรก", url: "/" }}
       />
       <div className="container mx-auto">
-        <div className="flex flex-col gap-2 text-sm">
+        <div className="flex flex-col gap-2">
           <h2 className="text-2xl  font-semibold text-[#0DA1DB]">
             บริษัท เร้นท์ เทรด แอนด์ เซอร์วิส
           </h2>
@@ -35,7 +35,7 @@ export default async function RtsPage() {
               </div>
             ))}
           </div>
-          <p>มีบริการให้เช่าเครื่องจักรที่หลากหลาย สามารถเลือกได้เหมาะกับการใช้งาน</p>
+          <p className="font-bold text-md">มีบริการให้เช่าเครื่องจักรที่หลากหลาย สามารถเลือกได้เหมาะกับการใช้งาน</p>
           <p>บริษัท ของเรามีบริการ ให้เช่าเครื่องจักร งานก่อสร้าง หลายประเภท เราเชื่อว่าการเลือกเครื่องจักรให้เหมาะสมกับการใช้งานนั้นจะทำให้การทำงานรวดเร็วและมีประสิทธิภาพอย่างสูงที่สุด ไม่ว่าจะเป็น</p>
           <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 my-4">
             <div className="col-span-5">
@@ -56,7 +56,6 @@ export default async function RtsPage() {
             </div>
           </div>
           <p>เราให้เช่าเครื่องจักรคุณภาพดีครอบคลุมทุกงานก่อสร้าง งานอุตสาหกรรม และงานอื่น ๆ ที่ต้องอาศัยเครื่องจักรและอุปกรณ์ที่หลากหลาย โดยที่ท่านไม่จำเป็นต้องซื้อเพื่อบริหารค่าใช้จ่ายไม่ให้เกินความจำเป็น แต่ท่านสามารถใช้ บริการให้เช่าเครื่องจักร กับเราได้ด้วย ราคาเช่าเครื่องจักร ที่เป็นมิตร เน้นการใช้ประโยชน์และตอบโจทย์ทุกการใช้งาน</p>
-          
 
           <h3 className="font-bold mt-6">พื้นที่บริการเช่าเครื่องจักรก่อสร้างและอุปกรณ์ต่าง ๆ</h3>
           <p className="mt-4">เราพร้อมให้บริการท่านครอบคลุม โดยเน้นบริเวณภาคตะวันออกและภาคกลางเป็นหลักไม่ว่าจะเป็น</p>
@@ -69,14 +68,8 @@ export default async function RtsPage() {
           </ul>
           
 
-
-
-
-
-
-          
         </div>
-        <div className="flex lg:flex-row flex-col lg:justify-between mt-6">
+        <div className="flex lg:flex-row flex-col lg:justify-between mt-10">
           <div className="flex flex-col gap-2">
 
             <div className="flex flex-col gap-2 text-sm">
@@ -115,8 +108,8 @@ export default async function RtsPage() {
             </div>
           </div>
         </div>
-        <hr />
-        <div className="py-2 grid grid-cols-2 gap-4 border-b border-slate-100  pb-4 w-full">
+        <div className="border-t-[.06rem] border-slate-300 mb-10" />
+        <div className="py-2 grid grid-cols-2 gap-4 border-b border-slate-100 mb-12 w-full">
           <Image
             className="aspect-[4/2] object-cover w-full col-span-2 lg:col-span-1 "
             alt={`บริษัท เร้นท์ (ประเทศไทย) จำกัด`}
@@ -136,7 +129,7 @@ export default async function RtsPage() {
             <Contactform branch="บริษัท เร้นท์ เทรด แอนด์ เซอร์วิส" />
           </div>
         </div>
-        <div className="py-6">
+        {/* <div className="py-6">
           <h6 className="text-xl font-semibold text-slate-600">
             พื้นที่บริการเช่าเครื่องจักรก่อสร้างและอุปกรณ์ต่าง ๆ
           </h6>
@@ -171,7 +164,7 @@ export default async function RtsPage() {
               </li>
             </ul>
           </div>
-        </div>
+        </div> */}
       </div>
     </>
   );
