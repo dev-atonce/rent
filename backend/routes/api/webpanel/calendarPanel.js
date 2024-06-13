@@ -3,9 +3,9 @@ const controllers = require("../../../controllers/webpanel/calendarPanel.control
 const auth = require("../../auth");
 const validator = require("../../../validators");
 
-router.get("/", controllers.onGetAll);
+router.get("/:id", controllers.onGetAll);
 
-router.get("/:id",[validator.calendar.findById, validator.check], controllers.onGetById);
+// router.get("/:id",[validator.calendar.findById, validator.check], controllers.onGetById);
 
 router.post("/", controllers.onInsert);
 
