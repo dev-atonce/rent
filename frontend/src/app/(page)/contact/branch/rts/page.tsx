@@ -9,6 +9,11 @@ import Contactform from "@/components/main/Contact/ContactForm";
 import { TbPointFilled } from "react-icons/tb";
 
 export default async function RtsPage() {
+  const images = [
+    {src:"Rectangle 139.png",title:"Rectangle 139"},
+    {src:"Rectangle 138.png",title:"Rectangle 138"},
+    {src:"Rectangle 137.png",title:"Rectangle 137"}
+  ];
   return (
     <>
       <Loading />
@@ -17,11 +22,63 @@ export default async function RtsPage() {
         prevPage={{ pageName: "หน้าแรก", url: "/" }}
       />
       <div className="container mx-auto">
-        <div className="flex lg:flex-row flex-col lg:justify-between">
+        <div className="flex flex-col gap-2 text-sm">
+          <h2 className="text-2xl  font-semibold text-[#0DA1DB]">
+            บริษัท เร้นท์ เทรด แอนด์ เซอร์วิส
+          </h2>
+          <p className="indent-10 mt-4">หากคุณต้องการ เช่าเครื่องจักร และเครื่องมือสำหรับใช้ในงานก่อสร้าง เราคือ บริษัทให้บริการเช่าเครื่องจักร งานก่อสร้าง ที่มีสินค้าให้เช่ากว่า 460 ประเภท เป็นจำนวนกว่า 5,000 ชิ้น และสามารถนำเครื่องจักรที่ยังไม่เป็นที่รู้จักในประเทศไทยเข้ามาปล่อยเช่าได้อย่างรวดเร็ว ในฐานะผู้บุกเบิกตลาดงานเช่า และยังเป็นบริษัทเพียงเจ้าเดียวในประเทศไทยที่มีเครื่องทดสอบอุปกรณ์ยก ปฏิบัติงานด้วยความปลอดภัย รวดเร็ว และใส่ใจสิ่งแวดล้อม</p>
+          <p className="text-orange-500">สนใจเช่า หรือต้องการสอบถามเกี่ยวกับสินค้า กรุณาส่งอีเมล์ระบุชื่อเรื่อง "สนใจเช่า/สอบถามราคา" มาที่ contact @rent.co.th</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
+            {images.map((image,index) => (
+              <div key={index} className="aspect-[4/2] object-cover w-full">
+                <Image src={`/${image.src}`} alt={image.title} width={834} height={436} quality={100} loading="lazy"/>
+              </div>
+            ))}
+          </div>
+          <p>มีบริการให้เช่าเครื่องจักรที่หลากหลาย สามารถเลือกได้เหมาะกับการใช้งาน</p>
+          <p>บริษัท ของเรามีบริการ ให้เช่าเครื่องจักร งานก่อสร้าง หลายประเภท เราเชื่อว่าการเลือกเครื่องจักรให้เหมาะสมกับการใช้งานนั้นจะทำให้การทำงานรวดเร็วและมีประสิทธิภาพอย่างสูงที่สุด ไม่ว่าจะเป็น</p>
+          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 my-4">
+            <div className="col-span-5">
+              <Image src={`/Rectangle 147.png`} alt={`Rectangle 147`} width={834} height={436} quality={100} loading="lazy"/>
+            </div>
+            <div className="col-span-7">
+              <ul className="list-disc ml-5 text-[#0DA1DB]">
+                <li>ให้เช่าเครื่องจักรกลหนัก</li>
+                <li>ให้เช่าเครื่องจักรงานก่อสร้าง</li>
+                <li>ให้เช่าเครื่องจักรอุตสาหกรรม</li>
+                <li>ให้เช่าเครื่องจักรหนักรื้อถอน</li>
+                <li>ให้เช่าเครื่องจักรหนัก ขนาดใหญ่</li>
+                <li>ให้เช่าเครื่องจักรที่ใช้ในงานโยธา</li>
+                <li>ให้เช่าอุปกรณ์ที่ใช้ในการติดตั้งเครื่องจักร</li>
+                <li>ให้เช่าเครื่องจักรงานซ่อมบำรุงโรงงาน</li>
+                <li>รถเช่า</li>
+              </ul>
+            </div>
+          </div>
+          <p>เราให้เช่าเครื่องจักรคุณภาพดีครอบคลุมทุกงานก่อสร้าง งานอุตสาหกรรม และงานอื่น ๆ ที่ต้องอาศัยเครื่องจักรและอุปกรณ์ที่หลากหลาย โดยที่ท่านไม่จำเป็นต้องซื้อเพื่อบริหารค่าใช้จ่ายไม่ให้เกินความจำเป็น แต่ท่านสามารถใช้ บริการให้เช่าเครื่องจักร กับเราได้ด้วย ราคาเช่าเครื่องจักร ที่เป็นมิตร เน้นการใช้ประโยชน์และตอบโจทย์ทุกการใช้งาน</p>
+          
+
+          <h3 className="font-bold mt-6">พื้นที่บริการเช่าเครื่องจักรก่อสร้างและอุปกรณ์ต่าง ๆ</h3>
+          <p className="mt-4">เราพร้อมให้บริการท่านครอบคลุม โดยเน้นบริเวณภาคตะวันออกและภาคกลางเป็นหลักไม่ว่าจะเป็น</p>
+          <ul className="list-disc ml-6">
+            <li>ภาคกลาง ให้เช่าเครื่องจักรสมุทรปราการ กรุงเทพ และปริมณฑลทุกพื้นที่ ให้เช่าเครื่องจักรปทุมธานี ให้เช่าเครื่องจักรอยุธยา ฯลฯ</li>
+            <li>ภาคตะวันออก ให้เช่าเครื่องจักร ชลบุรี ให้เช่าเครื่องจักร ระยอง ให้เช่าเครื่องจักร มาบตาพุด ฯลฯ</li>
+            <li>ภาคตะวันออกเฉียงเหนือ ให้เช่าเครื่องจักร ขอนแก่น นครราชสีมา ฯลฯ</li>
+            <li>ภาคตะวันตก ให้เช่าเครื่องจักร ประจวบคีรีขันธ์ กาญจนบุรี ฯลฯ</li>
+            <li>ภาคเหนือและภาคใต้จะอยู่ห่างไกลจากสาขาของเรา แต่สามารถพิจารณาให้บริการเช่าได้เป็นกรณีไป โดยจะให้เช่าในลักษณะที่ไม่มีบริการซ่อมบำรุง</li>
+          </ul>
+          
+
+
+
+
+
+
+          
+        </div>
+        <div className="flex lg:flex-row flex-col lg:justify-between mt-6">
           <div className="flex flex-col gap-2">
-            <h4 className="text-2xl  font-semibold text-[#0DA1DB]">
-              บริษัท เร้นท์ เทรด แอนด์ เซอร์วิส
-            </h4>
+
             <div className="flex flex-col gap-2 text-sm">
               <p>
                 บริษัท เร้นท์ เทรด แอนด์ เซอร์วิส จำกัด สาขาสมุทรปราการ 42/9
@@ -58,6 +115,7 @@ export default async function RtsPage() {
             </div>
           </div>
         </div>
+        <hr />
         <div className="py-2 grid grid-cols-2 gap-4 border-b border-slate-100  pb-4 w-full">
           <Image
             className="aspect-[4/2] object-cover w-full col-span-2 lg:col-span-1 "
