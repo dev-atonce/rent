@@ -2,12 +2,30 @@
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
 import { usePathname, useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
 
 interface OtherserviceProps {
     data: any;
 }
 
+type TabPosition = 'left' | 'top';
+
 const Otherservice = ({ data }: OtherserviceProps) => {
+
+    const [tabPosition, setTabPosition] = useState<TabPosition>('left');
+    
+    const adjust = () => {        
+        setTabPosition((window.innerWidth > 1024) ? 'left' : 'top');
+    }
+    
+    useEffect(() => {    
+        adjust();
+        window.addEventListener("resize", adjust);
+        return () => {
+            window.removeEventListener("resize", adjust);
+        }
+    }, [tabPosition])
+
     const router = useRouter();
     const pathname = usePathname();
 
@@ -32,7 +50,11 @@ const Otherservice = ({ data }: OtherserviceProps) => {
     return (
         <>
             <Tabs
-                tabPosition={`left`}
+                tabPosition={tabPosition}
+                tabBarStyle={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                }}
                 defaultActiveKey={pathname.includes("training") ? "1" : "2"}
                 items={items}
                 onChange={handleTabClick}
