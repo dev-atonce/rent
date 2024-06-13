@@ -18,6 +18,15 @@ const methods = {
       res.error(error);
     }
   },
+
+  async onGetById(req, res) {
+    try {
+      let result = await Project.findById(req.params.id);
+      res.success(result);
+    } catch (error) {
+      res.error(error);
+    }
+  },
 };
 
 module.exports = { ...methods };

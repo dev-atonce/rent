@@ -20,7 +20,7 @@ function formatDate(dateTimeString: any) {
 }
 
 const BlogCard = ({ data, type }: BlogCardProps) => {
-  console.log(type);
+  console.log(data);
   return data?.map((item: any, key: any) => {
     return (
       <Col
@@ -30,7 +30,10 @@ const BlogCard = ({ data, type }: BlogCardProps) => {
         lg={type?.includes("recruitment") ? 6 : 8}
         key={key}
       >
-        <a href={item?.url}>
+        <a
+          // @ts-ignore
+          href={type.includes("project") ? `/project/${item?.id}` : "item?.url"}
+        >
           <Card
             hoverable
             cover={

@@ -36,6 +36,16 @@ const methods = {
       return Promise.reject(ErrorNotFound("url: not found"));
     }
   },
+
+  async findById(id) {
+    try {
+      const obj = await Project.findById(id);
+      if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
+      return obj;
+    } catch (error) {
+      return Promise.reject(ErrorNotFound("id: not found"));
+    }
+  },
 };
 
 module.exports = { ...methods };
