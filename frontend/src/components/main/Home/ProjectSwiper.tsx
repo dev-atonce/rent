@@ -8,7 +8,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import "swiper/css/effect-fade";
 import Image from "next/image";
-import { FaCircle } from "react-icons/fa";
+import { FaAngleDoubleRight, FaCircle } from "react-icons/fa";
 import Link from "next/link";
 
 const data = [
@@ -74,7 +74,7 @@ const data = [
   },
 ];
 
-export default function ProjectSwiper() {
+export default function ProjectSwiper({ projectData }: any) {
   return (
     <div className="py-10 container mx-auto project">
       <div className="w-full flex justify-center text-2xl font-semibold text-slate-600  py-8">
@@ -105,27 +105,36 @@ export default function ProjectSwiper() {
           // onSwiper={(swiper) => console.log(swiper)}
         >
           <ul>
-            {data.map((v, i) => {
+            {projectData.map((v: any, i: any) => {
               return (
                 <SwiperSlide key={`${i}`} className="ralative ">
                   <Link
-                    href={v?.url}
+                    href={`/project/${v?.id}`}
                     className="flex flex-col items-center gap-2c"
                   >
                     <Image
-                      src={v.image}
+                      src={"/img/about_1.png"}
+                      // src={v.image}
                       alt={v.title}
                       width={1920}
                       height={618}
                       className=" object-cover w-full aspect-[3/2] rounded-xl"
                     />
-                    <span>{v?.title}</span>
+                    <span>{v?.projectNameTH}</span>
                   </Link>
                 </SwiperSlide>
               );
             })}
           </ul>
         </Swiper>
+      </div>
+      <div className="flex justify-end pt-2">
+        <Link
+          href="/project"
+          className="text-sm text-orange-500 flex items-center "
+        >
+          ดูทั้งหมด <FaAngleDoubleRight className="translate-y-[2px]" />
+        </Link>
       </div>
     </div>
   );

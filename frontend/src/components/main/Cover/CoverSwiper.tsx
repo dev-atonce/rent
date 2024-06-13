@@ -16,6 +16,51 @@ const data = [
     id: 1,
     title: "ARE AWESOME",
     tagline: "NEXTJS 13 & SWIPER SLIDER",
+    image: "/img/banner_1.jpg",
+    url: "/rental-product",
+    buttons: [
+      {
+        id: 1,
+        text: "Roberto Nickson",
+        link: "https://www.pexels.com/@rpnickson/",
+        type: "btn-dark btn-circle",
+      },
+    ],
+  },
+  {
+    id: 1,
+    title: "ARE AWESOME",
+    tagline: "NEXTJS 13 & SWIPER SLIDER",
+    image: "/img/banner_2.jpg",
+    url: "/rental-product",
+    buttons: [
+      {
+        id: 1,
+        text: "Roberto Nickson",
+        link: "https://www.pexels.com/@rpnickson/",
+        type: "btn-dark btn-circle",
+      },
+    ],
+  },
+  {
+    id: 1,
+    title: "ARE AWESOME",
+    tagline: "NEXTJS 13 & SWIPER SLIDER",
+    image: "/img/banner_3.jpg",
+    url: "/rental-product",
+    buttons: [
+      {
+        id: 1,
+        text: "Roberto Nickson",
+        link: "https://www.pexels.com/@rpnickson/",
+        type: "btn-dark btn-circle",
+      },
+    ],
+  },
+  {
+    id: 1,
+    title: "ARE AWESOME",
+    tagline: "NEXTJS 13 & SWIPER SLIDER",
     image: "/img/slide1.jpeg",
     url: "/rental-product",
     buttons: [

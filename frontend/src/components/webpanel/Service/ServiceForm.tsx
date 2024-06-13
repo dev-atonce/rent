@@ -1,6 +1,8 @@
 import { useState } from "react";
 import Jodit from "../Editor/Jodit";
 import FormGroup from "../FormGroup/FormGroup";
+import Image from "next/image";
+import { MdDeleteForever } from "react-icons/md";
 
 export default function ServiceForm({
   languages,
@@ -10,6 +12,7 @@ export default function ServiceForm({
   id,
   onSaveSeo,
   onChangeSeoState,
+  onDeleteImageGallery,
 }: any) {
   const [langState, setLangState] = useState(
     process.env.NEXT_PUBLIC_MAIN_LANGUAGE
@@ -23,34 +26,46 @@ export default function ServiceForm({
           formLabel="General Info."
           inputBox={[
             {
-              label: "Service Name",
-              placeHolder: "Service Name",
+              label: "Project Name",
+              placeHolder: "Project Name",
               state: serviceState,
               setState: onChangeState,
-              keyProp: "serviceName",
+              keyProp: "projectName",
               type: "input",
               languages: languages,
               required: true,
             },
 
             {
-              label: "Service URL",
-              placeHolder: "Service URL",
-              state: serviceState,
-              setState: onChangeState,
-              keyProp: "serviceUrl",
-              type: "input",
-              required: true,
-            },
-            {
               label: "Description",
-              placeHolder: "Service Description",
+              placeHolder: "Project Description",
               state: serviceState,
               setState: onChangeState,
-              keyProp: "serviceDescription",
+              keyProp: "description",
               type: "textArea",
               rows: 3,
               languages: languages,
+              required: true,
+            },
+            {
+              label: "Image",
+              placeHolder: "image",
+              state: serviceState,
+              setState: onChangeState,
+              keyProp: "image",
+              type: "image",
+              ratio: "3/2",
+              required: true,
+              height: "200px",
+              multiple: false,
+            },
+            {
+              label: "Image ALT",
+              placeHolder: "alt",
+              state: serviceState,
+              setState: onChangeState,
+              keyProp: "imageAlt",
+              type: "input",
               required: true,
             },
           ]}
@@ -58,42 +73,49 @@ export default function ServiceForm({
       </div>
 
       <div className="flex flex-col gap-9">
-        <FormGroup
-          // modalState={show}
-
-          onSave={onSaveSeo}
-          formLabel={"SEO Settings"}
-          inputBox={[
-            {
-              label: "Title",
-              placeHolder: "Page Title",
-              state: serviceState?.serviceSeo,
-              setState: onChangeSeoState,
-              keyProp: "title",
-              type: "input",
-              languages,
-            },
-            {
-              label: "Keywords",
-              placeHolder: "META Keywords",
-              state: serviceState?.serviceSeo,
-              setState: onChangeSeoState,
-              keyProp: "keyword",
-              type: "input",
-              languages,
-            },
-            {
-              label: "Description",
-              placeHolder: "META Description",
-              state: serviceState?.serviceSeo,
-              setState: onChangeSeoState,
-              keyProp: "description",
-              type: "textArea",
-              rows: 3,
-              languages,
-            },
-          ]}
-        />
+        <div className="w-full  sm:col-span-2 py-2 flex flex-col gap-y-2">
+          <span>Gallery</span>
+          <div className=" grid grid-cols-12 gap-2 rounded-lg border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark h-full py-2 px-6">
+            {serviceState?._gallery?.map((item: any, index: any) => (
+              <div
+                key={index}
+                className="col-span-4 rounded-lg overflow-hidden relative"
+              >
+                <div
+                  onClick={() => onDeleteImageGallery(index)}
+                  className="absolute top-2 right-2 p-2 bg-red rounded-full hover:cursor-pointer text-white"
+                >
+                  <MdDeleteForever size={20} />
+                </div>
+                <Image
+                  src={"/img/about_1.png"}
+                  alt="gallery"
+                  width="400"
+                  height="400"
+                  className="h-full w-full object-cover aspect-[3/2]"
+                />
+              </div>
+            ))}
+          </div>
+          <FormGroup
+            //   onSave={onSave}
+            formLabel={"Upload Images"}
+            inputBox={[
+              {
+                label: "Gallery Images",
+                placeHolder: "image",
+                state: serviceState,
+                setState: onChangeState,
+                keyProp: "gallery",
+                type: "image",
+                ratio: "3/2",
+                required: true,
+                height: "200px",
+                multiple: true,
+              },
+            ]}
+          />
+        </div>
       </div>
       <div className="col-span-2 min-h-[40vh]">
         <div className="flex gap-[1px] translate-y-2 translate-x-2 relative z-0">
@@ -114,7 +136,7 @@ export default function ServiceForm({
                 key={k}
                 onChange={onChangeState}
                 state={serviceState}
-                prop={serviceState && `serviceDetail${i}`}
+                prop={serviceState && `projectDetail${i}`}
               />
             )
         )}

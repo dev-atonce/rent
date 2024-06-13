@@ -16,7 +16,7 @@ interface SidebarProps {
 
 const menus = [
   { title: "Home", url: "/webpanel/home" },
-  { title: "Services", url: "/webpanel/service" },
+  { title: "Project", url: "/webpanel/project" },
   { title: "About Us", url: "/webpanel/about-us" },
   { title: "Product", url: "/webpanel/product" },
   { title: "Training Calendar", url: "/webpanel/training" },

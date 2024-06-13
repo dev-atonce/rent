@@ -19,8 +19,8 @@ app.use((req, res, next) => {
 require("./configs/databases");
 
 // Body parser
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+app.use(express.json({ limit: "50mb" }));
+app.use(express.urlencoded({ extended: false, limit: "50mb" }));
 
 // Passport
 require("./configs/passport");
@@ -39,9 +39,9 @@ require("./configs/errorHandler")(config.isProduction, app);
 
 // Start Server
 const server = app
-  .listen(config.port, "127.0.0.1", () => {
+  // .listen(config.port, "127.0.0.1", () => {
   // .listen(config.port, "192.168.0.106", () => {
-  // .listen(config.port, "192.168.0.100", () => {
+  .listen(config.port, "192.168.0.100", () => {
     // .listen(config.port, "192.168.1.122", () => {
     let host = server.address().address;
     let port = server.address().port;
