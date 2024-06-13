@@ -4,7 +4,9 @@ const { ErrorBadRequest, ErrorNotFound } = require("../../configs/errorMethods")
 const methods = {
     async findAll(req) {
         try {
-            const rows = await Calendar.find();
+            const rows = await Calendar.find().populate({
+                path: "trainingCourse",
+            });
             const count = await Calendar.countDocuments();
             return {
                 total: count,
@@ -17,7 +19,9 @@ const methods = {
 
     async findById(id) {
         try {
-            const obj = await Calendar.findById(id);
+            const obj = await Calendar.findById(id).populate({
+                path: "trainingCourse",
+            });
             if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
             return obj;
         } catch (error) {

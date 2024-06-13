@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaChevronDown } from "react-icons/fa";
 import Link from "next/link";
 // import { useSelectedLayoutSegment } from "next/navigation";
-
+                            
 export default function NavDropdown({ title, dropdownItems}: any) {
   // const [active, setActive] = useState(false);
   const [show, setShow] = useState<String>("hidden");
