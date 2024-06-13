@@ -64,6 +64,7 @@ export default function FormGroup({
               ratio={i?.ratio}
               height={i?.height}
               label={i?.label}
+              uploadAmount={i?.uploadAmount}
             />
           ) : i?.type === "dropDown" ? (
             <SelectGroupOne

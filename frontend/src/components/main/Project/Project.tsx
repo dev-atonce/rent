@@ -15,16 +15,16 @@ const ProjectSection = ({ limit, typeBlog, home, data }: any) => {
         <p className="text-center p-10">Coming Soon ...</p>
       ) : (
         <>
-          <Row gutter={[16, 16]}>
+          <Row gutter={[16, 16]} className="py-4">
             <BlogCard data={data} type={typeBlog}></BlogCard>
           </Row>
-          {!home && (
+          {/* {!home && (
             <AntPagination
               total={total}
               currentPage={page}
               setCurrentPage={setPage}
             />
-          )}
+          )} */}
         </>
       )}
     </>

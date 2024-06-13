@@ -65,8 +65,8 @@ const methods = {
             const checkDup = await Project.findOne({
               projectUrl: req.body.projectUrl,
             });
-            if (checkDup)
-              return reject(ErrorBadRequest("URL is already exist"));
+            // if (checkDup)
+            //   return reject(ErrorBadRequest("URL is already exist"));
             const data = req.body;
             if (req.files?.image) {
               req.files?.image.map((file) => {

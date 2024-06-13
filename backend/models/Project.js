@@ -5,7 +5,7 @@ const schema = new mongoose.Schema(
   {
     projectNameTH: { type: String },
     projectDetailTH: { type: String },
-    projectUrl: { type: String, unique: true, required: true },
+    projectUrl: { type: String },
     image: { type: String },
     imageAlt: { type: String },
     gallery: { type: Array },

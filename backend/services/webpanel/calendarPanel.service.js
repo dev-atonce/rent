@@ -4,7 +4,7 @@ const { ErrorBadRequest, ErrorNotFound } = require("../../configs/errorMethods")
 const methods = {
     async findAll(req) {
         try {
-            const rows = await Calendar.find().populate({
+            const rows = await Calendar.find({trainingCourse: req.params.id}).populate({
                 path: "trainingCourse",
             });
             const count = await Calendar.countDocuments();

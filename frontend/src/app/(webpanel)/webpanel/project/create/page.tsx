@@ -43,35 +43,35 @@ export default function CreateServicePage() {
     };
   }
   const { onSave }: any = useContext(FetchContext);
-  const router = useRouter();
+
   const [serviceState, setServiceState] = useState({} as any);
 
   const onCreate = () => {
     // Validate
-    if (
-      !serviceState?.serviceNameEN ||
-      !serviceState?.serviceNameTH ||
-      !serviceState?.serviceUrl ||
-      !serviceState?.serviceDescriptionEN ||
-      !serviceState?.serviceDescriptionTH
-    ) {
-      Swal.fire({
-        showConfirmButton: false,
-        position: "top",
-        toast: true,
-        icon: "error",
-        title: "Oops...",
-        text: "Fill In All the Required Boxes",
-        footer: "Including: Service Name, URL, Description",
-      });
-      return;
-    }
+    // if (
+    //   !serviceState?.serviceNameEN ||
+    //   !serviceState?.serviceNameTH ||
+    //   !serviceState?.serviceUrl ||
+    //   !serviceState?.serviceDescriptionEN ||
+    //   !serviceState?.serviceDescriptionTH
+    // ) {
+    //   Swal.fire({
+    //     showConfirmButton: false,
+    //     position: "top",
+    //     toast: true,
+    //     icon: "error",
+    //     title: "Oops...",
+    //     text: "Fill In All the Required Boxes",
+    //     footer: "Including: Service Name, URL, Description",
+    //   });
+    //   return;
+    // }
     onSave(
       serviceState,
       "POST",
       null,
-      "service",
-      `Create New Service:${serviceState?.serviceNameEN || serviceState?.serviceNameTH}`
+      "project",
+      `Create New Project:${serviceState?.projectNameTH}`
     );
   };
   // Tracking Form Change
@@ -91,8 +91,8 @@ export default function CreateServicePage() {
   return (
     <DefaultLayout>
       <Breadcrumb
-        pageName={"Create New Service"}
-        prevPage={{ pageName: "Service", url: "/webpanel/service" }}
+        pageName={"Create New Project"}
+        prevPage={{ pageName: "Project", url: "/webpanel/project" }}
       />
 
       <ServiceForm

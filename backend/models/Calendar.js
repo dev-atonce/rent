@@ -2,9 +2,9 @@ const mongoose = require("mongoose");
 
 const schema = new mongoose.Schema(
     {
-        titleTH: { type: String, required: true },
-        startDate: { type: String, required: true },
-        endDate: { type: String },
+        title: { type: String, required: true },
+        start: { type: String, required: true },
+        end: { type: String },
         trainingCourse: {
             type: mongoose.Schema.Types.ObjectId,
             ref: "TrainingCourses",
@@ -18,9 +18,9 @@ const schema = new mongoose.Schema(
 schema.methods.toJSON = function () {
     return {
         id: this._id,
-        titleTH: this.titleTH,
-        startDate: this.startDate,
-        endDate: this.endDate,
+        title: this.title,
+        start: this.start,
+        end: this.end,
         trainingCourse: this.trainingCourse,
         createdAt: this.createdAt,
         updatedAt: this.updatedAt,

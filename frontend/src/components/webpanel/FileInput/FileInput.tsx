@@ -14,6 +14,7 @@ export default function FileInput({
   label,
   ratio,
   height,
+  uploadAmount,
 }: any) {
   const [file, setFile] = useState<File[]>([]);
   const [singleFile, setSingleFile] = useState(null);
@@ -24,7 +25,13 @@ export default function FileInput({
     if (multiple) {
       let file1: File[] = [];
       for (let i = 0; i < e.target.files?.length; i++) {
-        file1.push(e.target.files?.[i]);
+        if (uploadAmount) {
+          if (i < uploadAmount) {
+            file1.push(e.target.files?.[i]);
+          }
+        } else {
+          file1.push(e.target.files?.[i]);
+        }
       }
       // setFile(file1);
 
@@ -42,7 +49,16 @@ export default function FileInput({
   const imageChange = (e: any) => {
     if (e.target.files && e.target.files.length > 0) {
       if (multiple) {
-        setSelectedImages(Object.values(e.target.files));
+        if (uploadAmount) {
+          setSelectedImages(
+            // @ts-ignore
+            Object.values(e.target.files).filter(
+              (i: any, index: any) => index < uploadAmount
+            )
+          );
+        } else {
+          setSelectedImages(Object.values(e.target.files));
+        }
       } else {
         setSelectedImage(e.target.files[0]);
       }

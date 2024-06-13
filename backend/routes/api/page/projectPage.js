@@ -8,5 +8,11 @@ router.get(
   [validator.project.url, validator.check],
   controllers.onGetByUrl
 );
+router.get(
+  "/url/:url",
+  [validator.project.url, validator.check],
+  controllers.onGetByUrl
+);
+router.get("/:id", controllers.onGetById);
 
 module.exports = router;
