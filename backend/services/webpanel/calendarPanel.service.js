@@ -13,25 +13,12 @@ const methods = {
         path: "trainingCourse",
       });
       const count = await Calendar.countDocuments();
-
       return {
         total: count,
         rows: rows,
       };
     } catch (error) {
       return Promise.reject(ErrorNotFound(error.message));
-    }
-  },
-
-  async findById(id) {
-    try {
-      const obj = await Calendar.findById(id).populate({
-        path: "trainingCourse",
-      });
-      if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
-      return obj;
-    } catch (error) {
-      return Promise.reject(ErrorNotFound("id: not found"));
     }
   },
 

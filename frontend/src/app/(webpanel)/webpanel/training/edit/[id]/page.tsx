@@ -24,7 +24,6 @@ export default function TrainingEdit({
     const calendar = await onFetchOne("calendar", id);
 
     setData({ ...data, initialName: data?.titleTH });
-    console.log(calendar);
     setCalendar(calendar?.rows);
   };
 

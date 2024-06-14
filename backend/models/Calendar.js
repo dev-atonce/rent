@@ -18,9 +18,9 @@ const schema = new mongoose.Schema(
 schema.methods.toJSON = function () {
   return {
     id: this._id,
-    title: this.titleTH,
-    start: this.startDate,
-    end: this.endDate,
+    title: this.title,
+    start: this.start,
+    end: this.end,
     trainingCourse: this.trainingCourse,
     createdAt: this.createdAt,
     updatedAt: this.updatedAt,

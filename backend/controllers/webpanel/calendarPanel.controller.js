@@ -4,16 +4,6 @@ const methods = {
   async onGetAll(req, res) {
     try {
       let result = await Calendar.findAll(req);
-
-      res.success(result);
-    } catch (error) {
-      res.error(error);
-    }
-  },
-
-  async onGetById(req, res) {
-    try {
-      let result = await Calendar.findById(req.params.id);
       res.success(result);
     } catch (error) {
       res.error(error);

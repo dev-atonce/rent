@@ -5,8 +5,6 @@ const validator = require("../../../validators");
 
 router.get("/:id", controllers.onGetAll);
 
-// router.get("/:id",[validator.calendar.findById, validator.check], controllers.onGetById);
-
 router.post("/", controllers.onInsert);
 
 router.put("/:id", controllers.onUpdate);
