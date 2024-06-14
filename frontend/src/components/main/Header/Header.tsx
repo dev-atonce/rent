@@ -13,8 +13,10 @@ import { getCookie, hasCookie, setCookie } from "cookies-next";
 export default function Header() {
   const [currentLanguage, setCurrentLanguage] = useState<string>("th");
   const [openLang, setOpenLang] = useState<Boolean>(false);
+  const [openID, setOpenID] = useState<String>('');
+
   const [isOpen, setIsOpen] = useState<Boolean>(false);
-  const { primaryColor }: any = useContext(PageSettingContext);
+  const {primaryColor }: any = useContext(PageSettingContext);
   const [openSubMenu, setOpenSubMenu] = useState<Boolean>(false);
 
   const languages = [
@@ -153,10 +155,9 @@ export default function Header() {
                     language={{
                         currentLanguage,
                         setCurrentLanguage,
-                        openLang,
-                        setOpenLang,
-                        toggleLanguage,
-                        languages,
+                        openID, setOpenID,
+                        openLang, setOpenLang,
+                        languages, toggleLanguage,
                         switchLanguage,
                     }}
                 />
@@ -189,9 +190,13 @@ export default function Header() {
                         <div className="hidden md:flex items-center social-icon">
                             <LanguageSwitcher
                                 position="bottom"
+                                round="rounded-full"
+                                id="Header"
                                 language={{
                                     currentLanguage,
                                     setCurrentLanguage,
+                                    openID,
+                                    setOpenID,
                                     openLang,
                                     setOpenLang,
                                     toggleLanguage,
