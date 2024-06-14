@@ -410,6 +410,8 @@ export default function FetchProvider({ children, user, token }: any) {
       route = `${projectRoute}/${id}`;
     } else if (type == "product") {
       route = `${productStatusRoute}/${id}`;
+    } else if (type == "training") {
+      route = `${trainingRoute}/${id}`;
     }
     try {
       const response = await fetch(route, {

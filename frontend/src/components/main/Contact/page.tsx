@@ -44,7 +44,7 @@ export default function Contact({ data }: any) {
       telephone: "โทร. 02-017-7217",
     },
   ];
-  console.log(data);
+
 
   const initList = data?.map((i: any, key: any) => ({
     ...i,

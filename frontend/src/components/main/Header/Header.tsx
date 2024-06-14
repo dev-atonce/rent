@@ -129,116 +129,116 @@ export default function Header() {
 
   return (
     <>
+      <div
+        id="google_translate_element"
+        style={{
+          width: "0px",
+          height: "0px",
+          position: "absolute",
+          left: "50%",
+          zIndex: -99999,
+        }}
+      ></div>
+      <div className="flex">
         <div
-            id="google_translate_element"
-            style={{
-                width: "0px",
-                height: "0px",
-                position: "absolute",
-                left: "50%",
-                zIndex: -99999,
-            }}
-        ></div>
-        <div className="flex">
-            <div
-                className={`fixed block lg:none top-0 left-0 h-full w-80 text-black bg-slate-200 transition-transform duration-300 z-40 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
-            >
-            <Script
-                    src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
-                    strategy="afterInteractive"
+          className={`fixed block lg:none top-0 left-0 h-full w-80 text-black bg-slate-200 transition-transform duration-300 z-40 ${isOpen ? "translate-x-0" : "-translate-x-full"}`}
+        >
+          <Script
+            src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"
+            strategy="afterInteractive"
+          />
+          <div className="grid content-stretch">
+            <SideBar
+              sideBar={{ toggleSubMenu, closeSideBar }}
+              language={{
+                currentLanguage,
+                setCurrentLanguage,
+                openLang,
+                setOpenLang,
+                toggleLanguage,
+                languages,
+                switchLanguage,
+              }}
             />
-            <div className="grid content-stretch">
-                <SideBar
-                    sideBar={{ toggleSubMenu, closeSideBar }}
-                    language={{
-                        currentLanguage,
-                        setCurrentLanguage,
-                        openLang,
-                        setOpenLang,
-                        toggleLanguage,
-                        languages,
-                        switchLanguage,
-                    }}
-                />
-            </div>
-            </div>
+          </div>
         </div>
-        <div className="header">
-            <div className="section-1">
-                <div className="container mx-auto">
-                    <div className="flex justify-between">
-                        <div className="flex justify-center items-center lg:hidden">
-                                <div
-                                    className="cursor-pointer flex flex-col items-center justify-around w-8 h-8 burger"
-                                    onClick={toggleSidebar}
-                                >
-                                <div
-                                    className={`w-full h-1 ${isOpen ? `bg-white` : `bg-black`} ${isOpen ? "transform rotate" : ""} transition-transform duration-300`}
-                                ></div>
-                                <div
-                                    className={`w-full h-1 ${isOpen ? `bg-white` : `bg-black`} ${isOpen ? "opacity-0" : ""} transition-opacity duration-300`}
-                                ></div>
-                                <div
-                                    className={`w-full h-1 ${isOpen ? `bg-white` : `bg-black`} ${isOpen ? "transform -rotate" : ""} transition-transform duration-300`}
-                                ></div>
-                                </div>
-                        </div>
-                        <div className="logo">
-                            <Logo color={primaryColor} />
-                        </div>
-                        <div className="hidden md:flex items-center social-icon">
-                            <LanguageSwitcher
-                                position="bottom"
-                                language={{
-                                    currentLanguage,
-                                    setCurrentLanguage,
-                                    openLang,
-                                    setOpenLang,
-                                    toggleLanguage,
-                                    languages,
-                                    switchLanguage,
-                                }}
-                            />
-                            <a
-                                href="https://www.facebook.com"
-                                target="_blank"
-                                className="rounded-full p-2 bg-blue-600"
-                            >
-                            <FaFacebookF fontSize="1.2em" color="white" />
-                            </a>
-                            <a
-                                href="https://line.me/th"
-                                target="_blank"
-                                className="rounded-full p-2 bg-green-500 ml-1"
-                            >
-                            <FaLine fontSize="1.2em" color="white" />
-                            </a>
-                            <a
-                                href="https://www.youtube.com"
-                                target="_blank"
-                                className="rounded-full p-2 bg-red ml-1"
-                            >
-                            <FaYoutube
-                                fontSize="1.2em"
-                                color="white"
-                                className="bg-red-500"
-                            />
-                            </a>
-                        </div>
-                    </div>
+      </div>
+      <div className="header">
+        <div className="section-1">
+          <div className="container mx-auto">
+            <div className="flex justify-between">
+              <div className="flex justify-center items-center lg:hidden">
+                <div
+                  className="cursor-pointer flex flex-col items-center justify-around w-8 h-8 burger"
+                  onClick={toggleSidebar}
+                >
+                  <div
+                    className={`w-full h-1 ${isOpen ? `bg-white` : `bg-black`} ${isOpen ? "transform rotate" : ""} transition-transform duration-300`}
+                  ></div>
+                  <div
+                    className={`w-full h-1 ${isOpen ? `bg-white` : `bg-black`} ${isOpen ? "opacity-0" : ""} transition-opacity duration-300`}
+                  ></div>
+                  <div
+                    className={`w-full h-1 ${isOpen ? `bg-white` : `bg-black`} ${isOpen ? "transform -rotate" : ""} transition-transform duration-300`}
+                  ></div>
                 </div>
+              </div>
+              <div className="logo">
+                <Logo color={primaryColor} />
+              </div>
+              <div className="hidden md:flex items-center social-icon">
+                <LanguageSwitcher
+                  position="bottom"
+                  language={{
+                    currentLanguage,
+                    setCurrentLanguage,
+                    openLang,
+                    setOpenLang,
+                    toggleLanguage,
+                    languages,
+                    switchLanguage,
+                  }}
+                />
+                <a
+                  href="https://www.facebook.com/rentalmachines/"
+                  target="_blank"
+                  className="rounded-full p-2 bg-blue-600"
+                >
+                  <FaFacebookF fontSize="1.2em" color="white" />
+                </a>
+                <a
+                  href="https://line.me/ti/p/~ID@rent_thailand"
+                  target="_blank"
+                  className="rounded-full p-2 bg-green-500 ml-1"
+                >
+                  <FaLine fontSize="1.2em" color="white" />
+                </a>
+                <a
+                  href="https://www.youtube.com/@rent_thailand"
+                  target="_blank"
+                  className="rounded-full p-2 bg-red ml-1"
+                >
+                  <FaYoutube
+                    fontSize="1.2em"
+                    color="white"
+                    className="bg-red-500"
+                  />
+                </a>
+              </div>
             </div>
-                <div className="section-2 hidden lg:block">
-                    <div className="container mx-auto">
-                        <div className="responsive-nav">
-                            <div className="flex justify-center">
-                                <NavBar />
-                            </div>
-                            <div className="more-menu"></div>
-                        </div>
-                    </div>
-                </div>
+          </div>
+        </div>
+        <div className="section-2 hidden lg:block">
+          <div className="container mx-auto">
+            <div className="responsive-nav">
+              <div className="flex justify-center">
+                <NavBar />
+              </div>
+              <div className="more-menu"></div>
             </div>
-        </>
-    );
+          </div>
+        </div>
+      </div>
+    </>
+  );
 }

@@ -116,10 +116,11 @@ export default function TrainingForm({
                     href="product/maincat/create"
                     className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
                   >
-                    CREATE MAIN-CATEGORY
+                    CREATE SCHEDULE
                   </Link>
                 </div>
               </div>
+              {/* to do calendar fetch */}
               <div className="">
                 <TableThree
                   //   onDelete={onDeleteMainCat}

@@ -17,10 +17,11 @@ export default function Product({ type }: any) {
       // `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product/all`
     );
     const products = await subCat.json();
+
     const filteredProducts = products?.rows?.filter(
       (i: any) => i?.type == type
     );
-
+    console.log(products);
     setProducts(filteredProducts);
   };
   const fetchCat = async () => {
@@ -100,6 +101,8 @@ export default function Product({ type }: any) {
       setFilteredProducts(filteredProduct);
     }
   };
+  console.log(filteredProducts);
+  console.log(filter);
 
   useEffect(() => {
     fetchCat();

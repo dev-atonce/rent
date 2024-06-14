@@ -1,11 +1,11 @@
 import flatpickr from "flatpickr";
 import { useEffect } from "react";
 
-const DatePickerOne = () => {
+const DatePickerOne = ({ label }: any) => {
   useEffect(() => {
     // Init flatpickr
     flatpickr(".form-datepicker", {
-      mode: "single",
+      mode: "range",
       static: true,
       monthSelectorType: "static",
       dateFormat: "M j, Y",
@@ -18,17 +18,18 @@ const DatePickerOne = () => {
 
   return (
     <div>
-      <label className="mb-3 block text-sm font-medium text-black dark:text-white">
-        Date picker
+      <label className=" block text-sm font-medium text-black dark:text-white">
+        {label}
       </label>
       <div className="relative">
         <input
-          className="form-datepicker w-full rounded border-[1.5px] border-stroke bg-transparent px-5 py-3 font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
+          onChange={(e: any) => console.log(e.target)}
+          className="form-datepicker w-full rounded border-[1.5px] border-stroke bg-transparent  font-normal outline-none transition focus:border-primary active:border-primary dark:border-form-strokedark dark:bg-form-input dark:focus:border-primary"
           placeholder="mm/dd/yyyy"
           data-class="flatpickr-right"
         />
 
-        <div className="pointer-events-none absolute inset-0 left-auto right-5 flex items-center">
+        {/* <div className="pointer-events-none absolute inset-0 left-auto right-5 flex items-center">
           <svg
             width="18"
             height="18"
@@ -41,7 +42,7 @@ const DatePickerOne = () => {
               fill="#64748B"
             />
           </svg>
-        </div>
+        </div> */}
       </div>
     </div>
   );

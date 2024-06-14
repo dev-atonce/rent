@@ -61,7 +61,7 @@ const data = [
     id: 1,
     title: "ARE AWESOME",
     tagline: "NEXTJS 13 & SWIPER SLIDER",
-    image: "/img/slide1.jpeg",
+    image: "/img/ad1.jpg",
     url: "/rental-product",
     buttons: [
       {
@@ -76,7 +76,7 @@ const data = [
     id: 2,
     title: "GIVE IT A SHOOT",
     tagline: "IF YOU LIKE IT",
-    image: "/img/slide2.jpeg",
+    image: "/img/ad2.jpg",
     url: "/rental-product",
     buttons: [
       {
@@ -91,7 +91,7 @@ const data = [
     id: 3,
     title: "GIVE IT A SHOOT",
     tagline: "IF YOU LIKE IT",
-    image: "/img/slide3.jpeg",
+    image: "/img/ad3.jpg",
     url: "/rental-product",
     buttons: [
       {
@@ -106,7 +106,7 @@ const data = [
     id: 3,
     title: "GIVE IT A SHOOT",
     tagline: "IF YOU LIKE IT",
-    image: "/img/slide4.jpeg",
+    image: "/img/ad4.jpg",
     url: "/rental-product",
     buttons: [
       {
@@ -146,7 +146,7 @@ export default function CoverSwiper() {
                       alt={v.title}
                       width={1920}
                       height={618}
-                      className=" object-cover w-full aspect-[3/1]"
+                      className=" object-cover  w-full aspect-[3/1.5"
                     />
                   </Link>
                 </SwiperSlide>

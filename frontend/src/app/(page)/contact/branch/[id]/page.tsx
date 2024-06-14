@@ -8,6 +8,30 @@ import { FaPhoneAlt } from "react-icons/fa";
 import Contactform from "@/components/main/Contact/ContactForm";
 import { TbPointFilled } from "react-icons/tb";
 
+import { Metadata, ResolvingMetadata } from "next";
+
+const pageName = "contact";
+export async function generateMetadata(
+  { params, searchParams }: any,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
+  // read route params
+  const lng = "TH";
+
+  const seoRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/seo/page-name/${pageName}`;
+
+  // fetch data
+  const response = await fetch(seoRoute, { cache: "no-store" }).then((res) =>
+    res.json()
+  );
+
+  return {
+    title: response[`seoTitle${lng}`],
+    description: response[`seoDescription${lng}`],
+    keywords: response[`seoKeyword${lng}`],
+  };
+}
+
 const fetchData = async (id: any) => {
   const data = await fetch(
     `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact/${id}`
@@ -56,9 +80,9 @@ export default async function BranchPage({ params: { id } }: any) {
         </div>
         <div className="py-2 grid grid-cols-2 gap-4 border-b border-slate-100  pb-4 w-full">
           <Image
-            className="aspect-[4/2] object-cover w-full col-span-2 lg:col-span-1 "
+            className="aspect-[4/2] object-cover w-full col-span-2 lg:col-span-1 rounded-lg "
             alt={`บริษัท เร้นท์ (ประเทศไทย) จำกัด`}
-            src={`/Rectangle 136.png`}
+            src={`/img/contact_rent.jpg`}
             width={834}
             height={436}
             quality={100}

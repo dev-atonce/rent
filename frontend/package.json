@@ -38,6 +38,7 @@
     "react-apexcharts": "^1.4.1",
     "react-color": "^2.19.3",
     "react-cookie": "^7.1.4",
+    "react-datepicker": "^7.0.0",
     "react-dom": "^18",
     "react-hook-form": "^7.51.4",
     "react-i18next": "^14.1.1",
