@@ -60,11 +60,12 @@ const Training = () => {
                 <TrainingCourseCard data={courseList} />
             </Row>
 
-            {total > Number(process.env.NEXT_PUBLIC_perPage) &&
+            {total > Number(process.env.NEXT_PUBLIC_COURSE_PERPAGE) &&
                 <AntPagination
                     total={total}
                     currentPage={page}
                     setCurrentPage={setPage}
+                    pageSize={Number(process.env.NEXT_PUBLIC_COURSE_PERPAGE)}
                 />
             }
         </>

@@ -105,6 +105,77 @@ export default function FetchProvider({ children, user, token }: any) {
       console.error("There was a problem with the fetch operation:", error);
     }
   };
+  const onFetchPage = async (type: any, id: any, page: any) => {
+    let route = "";
+    if (id) {
+      if (type === "service") {
+        route = `${serviceRoute}/${id}`;
+      } else if (type === "user") {
+        route = `${userRoute}/${id}`;
+      } else if (type === "address") {
+        route = `${addressRoute}/${id}`;
+      } else if (type === "subject") {
+        route = `${subjectRoute}/${id}`;
+      } else if (type === "position") {
+        route = `${positionRoute}/${id}`;
+      } else if (type === "product") {
+        route = `${productRoute}/${id}?page=${page}`;
+      } else if (type === "mainCategory") {
+        route = `${mainCategoryRoute}/${id}`;
+      } else if (type === "subCategory") {
+        route = `${subCategoryRoute}/${id}`;
+      } else if (type === "project") {
+        route = `${projectRoute}/${id}`;
+      } else if (type === "training") {
+        route = `${trainingRoute}/${id}`;
+      } else if (type === "calendar") {
+        route = `${calendarRoute}/${id}`;
+      }
+    } else {
+      if (type === "service") {
+        route = serviceRoute;
+      } else if (type === "user") {
+        route = userRoute;
+      } else if (type === "seo") {
+        route = seoRoute;
+      } else if (type === "log") {
+        route = logRoute;
+      } else if (type === "address") {
+        route = addressRoute;
+      } else if (type === "subject") {
+        route = subjectRoute;
+      } else if (type === "position") {
+        route = positionRoute;
+      } else if (type === "product") {
+        route = productRoute;
+      } else if (type === "mainCategory") {
+        route = mainCategoryRoute;
+      } else if (type === "subCategory") {
+        route = subCategoryRoute;
+      } else if (type === "calendar") {
+        route = calendarRoute;
+      }
+    }
+    try {
+      const response = await fetch(route, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+
+      return data;
+
+      // console.log("Data received:", data);
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+    }
+  };
   const onSave = (
     data: any,
     method: any,
@@ -710,6 +781,7 @@ export default function FetchProvider({ children, user, token }: any) {
       value={{
         onSave,
         onFetchOne,
+        onFetchPage,
         onInsertLog,
         onChangeStatus,
         onSort,

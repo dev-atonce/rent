@@ -26,7 +26,7 @@ const upload = multer({
 
 const methods = {
   async findAll(req) {
-    const limit = +(req.query.size || config.pageLimit);
+    const limit = +(req.query.size || 50);
     const offset = +(limit * ((req.query.page || 1) - 1));
     try {
       const rows = await Product.find()
@@ -38,9 +38,9 @@ const methods = {
             select: "nameTH",
           },
         })
-        .sort({ sort: "asc" });
-      // .limit(limit)
-      // .skip(offset);
+        .sort({ sort: "asc" })
+        .limit(limit)
+        .skip(offset);
       const count = await Product.countDocuments();
       return {
         total: count,

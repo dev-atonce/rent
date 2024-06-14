@@ -5,7 +5,12 @@ const { ErrorNotFound } = require("../../configs/errorMethods");
 const methods = {
     async findById(req) {
         try {
-            const rows = await Calendar.find({ trainingCourse: req.params.id }).select('title start end -_id').exec();
+            const rows = await Calendar.find({ trainingCourse: req.params.id })
+                .select('title start end -_id')
+                .populate({
+                    path: "trainingCourse",
+                    select: "titleTH",
+                });
             return {
                 rows: rows,
             };

@@ -5,9 +5,10 @@ interface AntPaginationProps {
     currentPage: any,
     setCurrentPage: any,
     total: number,
+    pageSize: number,
 }
 
-const AntPagination = ({total, currentPage, setCurrentPage}: AntPaginationProps) => {
+const AntPagination = ({total, currentPage, setCurrentPage, pageSize}: AntPaginationProps) => {
 
     // Function to handle page change
     const handlePageChange = (page: number) => {
@@ -23,6 +24,7 @@ const AntPagination = ({total, currentPage, setCurrentPage}: AntPaginationProps)
                 total={total}
                 onChange={handlePageChange}
                 showSizeChanger={false}
+                pageSize={pageSize}
             />
         </div>
         </>

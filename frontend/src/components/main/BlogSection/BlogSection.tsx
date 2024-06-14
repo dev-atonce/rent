@@ -43,6 +43,7 @@ const BlogSection = ({ limit, typeBlog, home }: BlogSectionProps) => {
               total={total}
               currentPage={page}
               setCurrentPage={setPage}
+              pageSize={limit}
             />
           )}
         </>
