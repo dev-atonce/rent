@@ -8,7 +8,16 @@ const methods = {
     const limit = +(req.query.size || config.pageLimit);
     const offset = +(limit * ((req.query.page || 1) - 1));
     try {
-      const rows = await Product.find({ status: true }).sort({ sort: "asc" });
+      const rows = await Product.find({ status: true })
+      .populate({
+        path: "subCategory",
+        select: "nameTH mainCategory",
+        populate: {
+          path: "mainCategory",
+          select: "nameTH",
+        },
+      })
+      .sort({ sort: "asc" });
       // .limit(limit)
       // .skip(offset);
       const count = await Product.countDocuments({ status: true });
@@ -29,7 +38,9 @@ const methods = {
       const obj = await Product.findOne({
         serviceUrl: url,
         status: true,
-      }).exec();
+      })
+      .populate("subCategory")
+      .exec();
       if (!obj) return Promise.reject(ErrorNotFound("url: not found"));
       return obj;
     } catch (error) {
