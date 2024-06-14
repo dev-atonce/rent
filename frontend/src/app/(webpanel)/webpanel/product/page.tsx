@@ -9,6 +9,7 @@ import Input from "@/components/webpanel/Input/Input";
 import SelectGroupOne from "@/components/webpanel/SelectGroup/SelectGroupOne";
 import { FetchContext } from "@/contexts/FetchContext";
 import { set } from "react-hook-form";
+import AntPagination from "@/components/common/AntPagination/AntPagination";
 
 // export const metadata: Metadata = {
 //   title: "Next.js Form Layout | TailAdmin - Next.js Dashboard Template",
@@ -17,7 +18,7 @@ import { set } from "react-hook-form";
 // };
 
 export default function ProductPage() {
-  const { onFetchOne, onDelete }: any = useContext(FetchContext);
+  const { onFetchOne, onDelete, onFetchPage }: any = useContext(FetchContext);
   const [data, setData] = useState([]);
   const [mainCatData, setMainCatData] = useState([]);
   const [subCatData, setSubCatData] = useState([]);
@@ -30,6 +31,10 @@ export default function ProductPage() {
     status: "0",
     category: "",
   });
+
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+
   const envLangs: string | undefined = process.env.NEXT_PUBLIC_LANGUAGES;
 
   // @ts-ignore
@@ -41,12 +46,13 @@ export default function ProductPage() {
   const [modalState, setModalState] = useState(initialModalState);
 
   async function fetchData() {
-    const data = await onFetchOne("product", "all");
+    const data = await onFetchPage("product", "all", page);
     const mainCat = await onFetchOne("mainCategory", null);
     const subCat = await onFetchOne("subCategory", null);
 
     setInitData(data?.rows);
-
+    setTotal(data?.total);
+    // setData(filter(data?.rows));
     setData(filter(data?.rows));
     setMainCatData(mainCat?.rows);
     setSubCatData(subCat?.rows);
@@ -135,7 +141,7 @@ export default function ProductPage() {
 
   useEffect(() => {
     fetchData();
-  }, [modalState]);
+  }, [modalState, page]);
 
   useEffect(() => {
     fetchData();
@@ -303,6 +309,14 @@ export default function ProductPage() {
             { title: "Status", minWidth: "" },
           ]}
         />
+        { total > Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE) &&
+          <AntPagination
+            total={total}
+            currentPage={page}
+            setCurrentPage={setPage}
+            pageSize={Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE)}
+          />
+        }
       </>
       {/* <Jodit /> */}
     </DefaultLayout>

@@ -7,10 +7,7 @@ const methods = {
         try {
             const rows = await Calendar.find({ trainingCourse: req.params.id })
                 .select('title start end -_id')
-                .populate({
-                    path: "trainingCourse",
-                    select: "titleTH",
-                });
+                .populate("trainingCourse");
             return {
                 rows: rows,
             };
