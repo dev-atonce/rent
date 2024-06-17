@@ -20,7 +20,7 @@ export default async function TrainingCourse({ params }: { params: { id: string 
         <>
             <Loading />
             <Cover
-                pageName={"การฝึกอบรมความปลอดภัย Safety Training"}
+                pageName={`การฝึกอบรมความปลอดภัย ${data[0].trainingCourse.titleTH}`}
                 prevPage={{ pageName: "หน้าแรก", url: "/" }}
             />
             <div className="container mx-auto">

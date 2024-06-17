@@ -13,6 +13,8 @@ import { getCookie, hasCookie, setCookie } from "cookies-next";
 export default function Header() {
   const [currentLanguage, setCurrentLanguage] = useState<string>("th");
   const [openLang, setOpenLang] = useState<Boolean>(false);
+  const [openID, setOpenID] = useState<String>("");
+
   const [isOpen, setIsOpen] = useState<Boolean>(false);
   const { primaryColor }: any = useContext(PageSettingContext);
   const [openSubMenu, setOpenSubMenu] = useState<Boolean>(false);
@@ -160,82 +162,145 @@ export default function Header() {
                 switchLanguage,
               }}
             />
+            <div className="grid content-stretch">
+              <SideBar
+                sideBar={{ toggleSubMenu, closeSideBar }}
+                language={{
+                  currentLanguage,
+                  setCurrentLanguage,
+                  openID,
+                  setOpenID,
+                  openLang,
+                  setOpenLang,
+                  languages,
+                  toggleLanguage,
+                  switchLanguage,
+                }}
+              />
+            </div>
+          </div>
+        </div>
+        <div className="header">
+          <div className="section-1">
+            <div className="container mx-auto">
+              <div className="flex justify-between">
+                <div className="flex justify-center items-center lg:hidden">
+                  <div
+                    className="cursor-pointer flex flex-col items-center justify-around w-8 h-8 burger"
+                    onClick={toggleSidebar}
+                  >
+                    <div
+                      className={`w-full h-1 ${isOpen ? `bg-white` : `bg-black`} ${isOpen ? "transform rotate" : ""} transition-transform duration-300`}
+                    ></div>
+                    <div
+                      className={`w-full h-1 ${isOpen ? `bg-white` : `bg-black`} ${isOpen ? "opacity-0" : ""} transition-opacity duration-300`}
+                    ></div>
+                    <div
+                      className={`w-full h-1 ${isOpen ? `bg-white` : `bg-black`} ${isOpen ? "transform -rotate" : ""} transition-transform duration-300`}
+                    ></div>
+                  </div>
+                </div>
+                <div className="logo">
+                  <Logo color={primaryColor} />
+                </div>
+                <div className="hidden md:flex items-center social-icon">
+                  <LanguageSwitcher
+                    position="bottom"
+                    round="rounded-full"
+                    id="Header"
+                    language={{
+                      currentLanguage,
+                      setCurrentLanguage,
+                      openID,
+                      setOpenID,
+                      openLang,
+                      setOpenLang,
+                      toggleLanguage,
+                      languages,
+                      switchLanguage,
+                    }}
+                  />
+                  <a
+                    href="https://www.facebook.com"
+                    target="_blank"
+                    className="rounded-full p-2 bg-blue-600"
+                  >
+                    <FaFacebookF fontSize="1.2em" color="white" />
+                  </a>
+                  <a
+                    href="https://line.me/th"
+                    target="_blank"
+                    className="rounded-full p-2 bg-green-500 ml-1"
+                  >
+                    <FaLine fontSize="1.2em" color="white" />
+                  </a>
+                  <a
+                    href="https://www.youtube.com"
+                    target="_blank"
+                    className="rounded-full p-2 bg-red ml-1"
+                  >
+                    <FaYoutube
+                      fontSize="1.2em"
+                      color="white"
+                      className="bg-red-500"
+                    />
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="logo">
+            <Logo color={primaryColor} />
+          </div>
+          <div className="hidden md:flex items-center social-icon">
+            <LanguageSwitcher
+              position="bottom"
+              language={{
+                currentLanguage,
+                setCurrentLanguage,
+                openLang,
+                setOpenLang,
+                toggleLanguage,
+                languages,
+                switchLanguage,
+              }}
+            />
+            <a
+              href="https://www.facebook.com/rentalmachines/"
+              target="_blank"
+              className="rounded-full p-2 bg-blue-600"
+            >
+              <FaFacebookF fontSize="1.2em" color="white" />
+            </a>
+            <a
+              href="https://line.me/ti/p/~ID@rent_thailand"
+              target="_blank"
+              className="rounded-full p-2 bg-green-500 ml-1"
+            >
+              <FaLine fontSize="1.2em" color="white" />
+            </a>
+            <a
+              href="https://www.youtube.com/@rent_thailand"
+              target="_blank"
+              className="rounded-full p-2 bg-red ml-1"
+            >
+              <FaYoutube
+                fontSize="1.2em"
+                color="white"
+                className="bg-red-500"
+              />
+            </a>
           </div>
         </div>
       </div>
-      <div className="header">
-        <div className="section-1">
-          <div className="container mx-auto">
-            <div className="flex justify-between">
-              <div className="flex justify-center items-center lg:hidden">
-                <div
-                  className="cursor-pointer flex flex-col items-center justify-around w-8 h-8 burger"
-                  onClick={toggleSidebar}
-                >
-                  <div
-                    className={`w-full h-1 ${isOpen ? `bg-white` : `bg-black`} ${isOpen ? "transform rotate" : ""} transition-transform duration-300`}
-                  ></div>
-                  <div
-                    className={`w-full h-1 ${isOpen ? `bg-white` : `bg-black`} ${isOpen ? "opacity-0" : ""} transition-opacity duration-300`}
-                  ></div>
-                  <div
-                    className={`w-full h-1 ${isOpen ? `bg-white` : `bg-black`} ${isOpen ? "transform -rotate" : ""} transition-transform duration-300`}
-                  ></div>
-                </div>
-              </div>
-              <div className="logo">
-                <Logo color={primaryColor} />
-              </div>
-              <div className="hidden md:flex items-center social-icon">
-                <LanguageSwitcher
-                  position="bottom"
-                  language={{
-                    currentLanguage,
-                    setCurrentLanguage,
-                    openLang,
-                    setOpenLang,
-                    toggleLanguage,
-                    languages,
-                    switchLanguage,
-                  }}
-                />
-                <a
-                  href="https://www.facebook.com/rentalmachines/"
-                  target="_blank"
-                  className="rounded-full p-2 bg-blue-600"
-                >
-                  <FaFacebookF fontSize="1.2em" color="white" />
-                </a>
-                <a
-                  href="https://line.me/ti/p/~ID@rent_thailand"
-                  target="_blank"
-                  className="rounded-full p-2 bg-green-500 ml-1"
-                >
-                  <FaLine fontSize="1.2em" color="white" />
-                </a>
-                <a
-                  href="https://www.youtube.com/@rent_thailand"
-                  target="_blank"
-                  className="rounded-full p-2 bg-red ml-1"
-                >
-                  <FaYoutube
-                    fontSize="1.2em"
-                    color="white"
-                    className="bg-red-500"
-                  />
-                </a>
-              </div>
+
+      <div className="section-2 hidden lg:block">
+        <div className="container mx-auto">
+          <div className="responsive-nav">
+            <div className="flex justify-center">
+              <NavBar />
             </div>
-          </div>
-        </div>
-        <div className="section-2 hidden lg:block">
-          <div className="container mx-auto">
-            <div className="responsive-nav">
-              <div className="flex justify-center">
-                <NavBar />
-              </div>
-              <div className="more-menu"></div>
-            </div>
+            <div className="more-menu"></div>
           </div>
         </div>
       </div>
