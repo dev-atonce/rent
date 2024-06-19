@@ -176,13 +176,14 @@ export default function FetchProvider({ children, user, token }: any) {
       console.error("There was a problem with the fetch operation:", error);
     }
   };
-  const onSave = (
+
+  const onSave = async (
     data: any,
     method: any,
     id: any,
     type: any,
     activity: any
-  ) => {
+  ): Promise<{ success: boolean; message: string }> => {
     let route = "";
     let modifiedData = { ...data };
 
@@ -237,6 +238,18 @@ export default function FetchProvider({ children, user, token }: any) {
       } else if (method?.toUpperCase() == "POST") {
         route = projectRoute;
       }
+    } else if (type == "calendar") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${calendarRoute}/${id}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = calendarRoute;
+      }
+    } else if (type == "training") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${trainingRoute}/${id}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = trainingRoute;
+      }
     } else if (type == "serviceSeo") {
       route = `${serviceSeoRoute}/${id}`;
     } else if (type == "serviceSort") {
@@ -263,176 +276,448 @@ export default function FetchProvider({ children, user, token }: any) {
       },
       buttonsStyling: false,
     });
-    swalWithBootstrapButtons
-      .fire({
-        title: "Are you sure?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes, Save Changes!",
-        cancelButtonText: "No, cancel!",
-        reverseButtons: true,
-      })
-      .then(async (result) => {
-        if (result.isConfirmed) {
-          try {
-            const response = await fetch(`${route}`, {
-              method: method?.toUpperCase(),
-              headers: {
-                "Content-Type": "application/json",
-              },
 
-              body: JSON.stringify(modifiedData),
-            });
-
-            const res = await response?.json();
-
-            if (res?.error) {
-              let msg = res?.error?.message;
-              // error message conditions
-              if (res?.error?.message.includes("`serviceUrl` to be unique")) {
-                msg = "Service URL has been used!, try a new one.";
-              } else if (
-                res.error.message.includes("`username` to be unique")
-              ) {
-                msg = `This username is already registered.`;
-              } else if (res.error.message.includes("`email` to be unique")) {
-                msg = `This email is already registered.`;
-              }
-              Swal.fire({
-                position: "top-right",
-                toast: true,
-                icon: "error",
-                title: msg,
-                showConfirmButton: false,
-                timer: 2500,
+    return new Promise((resolve, reject) => {
+      swalWithBootstrapButtons
+        .fire({
+          title: "Are you sure?",
+          text: "You won't be able to revert this!",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Yes, Save Changes!",
+          cancelButtonText: "No, cancel!",
+          reverseButtons: true,
+        })
+        .then(async (result) => {
+          if (result.isConfirmed) {
+            try {
+              const response = await fetch(`${route}`, {
+                method: method?.toUpperCase(),
+                headers: {
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify(modifiedData),
               });
-            } else {
-              const logRes = onInsertLog(
-                res?.id,
-                userId,
-                type,
-                `${user?.username}-${activity}`
-              );
-              //  @ts-ignore
-              if (!logRes?.error) {
-                // upload image
-                if (data?.image) {
-                  let imgRoute = route;
-                  if (method?.toUpperCase() == "POST") {
-                    imgRoute = `${route}/${res?.id}`;
-                  }
 
-                  await onUploadImage("image", data?.image, "PUT", imgRoute);
+              const res = await response?.json();
+
+              if (res?.error) {
+                let msg = res?.error?.message;
+                // error message conditions
+                if (res?.error?.message.includes("`serviceUrl` to be unique")) {
+                  msg = "Service URL has been used!, try a new one.";
+                } else if (
+                  res.error.message.includes("`username` to be unique")
+                ) {
+                  msg = `This username is already registered.`;
+                } else if (res.error.message.includes("`email` to be unique")) {
+                  msg = `This email is already registered.`;
                 }
-                if (data?.gallery) {
-                  let imgRoute = route;
-
-                  if (method?.toUpperCase() == "POST") {
-                    imgRoute = `${route}/${res?.id}`;
-                  }
-
-                  await onUploadImage(
-                    "gallery",
-                    data?.gallery,
-                    "PUT",
-                    imgRoute
-                  );
-                }
-
                 Swal.fire({
                   position: "top-right",
                   toast: true,
-                  icon: "success",
-                  title: "Your Changes have been saved!",
+                  icon: "error",
+                  title: msg,
                   showConfirmButton: false,
                   timer: 2500,
                 });
+                reject({ success: false, message: msg });
+              } else {
+                const logRes = await onInsertLog(
+                  res?.id,
+                  userId,
+                  type,
+                  `${user?.username}-${activity}`
+                );
+                //  @ts-ignore
+                if (!logRes?.error) {
+                  // upload image
+                  if (data?.image) {
+                    let imgRoute = route;
+                    if (method?.toUpperCase() == "POST") {
+                      imgRoute = `${route}/${res?.id}`;
+                    }
 
-                if (method?.toUpperCase() === "POST") {
-                  if (type === "service") {
-                    setTimeout(() => {
-                      router.push(`/webpanel/service/edit/${res?.id}`);
-                    }, 2000);
-                  } else if (type === "user") {
-                    setTimeout(() => {
-                      router.push("/webpanel/settings/user");
-                    }, 2000);
-                  } else if (type === "address") {
-                    setTimeout(() => {
-                      router.push("/webpanel/contact");
-                    }, 2000);
-                  } else if (type === "subject") {
-                    setTimeout(() => {
-                      router.push("/webpanel/contact");
-                    }, 2000);
-                  } else if (type == "position") {
-                    setTimeout(() => {
-                      router.push("/webpanel/career");
-                    }, 2000);
-                  } else if (
-                    type == "mainCategory" ||
-                    type == "subCategory" ||
-                    type == "product"
-                  ) {
-                    setTimeout(() => {
-                      router.push("/webpanel/product");
-                    }, 2000);
-                  } else if (type == "project") {
-                    setTimeout(() => {
-                      router.push("/webpanel/project");
-                    }, 2000);
+                    await onUploadImage("image", data?.image, "PUT", imgRoute);
                   }
-                } else if (method?.toUpperCase() === "PUT") {
-                  if (type === "user") {
-                    setTimeout(() => {
-                      router.push("/webpanel/settings/user");
-                    }, 2000);
+                  if (data?.gallery) {
+                    let imgRoute = route;
+
+                    if (method?.toUpperCase() == "POST") {
+                      imgRoute = `${route}/${res?.id}`;
+                    }
+
+                    await onUploadImage(
+                      "gallery",
+                      data?.gallery,
+                      "PUT",
+                      imgRoute
+                    );
                   }
-                  if (type === "address") {
-                    setTimeout(() => {
-                      router.push("/webpanel/contact");
-                    }, 2000);
-                  } else if (type === "subject") {
-                    setTimeout(() => {
-                      router.push("/webpanel/contact");
-                    }, 2000);
-                  } else if (type == "position") {
-                    setTimeout(() => {
-                      router.push("/webpanel/career");
-                    }, 2000);
-                  } else if (
-                    type == "mainCategory" ||
-                    type == "subCategory" ||
-                    type == "product"
-                  ) {
-                    setTimeout(() => {
-                      router.push("/webpanel/product");
-                    }, 2000);
-                  } else if (type == "project") {
-                    setTimeout(() => {
-                      router.push("/webpanel/project");
-                    }, 2000);
+
+                  Swal.fire({
+                    position: "top-right",
+                    toast: true,
+                    icon: "success",
+                    title: "Your Changes have been saved!",
+                    showConfirmButton: false,
+                    timer: 2500,
+                  });
+
+                  if (method?.toUpperCase() === "POST") {
+                    if (type === "service") {
+                      setTimeout(() => {
+                        router.push(`/webpanel/service/edit/${res?.id}`);
+                      }, 2000);
+                    } else if (type === "user") {
+                      setTimeout(() => {
+                        router.push("/webpanel/settings/user");
+                      }, 2000);
+                    } else if (type === "address") {
+                      setTimeout(() => {
+                        router.push("/webpanel/contact");
+                      }, 2000);
+                    } else if (type === "subject") {
+                      setTimeout(() => {
+                        router.push("/webpanel/contact");
+                      }, 2000);
+                    } else if (type == "position") {
+                      setTimeout(() => {
+                        router.push("/webpanel/career");
+                      }, 2000);
+                    } else if (
+                      type == "mainCategory" ||
+                      type == "subCategory" ||
+                      type == "product"
+                    ) {
+                      setTimeout(() => {
+                        router.push("/webpanel/product");
+                      }, 2000);
+                    } else if (type == "project") {
+                      setTimeout(() => {
+                        router.push("/webpanel/project");
+                      }, 2000);
+                    }
+                  } else if (method?.toUpperCase() === "PUT") {
+                    if (type === "user") {
+                      setTimeout(() => {
+                        router.push("/webpanel/settings/user");
+                      }, 2000);
+                    }
+                    if (type === "address") {
+                      setTimeout(() => {
+                        router.push("/webpanel/contact");
+                      }, 2000);
+                    } else if (type === "subject") {
+                      setTimeout(() => {
+                        router.push("/webpanel/contact");
+                      }, 2000);
+                    } else if (type == "position") {
+                      setTimeout(() => {
+                        router.push("/webpanel/career");
+                      }, 2000);
+                    } else if (
+                      type == "mainCategory" ||
+                      type == "subCategory" ||
+                      type == "product"
+                    ) {
+                      setTimeout(() => {
+                        router.push("/webpanel/product");
+                      }, 2000);
+                    } else if (type == "project") {
+                      setTimeout(() => {
+                        router.push("/webpanel/project");
+                      }, 2000);
+                    }
                   }
+                  resolve({ success: true, message: "ok" });
+                } else {
+                  reject({ success: false, message: "Log insertion failed" });
                 }
-                return "ok";
               }
+            } catch (err) {
+              console.log(err);
+              reject({ success: false, message: "An error occurred" });
             }
-          } catch (err) {
-            console.log(err);
+          } else if (result.dismiss === Swal.DismissReason.cancel) {
+            swalWithBootstrapButtons.fire({
+              title: "Cancelled",
+              text: "Your changes were cancelled! :)",
+              icon: "error",
+            });
+            resolve({ success: false, message: "Cancelled by user" });
           }
-        } else if (
-          /* Read more about handling dismissals below */
-          result.dismiss === Swal.DismissReason.cancel
-        ) {
-          swalWithBootstrapButtons.fire({
-            title: "Cancelled",
-            text: "Your Cancelled the changes! :)",
-            icon: "error",
-          });
-        }
-      });
+        });
+    });
   };
+
+  // const onSave = (
+  //   data: any,
+  //   method: any,
+  //   id: any,
+  //   type: any,
+  //   activity: any
+  // ) => {
+  //   let route = "";
+  //   let modifiedData = { ...data };
+
+  //   data?.image && delete modifiedData?.image;
+  //   data?.gallery && delete modifiedData?.gallery;
+
+  //   if (type == "service") {
+  //     if (method.toUpperCase() == "PUT") {
+  //       route = `${serviceRoute}/${id}`;
+  //     } else if (method.toUpperCase() == "POST") {
+  //       route = serviceRoute;
+  //     }
+  //   } else if (type == "address") {
+  //     if (method.toUpperCase() == "PUT") {
+  //       route = `${addressRoute}/${id}`;
+  //     } else if (method?.toUpperCase() == "POST") {
+  //       route = addressRoute;
+  //     }
+  //   } else if (type == "subject") {
+  //     if (method.toUpperCase() == "PUT") {
+  //       route = `${subjectRoute}/${id}`;
+  //     } else if (method?.toUpperCase() == "POST") {
+  //       route = subjectRoute;
+  //     }
+  //   } else if (type == "position") {
+  //     if (method.toUpperCase() == "PUT") {
+  //       route = `${positionRoute}/${id}`;
+  //     } else if (method?.toUpperCase() == "POST") {
+  //       route = positionRoute;
+  //     }
+  //   } else if (type == "mainCategory") {
+  //     if (method.toUpperCase() == "PUT") {
+  //       route = `${mainCategoryRoute}/${id}`;
+  //     } else if (method?.toUpperCase() == "POST") {
+  //       route = mainCategoryRoute;
+  //     }
+  //   } else if (type == "subCategory") {
+  //     if (method.toUpperCase() == "PUT") {
+  //       route = `${subCategoryRoute}/${id}`;
+  //     } else if (method?.toUpperCase() == "POST") {
+  //       route = subCategoryRoute;
+  //     }
+  //   } else if (type == "product") {
+  //     if (method.toUpperCase() == "PUT") {
+  //       route = `${productRoute}/${id}`;
+  //     } else if (method?.toUpperCase() == "POST") {
+  //       route = productRoute;
+  //     }
+  //   } else if (type == "project") {
+  //     if (method.toUpperCase() == "PUT") {
+  //       route = `${projectRoute}/${id}`;
+  //     } else if (method?.toUpperCase() == "POST") {
+  //       route = projectRoute;
+  //     }
+  //   } else if (type == "calendar") {
+  //     if (method.toUpperCase() == "PUT") {
+  //       route = `${calendarRoute}/${id}`;
+  //       // } else if (method?.toUpperCase() == "POST") {
+  //       //   route = calendarRoute;
+  //       // }
+  //       // }
+  //     }
+  //   } else if (type == "serviceSeo") {
+  //     route = `${serviceSeoRoute}/${id}`;
+  //   } else if (type == "serviceSort") {
+  //     route = `${serviceSortRoute}/${id}`;
+  //   } else if (type == "serviceStatus") {
+  //     route = `${serviceStatusRoute}/${id}`;
+  //   } else if (type == "user") {
+  //     if (method.toUpperCase() == "PUT") {
+  //       route = `${userRoute}/${id}`;
+  //     } else if (method?.toUpperCase() == "POST") {
+  //       route = userRoute;
+  //     }
+  //   } else if (type == "seo") {
+  //     if (method.toUpperCase() === "PUT") {
+  //       route = `${seoRoute}/${id}`;
+  //     }
+  //   }
+
+  //   const swalWithBootstrapButtons = Swal.mixin({
+  //     customClass: {
+  //       confirmButton:
+  //         "border-2 border-green-600 rounded-xl p-4 text-green-600 font-bold mx-1",
+  //       cancelButton: "bg-red rounded-xl p-4 text-white font-bold",
+  //     },
+  //     buttonsStyling: false,
+  //   });
+  //   swalWithBootstrapButtons
+  //     .fire({
+  //       title: "Are you sure?",
+  //       text: "You won't be able to revert this!",
+  //       icon: "warning",
+  //       showCancelButton: true,
+  //       confirmButtonText: "Yes, Save Changes!",
+  //       cancelButtonText: "No, cancel!",
+  //       reverseButtons: true,
+  //     })
+  //     .then(async (result) => {
+  //       if (result.isConfirmed) {
+  //         try {
+  //           const response = await fetch(`${route}`, {
+  //             method: method?.toUpperCase(),
+  //             headers: {
+  //               "Content-Type": "application/json",
+  //             },
+
+  //             body: JSON.stringify(modifiedData),
+  //           });
+
+  //           const res = await response?.json();
+
+  //           if (res?.error) {
+  //             let msg = res?.error?.message;
+  //             // error message conditions
+  //             if (res?.error?.message.includes("`serviceUrl` to be unique")) {
+  //               msg = "Service URL has been used!, try a new one.";
+  //             } else if (
+  //               res.error.message.includes("`username` to be unique")
+  //             ) {
+  //               msg = `This username is already registered.`;
+  //             } else if (res.error.message.includes("`email` to be unique")) {
+  //               msg = `This email is already registered.`;
+  //             }
+  //             Swal.fire({
+  //               position: "top-right",
+  //               toast: true,
+  //               icon: "error",
+  //               title: msg,
+  //               showConfirmButton: false,
+  //               timer: 2500,
+  //             });
+  //           } else {
+  //             const logRes = onInsertLog(
+  //               res?.id,
+  //               userId,
+  //               type,
+  //               `${user?.username}-${activity}`
+  //             );
+  //             //  @ts-ignore
+  //             if (!logRes?.error) {
+  //               // upload image
+  //               if (data?.image) {
+  //                 let imgRoute = route;
+  //                 if (method?.toUpperCase() == "POST") {
+  //                   imgRoute = `${route}/${res?.id}`;
+  //                 }
+
+  //                 await onUploadImage("image", data?.image, "PUT", imgRoute);
+  //               }
+  //               if (data?.gallery) {
+  //                 let imgRoute = route;
+
+  //                 if (method?.toUpperCase() == "POST") {
+  //                   imgRoute = `${route}/${res?.id}`;
+  //                 }
+
+  //                 await onUploadImage(
+  //                   "gallery",
+  //                   data?.gallery,
+  //                   "PUT",
+  //                   imgRoute
+  //                 );
+  //               }
+
+  //               Swal.fire({
+  //                 position: "top-right",
+  //                 toast: true,
+  //                 icon: "success",
+  //                 title: "Your Changes have been saved!",
+  //                 showConfirmButton: false,
+  //                 timer: 2500,
+  //               });
+
+  //               if (method?.toUpperCase() === "POST") {
+  //                 if (type === "service") {
+  //                   setTimeout(() => {
+  //                     router.push(`/webpanel/service/edit/${res?.id}`);
+  //                   }, 2000);
+  //                 } else if (type === "user") {
+  //                   setTimeout(() => {
+  //                     router.push("/webpanel/settings/user");
+  //                   }, 2000);
+  //                 } else if (type === "address") {
+  //                   setTimeout(() => {
+  //                     router.push("/webpanel/contact");
+  //                   }, 2000);
+  //                 } else if (type === "subject") {
+  //                   setTimeout(() => {
+  //                     router.push("/webpanel/contact");
+  //                   }, 2000);
+  //                 } else if (type == "position") {
+  //                   setTimeout(() => {
+  //                     router.push("/webpanel/career");
+  //                   }, 2000);
+  //                 } else if (
+  //                   type == "mainCategory" ||
+  //                   type == "subCategory" ||
+  //                   type == "product"
+  //                 ) {
+  //                   setTimeout(() => {
+  //                     router.push("/webpanel/product");
+  //                   }, 2000);
+  //                 } else if (type == "project") {
+  //                   setTimeout(() => {
+  //                     router.push("/webpanel/project");
+  //                   }, 2000);
+  //                 }
+  //               } else if (method?.toUpperCase() === "PUT") {
+  //                 if (type === "user") {
+  //                   setTimeout(() => {
+  //                     router.push("/webpanel/settings/user");
+  //                   }, 2000);
+  //                 }
+  //                 if (type === "address") {
+  //                   setTimeout(() => {
+  //                     router.push("/webpanel/contact");
+  //                   }, 2000);
+  //                 } else if (type === "subject") {
+  //                   setTimeout(() => {
+  //                     router.push("/webpanel/contact");
+  //                   }, 2000);
+  //                 } else if (type == "position") {
+  //                   setTimeout(() => {
+  //                     router.push("/webpanel/career");
+  //                   }, 2000);
+  //                 } else if (
+  //                   type == "mainCategory" ||
+  //                   type == "subCategory" ||
+  //                   type == "product"
+  //                 ) {
+  //                   setTimeout(() => {
+  //                     router.push("/webpanel/product");
+  //                   }, 2000);
+  //                 } else if (type == "project") {
+  //                   setTimeout(() => {
+  //                     router.push("/webpanel/project");
+  //                   }, 2000);
+  //                 }
+  //               }
+  //               return { success: true, message: "ok" };
+  //             }
+  //             return { success: true, message: "ok" };
+  //           }
+  //           return { success: true, message: "ok" };
+  //         } catch (err) {
+  //           console.log(err);
+  //         }
+  //       } else if (
+  //         /* Read more about handling dismissals below */
+  //         result.dismiss === Swal.DismissReason.cancel
+  //       ) {
+  //         swalWithBootstrapButtons.fire({
+  //           title: "Cancelled",
+  //           text: "Your Cancelled the changes! :)",
+  //           icon: "error",
+  //         });
+  //       }
+  //     });
+  // };
 
   const onUploadImage = async (
     type: any,
@@ -584,6 +869,10 @@ export default function FetchProvider({ children, user, token }: any) {
       route = `${productRoute}/${id}`;
     } else if (type === "project") {
       route = `${projectRoute}/${id}`;
+    } else if (type === "training") {
+      route = `${trainingRoute}/${id}`;
+    } else if (type === "calendar") {
+      route = `${calendarRoute}/${id}`;
     }
 
     const swalWithBootstrapButtons = Swal.mixin({
@@ -607,63 +896,66 @@ export default function FetchProvider({ children, user, token }: any) {
       })
       .then(async (result) => {
         if (result.isConfirmed) {
-          try {
-            const response = await fetch(route, { method: "DELETE" });
-            const res = await response.json();
+          // try {
+          const response = await fetch(route, { method: "DELETE" });
 
-            if (res?.error) {
-              const msg = res?.error?.message;
-              Swal.fire({
-                position: "top-right",
-                toast: true,
-                icon: "error",
-                title: msg,
-                showConfirmButton: false,
-                timer: 2500,
-              });
-              return { error: true, message: msg };
-            } else {
-              const logRes = await onInsertLog(
-                id,
-                userId,
-                type,
-                `${user?.username}-${activity}: ${id}`
-              );
+          const res = await response.json();
+          console.log(res);
 
-              if (!logRes?.error) {
-                Swal.fire({
-                  position: "top-right",
-                  toast: true,
-                  icon: "success",
-                  title: "Your changes have been saved!",
-                  showConfirmButton: false,
-                  timer: 2500,
-                });
-                return { success: true, message: "ok" };
-              } else {
-                Swal.fire({
-                  position: "top-right",
-                  toast: true,
-                  icon: "error",
-                  title: "Log insertion failed",
-                  showConfirmButton: false,
-                  timer: 2500,
-                });
-                return { error: true, message: "Log insertion failed" };
-              }
-            }
-          } catch (err) {
-            console.log("Error during onDelete:", err);
+          if (res?.error) {
+            const msg = res?.error?.message;
             Swal.fire({
               position: "top-right",
               toast: true,
               icon: "error",
-              title: "An unexpected error occurred",
+              title: msg,
               showConfirmButton: false,
               timer: 2500,
             });
-            return { error: true, message: "An unexpected error occurred" };
+            return { error: true, message: msg };
+          } else {
+            const logRes = await onInsertLog(
+              id,
+              userId,
+              type,
+              `${user?.username}-${activity}: ${id}`
+            );
+
+            if (!logRes?.error) {
+              Swal.fire({
+                position: "top-right",
+                toast: true,
+                icon: "success",
+                title: "Your changes have been saved!",
+                showConfirmButton: false,
+                timer: 2500,
+              });
+              return { success: true, message: "ok" };
+            } else {
+              Swal.fire({
+                position: "top-right",
+                toast: true,
+                icon: "error",
+                title: "Log insertion failed",
+                showConfirmButton: false,
+                timer: 2500,
+              });
+              return { error: true, message: "Log insertion failed" };
+            }
           }
+          // }
+          // catch (err) {
+          //   console.log("Error during onDelete:", err);
+          //   Swal.fire({
+          //     position: "top-right",
+          //     toast: true,
+          //     icon: "error",
+          //     title: "An unexpected error occurred",
+          //     showConfirmButton: false,
+          //     timer: 2500,
+          //   });
+          //   return { error: true, message: "An unexpected error occurred" };
+          // }
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           swalWithBootstrapButtons.fire({
             title: "Cancelled",

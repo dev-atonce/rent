@@ -7,6 +7,7 @@ import Header from "@/components/main/Header/Header";
 import Footer from "@/components/main/Footer/Footer";
 import { Noto_Sans_Thai_Looped } from "next/font/google";
 import type { Metadata, ResolvingMetadata } from "next";
+import Favicon from "../../../public/icon.ico";
 const roboto = Noto_Sans_Thai_Looped({
   weight: ["300", "400", "500", "600", "700", "800"],
   style: ["normal"],
@@ -15,7 +16,11 @@ const roboto = Noto_Sans_Thai_Looped({
 });
 
 const pageName = "home";
-
+export const ico: Metadata = {
+  title: "favicon",
+  description: "By Owner",
+  icons: [{ rel: "icon", url: Favicon.src }],
+};
 export async function generateMetadata(
   { params, searchParams }: any,
   parent: ResolvingMetadata

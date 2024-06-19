@@ -34,7 +34,7 @@ export default async function Home() {
         <Blog />
         {/*FB & YT */}
         <FacebookEmbed url="https://www.facebook.com/rentalmachines/" />
-        <ForeignBranch title="บริษัทในเครือ" color={subjectColor} />
+        <ForeignBranch title="บริษัทในเครือ" color={subjectColor} home={true} />
       </div>
     </>
   );

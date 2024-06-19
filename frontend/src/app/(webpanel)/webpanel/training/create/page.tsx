@@ -8,7 +8,7 @@ import TrainingForm from "@/components/webpanel/TrainingForm/TrainingForm";
 import { FetchContext } from "@/contexts/FetchContext";
 import { useContext, useEffect, useState } from "react";
 
-export default function TrainingEdit({
+export default function TrainingCreate({
   params: { id },
   // data,
 }: any) {
@@ -19,49 +19,30 @@ export default function TrainingEdit({
   //   @ts-ignore
   const languages = envLangs.split(",").map((i: any) => i.toUpperCase());
 
-  const onFetch = async () => {
-    const data = await onFetchOne("training", id);
-    const calendar = await onFetchOne("calendar", id);
-
-    setData({ ...data, initialName: data?.titleTH });
-    setCalendar(calendar?.rows);
-  };
-
-  const onFetchCalendar = async () => {
-    const calendar = await onFetchOne("calendar", id);
-
-    setCalendar(calendar?.rows);
-  };
-
-  const onEdit = async () => {
+  const onCreate = async () => {
     //   @ts-ignore
-    onSave(data, "PUT", id, "training", `Edit Training ${data?.nameTH}`);
+    onSave(data, "POST", id, "training", `Create Training ${data?.nameTH}`);
   };
 
   const onChangeState = (e: any, field: string) => {
     setData((prevState: any) => ({ ...prevState, [field]: e }));
   };
 
-  useEffect(() => {
-    onFetch();
-  }, []);
-
   return (
     <DefaultLayout>
       <Breadcrumb
         //   @ts-ignore
-        pageName={`Edit Course: ${data?.initialName}`}
+        pageName={`Create New Course`}
         prevPage={{ pageName: `Training`, url: "/webpanel/training" }}
       />
 
       <TrainingForm
-        onFetchCalendar={onFetchCalendar}
         data={data}
         onChangeState={onChangeState}
         languages={languages}
         tableData={calendar}
-        edit={true}
-        onSave={onEdit}
+        edit={false}
+        onSave={onCreate}
       />
     </DefaultLayout>
   );

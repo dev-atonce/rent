@@ -39,10 +39,6 @@ export default function TrainingPage() {
     setData(filter(data?.rows));
   }
 
-  const onSetFilter = (value: any, keyProp: any) => {
-    setFilterState((prev) => ({ ...prev, [keyProp]: value }));
-  };
-
   const filter = (data: any) => {
     const keyword = filterState?.keyword?.toLowerCase();
     const status: string | boolean = filterState?.status;
@@ -78,7 +74,7 @@ export default function TrainingPage() {
 
   const onDeleteItem = async (id: any) => {
     try {
-      const res = await onDelete(id, "project", "Delete Project");
+      const res = await onDelete(id, "training", "Delete Training Course");
       if (res.success) {
         fetchData();
       }
@@ -108,28 +104,6 @@ export default function TrainingPage() {
       />
       <>
         <div className="flex justify-end  item-center">
-          {/* <div className="flex items-center gap-1">
-            <Input
-              placeHolder="Search . . ."
-              state={filterState}
-              setState={onSetFilter}
-              keyProp={"keyword"}
-            />
-            <div className=" w-40">
-              
-              <SelectGroupOne
-               
-                list={[
-                  { title: "online", value: true },
-                  { title: "offline", value: false },
-                  { title: "all", value: "all" },
-                ]}
-                selectedOption={filterState}
-                setSelectedOption={onSetFilter}
-                keyProp="status"
-              />
-            </div>
-          </div> */}
           <div className="flex items-center gap-1">
             {(!filterState?.keyword || filterState?.keyword.length === 0) &&
               (filterState?.status === "0" ||
@@ -146,7 +120,7 @@ export default function TrainingPage() {
               href="training/create"
               className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
             >
-              CREATE PROJECT
+              CREATE NEW COURSE
             </Link>
           </div>
         </div>

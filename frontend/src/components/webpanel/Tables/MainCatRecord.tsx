@@ -50,8 +50,15 @@ export default function MainCatRecord({
             <RxDragHandleHorizontal size={25} />
           </td>
           <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11 text-start">
-            <p className="text-xs">{i?.nameEN}</p>
             <p className="text-xs">{i?.nameTH}</p>
+            {i?.type && (
+              <span
+                className={`
+              ${i?.type == "rent" ? "bg-blue-500" : i?.type == "both" ? "bg-slate-500" : "bg-green-500"} text-xs uppercase px-4 text-white rounded-md`}
+              >
+                {i?.type}
+              </span>
+            )}
           </td>
 
           <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
@@ -75,8 +82,15 @@ export default function MainCatRecord({
         <tr key={index}>
           <td className="text-center border-b border-[#eee] ">{index + 1}</td>
           <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11 text-start">
-            <p className="text-xs">{i?.nameEN}</p>
             <p className="text-xs">{i?.nameTH}</p>
+            {i?.type && (
+              <span
+                className={`
+              ${i?.type == "rent" ? "bg-blue-500" : i?.type == "both" ? "bg-slate-500" : "bg-green-500"} text-xs uppercase px-4 text-white rounded-md`}
+              >
+                {i?.type}
+              </span>
+            )}
           </td>
 
           <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
