@@ -19,8 +19,6 @@ const SelectGroupOne: React.FC = ({
     setIsOptionSelected(true);
   };
 
-  console.log(selectedOption);
-
   return (
     <div className="mb-4.5">
       <label className="mb-2.5 block text-black dark:text-white">
