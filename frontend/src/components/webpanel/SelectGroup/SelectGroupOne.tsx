@@ -19,8 +19,6 @@ const SelectGroupOne: React.FC = ({
     setIsOptionSelected(true);
   };
 
-  console.log(selectedOption);
-
   return (
     <div className="mb-4.5">
       <label className="mb-2.5 block text-black dark:text-white">
@@ -37,7 +35,7 @@ const SelectGroupOne: React.FC = ({
             isOptionSelected ? "text-black dark:text-white" : ""
           }`}
         >
-          <option value="0" className="text-body dark:text-bodydark">
+          <option value="" className="text-body dark:text-bodydark">
             Select {label}
           </option>
 

@@ -16,6 +16,7 @@
     "@fullcalendar/google-calendar": "^6.1.14",
     "@fullcalendar/interaction": "^6.1.14",
     "@fullcalendar/react": "^6.1.14",
+    "@icons/material": "^0.4.1",
     "@material-tailwind/react": "^2.1.9",
     "@next/swc-win32-x64-msvc": "^15.0.0-rc.0",
     "@nextui-org/button": "^2.0.31",

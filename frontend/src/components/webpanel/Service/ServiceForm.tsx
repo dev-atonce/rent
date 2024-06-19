@@ -3,6 +3,7 @@ import Jodit from "../Editor/Jodit";
 import FormGroup from "../FormGroup/FormGroup";
 import Image from "next/image";
 import { MdDeleteForever } from "react-icons/md";
+import TextEditor from "@/components/TextEditor";
 
 export default function ServiceForm({
   languages,
@@ -134,6 +135,9 @@ export default function ServiceForm({
           />
         </div>
       </div>
+      <div className="col-span-2">
+        <TextEditor />
+      </div>
       <div className="col-span-2 ">
         <div className="flex gap-[1px] translate-y-2 translate-x-2 relative z-0">
           {languages.map((i: any, k: any) => (
@@ -146,6 +150,7 @@ export default function ServiceForm({
             </button>
           ))}
         </div>
+        
         {languages?.map(
           (i: any, k: any) =>
             i?.toLowerCase() === langState && (

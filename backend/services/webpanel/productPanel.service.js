@@ -25,11 +25,22 @@ const upload = multer({
 ]);
 
 const methods = {
+  scopeSearch(req) {
+    $or = [];
+    if (req.query.keyword) $or.push({ productNameTH: { $regex: req.query.keyword } });
+    if (req.query.status && req.query.status !== "all") $or.push({ status: req.query.status });
+    if (req.query.category && req.query.category !== "all") $or.push({ subCategory: req.query.category });
+    const query = $or.length > 0 ? { $or } : {};
+    return { query: query };
+  },
+
   async findAll(req) {
     const limit = +(req.query.size || 50);
     const offset = +(limit * ((req.query.page || 1) - 1));
+    const _q = methods.scopeSearch(req);
+
     try {
-      const rows = await Product.find()
+      const rows = await Product.find(_q.query)
         .populate({
           path: "subCategory",
           select: "nameTH mainCategory",
@@ -41,7 +52,7 @@ const methods = {
         .sort({ sort: "asc" })
         .limit(limit)
         .skip(offset);
-      const count = await Product.countDocuments();
+      const count = await Product.countDocuments(_q.query);
       return {
         total: count,
         lastPage: Math.ceil(count / limit),

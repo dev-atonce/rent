@@ -19,6 +19,7 @@ import CalendarRecord from "./CalendarRecord";
 
 const TableThree = ({
   onFetchCalendar,
+  currentPage,
   data,
   col,
   modal,
@@ -149,6 +150,7 @@ const TableThree = ({
                   onChangeStatus={onChangeStatus}
                   key={key}
                   onDelete={onDelete}
+                  currentPage={currentPage}
                 />
               ))}
             {type === "history" &&

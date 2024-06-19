@@ -8,7 +8,6 @@ import Link from "next/link";
 import Input from "@/components/webpanel/Input/Input";
 import SelectGroupOne from "@/components/webpanel/SelectGroup/SelectGroupOne";
 import { FetchContext } from "@/contexts/FetchContext";
-import { set } from "react-hook-form";
 import AntPagination from "@/components/common/AntPagination/AntPagination";
 
 // export const metadata: Metadata = {
@@ -22,86 +21,34 @@ export default function ProductPage() {
   const [data, setData] = useState([]);
   const [mainCatData, setMainCatData] = useState([]);
   const [subCatData, setSubCatData] = useState([]);
-  const [initData, setInitData] = useState([]);
   const [dragState, setDragState] = useState(false);
   const [mainCatDragState, setMainCatDragState] = useState(false);
   const [subCatDragState, setSubCatDragState] = useState(false);
   const [filterState, setFilterState] = useState({
     keyword: "",
-    status: "0",
+    status: "",
     category: "",
   });
 
-  const [page, setPage] = useState(1);
+  const [pageState, setPageState] = useState(1);
   const [total, setTotal] = useState(0);
-
-  const envLangs: string | undefined = process.env.NEXT_PUBLIC_LANGUAGES;
-
-  // @ts-ignore
-  const languages: undefined | string[] = envLangs
-    .split(",")
-    .map((i: any) => i.toUpperCase());
 
   const initialModalState = {};
   const [modalState, setModalState] = useState(initialModalState);
 
-  async function fetchData() {
-    const data = await onFetchPage("product", "all", page);
+  async function fetchData(query: any = {}) {
+    const data = await onFetchPage("product", "all", pageState, query);
     const mainCat = await onFetchOne("mainCategory", null);
     const subCat = await onFetchOne("subCategory", null);
 
-    setInitData(data?.rows);
     setTotal(data?.total);
-    // setData(filter(data?.rows));
-    setData(filter(data?.rows));
+    setData(data?.rows);
     setMainCatData(mainCat?.rows);
     setSubCatData(subCat?.rows);
   }
 
   const onSetFilter = (value: any, keyProp: any) => {
     setFilterState((prev) => ({ ...prev, [keyProp]: value }));
-  };
-
-  const filter = (data: any) => {
-    const keyword = filterState?.keyword?.toLowerCase();
-    const status: string | boolean = filterState?.status;
-    const category = filterState?.category;
-
-    const filteredData = data?.filter((item: any) => {
-      let keywordMatch = true;
-      let statusMatch = true;
-      let categoryMatch = true;
-
-      if (keyword) {
-        keywordMatch =
-          item?.subCategory?.nameTH?.toLowerCase().includes(keyword) ||
-          item?.subCategory?.mainCategory?.nameTH
-            ?.toLowerCase()
-            .includes(keyword) ||
-          item?.productNameTH?.toLowerCase().includes(keyword);
-      }
-
-      if (category && category !== "all") {
-        categoryMatch = item?.subCategory?.mainCategory?.id == category;
-      }
-      // @ts-ignore
-      if (status !== undefined && status !== "all" && status !== "0") {
-        // Handle status as boolean strings
-        let convertedStatus;
-        if (status === "true") {
-          convertedStatus = true;
-        } else if (status === "false") {
-          convertedStatus = false;
-        } else {
-          convertedStatus = status;
-        }
-        statusMatch = item?.status === convertedStatus;
-      }
-
-      return keywordMatch && statusMatch && categoryMatch;
-    });
-
-    return filteredData;
   };
 
   const onDeleteMainCat = async (id: any) => {
@@ -136,17 +83,10 @@ export default function ProductPage() {
   };
 
   useEffect(() => {
-    fetchData();
-  }, []);
-
-  useEffect(() => {
-    fetchData();
-  }, [modalState, page]);
-
-  useEffect(() => {
-    fetchData();
+    const query = new URLSearchParams(filterState).toString();
+    fetchData(query);
     setDragState(false);
-  }, [filterState]);
+  }, [filterState, pageState]);
 
   return (
     <DefaultLayout>
@@ -238,7 +178,7 @@ export default function ProductPage() {
               setState={onSetFilter}
               keyProp={"keyword"}
             />
-            <div className=" w-40">
+            <div className="w-40">
               {/* @ts-ignore */}
               <SelectGroupOne
                 // @ts-ignore
@@ -247,16 +187,16 @@ export default function ProductPage() {
                 label={"Status"}
                 // @ts-ignore
                 list={[
-                  { title: "online", value: true },
-                  { title: "offline", value: false },
-                  { title: "all", value: "all" },
+                  { title: "All", value: "all" },
+                  { title: "Online", value: true },
+                  { title: "Offline", value: false },
                 ]}
                 selectedOption={filterState}
                 setSelectedOption={onSetFilter}
                 keyProp="status"
               />
             </div>
-            <div className=" w-49">
+            <div className="w-49">
               {/* @ts-ignore */}
               <SelectGroupOne
                 // @ts-ignore
@@ -265,7 +205,7 @@ export default function ProductPage() {
                 label={"Category"}
                 // @ts-ignore
                 field="nameTH"
-                list={[{ nameTH: "all" }, ...mainCatData]}
+                list={[{ nameTH: "All", id: "all" }, ...mainCatData]}
                 selectedOption={filterState}
                 setSelectedOption={onSetFilter}
                 keyProp="category"
@@ -294,6 +234,7 @@ export default function ProductPage() {
           </div>
         </div>
         <TableThree
+          currentPage={pageState}
           onDelete={onDeleteProduct}
           drag={dragState}
           type="product"
@@ -302,7 +243,6 @@ export default function ProductPage() {
           setData={setData}
           col={[
             { title: "Product", minWidth: "" },
-
             { title: "Category", minWidth: "" },
             { title: "Type", minWidth: "" },
             { title: "Actions", minWidth: "" },
@@ -312,8 +252,8 @@ export default function ProductPage() {
         { total > Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE) &&
           <AntPagination
             total={total}
-            currentPage={page}
-            setCurrentPage={setPage}
+            currentPage={pageState}
+            setCurrentPage={setPageState}
             pageSize={Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE)}
           />
         }

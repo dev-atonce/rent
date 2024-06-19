@@ -105,7 +105,7 @@ export default function FetchProvider({ children, user, token }: any) {
       console.error("There was a problem with the fetch operation:", error);
     }
   };
-  const onFetchPage = async (type: any, id: any, page: any) => {
+  const onFetchPage = async (type: any, id: any, page: any, query: any) => {
     let route = "";
     if (id) {
       if (type === "service") {
@@ -119,7 +119,7 @@ export default function FetchProvider({ children, user, token }: any) {
       } else if (type === "position") {
         route = `${positionRoute}/${id}`;
       } else if (type === "product") {
-        route = `${productRoute}/${id}?page=${page}`;
+        route = `${productRoute}/${id}?page=${page}&${query}`;
       } else if (type === "mainCategory") {
         route = `${mainCategoryRoute}/${id}`;
       } else if (type === "subCategory") {
