@@ -17,6 +17,7 @@ export default function ServiceRecord({
   dragItem,
   dragOverItem,
   onDelete,
+  currentPage,
 }: any) {
   const [enabled, setEnabled] = useState(false);
   const options = {
@@ -111,7 +112,9 @@ export default function ServiceRecord({
         </tr>
       ) : (
         <tr key={index}>
-          <td className="text-center border-b border-[#eee]">{index + 1}</td>
+          <td className="text-center border-b border-[#eee]">
+            {(currentPage - 1) * Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE) + (index + 1)}
+          </td>
           <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
             <h5 className="font-medium text-black dark:text-white text-xs">
               {i?.productNameTH}

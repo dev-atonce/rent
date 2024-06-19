@@ -88,9 +88,7 @@ export default function ProductPage() {
     setDragState(false);
   }, [filterState, pageState]);
 
-  console.log(mainCatData);
   return (
-    
     <DefaultLayout>
       <Breadcrumb
         pageName="Products"
@@ -236,6 +234,7 @@ export default function ProductPage() {
           </div>
         </div>
         <TableThree
+          currentPage={pageState}
           onDelete={onDeleteProduct}
           drag={dragState}
           type="product"
