@@ -18,6 +18,7 @@ import TrainingRecord from "./TrainingRecord";
 import CalendarRecord from "./CalendarRecord";
 
 const TableThree = ({
+  currentPage,
   data,
   col,
   modal,
@@ -148,6 +149,7 @@ const TableThree = ({
                   onChangeStatus={onChangeStatus}
                   key={key}
                   onDelete={onDelete}
+                  currentPage={currentPage}
                 />
               ))}
             {type === "history" &&
