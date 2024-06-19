@@ -5,15 +5,15 @@ import ProductGrid from "@/components/main/ProductGrid/ProductGrid";
 
 const fetchProduct = async (id: any) => {
   const subCat = await fetch(
-    // `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/product`
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product/all`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/product`
+    // `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product/all`
   );
   const products = await subCat.json();
   const filteredProducts = products.rows.filter(
     (i: any) => i?.subCategory?.id == id
   );
-  console.log(products);
-  console.log(filteredProducts);
+  // console.log(products);
+  // console.log(filteredProducts);
   return filteredProducts;
 };
 

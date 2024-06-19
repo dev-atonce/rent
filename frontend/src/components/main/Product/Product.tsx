@@ -21,7 +21,7 @@ export default function Product({ type }: any) {
     const filteredProducts = products?.rows?.filter(
       (i: any) => i?.type == type
     );
-    console.log(products);
+    // console.log(products);
     setProducts(filteredProducts);
   };
   const fetchCat = async () => {

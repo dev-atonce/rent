@@ -18,6 +18,7 @@ import TrainingRecord from "./TrainingRecord";
 import CalendarRecord from "./CalendarRecord";
 
 const TableThree = ({
+  onFetchCalendar,
   data,
   col,
   modal,
@@ -215,6 +216,7 @@ const TableThree = ({
               data?.map((i: any, key: any) => {
                 return (
                   <CalendarRecord
+                    onFetchCalendar={onFetchCalendar}
                     i={i}
                     index={key}
                     modal={modal}
