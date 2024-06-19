@@ -1,3 +1,4 @@
+"use client"
 import { 
     BsTypeBold,
     BsTypeItalic,
@@ -24,19 +25,10 @@ import {
 import { RxCaretDown ,RxFontSize, RxLineHeight, RxDividerHorizontal   } from "react-icons/rx";
 import { CgUndo, CgRedo } from "react-icons/cg";
 import { useEffect, useState } from "react";
-const placeHolder = () => <span 
-data-ref="placeholder" style={{
-    display: 'block',
-    fontSize: '16px',
-    lineHeight: '24px',
-    textAlign: 'start', 
-    paddingTop: '8px',
-    paddingLeft: '8px',
-    paddingRight: '8px',
-    marginTop: '0px',
-    marginLeft: '0px'
-}}
-className="absolute">Start writing...</span>;
+import ModalDialog from "../main/Modal";
+import { Button, useDisclosure} from "@nextui-org/react";
+import "../../css/Custom.scss"
+
 
 const fontSize = {
     "h1":"text-5xl",
@@ -48,7 +40,29 @@ const fontSize = {
 };
 
 const TextEditor = () => {
+    const [visible, setVisible] = useState<Boolean>(false);
+    const [row, setRow] = useState<HTMLElement>();
+    // const [output, setOutput] = useState<HTMLElement>( );
+    // const { onOpen, onOpenChange} = useDisclosure();
 
+    const handler = () => setVisible(true);
+    const closeHandler = () => setVisible(false);
+
+    // const Status = () => 
+        
+    //     console.log(document.elementsFromPoint(0, 30))
+    //     let elements = document.elementsFromPoint(0, 30);
+    //     elements.forEach((elt, i) => {
+    //         output.textContent += elt.localName;
+    //         if (i < elements.length - 1) {
+    //             output.textContent += " < ";
+    //         }
+    //     });
+    // }
+    const handleSetSelect = (e) => {
+        setRow(e.target);
+        e.target.closest('.grid').classList.toggle('select-row');
+    }
     const Heading = (select:String) => 
     {
         document.getSelection();
@@ -63,9 +77,20 @@ const TextEditor = () => {
         document.getSelection();
         document.execCommand("bold",false,undefined)
     }
+    const TextItalic = () => {
+        document.getSelection();
+        document.execCommand("italic",false,undefined)
+    }
     
+    useEffect(() => {
+
+        // document.addEventListener('mouseup',Status)
+        // return () => document.removeEventListener('mouseup',Status)    
+    })
+
     return (
     <>
+    <ModalDialog visible={visible} closeHandler={closeHandler} select={{row,handleSetSelect}} title="Add Row"/>
     <div className="rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark h-full overflow-hidden">
         <div className="text-editor">
             <div className="header">
@@ -84,7 +109,7 @@ const TextEditor = () => {
                                 <BsTypeBold onClick={TextBold}/>
                             </button>
                             <button type="button" title="Italic" className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2">
-                                <BsTypeItalic onClick={()=>{document.execCommand('italic')}}/>
+                                <BsTypeItalic onClick={TextItalic}/>
                             </button>
                             <button type="button" title="Underline" className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2">
                                 <BsTypeUnderline onClick={()=>{document.execCommand('underline')}}/>
@@ -139,7 +164,6 @@ const TextEditor = () => {
                             </div>
                             <div className="tool-item flex items-center overflow-hidden border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
                                 <button 
-                                    onClick={Heading}
                                     type="button" 
                                     title="Heading" 
                                     className="tools-item hover:bg-slate-200 text-slate-700 hover:text-slate-900 p-2">
@@ -180,6 +204,7 @@ const TextEditor = () => {
                     <div className="w-full"></div>
                     <div className="flex-none">
                         <div className="group flex">
+                            
                             <button type="button" title="Full Screen" className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2">
                                 <RiFullscreenFill />
                             </button>
@@ -188,13 +213,17 @@ const TextEditor = () => {
                 </div>
             </div>
             <div className="editor-body border-t border-slate-300 min-h-100 p-2 focus:outline-none focus-visible:outline-none" 
-                contentEditable="true" 
+                suppressContentEditableWarning={true}
+                contentEditable={true} 
                 aria-disabled="false" 
                 tabIndex={-1}  
                 spellCheck="false"
-            ></div>
+            ><p></p></div>
             <div className="editor-footer p-2 border-slate-200 border-t">
-                <button className="bg-primary text-white hover:text-slate-200 hover:bg-blue-800 rounded-lg p-2 text-sm font-bold">Add row</button>
+                <div id="output"></div>
+                <Button onPress={handler}
+                    className="bg-primary text-white hover:text-slate-200 hover:bg-blue-500 rounded-lg p-2 text-sm font-bold"
+                >Add row</Button>
             </div>
         </div>
     </div>
