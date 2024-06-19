@@ -34,7 +34,9 @@ export default function Product({ type }: any) {
     );
     const subCatData = await subCat.json();
 
-    setMainCat(data.rows);
+    setMainCat(
+      data.rows.filter((i: any) => i?.type == type || i?.type == "both")
+    );
     setInitSubCat(subCatData.rows);
   };
   // to do sub cat list
@@ -137,23 +139,14 @@ export default function Product({ type }: any) {
           ไม่พบสินค้าที่ค้นหา
         </div>
       )}
-      {type == "rent" ? (
-        <ProductGrid
-          title={"หมวดหมู่สินค้า"}
-          data={mainCat}
-          type={type}
-          urlPre={"/main-category"}
-          product={false}
-        />
-      ) : (
-        <ProductGrid
-          title={"สินค้าขายทั้งหมด"}
-          data={products}
-          type={type}
-          urlPre={"/main-category"}
-          product={true}
-        />
-      )}
+
+      <ProductGrid
+        title={"หมวดหมู่สินค้า"}
+        data={mainCat}
+        type={type}
+        urlPre={"/main-category"}
+        product={false}
+      />
     </div>
   );
 }

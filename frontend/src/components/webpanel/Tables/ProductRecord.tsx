@@ -113,10 +113,12 @@ export default function ServiceRecord({
       ) : (
         <tr key={index}>
           <td className="text-center border-b border-[#eee]">
-            {(currentPage - 1) * Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE) + (index + 1)}
+            {(currentPage - 1) *
+              Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE) +
+              (index + 1)}
           </td>
           <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-            <h5 className="font-medium text-black dark:text-white text-xs">
+            <h5 className="font-semibold text-black  dark:text-white text-xs">
               {i?.productNameTH}
             </h5>
             <span className="text-xs border border-yellow-500 rounded-full px-2 py-1">
@@ -124,19 +126,18 @@ export default function ServiceRecord({
             </span>
           </td>
           <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark text-sm">
-            <p className="text-black dark:text-white font-semibold">
+            <p className="text-black dark:text-white text-xs">
               {i?.subCategory?.mainCategory?.nameTH}
             </p>
           </td>
 
           <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark text-xs">
-            {i?.type == "rent" ? (
-              <span className="text-sm border-blue-500 border rounded-full  px-2 py-1">
-                เช่า
-              </span>
-            ) : (
-              <span className="text-sm border-green-500 border rounded-full px-2 py-1">
-                ขาย
+            {i?.type && (
+              <span
+                className={`
+              ${i?.type == "rent" ? "bg-blue-500" : i?.type == "both" ? "bg-slate-500" : "bg-green-500"} text-xs uppercase px-4 text-white rounded-md`}
+              >
+                {i?.type}
               </span>
             )}
           </td>

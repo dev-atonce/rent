@@ -35,12 +35,12 @@ export default async function RentMainCatPage({ params: { id } }: any) {
       <Loading />
       <Cover
         pageName={mainCatData?.nameTH}
-        prevPage={{ pageName: "สินค้าเช่า", url: "/rental-product" }}
+        prevPage={{ pageName: "สินค้าขาย", url: "/sale-product" }}
       />
       <div className="container mx-auto">
         <ProductGrid
           data={data}
-          type={"rent"}
+          type={"sale"}
           urlPre={"/sub-category"}
           product={false}
         />

@@ -34,6 +34,28 @@ export default function MainCatForm({
   return (
     <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
       <div className="flex flex-col gap-4 ">
+        {mainCat && (
+          <div className="flex gap-2">
+            <button
+              onClick={() => onChangeState("both", "type")}
+              className={`${data?.type == "both" && "border-green-500 font-bold text-green-500 border-2 shadow-lg"} border rounded px-4`}
+            >
+              BOTH
+            </button>
+            <button
+              onClick={() => onChangeState("rent", "type")}
+              className={`${data?.type == "rent" && "border-green-500 font-bold text-green-500 border-2  shadow-lg"} border rounded px-4`}
+            >
+              RENT
+            </button>
+            <button
+              onClick={() => onChangeState("sale", "type")}
+              className={`${data?.type == "sale" && "border-green-500 font-bold text-green-500 border-2  shadow-lg"} border rounded px-4`}
+            >
+              SALE
+            </button>
+          </div>
+        )}
         {!mainCat && (
           <div className="rounded-lg border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark h-full py-2 px-6">
             {data?.curMainCat ? (

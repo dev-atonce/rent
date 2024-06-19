@@ -1,16 +1,20 @@
+import CompanyProfile from "@/components/main/CompanyProfile/CompanyProfile";
 import Cover from "@/components/main/Cover/Cover";
 import Loading from "@/components/main/Loading/Loading";
 import Image from "next/image";
 
 export default function historyPage() {
-    return (
-        <>
-            <Loading />
-            <Cover
-                pageName={"ประวัติบริษัท"}
-                prevPage={{ pageName: "หน้าแรก", url: "/" }}
-            />
-            <div className="container mx-auto mt-10 mb-20">
+  return (
+    <>
+      <Loading />
+      <Cover
+        pageName={"ประวัติบริษัท"}
+        prevPage={{ pageName: "หน้าแรก", url: "/" }}
+      />
+      <div className="container mx-auto pb-10">
+        <CompanyProfile />
+      </div>
+      {/* <div className="container mx-auto mt-10 mb-20">
                 <div className="grid grid-cols-1 md:grid-cols-12 gap-4">
                     <div className="col-span-4 flex justify-center align-middle">
                         <Image src="/Rectangle 106.png" alt="rent" width="300" height="180"/>
@@ -52,7 +56,7 @@ export default function historyPage() {
                         </p>
                     </div>
                 </div>
-            </div>
-        </>
-    );
+            </div> */}
+    </>
+  );
 }

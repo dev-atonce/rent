@@ -10,7 +10,7 @@ const fetchProduct = async (id: any) => {
   );
   const products = await subCat.json();
   const filteredProducts = products.rows.filter(
-    (i: any) => i?.subCategory?.id == id
+    (i: any) => i?.subCategory?.id == id && i?.type == "sale"
   );
   // console.log(products);
   // console.log(filteredProducts);
@@ -36,14 +36,14 @@ export default async function RentSubCatPage({ params: { id } }: any) {
         pageName={subCatData?.nameTH}
         prevPage={{
           pageName: subCatData?.mainCategory?.nameTH,
-          url: `/rental-product/main-category/${subCatData?.mainCategory?.id}`,
+          url: `/sale-product/main-category/${subCatData?.mainCategory?.id}`,
         }}
       />
 
       <div className="container mx-auto">
         <ProductGrid
           data={data}
-          type={"rent"}
+          type={"sale"}
           urlPre={"/sub-category"}
           product={true}
         />

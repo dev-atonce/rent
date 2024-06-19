@@ -11,7 +11,7 @@ const fetchProduct = async (id: any) => {
   const products = await subCat.json();
 
   const filteredProducts = products.rows.filter(
-    (i: any) => i?.subCategory?.id == id
+    (i: any) => i?.subCategory?.id == id && i?.type == "rent"
   );
   // console.log(products);
   // console.log(filteredProducts);
