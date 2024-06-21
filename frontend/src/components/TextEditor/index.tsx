@@ -28,6 +28,7 @@ import { useEffect, useState } from "react";
 import ModalDialog from "../main/Modal";
 import { Button, useDisclosure} from "@nextui-org/react";
 import "../../css/Custom.scss"
+import { List } from "antd";
 
 
 const fontSize = {
@@ -38,27 +39,137 @@ const fontSize = {
     "h5":"text-xl",
     "h6":"text-lg"
 };
+const minHeight = '25rem';
+const DropdownUnorderedList  = () =>{
+    return (<ul className="absolute rounded bg-white border border-slate-200 DropdownUnorderedList" 
+        style={{top:'0',marginTop:'33px',width:'max-content'}}>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="">Default</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="circle">Circle</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="dot">Dot</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="square">Square</li>
+    </ul>)
+}
+const DropdownOrderedList = () =>{
+    return (<ul 
+        className="absolute rounded bg-white border border-slate-200 DropdownOrderedList" 
+        style={{top:'0',marginTop:'33px',width:'max-content'}}>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="decimal">Default</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="lower-alpha">Lower Alpha</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="lower-greek">Lower Greek</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="lower-roman">Lower Roman</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="upper-alpha">Upper Alpha</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="upper-roman">Upper Roman</li>
+    </ul>)
+}
+const FontSizeList = ({height}:any) => {
+    return (<ul 
+        className="absolute rounded bg-white border border-slate-200" 
+        style={{top:'0',marginTop:'33px',width:'max-content',height:minHeight,overflowY:'auto',overflowX:'hidden'}}>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="8px">8px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="9px">9px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="10px">10px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="11px">11px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="12px">12px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="14px">14px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="16px">16px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="24px">24px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="30px">30px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="36px">36px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="48px">48px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="60px">60px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="72px">72px</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="96px">96px</li>
+    </ul>)
+}
+const HeadingList = () => {
+    return (<ul
+        className="absolute rounded bg-white border border-slate-200"
+        style={{top:'0',marginTop:'33px',width:'max-content'}}>
+        {/* {Array.from(fontSize).map((v)=>(<li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type={v}>Heading 1</li>))} */}
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="p">Paragraph</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="h1">Heading 1</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="h2">Heading 2</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="h3">Heading 3</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="h4">Heading 4</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="h5">Heading 5</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="h6">Heading 6</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="pre">Pre</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="blockquote">Blockquote</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="code">Code</li>
+    </ul>);
+}
+const LineHeightList = () => {
+    return (<ul
+        className="absolute rounded bg-white border border-slate-200"
+        style={{top:'0',marginTop:'33px',width:'max-content'}}>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1">1</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="2">2</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1.1">1.1</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1.2">1.2</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1.3">1.3</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1.4">1.4</li>
+        <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1.5">1.5</li>
+    </ul>);
+}
+const HoverSelect = ({el,cr}:any) => {
+    // cr = current row
+    const row = el.parentNode;
+    const parentNode = row.parentNode;
+    const index = parseInt(el.getAttribute('data-index'));
+    const offset = 10;
+    
+    console.log(parentNode)
+    row.childNodes.forEach((v,k) => {
+        let hover = 0;
+        hover = (k < offset) ? k : 0;
+        if(hover < k) console.log(hover)
+        // if(k <= hover) {
+        //     v.classList.add('bg-slate-300');
+        // } else {
+        //     v.classList.remove('bg-slate-300');
+        // }
+    })
+}
+const TableList = () => {
+    let index = 0;
+    return (<>
+        <div 
+            className="absolute rounded bg-white border border-slate-200 p-4"
+            style={{top:'0',marginTop:'33px',width:'max-content'}}
+        >
+            <div className=""> 
+                {Array.from(Array(10).keys()).map((v,i) => 
+                    <div className="grid grid-cols-10 gap-1 mb-1" key={i}>
+                    {Array.from(Array(10).keys()).map((vs,j) => {
+                        index++;
+                        return <div key={index} className="border border-slate-200 w-4 h-4" data-index={index} onMouseOver={(e)=>HoverSelect(e.currentTarget,j)}></div>
+                    })}
+                    </div>
+                )}
+            </div>
+            <div className="w-full flex justify-center mt-2"><span className="mr-2">1</span> x <span className="ml-2">1</span></div>
+        </div>
+    </>)
+}
 
 const TextEditor = () => {
     const [visible, setVisible] = useState<Boolean>(false);
     const [row, setRow] = useState<HTMLElement>();
-    // const [output, setOutput] = useState<HTMLElement>( );
+    const [openDropdown, setOpenDropdown] = useState<String>('');
+    const [height, setHeight] = useState<String>(minHeight);
+
     // const { onOpen, onOpenChange} = useDisclosure();
 
     const handler = () => setVisible(true);
     const closeHandler = () => setVisible(false);
 
-    // const Status = () => 
-        
-    //     console.log(document.elementsFromPoint(0, 30))
-    //     let elements = document.elementsFromPoint(0, 30);
-    //     elements.forEach((elt, i) => {
-    //         output.textContent += elt.localName;
-    //         if (i < elements.length - 1) {
-    //             output.textContent += " < ";
-    //         }
-    //     });
-    // }
+    const OpenDropdown = (list:String) => {
+        if(openDropdown == list){
+            setOpenDropdown('');
+        }else{
+            setOpenDropdown(list);
+        }
+    }
     const handleSetSelect = (e) => {
         setRow(e.target);
         e.target.closest('.grid').classList.toggle('select-row');
@@ -82,8 +193,11 @@ const TextEditor = () => {
         document.execCommand("italic",false,undefined)
     }
     
+    
     useEffect(() => {
-
+        document.addEventListener('click',(e)=>{
+            const target = e.target;
+        })
         // document.addEventListener('mouseup',Status)
         // return () => document.removeEventListener('mouseup',Status)    
     })
@@ -136,17 +250,29 @@ const TextEditor = () => {
                             </button>
                         </div>
                         <div className="group flex border-r px-1 border-slate-300">
-                            <div className="tool-item flex items-center overflow-hidden border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
+                            <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
                                 <button type="button" title="Unordered" className="tools-item hover:bg-slate-200 text-slate-500 hover:text-slate-900 p-2">
                                     <RiListUnordered onClick={()=>{document.execCommand('insertUnorderedList')}}/>
                                 </button>
-                                <div title="Unordered" className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center" style={{height:'32px'}}><RxCaretDown /></div>
+                                <div 
+                                    title="Unordered" 
+                                    className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center" 
+                                    style={{height:'32px'}}
+                                    onClick={()=>OpenDropdown('unordered')}
+                                ><RxCaretDown /></div>
+                                {openDropdown == 'unordered' && <DropdownUnorderedList />}
                             </div>
-                            <div className="tool-item flex items-center overflow-hidden border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
+                            <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
                                 <button type="button" title="Ordered" className="tools-item hover:bg-slate-200 text-slate-500 hover:text-slate-900 p-2">
                                     <RiListOrdered2 onClick={()=>{document.execCommand('insertOrderedList')}}/>
                                 </button>
-                                <div title="Ordered" className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center" style={{height:'32px'}}><RxCaretDown /></div>
+                                <div 
+                                    title="Ordered" 
+                                    className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center" 
+                                    style={{height:'32px'}}
+                                    onClick={()=>OpenDropdown('ordered')}
+                                ><RxCaretDown /></div>
+                                {openDropdown == 'ordered' && <DropdownOrderedList />}
                             </div>
                             <button type="button" disabled={true} title="Decrease Indent" className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 disabled:opacity-75 disabled:bg-white disabled:text-slate-300 p-2">
                                 <RiIndentDecrease onClick={()=>document.execCommand('outdent')} />
@@ -156,37 +282,61 @@ const TextEditor = () => {
                             </button>
                         </div>
                         <div className="group flex border-r px-1 border-slate-300">
-                            <div className="tool-item flex items-center overflow-hidden border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
+                            <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
                                 <button type="button" title="Font Size" className="tools-item hover:bg-slate-200 text-slate-700 hover:text-slate-900 p-2">
                                     <RxFontSize />
                                 </button>
-                                <div title="Font Size" className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center" style={{height:'32px'}}><RxCaretDown /></div>
+                                <div 
+                                    title="Font Size" 
+                                    className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center" 
+                                    style={{height:'32px'}}
+                                    onClick={()=>OpenDropdown('fontSize')}
+                                ><RxCaretDown /></div>
+                                {openDropdown == 'fontSize' && <FontSizeList />}
                             </div>
-                            <div className="tool-item flex items-center overflow-hidden border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
+                            <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
                                 <button 
                                     type="button" 
                                     title="Heading" 
                                     className="tools-item hover:bg-slate-200 text-slate-700 hover:text-slate-900 p-2">
                                     <RiHeading2 />
                                 </button>
-                                <div title="Heading" className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center" style={{height:'32px'}}><RxCaretDown /></div>
+                                <div 
+                                    title="Heading" 
+                                    className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center" 
+                                    style={{height:'32px'}}
+                                    onClick={()=>OpenDropdown('heading')}
+                                ><RxCaretDown /></div>
+                                {openDropdown == 'heading' && <HeadingList />}
                             </div>
-                            <div className="tool-item flex items-center overflow-hidden border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
+                            <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
                                 <button type="button" title="Heading" className="tools-item hover:bg-slate-200 text-slate-700 hover:text-slate-900 p-2">
                                     <RxLineHeight />
                                 </button>
-                                <div title="Heading" className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center" style={{height:'32px'}}><RxCaretDown /></div>
+                                <div 
+                                    title="Heading" 
+                                    className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center" 
+                                    style={{height:'32px'}}
+                                    onClick={()=>OpenDropdown('lineHeight')}
+                                ><RxCaretDown /></div>
+                                {openDropdown == 'lineHeight' && <LineHeightList />}
                             </div>
                         </div>
                         <div className="group flex border-r px-1 border-slate-300">
                             <button type="button" title="Horizontal Line" className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2">
                                 <RxDividerHorizontal />
                             </button>
-                            <div className="tool-item flex items-center overflow-hidden border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
+                            <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
                                 <button type="button" title="Heading" className="tools-item hover:bg-slate-200 text-slate-700 hover:text-slate-900 p-2">
                                     <BsTable />
                                 </button>
-                                <div title="Heading" className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center" style={{height:'32px'}}><RxCaretDown /></div>
+                                <div 
+                                    title="Heading" 
+                                    className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center" 
+                                    style={{height:'32px'}}
+                                    onClick={()=>OpenDropdown('table')}
+                                ><RxCaretDown /></div>
+                                {openDropdown == 'table' && <TableList />}
                             </div>
                             <button type="button" title="Insert Link" className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2">
                                 <BsLink45Deg />
