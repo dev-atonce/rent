@@ -111,23 +111,31 @@ const LineHeightList = () => {
         <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1.5">1.5</li>
     </ul>);
 }
-const HoverSelect = ({el,cr}:any) => {
-    // cr = current row
-    const row = el.parentNode;
-    const parentNode = row.parentNode;
-    const index = parseInt(el.getAttribute('data-index'));
-    const offset = 10;
-    
-    console.log(parentNode)
-    row.childNodes.forEach((v,k) => {
-        let hover = 0;
-        hover = (k < offset) ? k : 0;
-        if(hover < k) console.log(hover)
-        // if(k <= hover) {
-        //     v.classList.add('bg-slate-300');
-        // } else {
-        //     v.classList.remove('bg-slate-300');
-        // }
+const HoverSelect = (el) => {
+    const current = el.target;
+
+    const rowElement = current.parentNode;
+    const parentNode = rowElement.parentNode;
+    const index = parseInt(current.getAttribute('data-index'));
+    let x = 0;
+    let y = 0;
+
+    parentNode.childNodes.forEach((row,i) => {
+        y = i
+        Array.from(row.children).map((col,j) => {
+            x = j;
+            if(current == col){
+                parentNode.childNodes.forEach((v,k)=>{
+                    Array.from(v.children).map((vc,l)=>{
+                        if(k<=y && l<=x) (vc as any).classList.add('bg-slate-300');
+                        else (vc as any).classList.remove('bg-slate-300');
+                    })
+                })
+                parentNode.querySelector('.x').innerHTML = (x+1);
+                parentNode.querySelector('.y').innerHTML = (y+1);
+                return false;
+            }
+        })
     })
 }
 const TableList = () => {
@@ -137,17 +145,17 @@ const TableList = () => {
             className="absolute rounded bg-white border border-slate-200 p-4"
             style={{top:'0',marginTop:'33px',width:'max-content'}}
         >
-            <div className=""> 
-                {Array.from(Array(10).keys()).map((v,i) => 
-                    <div className="grid grid-cols-10 gap-1 mb-1" key={i}>
-                    {Array.from(Array(10).keys()).map((vs,j) => {
-                        index++;
-                        return <div key={index} className="border border-slate-200 w-4 h-4" data-index={index} onMouseOver={(e)=>HoverSelect(e.currentTarget,j)}></div>
-                    })}
-                    </div>
-                )}
-            </div>
-            <div className="w-full flex justify-center mt-2"><span className="mr-2">1</span> x <span className="ml-2">1</span></div>
+            {/* <div className="">  */}
+            {Array.from(Array(10).keys()).map((v,i) => 
+                <div className="grid grid-cols-10 gap-1 mb-1" key={i}>
+                {Array.from(Array(10).keys()).map((vs,j) => {
+                    if(j > 0) index++;
+                    return <div key={index} className="border border-slate-200 w-4 h-4" data-index={index} onMouseOver={HoverSelect}></div>
+                })}
+                </div>
+            )}
+            {/* </div> */}
+            <div className="w-full flex justify-center mt-2"><span className="mr-2 x">1</span> x <span className="ml-2 y">1</span></div>
         </div>
     </>)
 }
