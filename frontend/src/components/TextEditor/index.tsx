@@ -41,7 +41,7 @@ const fontSize = {
 };
 const minHeight = '25rem';
 const DropdownUnorderedList  = () =>{
-    return (<ul className="absolute rounded bg-white border border-slate-200 DropdownUnorderedList" 
+    return (<ul className="absolute rounded bg-white border z-20 border-slate-200 DropdownUnorderedList" 
         style={{top:'0',marginTop:'33px',width:'max-content'}}>
         <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="">Default</li>
         <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="circle">Circle</li>
@@ -51,7 +51,7 @@ const DropdownUnorderedList  = () =>{
 }
 const DropdownOrderedList = () =>{
     return (<ul 
-        className="absolute rounded bg-white border border-slate-200 DropdownOrderedList" 
+        className="absolute rounded bg-white border z-20 border-slate-200 DropdownOrderedList" 
         style={{top:'0',marginTop:'33px',width:'max-content'}}>
         <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="decimal">Default</li>
         <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="lower-alpha">Lower Alpha</li>
@@ -63,7 +63,7 @@ const DropdownOrderedList = () =>{
 }
 const FontSizeList = ({height}:any) => {
     return (<ul 
-        className="absolute rounded bg-white border border-slate-200" 
+        className="absolute rounded bg-white border z-20 border-slate-200" 
         style={{top:'0',marginTop:'33px',width:'max-content',height:minHeight,overflowY:'auto',overflowX:'hidden'}}>
         <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="8px">8px</li>
         <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="9px">9px</li>
@@ -83,7 +83,7 @@ const FontSizeList = ({height}:any) => {
 }
 const HeadingList = () => {
     return (<ul
-        className="absolute rounded bg-white border border-slate-200"
+        className="absolute rounded bg-white border z-20 border-slate-200"
         style={{top:'0',marginTop:'33px',width:'max-content'}}>
         {/* {Array.from(fontSize).map((v)=>(<li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type={v}>Heading 1</li>))} */}
         <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="p">Paragraph</li>
@@ -100,7 +100,7 @@ const HeadingList = () => {
 }
 const LineHeightList = () => {
     return (<ul
-        className="absolute rounded bg-white border border-slate-200"
+        className="absolute rounded bg-white border z-20 border-slate-200"
         style={{top:'0',marginTop:'33px',width:'max-content'}}>
         <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1">1</li>
         <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="2">2</li>
@@ -141,7 +141,7 @@ const TableList = ({btn}:any) => {
     let index = 0;
     return (<>
         <div 
-            className="absolute rounded bg-white border border-slate-200 p-2"
+            className="absolute rounded bg-white border border-slate-200 p-2 z-20"
             style={{top:'0',marginTop:'33px',width:'max-content'}}
         >
             {Array.from(Array(10).keys()).map((v,i) => 
@@ -226,17 +226,22 @@ const TextEditor = ({id}:any) => {
             let editor = document.getElementById(EditorId);
             let editorBody = editor?.querySelector('.editor-body');
             const rowElement = document.createElement('div');
-            rowElement.setAttribute('class','grid grid-cols-1 md:grid-cols-12 gap-4');
+            rowElement.setAttribute('class','grid grid-cols-1 md:grid-cols-12 gap-4 relative pt-7');
             newRow.map((v,k)=>{
                 let column = document.createElement('div');
-                column.setAttribute("class",v.col);
+                column.setAttribute("class",v.col+' border border-slate-200');
+                if(v.content == 'text') column.setAttribute('contenteditable','true');
+                if(v.content == 'image') {
+                    column.classList.add('bg-slate-200','flex','justify-center','items-center','cursor-pointer');
+                    column.setAttribute('data-image','true');
+                }
                 column.innerHTML = v.content;
                 rowElement.append(column)
             })
             const controlBox = document.createElement('div');
-            controlBox.setAttribute('class','col-span-12 row-panel');
+            controlBox.setAttribute('class','absolute right-0 top-0 row-panel');
             const removeBtn = document.createElement('button');
-            removeBtn.setAttribute('class','p-2 bg-red');
+            removeBtn.setAttribute('class','bg-red text-white rounded w-7 h-7');
             removeBtn.innerHTML = 'X';
             controlBox.append(removeBtn)
             rowElement.prepend(controlBox)
@@ -435,7 +440,7 @@ const TextEditor = ({id}:any) => {
             </div>
             <div className="editor-body border-t border-slate-300 min-h-100 p-2 focus:outline-none focus-visible:outline-none" 
                 suppressContentEditableWarning={true}
-                contentEditable={true} 
+                contentEditable={false} 
                 aria-disabled="false" 
                 tabIndex={-1}  
                 spellCheck="false"
