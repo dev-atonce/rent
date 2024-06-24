@@ -111,12 +111,11 @@ const LineHeightList = () => {
         <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1.5">1.5</li>
     </ul>);
 }
-const HoverSelect = (el) => {
+const HoverSelect = (el:any) => {
     const current = el.target;
-
     const rowElement = current.parentNode;
     const parentNode = rowElement.parentNode;
-    const index = parseInt(current.getAttribute('data-index'));
+    // const index = parseInt(current.getAttribute('data-index'));
     let x = 0;
     let y = 0;
 
@@ -138,26 +137,58 @@ const HoverSelect = (el) => {
         })
     })
 }
-const TableList = () => {
+const TableList = ({btn}:any) => {
     let index = 0;
     return (<>
         <div 
             className="absolute rounded bg-white border border-slate-200 p-4"
             style={{top:'0',marginTop:'33px',width:'max-content'}}
         >
-            {/* <div className="">  */}
             {Array.from(Array(10).keys()).map((v,i) => 
-                <div className="grid grid-cols-10 gap-1 mb-1" key={i}>
+            <div className="grid grid-cols-10 gap-1 mb-1" key={i}>
                 {Array.from(Array(10).keys()).map((vs,j) => {
                     if(j > 0) index++;
-                    return <div key={index} className="border border-slate-200 w-4 h-4" data-index={index} onMouseOver={HoverSelect}></div>
+                    return <div key={index} className="border border-slate-200 w-4 h-4" data-index={index} onMouseOver={HoverSelect} onClick={(el)=>{CreateTable(el);btn.setOpenDropdown('')}} btn={btn}></div>
                 })}
-                </div>
+            </div>
             )}
-            {/* </div> */}
             <div className="w-full flex justify-center mt-2"><span className="mr-2 x">1</span> x <span className="ml-2 y">1</span></div>
         </div>
     </>)
+}
+const CreateTable = (el:any) => {
+    const current = el.currentTarget;
+    const parentNode = current.parentNode.parentNode;
+    const x = parentNode.querySelector('.x').innerHTML;
+    const y = parentNode.querySelector('.y').innerHTML;
+    const TextEditor = parentNode.closest('.text-editor');
+    const colWidth = 100 / x;
+    const table = document.createElement('table');
+    table.setAttribute('class','border-collapse border border-slate-300 w-full')
+    const thead = document.createElement('thead');
+    const tbody = document.createElement('tbody');
+    // thead
+    let tr = document.createElement('tr');
+    Array.from({length:x}).map(()=>{
+        let th  =  document.createElement('th');
+        th.setAttribute('width',`${colWidth}%`);
+        th.setAttribute('class','border border-slate-300 h-10')
+        tr.append(th)
+    });
+    thead.append(tr);
+    // tbody
+    Array.from({length:(y-1)}).map(()=>{
+        let tr = document.createElement('tr')
+        Array.from({length:x}).map(()=>{
+            let td = document.createElement('td');
+            td.setAttribute('class','border border-slate-300 h-10 p-1');
+            tr.append(td);
+        })
+        tbody.append(tr)
+    })
+    //
+    table.append(thead,tbody);
+    TextEditor.querySelector('[contenteditable="true"]').append(table);
 }
 
 const TextEditor = () => {
@@ -344,7 +375,7 @@ const TextEditor = () => {
                                     style={{height:'32px'}}
                                     onClick={()=>OpenDropdown('table')}
                                 ><RxCaretDown /></div>
-                                {openDropdown == 'table' && <TableList />}
+                                {openDropdown == 'table' && <TableList btn={{setOpenDropdown}}/>}
                             </div>
                             <button type="button" title="Insert Link" className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2">
                                 <BsLink45Deg />
