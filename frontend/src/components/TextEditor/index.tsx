@@ -24,7 +24,7 @@ import {
 } from "react-icons/ri";
 import { RxCaretDown ,RxFontSize, RxLineHeight, RxDividerHorizontal   } from "react-icons/rx";
 import { CgUndo, CgRedo } from "react-icons/cg";
-import { useEffect, useState } from "react";
+import { useEffect, useState,cloneElement } from "react";
 import ModalDialog from "../main/Modal";
 import { Button, useDisclosure} from "@nextui-org/react";
 import "../../css/Custom.scss"
@@ -141,7 +141,7 @@ const TableList = ({btn}:any) => {
     let index = 0;
     return (<>
         <div 
-            className="absolute rounded bg-white border border-slate-200 p-4"
+            className="absolute rounded bg-white border border-slate-200 p-2"
             style={{top:'0',marginTop:'33px',width:'max-content'}}
         >
             {Array.from(Array(10).keys()).map((v,i) => 
@@ -191,9 +191,11 @@ const CreateTable = (el:any) => {
     TextEditor.querySelector('[contenteditable="true"]').append(table);
 }
 
-const TextEditor = () => {
+const TextEditor = ({id}:any) => {
+    const EditorId = (id)?id: new Date().getTime();
+   
     const [visible, setVisible] = useState<Boolean>(false);
-    const [row, setRow] = useState<HTMLElement>();
+    const [row, setRow] = useState<any>();
     const [openDropdown, setOpenDropdown] = useState<String>('');
     const [height, setHeight] = useState<String>(minHeight);
 
@@ -210,8 +212,37 @@ const TextEditor = () => {
         }
     }
     const handleSetSelect = (e) => {
-        setRow(e.target);
-        e.target.closest('.grid').classList.toggle('select-row');
+        
+        const current = e.target.closest('.grid');
+        e.target.closest('.bg-stripes-pink').querySelector('.select-row')?.classList.toggle('select-row');
+        let selectedRow = current.getAttribute('data-content')
+        current.classList.toggle('select-row');
+        setRow(selectedRow);
+    }
+    const createRow = () => {
+
+        if(row){
+            let newRow = JSON.parse(row);
+            let editor = document.getElementById(EditorId);
+            let editorBody = editor?.querySelector('.editor-body');
+            const rowElement = document.createElement('div');
+            rowElement.setAttribute('class','grid grid-cols-1 md:grid-cols-12 gap-4');
+            newRow.map((v,k)=>{
+                let column = document.createElement('div');
+                column.setAttribute("class",v.col);
+                column.innerHTML = v.content;
+                rowElement.append(column)
+            })
+            const controlBox = document.createElement('div');
+            controlBox.setAttribute('class','col-span-12 row-panel');
+            const removeBtn = document.createElement('button');
+            removeBtn.setAttribute('class','p-2 bg-red');
+            removeBtn.innerHTML = 'X';
+            controlBox.append(removeBtn)
+            rowElement.prepend(controlBox)
+            editorBody?.append(rowElement);
+            
+        }
     }
     const Heading = (select:String) => 
     {
@@ -225,11 +256,11 @@ const TextEditor = () => {
     }
     const TextBold = () => {
         document.getSelection();
-        document.execCommand("bold",false,undefined)
+        document.execCommand("bold",false,undefined);
     }
     const TextItalic = () => {
         document.getSelection();
-        document.execCommand("italic",false,undefined)
+        document.execCommand("italic",false,undefined);
     }
     
     
@@ -243,8 +274,10 @@ const TextEditor = () => {
 
     return (
     <>
-    <ModalDialog visible={visible} closeHandler={closeHandler} select={{row,handleSetSelect}} title="Add Row"/>
-    <div className="rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark h-full overflow-hidden">
+    <ModalDialog visible={visible} closeHandler={closeHandler} select={{row,handleSetSelect,createRow,EditorId}} title="Add Row"/>
+    <div 
+        id={EditorId}
+        className="rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark h-full overflow-hidden">
         <div className="text-editor">
             <div className="header">
                 <div className="tools flex justify-stretch p-1">
@@ -393,7 +426,6 @@ const TextEditor = () => {
                     <div className="w-full"></div>
                     <div className="flex-none">
                         <div className="group flex">
-                            
                             <button type="button" title="Full Screen" className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2">
                                 <RiFullscreenFill />
                             </button>

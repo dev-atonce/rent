@@ -9,6 +9,16 @@ import {
 } from "@nextui-org/react";
 
 export default function ModalDialog({visible, closeHandler, title, select}:any) {
+    const rows = [
+      [{'col':'col-span-12','content':'text'}],
+      [{'col':'col-span-4','content':'image'},{"col":"col-span-8","content":"text"}],
+      [{'col':'col-span-4','content':'image'},{"col":"col-span-4","content":"image"},{"col":"col-span-4","content":"image"}],
+      [{'col':'col-span-3','content':'image'},{"col":"col-span-3","content":"image"},{"col":"col-span-3","content":"image"},{"col":"col-span-3","content":"image"}],
+      [{'col':'col-span-3','content':'image'},{"col":"col-span-3","content":"image"},{"col":"col-span-6","content":"text"}],
+      [{'col':'col-span-8','content':'text'},{"col":"col-span-4","content":"image"}],
+      [{'col':'col-span-6','content':'text'},{"col":"col-span-6","content":"image"}],
+      [{'col':'col-span-12','content':'image'}],
+  ];
   return (
     <>
       {/* <Button onPress={onOpen}>Open Modal</Button> */}
@@ -25,52 +35,33 @@ export default function ModalDialog({visible, closeHandler, title, select}:any) 
             <>
               <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
               <ModalBody>
-                <div className="bg-stripes-pink" style={{
+                <div className="bg-stripes-pink p-2" style={{
                   borderRadius: '10px',
                   backgroundColor: '#9772f41a',
                   backgroundImage: 'linear-gradient(135deg, #6148ec80 10%, #0000 0, #0000 50%, #6148ec80 0, #6148ec80 60%, #0000 0, #0000',
                   backgroundSize: '7.07px 7.07px'
                 }}>
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 rounded-lg hover:ring hover:ring-indigo-500" onClick={select.handleSetSelect}>
-                    <span className="col-span-12 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">text</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4 rounded-lg hover:ring hover:ring-indigo-500" onClick={select.handleSetSelect}>
-                    <span className="col-span-4 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                    <span className="col-span-8 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">text</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4 rounded-lg hover:ring hover:ring-indigo-500" onClick={select.handleSetSelect}>
-                    <span className="col-span-4 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                    <span className="col-span-4 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                    <span className="col-span-4 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4 rounded-lg hover:ring hover:ring-indigo-500" onClick={select.handleSetSelect}>
-                    <span className="col-span-3 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                    <span className="col-span-3 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                    <span className="col-span-3 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                    <span className="col-span-3 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4 rounded-lg hover:ring hover:ring-indigo-500" onClick={select.handleSetSelect}>
-                    <span className="col-span-3 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                    <span className="col-span-3 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                    <span className="col-span-6 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">text</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4 rounded-lg hover:ring hover:ring-indigo-500" onClick={select.handleSetSelect}>
-                    <span className="col-span-8 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">text</span>
-                    <span className="col-span-4 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4 rounded-lg hover:ring hover:ring-indigo-500" onClick={select.handleSetSelect}>
-                    <span className="col-span-6 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">text</span>
-                    <span className="col-span-6 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                  </div>
-                  <div className="grid grid-cols-1 md:grid-cols-12 gap-4 mt-4 rounded-lg hover:ring hover:ring-indigo-500" onClick={select.handleSetSelect}>
-                    <span className="col-span-12 border-dashed bg-indigo-400 flex justify-center rounded-lg text-white font-bold p-2">image</span>
-                  </div>
+                  {Array.from(rows).map((v,k) => 
+                    <div key={k} className={`grid grid-cols-1 md:grid-cols-12 gap-4 ${k>0?`mt-4`:``} transition-all cursor-pointer rounded-lg hover:ring hover:ring-indigo-500`} 
+                      data-content={JSON.stringify(v)} 
+                      onClick={select.handleSetSelect}>
+                      {Array.from(v).map((v2, k2) =>
+                         <span 
+                            key={k2} 
+                            className={`${v2.col} border-dashed bg-indigo-300 flex justify-center rounded-lg text-slate-600 font-bold p-2`} 
+                            data-content={v2.content}
+                          >{v2.content}</span>
+                      )}
+                    </div>
+                  )}
                 </div>
               </ModalBody>
               <ModalFooter>
                 <Button 
-                  onPress={onClose} 
-                  className="bg-blue-200 text-white font-bold hover:bg-blue-700 focus:ring focus:ring-blue-300 rounded-lg">
+                  data-id={select.EditorId}
+                  onClick={select.createRow}
+                  // onPress={onClose}
+                  className={`${select.row?`bg-blue-500`:`bg-blue-200`} text-white font-bold hover:bg-blue-700 focus:ring focus:ring-blue-300 rounded-lg`}>
                   Select
                 </Button>
                 <Button 
