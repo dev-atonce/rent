@@ -62,7 +62,7 @@ export default function ModalDialog({visible, closeHandler, title, select}:any) 
                   onClick={select.createRow}
                   // onPress={onClose}
                   className={`${select.row?`bg-blue-500`:`bg-blue-200`} text-white font-bold hover:bg-blue-700 focus:ring focus:ring-blue-300 rounded-lg`}>
-                  Select
+                  Append
                 </Button>
                 <Button 
                   variant="light" 

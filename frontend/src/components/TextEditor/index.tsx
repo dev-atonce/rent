@@ -22,6 +22,8 @@ import {
     RiIndentIncrease,
     RiFullscreenFill
 } from "react-icons/ri";
+import { FaTimes } from "react-icons/fa";
+
 import { RxCaretDown ,RxFontSize, RxLineHeight, RxDividerHorizontal   } from "react-icons/rx";
 import { CgUndo, CgRedo } from "react-icons/cg";
 import { useEffect, useState,cloneElement } from "react";
@@ -164,7 +166,7 @@ const CreateTable = (el:any) => {
     const TextEditor = parentNode.closest('.text-editor');
     const colWidth = 100 / x;
     const table = document.createElement('table');
-    table.setAttribute('class','border-collapse border border-slate-300 w-full')
+    table.setAttribute('class','border-collapse border border-slate-200 w-full')
     const thead = document.createElement('thead');
     const tbody = document.createElement('tbody');
     // thead
@@ -172,7 +174,7 @@ const CreateTable = (el:any) => {
     Array.from({length:x}).map(()=>{
         let th  =  document.createElement('th');
         th.setAttribute('width',`${colWidth}%`);
-        th.setAttribute('class','border border-slate-300 h-10')
+        th.setAttribute('class','border border-slate-200 h-10')
         tr.append(th)
     });
     thead.append(tr);
@@ -181,7 +183,7 @@ const CreateTable = (el:any) => {
         let tr = document.createElement('tr')
         Array.from({length:x}).map(()=>{
             let td = document.createElement('td');
-            td.setAttribute('class','border border-slate-300 h-10 p-1');
+            td.setAttribute('class','border border-slate-200 h-10 p-1');
             tr.append(td);
         })
         tbody.append(tr)
@@ -229,20 +231,39 @@ const TextEditor = ({id}:any) => {
             rowElement.setAttribute('class','grid grid-cols-1 md:grid-cols-12 gap-4 relative pt-7');
             newRow.map((v,k)=>{
                 let column = document.createElement('div');
-                column.setAttribute("class",v.col+' border border-slate-200');
-                if(v.content == 'text') column.setAttribute('contenteditable','true');
+                column.setAttribute("class",v.col);
+                if(v.content == 'text') {
+                    column.setAttribute('contenteditable','true');
+                    column.classList.add('col-text');
+                }
                 if(v.content == 'image') {
-                    column.classList.add('bg-slate-200','flex','justify-center','items-center','cursor-pointer');
+                    column.classList.add('col-image','bg-slate-100','flex','justify-center','items-center','cursor-pointer');
                     column.setAttribute('data-image','true');
                 }
                 column.innerHTML = v.content;
                 rowElement.append(column)
             })
             const controlBox = document.createElement('div');
-            controlBox.setAttribute('class','absolute right-0 top-0 row-panel');
+            controlBox.setAttribute('class','absolute bg-slate-300 row-panel right-0 top-0 overflow-hidden rounded-lg z-30');
+            controlBox.innerHTML = `
+                <button class="rounded px-2 py-1 text-slate-800 hover:bg-slate-300" title="Soure code">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                </button>
+            `;
+            // <button class="rounded px-2 py-1 text-slate-800 hover:bg-slate-300" title="Move">
+            //     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="15px" width="15px" version="1.1" id="Layer_1" viewBox="0 0 492.001 492.001" xml:space="preserve">
+            //         <g>
+            //             <g>
+            //                 <path d="M487.97,237.06l-58.82-58.82c-5.224-5.228-14.376-5.228-19.592,0l-7.436,7.432c-5.4,5.4-5.4,14.064,0,19.46l21.872,21.74    H265.206V68.396l21.808,22.132c5.224,5.22,14.216,5.22,19.428,0l7.36-7.432c5.404-5.404,5.356-14.196-0.044-19.596L254.846,4.444    c-2.6-2.592-6.088-4.184-9.804-4.184h-0.404c-3.712,0-7.188,1.588-9.784,4.184l-57.688,57.772    c-2.612,2.608-4.052,6.124-4.052,9.836c0,3.704,1.44,7.208,4.052,9.816l7.432,7.444c5.224,5.22,14.612,5.228,19.828,0.004    l22.368-22.132v159.688H67.814l22.14-22.008c2.608-2.608,4.048-6.028,4.048-9.732s-1.44-7.16-4.052-9.76l-7.436-7.42    c-5.22-5.216-14.372-5.2-19.584,0.008L4.034,236.856c-2.672,2.672-4.1,6.244-4.032,9.92c-0.068,3.816,1.356,7.388,4.028,10.056    l57.68,57.692c5.224,5.22,14.38,5.22,19.596,0l7.44-7.44c2.604-2.6,4.044-6.084,4.044-9.788c0-3.716-1.44-7.232-4.044-9.836    l-22.14-22.172H226.79V425.32l-23.336-23.088c-5.212-5.22-14.488-5.22-19.7,0l-7.5,7.44c-2.604,2.6-4.072,6.084-4.072,9.792    c0,3.704,1.424,7.184,4.028,9.792l58.448,58.456c2.596,2.592,6.068,4.028,9.9,4.028c0.024-0.016,0.24,0,0.272,0    c3.712,0,7.192-1.432,9.792-4.028l58.828-58.832c2.6-2.604,4.044-6.088,4.044-9.792c0-3.712-1.44-7.192-4.044-9.796l-7.44-7.44    c-5.216-5.22-14.044-5.22-19.264,0l-21.54,21.868V265.284H425.59l-23.096,23.132c-2.612,2.608-4.048,6.112-4.048,9.82    s1.432,7.192,4.048,9.8l7.44,7.444c5.212,5.224,14.372,5.224,19.584,0l58.452-58.452c2.672-2.664,4.096-6.244,4.028-9.916    C492.07,243.296,490.642,239.728,487.97,237.06z"/>
+            //             </g>
+            //         </g>
+            //     </svg>
+            // </button>
+    
             const removeBtn = document.createElement('button');
-            removeBtn.setAttribute('class','bg-red text-white rounded w-7 h-7');
-            removeBtn.innerHTML = 'X';
+            removeBtn.setAttribute('title','Remove row');
+            removeBtn.setAttribute('class','rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100');
+            removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
             controlBox.append(removeBtn)
             rowElement.prepend(controlBox)
             editorBody?.append(rowElement);
@@ -268,14 +289,27 @@ const TextEditor = ({id}:any) => {
         document.execCommand("italic",false,undefined);
     }
     
-    
+    const createMark = () => {
+        return <div className="mark"></div>
+    }
+    const deleteRow = (e:any) => {
+        e.closest('.grid').remove();
+    }
     useEffect(() => {
         document.addEventListener('click',(e)=>{
-            const target = e.target;
+            const colText = e.target;
+            if(colText.nodeName == 'th') {
+                console.log(colText)
+            }
+            const removeRowBtn = e.target.closest('.row-panel');
+            if(removeRowBtn){
+                deleteRow(removeRowBtn)
+            }
         })
         // document.addEventListener('mouseup',Status)
         // return () => document.removeEventListener('mouseup',Status)    
     })
+
 
     return (
     <>
