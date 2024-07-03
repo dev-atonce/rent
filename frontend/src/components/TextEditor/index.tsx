@@ -26,13 +26,21 @@ import { FaTimes } from "react-icons/fa";
 
 import { RxCaretDown ,RxFontSize, RxLineHeight, RxDividerHorizontal   } from "react-icons/rx";
 import { CgUndo, CgRedo } from "react-icons/cg";
-import { useEffect, useState,cloneElement } from "react";
+import { useEffect, useState, cloneElement } from "react";
 import ModalDialog from "../main/Modal";
+import ImageModal from "../main/Modal/ImageModal";
 import { Button, useDisclosure} from "@nextui-org/react";
 import "../../css/Custom.scss"
 import { List } from "antd";
 
-
+const mediaImages = [
+    {"src":"Rectangle 114.png","alt":"Rectangle 114"},
+    {"src":"Rectangle 136.png","alt":"Rectangle 136"},
+    {"src":"Rectangle 137.png","alt":"Rectangle 137"},
+    {"src":"Rectangle 138.png","alt":"Rectangle 138"},
+    {"src":"Rectangle 139.png","alt":"Rectangle 139"},
+    {"src":"Rectangle 147.png","alt":"Rectangle 147"},
+];
 const fontSize = {
     "h1":"text-5xl",
     "h2":"text-4xl",
@@ -139,7 +147,9 @@ const HoverSelect = (el:any) => {
         })
     })
 }
-const TableList = ({btn}:any) => {
+// Create a box to select the table. (column x row)
+const TableList = ({btn}:any) =>
+{
     let index = 0;
     return (<>
         <div 
@@ -159,7 +169,10 @@ const TableList = ({btn}:any) => {
         </div>
     </>)
 }
-const CreateTable = (el:any) => {
+
+// Create table in to text content
+const CreateTable = (el:any) => 
+{
     const current = el.currentTarget;
     const parentNode = current.parentNode.parentNode;
     const x = parentNode.querySelector('.x').innerHTML;
@@ -194,19 +207,24 @@ const CreateTable = (el:any) => {
     TextEditor.querySelector('[contenteditable="true"]').append(table);
 }
 
-const TextEditor = ({id}:any) => {
+// Main Component
+const TextEditor = ({id}:any) => 
+{
     const EditorId = (id)?id: new Date().getTime();
-   
+    
     const [visible, setVisible] = useState<Boolean>(false);
+    const [imgVisible, setImgVisible] = useState<Boolean>(false);
     const [row, setRow] = useState<any>();
     const [openDropdown, setOpenDropdown] = useState<String>('');
     const [height, setHeight] = useState<String>(minHeight);
-
+    
     // const { onOpen, onOpenChange} = useDisclosure();
-
+    
     const handler = () => setVisible(true);
+    const imgModal = () => setImgVisible(true);
     const closeHandler = () => setVisible(false);
-
+    const closeImgHandler = () => setImgVisible(false);
+    
     const OpenDropdown = (list:String) => {
         if(openDropdown == list){
             setOpenDropdown('');
@@ -222,15 +240,16 @@ const TextEditor = ({id}:any) => {
         current.classList.toggle('select-row');
         setRow(selectedRow);
     }
-    const createRow = () => {
 
+    const createRow = () => {
+        
         if(row){
             let newRow = JSON.parse(row);
             let editor = document.getElementById(EditorId);
             let editorBody = editor?.querySelector('.editor-body');
             const rowElement = document.createElement('div');
-            rowElement.setAttribute('class','grid grid-cols-1 md:grid-cols-12 gap-4 relative pt-7');
-            newRow.map((v:any ,k:any)=>{
+            rowElement.setAttribute('class','grid grid-cols-1 md:grid-cols-12 gap-4 relative pt-6 pb-4');
+            newRow.map((v:any ,k:any) => {
                 let column = document.createElement('div');
                 column.setAttribute("class",v.col);
                 if(v.content == 'text') {
@@ -239,6 +258,7 @@ const TextEditor = ({id}:any) => {
                     column.classList.add('col-text');
                 }
                 if(v.content == 'image') {
+                    column.onclick = imgModal;
                     column.classList.add('col-image','bg-slate-100','flex','justify-center','items-center','cursor-pointer');
                     column.setAttribute('data-image','true');
                     column.setAttribute('data-text','image');
@@ -248,9 +268,9 @@ const TextEditor = ({id}:any) => {
             const controlBox = document.createElement('div');
             controlBox.setAttribute('class','absolute bg-slate-300 row-panel right-0 top-0 overflow-hidden rounded-lg z-30');
             controlBox.innerHTML = `
-                <button class="rounded px-2 py-1 text-slate-800 hover:bg-slate-300" title="Soure code">
-                    <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                </button>
+            <button class="rounded px-2 py-1 text-slate-800 hover:bg-slate-300" title="Soure code">
+            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </button>
             `;
             // <button class="rounded px-2 py-1 text-slate-800 hover:bg-slate-300" title="Move">
             //     <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" fill="#000000" height="15px" width="15px" version="1.1" id="Layer_1" viewBox="0 0 492.001 492.001" xml:space="preserve">
@@ -292,9 +312,6 @@ const TextEditor = ({id}:any) => {
         document.execCommand("italic",false,undefined);
     }
     
-    const createMark = () => {
-        return <div className="mark"></div>
-    }
     const deleteRow = (e:any) => {
         e.closest('.grid').remove();
     }
@@ -310,15 +327,14 @@ const TextEditor = ({id}:any) => {
             if(removeRowBtn){
                 deleteRow(removeRowBtn)
             }
-        })
-        // document.addEventListener('mouseup',Status)
-        // return () => document.removeEventListener('mouseup',Status)    
-    })
+        }) 
+    },[]);
 
 
     return (
     <>
     <ModalDialog visible={visible} closeHandler={closeHandler} select={{row,handleSetSelect,createRow,EditorId}} title="Add Row"/>
+    <ImageModal imgVisible={imgVisible} closeImgHandler={closeImgHandler} images={mediaImages} title="Image" />
     <div 
         id={EditorId}
         className="rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark h-full overflow-hidden">

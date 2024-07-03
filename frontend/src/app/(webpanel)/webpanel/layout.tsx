@@ -38,6 +38,7 @@ export default function RootLayout({
       <title>Webpanel</title>
       <meta name="keywords" content={"Webpanel Keywords"} />
       <meta name="description" content={"Webpanel Description"} />
+      <base href="/" />
 
       <body suppressHydrationWarning={true}>
         <div className="dark:bg-boxdark-2 dark:text-bodydark">
