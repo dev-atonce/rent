@@ -234,13 +234,14 @@ const TextEditor = ({id}:any) => {
                 column.setAttribute("class",v.col);
                 if(v.content == 'text') {
                     column.setAttribute('contenteditable','true');
+                    column.setAttribute('data-text','text');
                     column.classList.add('col-text');
                 }
                 if(v.content == 'image') {
                     column.classList.add('col-image','bg-slate-100','flex','justify-center','items-center','cursor-pointer');
                     column.setAttribute('data-image','true');
+                    column.setAttribute('data-text','image');
                 }
-                column.innerHTML = v.content;
                 rowElement.append(column)
             })
             const controlBox = document.createElement('div');
