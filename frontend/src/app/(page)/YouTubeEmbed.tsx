@@ -3,7 +3,7 @@ import { useState } from "react";
 // import Image from "next/image";
 
 
-const YouTubeEmbed = ({ list, width, height }) => {
+const YouTubeEmbed = ({ list, width, height }:any) => {
     const [video, setVideo] = useState(list[0].videoId);
     return (
         <>

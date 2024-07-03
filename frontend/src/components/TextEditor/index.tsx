@@ -121,13 +121,13 @@ const HoverSelect = (el:any) => {
     let x = 0;
     let y = 0;
 
-    parentNode.childNodes.forEach((row,i) => {
+    parentNode.childNodes.forEach((row:any, i:any) => {
         y = i
-        Array.from(row.children).map((col,j) => {
+        Array.from(row.children).map((col:any, j:any) => {
             x = j;
             if(current == col){
-                parentNode.childNodes.forEach((v,k)=>{
-                    Array.from(v.children).map((vc,l)=>{
+                parentNode.childNodes.forEach((v:any ,k:any)=>{
+                    Array.from(v.children).map((vc:any, l:any)=>{
                         if(k<=y && l<=x) (vc as any).classList.add('bg-slate-300');
                         else (vc as any).classList.remove('bg-slate-300');
                     })
@@ -146,10 +146,11 @@ const TableList = ({btn}:any) => {
             className="absolute rounded bg-white border border-slate-200 p-2 z-20"
             style={{top:'0',marginTop:'33px',width:'max-content'}}
         >
-            {Array.from(Array(10).keys()).map((v,i) => 
+            {Array.from(Array(10).keys()).map((v:any,i:any) => 
             <div className="grid grid-cols-10 gap-1 mb-1" key={i}>
-                {Array.from(Array(10).keys()).map((vs,j) => {
+                {Array.from(Array(10).keys()).map((vs:any,j:any) => {
                     if(j > 0) index++;
+                    //@ts-ignore
                     return <div key={index} className="border border-slate-200 w-4 h-4" data-index={index} onMouseOver={HoverSelect} onClick={(el)=>{CreateTable(el);btn.setOpenDropdown('')}} btn={btn}></div>
                 })}
             </div>
@@ -213,7 +214,7 @@ const TextEditor = ({id}:any) => {
             setOpenDropdown(list);
         }
     }
-    const handleSetSelect = (e) => {
+    const handleSetSelect = (e:any) => {
         
         const current = e.target.closest('.grid');
         e.target.closest('.bg-stripes-pink').querySelector('.select-row')?.classList.toggle('select-row');
@@ -229,7 +230,7 @@ const TextEditor = ({id}:any) => {
             let editorBody = editor?.querySelector('.editor-body');
             const rowElement = document.createElement('div');
             rowElement.setAttribute('class','grid grid-cols-1 md:grid-cols-12 gap-4 relative pt-7');
-            newRow.map((v,k)=>{
+            newRow.map((v:any ,k:any)=>{
                 let column = document.createElement('div');
                 column.setAttribute("class",v.col);
                 if(v.content == 'text') {
@@ -276,6 +277,7 @@ const TextEditor = ({id}:any) => {
         document.getSelection();
         if(select!='') {
             document.execCommand("formatBlock", false, `<h1>`);
+            // @ts-ignore
             selection.anchorNode.parentNode.setAttribute("class",`${fontSize.h1} font-bold`);
         }else{
             document.execCommand("formatBlock", false, `<${select}>`);
@@ -299,9 +301,11 @@ const TextEditor = ({id}:any) => {
     useEffect(() => {
         document.addEventListener('click',(e)=>{
             const colText = e.target;
+            // @ts-ignore
             if(colText.nodeName == 'th') {
                 console.log(colText)
             }
+            // @ts-ignore
             const removeRowBtn = e.target.closest('.row-panel');
             if(removeRowBtn){
                 deleteRow(removeRowBtn)
