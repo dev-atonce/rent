@@ -18,7 +18,7 @@
     "@fullcalendar/react": "^6.1.14",
     "@icons/material": "^0.4.1",
     "@material-tailwind/react": "^2.1.9",
-    "@next/swc-win32-x64-msvc": "^15.0.0-rc.0",
+    "@next/swc-linux-x64-gnu": "^14.2.4",
     "@nextui-org/button": "^2.0.31",
     "@nextui-org/dropdown": "^2.1.23",
     "@nextui-org/react": "^2.4.2",
