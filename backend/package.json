@@ -28,7 +28,7 @@
   },
   "scripts": {
     "dev": "nodemon .",
-    "start": "node .",
+    "start": "node index.js",
     "clean": "rm -rf node_modules"
   },
   "devDependencies": {
