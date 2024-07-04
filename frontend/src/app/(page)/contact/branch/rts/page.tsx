@@ -37,7 +37,7 @@ export default async function RtsPage() {
           </p>
           <p className="text-orange-500">
             สนใจเช่า หรือต้องการสอบถามเกี่ยวกับสินค้า
-            กรุณาส่งอีเมล์ระบุชื่อเรื่อง "สนใจเช่า/สอบถามราคา" มาที่ contact
+            กรุณาส่งอีเมล์ระบุชื่อเรื่อง &quot;สนใจเช่า/สอบถามราคา&quot; มาที่ contact
             @rent.co.th
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
@@ -143,7 +143,7 @@ export default async function RtsPage() {
               </div>
               <p>
                 สนใจเช่า หรือต้องการสอบถามเกี่ยวกับสินค้า
-                กรุณาส่งอีเมล์ระบุชื่อเรื่อง "สนใจเช่า/สอบถามราคา" มาที่ contact
+                กรุณาส่งอีเมล์ระบุชื่อเรื่อง &quot;สนใจเช่า/สอบถามราคา&quot; มาที่ contact
                 @rent.co.th
               </p>
             </div>

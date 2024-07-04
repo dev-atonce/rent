@@ -69,7 +69,7 @@ export default async function BranchPage({ params: { id } }: any) {
               </div>
               <p>
                 สนใจเช่า หรือต้องการสอบถามเกี่ยวกับสินค้า
-                กรุณาส่งอีเมล์ระบุชื่อเรื่อง "สนใจเช่า/สอบถามราคา" มาที่ contact
+                กรุณาส่งอีเมล์ระบุชื่อเรื่อง &quot;สนใจเช่า/สอบถามราคา&quot; มาที่ contact
                 @rent.co.th
               </p>
             </div>

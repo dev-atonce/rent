@@ -4,7 +4,7 @@ import { FaFacebookF } from "react-icons/fa";
 import { FaPlay } from "react-icons/fa";
 import YouTubeEmbed from './YouTubeEmbed';
 
-export default function FacebookEmbed({url}) {
+export default function FacebookEmbed({url}:any) {
 
   const ytList = [
     { 

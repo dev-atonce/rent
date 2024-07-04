@@ -406,4 +406,10 @@ ol.decimal
     [contenteditable="true"]{
         outline: none;
     }
+    [contentEditable=true]:empty:not(:focus):before {
+        content: attr(data-text)
+    }
+    [data-image=true]:empty:not(:focus):before{
+        content: attr(data-text)
+    }
 }
