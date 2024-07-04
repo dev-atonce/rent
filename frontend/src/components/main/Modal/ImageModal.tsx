@@ -7,9 +7,10 @@ import {
   ModalFooter, 
   Button
 } from "@nextui-org/react";
+import { MdDeleteForever } from "react-icons/md";
 
 
-export default function ImageModal({imgVisible, closeImgHandler, title, images}:any){
+export default function ImageModal({imgVisible, closeImgHandler, title, select, images}:any){
     return (
         <>
           {/* <Button onPress={onOpen}>Open Modal</Button> */}
@@ -23,15 +24,29 @@ export default function ImageModal({imgVisible, closeImgHandler, title, images}:
               closeButton
             >
             <ModalContent>
-              {(onClose) => (
+              {(onClose) => 
                 <>
                   <ModalHeader className="flex flex-col gap-1">{title}</ModalHeader>
                   <ModalBody>
+                    <div className="image-tools">
+                      <button className="bg-slate-100 rounded-lg p-1 hover:bg-slate-200 " disabled={true}>
+                        <MdDeleteForever className="text-slate-30009" style={{fontSize:'20px'}}/>
+                      </button>
+                    </div>
                     <div className="grid grid-cols-12 gap-4">
                       {Array.from(images).map((v:any, k:any) =>
-                        <div key={k} className="col-span-2 rounded-xl overflow-hidden bg-slate-300">
-                          <div className="flex justify-center align-middle display-block h-full">
-                            <img src={`${v.src}`} alt={v.alt} className="w-full" width="100%"/>
+                        <div 
+                          key={k} 
+                          className="col-span-2 rounded overflow-hidden bg-slate-100 hover:ring hover:ring-blue-500 cursor-pointer"
+                          onClick={select.selectImage}
+                        >
+                          <div 
+                            className="h-full relative flex align-middle content-center items-center" 
+                            // style={{
+                            //     position:"relative", display:"flex", height:"100%", alignContent:"center", alignItems: "center"
+                            // }}
+                          >
+                            <img src={`${v.src}`} alt={v.alt} style={{height:'min-content'}}/>
                           </div>
                         </div>
                       )}
@@ -53,7 +68,7 @@ export default function ImageModal({imgVisible, closeImgHandler, title, images}:
                     </Button>
                   </ModalFooter>
                 </>
-              )}
+              }
             </ModalContent>
           </Modal>
         </>

@@ -240,6 +240,17 @@ const TextEditor = ({id}:any) =>
         current.classList.toggle('select-row');
         setRow(selectedRow);
     }
+    // select image
+    const selectImage = (el:any) => {
+        const current = el.currentTarget;
+        console.log(current)
+       if(current.classList.contains('image-select')){
+            current.classList.remove('image-select');
+        }else{
+            current.classList.add('image-select');
+        }
+    }
+
 
     const createRow = () => {
         
@@ -333,8 +344,19 @@ const TextEditor = ({id}:any) =>
 
     return (
     <>
-    <ModalDialog visible={visible} closeHandler={closeHandler} select={{row,handleSetSelect,createRow,EditorId}} title="Add Row"/>
-    <ImageModal imgVisible={imgVisible} closeImgHandler={closeImgHandler} images={mediaImages} title="Image" />
+    <ModalDialog 
+        visible={visible} 
+        closeHandler={closeHandler} 
+        select={{row,handleSetSelect,createRow,EditorId}} 
+        title="Add Row"
+    />
+    <ImageModal 
+        imgVisible={imgVisible} 
+        closeImgHandler={closeImgHandler} 
+        images={mediaImages} 
+        select={{selectImage}}
+        title="Image" 
+    />
     <div 
         id={EditorId}
         className="rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark h-full overflow-hidden">

@@ -1,7 +1,7 @@
 const Email = require("../../models/Email");
 const config = require("../../configs/app");
 const nodemailer = require('nodemailer');
-const Mailgen = require('Mailgen');
+const Mailgen = require('mailgen');
 const { ErrorBadRequest } = require("../../configs/errorMethods");
 
 const configMail = {
