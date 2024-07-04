@@ -308,6 +308,7 @@ const TableList = ({ btn }: any) => {
                     CreateTable(el);
                     btn.setOpenDropdown("");
                   }}
+                  //   @ts-ignore
                   btn={btn}
                 ></div>
               );
