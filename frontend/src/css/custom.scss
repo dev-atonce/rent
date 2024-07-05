@@ -378,6 +378,7 @@ ol.decimal
 
 .editor-body{
     .col-image:hover,
+    .col-text.txt-remark,
     .col-text:hover{
         outline-offset: 2px;
         outline: 1px solid rgba(15, 115, 246, 60%);
@@ -416,4 +417,13 @@ ol.decimal
 
 .image-select{
     box-shadow: 0 0 0 3px rgba(15, 115, 246, 90%);
+}
+.z-50{
+    z-index:50;
+}
+.backdrop-blur-md{
+    background-color: rgba(0,0,0,0.575);
+}
+.img-resizer{
+    
 }

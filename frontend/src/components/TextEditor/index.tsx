@@ -204,7 +204,7 @@ const CreateTable = (el:any) =>
     })
     //
     table.append(thead,tbody);
-    TextEditor.querySelector('[contenteditable="true"]').append(table);
+    TextEditor.querySelector('.txt-remark').append(table);
 }
 
 // Main Component
@@ -216,17 +216,22 @@ const TextEditor = ({id}:any) =>
     const [imgVisible, setImgVisible] = useState<Boolean>(false);
     const [row, setRow] = useState<any>();
     const [openDropdown, setOpenDropdown] = useState<String>('');
+    const [imgSelect, setImgSelect] = useState<any>([]);
+    const [imgCount, setImgCount] = useState<any>(0);
+    const [imgTab, setImgTab] = useState<String>('current')
+    // const [remark, setRemark] = useState<HTMLElement>();
     const [height, setHeight] = useState<String>(minHeight);
     
     // const { onOpen, onOpenChange} = useDisclosure();
     
     const handler = () => setVisible(true);
-    const imgModal = () => setImgVisible(true);
+    const imgModal = (e) => {setImgVisible(true); remark(e.currentTarget)};
     const closeHandler = () => setVisible(false);
     const closeImgHandler = () => setImgVisible(false);
+
     
     const OpenDropdown = (list:String) => {
-        if(openDropdown == list){
+        if(openDropdown == list){s
             setOpenDropdown('');
         }else{
             setOpenDropdown(list);
@@ -241,16 +246,55 @@ const TextEditor = ({id}:any) =>
         setRow(selectedRow);
     }
     // select image
-    const selectImage = (el:any) => {
+    const select = (el:any) => {
         const current = el.currentTarget;
-        console.log(current)
-       if(current.classList.contains('image-select')){
+       if(current.classList.contains('image-select'))
+        {
             current.classList.remove('image-select');
+            imgSelect.map((v:any,k:Number)=>{ if(v==current.querySelector('img').getAttribute('src')){imgSelect.splice(k,1);} });
+            setImgCount(imgCount-1);
         }else{
             current.classList.add('image-select');
+            imgSelect.push(current.querySelector('img').getAttribute('src'));
+            setImgCount(imgCount+1);
+        }
+        setImgSelect(imgSelect);
+    }
+    const imgUnselect = () => {
+        setImgSelect([]);
+        console.log(document.querySelectorAll('.image-select'))
+        document.querySelectorAll('.image-select').forEach((v:any)=>{
+            v.classList.remove('image-select');
+        })
+    }
+    const remark = (e:any) => {
+        document.querySelector('img-remark')?.classList.remove('img-remark');
+        if (e) e.classList.toggle('img-remark');
+    }
+    const textRemark = (e:any) => {
+        document.querySelector('.txt-remark')?.classList.remove('txt-remark');
+        if (e.currentTarget) {
+            e.currentTarget.classList.toggle('txt-remark');
+            e.currentTarget.focus();
+            e.preventDefault();
         }
     }
-
+    const insertImg = () => 
+    {
+        const remark = document.querySelector('.img-remark');
+        if (remark) {
+            remark.querySelectorAll('img')?.forEach((v)=>{v.remove()});
+            imgSelect.map((v:any,k:any)=>{
+                let img = document.createElement('img');
+                img.setAttribute('src',v);
+                img.setAttribute('class','w-full h-full');
+                remark.append(img);
+            });
+            closeImgHandler();
+            remark.classList.remove('img-remark');
+            setImgSelect([]);
+        }
+    }
 
     const createRow = () => {
         
@@ -267,6 +311,7 @@ const TextEditor = ({id}:any) =>
                     column.setAttribute('contenteditable','true');
                     column.setAttribute('data-text','text');
                     column.classList.add('col-text');
+                    column.onclick = textRemark;
                 }
                 if(v.content == 'image') {
                     column.onclick = imgModal;
@@ -341,7 +386,6 @@ const TextEditor = ({id}:any) =>
         }) 
     },[]);
 
-
     return (
     <>
     <ModalDialog 
@@ -354,7 +398,7 @@ const TextEditor = ({id}:any) =>
         imgVisible={imgVisible} 
         closeImgHandler={closeImgHandler} 
         images={mediaImages} 
-        select={{selectImage}}
+        select={{select,imgSelect,imgUnselect,imgCount,setImgCount,insertImg,imgTab,setImgTab}}
         title="Image" 
     />
     <div 
