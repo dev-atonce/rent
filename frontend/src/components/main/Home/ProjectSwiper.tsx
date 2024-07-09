@@ -113,7 +113,11 @@ export default function ProjectSwiper({ projectData }: any) {
                     className="flex flex-col items-center gap-2c"
                   >
                     <Image
-                      src={"/img/about_1.png"}
+                      src={
+                        v?.image
+                          ? `${process.env.NEXT_PUBLIC_BASE_URL}${v?.image}`
+                          : `${process.env.NEXT_PUBLIC_BASE_URL}public\\image\\no_image.webp`
+                      }
                       // src={v.image}
                       alt={v.title}
                       width={1920}
