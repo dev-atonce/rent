@@ -218,7 +218,7 @@ const TextEditor = ({id}:any) =>
     const [openDropdown, setOpenDropdown] = useState<String>('');
     const [imgSelect, setImgSelect] = useState<any>([]);
     const [imgCount, setImgCount] = useState<any>(0);
-    const [imgTab, setImgTab] = useState<String>('current')
+    const [imgTab, setImgTab] = useState<String>('current');
     // const [remark, setRemark] = useState<HTMLElement>();
     const [height, setHeight] = useState<String>(minHeight);
     
@@ -246,8 +246,9 @@ const TextEditor = ({id}:any) =>
         setRow(selectedRow);
     }
     // select image
-    const select = (el:any) => {
-        const current = el.currentTarget;
+    const Select = (el:any) => {
+        console.log(el)
+        const current = el;
        if(current.classList.contains('image-select'))
         {
             current.classList.remove('image-select');
@@ -262,7 +263,6 @@ const TextEditor = ({id}:any) =>
     }
     const imgUnselect = () => {
         setImgSelect([]);
-        console.log(document.querySelectorAll('.image-select'))
         document.querySelectorAll('.image-select').forEach((v:any)=>{
             v.classList.remove('image-select');
         })
@@ -398,7 +398,7 @@ const TextEditor = ({id}:any) =>
         imgVisible={imgVisible} 
         closeImgHandler={closeImgHandler} 
         images={mediaImages} 
-        select={{select,imgSelect,imgUnselect,imgCount,setImgCount,insertImg,imgTab,setImgTab}}
+        select={{Select,imgSelect,imgUnselect,imgCount,setImgCount,insertImg,imgTab,setImgTab}}
         title="Image" 
     />
     <div 
