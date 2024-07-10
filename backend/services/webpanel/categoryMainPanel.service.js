@@ -1,17 +1,17 @@
 const CategoryMain = require("../../models/CategoryMain.js");
 const config = require("../../configs/app");
 const fs = require("fs");
-const {
-  ErrorBadRequest,
-  ErrorNotFound,
-} = require("../../configs/errorMethods");
-
 const multer = require("multer");
+const { ensureDirectoryExistence } = require("../../helpers/checkDirectory.helper");
+const { ErrorBadRequest, ErrorNotFound } = require("../../configs/errorMethods");
+
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "../public/uploads/categoryMain");
+  destination: (req, file, cb) => {
+    const uploadDir = "./public/image/categoryMain";
+    ensureDirectoryExistence(uploadDir);
+    cb(null, uploadDir);
   },
-  filename: function (req, file, cb) {
+  filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
@@ -53,7 +53,7 @@ const methods = {
         } else {
           try {
             const data = req.body;
-            data.image = req.file?.filename;
+            data.image = req.file?.path;
             const obj = new CategoryMain(data);
             const inserted = await obj.save();
             resolve(inserted);
@@ -77,18 +77,16 @@ const methods = {
             if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
             if (req.file) {
               if (obj?.image) {
-                fs?.unlink(
-                  "../public/uploads/categoryMain/" + obj.image,
-                  (err) => {
-                    if (err) {
-                      return Promise.reject(ErrorNotFound(err));
-                    }
+                try {
+                  await fs.unlink(obj.image);
+                } catch (error) {
+                  if (error.code !== "ENOENT") {
+                    throw error;
                   }
-                );
+                }
               }
-              data.image = req.file?.filename;
+              data.image = req.file?.path;
             }
-
             await CategoryMain.updateOne({ _id: req.params.id }, data, {
               runValidators: true,
               new: true,
@@ -106,11 +104,13 @@ const methods = {
     try {
       const obj = await CategoryMain.findOneAndDelete({ _id: id }).exec();
       if (obj?.image) {
-        fs?.unlink("../public/uploads/categoryMain/" + obj.image, (err) => {
-          if (err) {
-            return Promise.reject(ErrorNotFound(err));
+        try {
+          await fs.unlink(obj.image);
+        } catch (error) {
+          if (error.code !== "ENOENT") {
+            throw error;
           }
-        });
+        }
       }
       return { msg: "deleted success" };
     } catch (error) {
