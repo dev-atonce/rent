@@ -17,6 +17,11 @@ const nextConfig = {
         hostname: "rent.at-once.info",
         port: "",
       },
+      {
+        protocol: "https",
+        hostname: "api.rent.co.th",
+        port: "",
+      },
     ],
   },
 };

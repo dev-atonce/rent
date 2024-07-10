@@ -5,7 +5,6 @@ const schema = new mongoose.Schema(
   {
     projectNameTH: { type: String },
     projectDetailTH: { type: String },
-    projectUrl: { type: String },
     image: { type: String },
     imageAlt: { type: String },
     gallery: { type: Array },
@@ -40,7 +39,6 @@ schema.methods.toJSON = function () {
     id: this._id,
     projectNameTH: this.projectNameTH,
     projectDetailTH: this.projectDetailTH,
-    projectUrl: this.projectUrl,
     image: this.image,
     imageAlt: this.imageAlt,
     gallery: this.gallery,
