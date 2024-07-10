@@ -401,7 +401,7 @@ const TextEditor = ({ id }: any) => {
     setRow(selectedRow);
   };
   // select image
-  const select = (el: any) => {
+  const Select = (el: any) => {
     const current = el.currentTarget;
     if (current.classList.contains("image-select")) {
       current.classList.remove("image-select");
@@ -574,7 +574,7 @@ const TextEditor = ({ id }: any) => {
         closeImgHandler={closeImgHandler}
         images={mediaImages}
         select={{
-          select,
+          Select,
           imgSelect,
           imgUnselect,
           imgCount,
