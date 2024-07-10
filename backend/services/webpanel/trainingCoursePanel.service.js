@@ -1,17 +1,17 @@
 const TrainingCourse = require("../../models/TrainingCourse");
 const config = require("../../configs/app");
 const fs = require("fs");
-const {
-  ErrorBadRequest,
-  ErrorNotFound,
-} = require("../../configs/errorMethods");
 const multer = require("multer");
+const { ensureDirectoryExistence } = require("../../helpers/checkDirectory.helper");
+const { ErrorBadRequest, ErrorNotFound } = require("../../configs/errorMethods");
 
 const storage = multer.diskStorage({
-  destination: function (req, file, cb) {
-    cb(null, "../public/uploads/trainingCourse");
+  destination: (req, file, cb) => {
+    const uploadDir = "./public/image/trainingCourse";
+    ensureDirectoryExistence(uploadDir);
+    cb(null, uploadDir);
   },
-  filename: function (req, file, cb) {
+  filename: (req, file, cb) => {
     cb(null, Date.now() + "-" + file.originalname);
   },
 });
@@ -59,21 +59,16 @@ const methods = {
           return reject(ErrorBadRequest(err));
         } else {
           try {
-            // const checkDup = await TrainingCourse.findOne({
-            //   url: req.body.url,
-            // });
-            // if (checkDup)
-            //   return reject(ErrorBadRequest("URL is already exist"));
             const data = req.body;
             if (req.files?.image) {
               req.files?.image.map((file) => {
-                data.image = file.filename;
+                data.image = file.path;
               });
             }
             if (req.files?.gallery) {
               data.gallery = [];
               req.files?.gallery.map((file) => {
-                data.gallery.push(file.filename);
+                data.gallery.push(file.path);
               });
             }
             const obj = new TrainingCourse(data);
@@ -95,46 +90,39 @@ const methods = {
             return reject(ErrorBadRequest(err));
           } else {
             try {
-              // const checkDup = await TrainingCourse.findOne({ url: req.body.url });
-              // if (checkDup) return reject(ErrorBadRequest("URL is already exist"));
               const data = req.body;
               const obj = await TrainingCourse.findById(req.params.id).exec();
               if (!obj) return reject(ErrorNotFound("id: not found"));
               if (req.files?.image) {
-                if (obj.image) {
-                  fs?.unlink(
-                    "../public/uploads/trainingCourse/" + obj.image,
-                    (err) => {
-                      if (err) {
-                        return Promise.reject(ErrorNotFound(err));
-                      }
+                if (obj?.image) {
+                  try {
+                    await fs.unlink(obj.image);
+                  } catch (error) {
+                    if (error.code !== "ENOENT") {
+                      throw error;
                     }
-                  );
+                  }
                 }
                 req.files?.image.map((file) => {
-                  data.image = file.filename;
+                  data.image = file.path;
                 });
               }
               if (req.files?.gallery) {
-                console.log(req.files.gallery);
                 if (obj.gallery?.length >= 12)
                   return reject(ErrorBadRequest("Gallery is full"));
                 const galleryLeft = 12 - obj.gallery.length;
                 if (galleryLeft < req.files.gallery.length)
-                  return reject(
-                    ErrorBadRequest(
-                      `You can upload ${galleryLeft} picture to the gallery`
-                    )
-                  );
+                  return reject(ErrorBadRequest(`You can upload ${galleryLeft} picture to the gallery`)
+                );
                 if (obj.gallery.length > 0) {
                   data.gallery = obj.gallery;
                   req.files?.gallery.map((file) => {
-                    data.gallery = [...data.gallery, file.filename];
+                    data.gallery = [...data.gallery, file.path];
                   });
                 } else {
                   data.gallery = [];
                   req.files?.gallery.map((file) => {
-                    data.gallery = [...data.gallery, file.filename];
+                    data.gallery = [...data.gallery, file.path];
                   });
                 }
               }
@@ -157,14 +145,50 @@ const methods = {
   async delete(id) {
     try {
       const obj = await TrainingCourse.findOneAndDelete({ _id: id }).exec();
+      if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
       if (obj?.image) {
-        fs.unlink("../public/uploads/trainingCourse/" + obj.image, (err) => {
-          if (err) {
-            return Promise.reject(ErrorNotFound(err));
+        try {
+          await fs.unlink(obj.image);
+        } catch (error) {
+          if (error.code !== "ENOENT") {
+            throw error;
+          }
+        }
+      }
+      if (obj?.gallery) {
+        obj.gallery.map(async (item) => {
+          try {
+            await fs.unlink(item);
+          } catch (error) {
+            if (error.code !== "ENOENT") {
+              throw error;
+            }
           }
         });
       }
+      return { msg: "deleted success" };
+    } catch (error) {
+      return Promise.reject(ErrorBadRequest(error.message));
+    }
+  },
 
+  async deleteGallery(id, position) {
+    try {
+      const obj = await TrainingCourse.findById({ _id: id }).exec();
+      if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
+      if (obj.gallery[position]) {
+        try {
+          await fs.unlink(obj.gallery[position]);
+        } catch (err) {
+          if (err.code !== "ENOENT") {
+            throw err;
+          }
+        }
+        obj.gallery.splice(position, 1);
+      } else {
+        return Promise.reject(ErrorNotFound("Image not found in gallery"));
+      }
+      await TrainingCourse.updateOne({ _id: id }, { gallery: obj.gallery });
       return { msg: "deleted success" };
     } catch (error) {
       return Promise.reject(ErrorBadRequest(error.message));
