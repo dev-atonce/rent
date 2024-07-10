@@ -6,7 +6,11 @@ import Image from "next/image";
 import { MdFax } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
 import Contactform from "@/components/main/Contact/ContactForm";
-import { TbPointFilled } from "react-icons/tb";
+import { TbReportMoney } from "react-icons/tb";
+
+import { FaCalendarDays } from "react-icons/fa6";
+import { BsPersonFill } from "react-icons/bs";
+import { PiFilesDuotone } from "react-icons/pi";
 
 export default async function RtsPage() {
   const images = [
@@ -26,21 +30,93 @@ export default async function RtsPage() {
           <h2 className="text-2xl  font-semibold text-[#0DA1DB]">
             บริษัท เร้นท์ เทรด แอนด์ เซอร์วิส
           </h2>
-          <p className="indent-10 mt-4">
-            หากคุณต้องการ เช่าเครื่องจักร และเครื่องมือสำหรับใช้ในงานก่อสร้าง
-            เราคือ บริษัทให้บริการเช่าเครื่องจักร งานก่อสร้าง
-            ที่มีสินค้าให้เช่ากว่า 460 ประเภท เป็นจำนวนกว่า 5,000 ชิ้น
-            และสามารถนำเครื่องจักรที่ยังไม่เป็นที่รู้จักในประเทศไทยเข้ามาปล่อยเช่าได้อย่างรวดเร็ว
-            ในฐานะผู้บุกเบิกตลาดงานเช่า
-            และยังเป็นบริษัทเพียงเจ้าเดียวในประเทศไทยที่มีเครื่องทดสอบอุปกรณ์ยก
-            ปฏิบัติงานด้วยความปลอดภัย รวดเร็ว และใส่ใจสิ่งแวดล้อม
+          <p className=" mt-4">
+            บริษัทในเครือ Rent Group ที่เชี่ยวชาญด้านการกระจายสินค้า และการขนส่ง
+            เราสามารถให้บริการได้อย่างมีประสิทธิภาพมากขึ้นโดยการแบ่งการบริหารจัดการ
           </p>
+<<<<<<< Updated upstream
           <p className="text-orange-500">
             สนใจเช่า หรือต้องการสอบถามเกี่ยวกับสินค้า
             กรุณาส่งอีเมล์ระบุชื่อเรื่อง &quot;สนใจเช่า/สอบถามราคา&quot; มาที่ contact
             @rent.co.th
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
+=======
+          <>
+            <div className="bg-slate-50/20 from-blue-100 rounded-xl mt-4 px-10 md:px-10 text-slate-500">
+              <div className="flex flex-col gap-4">
+                <div className="grid gap-4 grid-cols-1 md:grid-cols-6 grid-rows-1   border border-slate-400 px-4 py-6 rounded-lg shadow-md">
+                  <div className="font-bold flex items-center gap-2 md:col-span-2 md:border-r border-slate-300">
+                    <FaCalendarDays size={20} />
+                    History
+                  </div>
+                  <div className="col-span-5 md:col-span-4">
+                    <ul>
+                      <li>
+                        1995 – Asian Trade & Leasing Co., Ltd Established in
+                        June
+                      </li>
+                      <li>2006 – Become a subsidiary of Rent Corporation</li>
+                      <li>
+                        2008 – Start supplying machines to Rent (Thailand)
+                      </li>
+                      <li>
+                        2012 – Appointed as the Official Distributor of SUIDEN
+                      </li>
+                      <li>
+                        2016 – Become the exclusive supplier of Rent (Thailand)
+                      </li>
+                      <li>
+                        2017 – Start selling SUIDEN Products through Rent
+                        (Thailand) Start Providing Transportation, Operator and
+                        Training Services to Rent (Thailand) in November
+                      </li>
+                      <li>
+                        2018 – Company name changed to Rent Trade & Service Co.,
+                        Ltd. in January
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+                <div className="grid gap-4 grid-cols-1 md:grid-cols-6 grid-rows-1   border border-slate-400 px-4 py-6 rounded-lg shadow-md">
+                  <div className="font-bold flex items-center gap-2 md:col-span-2 md:border-r border-slate-300">
+                    <TbReportMoney size={20} />
+                    Capital
+                  </div>
+                  <div className="col-span-5 md:col-span-4">
+                    150,000,000 Baht
+                  </div>
+                </div>
+
+                <div className="grid gap-4 grid-cols-1 md:grid-cols-6 grid-rows-1   border border-slate-400 px-4 py-6 rounded-lg shadow-md">
+                  <div className="font-bold flex items-center gap-2 md:col-span-2 md:border-r border-slate-300">
+                    <BsPersonFill size={20} />
+                    Employee
+                  </div>
+                  <div className="col-span-5 md:col-span-4">
+                    54 person (as of Jun 2024)
+                  </div>
+                </div>
+                <div className="grid gap-4 grid-cols-1 md:grid-cols-6 grid-rows-1   border border-slate-400 px-4 py-6 rounded-lg shadow-md">
+                  <div className="font-bold flex items-center gap-2 md:col-span-2 md:border-r border-slate-300">
+                    <PiFilesDuotone size={20} />
+                    Type of Business
+                  </div>
+                  <div className="col-span-5 md:col-span-4">
+                    <ol>
+                      <li>1. Distributor and Trading</li>
+                      <li>2. Transportation Service</li>
+                      <li>3. Operator Providing Service</li>
+                      <li>4. Operator Training Service</li>
+                    </ol>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+
+          {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
+>>>>>>> Stashed changes
             {images.map((image, index) => (
               <div key={index} className="aspect-[4/2] object-cover w-full">
                 <Image
@@ -53,76 +129,167 @@ export default async function RtsPage() {
                 />
               </div>
             ))}
+          </div> */}
+          <div className="flex justify-center">
+            <Image
+              src={`/img/rts_people.png`}
+              alt={"rts people"}
+              width={834}
+              height={436}
+              quality={100}
+              loading="lazy"
+            />
           </div>
-          <p className="font-bold text-md">
-            มีบริการให้เช่าเครื่องจักรที่หลากหลาย
-            สามารถเลือกได้เหมาะกับการใช้งาน
-          </p>
-          <p>
-            บริษัท ของเรามีบริการ ให้เช่าเครื่องจักร งานก่อสร้าง หลายประเภท
-            เราเชื่อว่าการเลือกเครื่องจักรให้เหมาะสมกับการใช้งานนั้นจะทำให้การทำงานรวดเร็วและมีประสิทธิภาพอย่างสูงที่สุด
-            ไม่ว่าจะเป็น
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 my-4">
-            <div className="col-span-5">
-              <Image
-                src={`/Rectangle 147.png`}
-                alt={`Rectangle 147`}
-                width={834}
-                height={436}
-                quality={100}
-                loading="lazy"
-              />
-            </div>
-            <div className="col-span-7">
-              <ul className="list-disc ml-6 text-[#0DA1DB]">
-                <li>ให้เช่าเครื่องจักรกลหนัก</li>
-                <li>ให้เช่าเครื่องจักรงานก่อสร้าง</li>
-                <li>ให้เช่าเครื่องจักรอุตสาหกรรม</li>
-                <li>ให้เช่าเครื่องจักรหนักรื้อถอน</li>
-                <li>ให้เช่าเครื่องจักรหนัก ขนาดใหญ่</li>
-                <li>ให้เช่าเครื่องจักรที่ใช้ในงานโยธา</li>
-                <li>ให้เช่าอุปกรณ์ที่ใช้ในการติดตั้งเครื่องจักร</li>
-                <li>ให้เช่าเครื่องจักรงานซ่อมบำรุงโรงงาน</li>
-                <li>รถเช่า</li>
-              </ul>
+          <div className="py-6">
+            <h4 className="font-bold text-xl text-slate-700 py-2">
+              บริการจัดหาพนักงานควบคุมเครื่องจักร (Operator)
+            </h4>
+            <p>
+              เราส่งมอบพนักงานควบคุมเครื่องจักรที่ถูกอบรมและให้ความรู้มาอย่างดีในการบังคับควบคุมเครื่องจักร
+            </p>
+            <p>
+              ด้วยการดูแลจากบริษัทผู้เชี่ยวชาญ
+              ทำให้พนักงานควบคุมเครื่องจักรของเรามีประสิทธิภาพสูง
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 my-4">
+              <div className="col-span-6">
+                <Image
+                  src={`/img/rts_operator1.png`}
+                  alt={`Rectangle 147`}
+                  width={834}
+                  height={436}
+                  quality={100}
+                  loading="lazy"
+                />
+              </div>
+              <div className="col-span-6 flex items-center flex-col justify-center">
+                <Image
+                  src={`/img/rts_operator2.png`}
+                  alt={`Rectangle 147`}
+                  width={834}
+                  height={436}
+                  quality={100}
+                  loading="lazy"
+                />
+                <div>
+                  เราจัดหาพนักงานควบคุมเครื่องจักรสำหรับรถขุด รถตัก รถยก
+                  สกายมาสเตอร์
+                  รถมินิเครนแมงมุมเพื่อทำงานให้กับไซต์งานของลูกค้าได้
+                </div>
+              </div>
             </div>
           </div>
-          <p>
-            เราให้เช่าเครื่องจักรคุณภาพดีครอบคลุมทุกงานก่อสร้าง งานอุตสาหกรรม
-            และงานอื่น ๆ ที่ต้องอาศัยเครื่องจักรและอุปกรณ์ที่หลากหลาย
-            โดยที่ท่านไม่จำเป็นต้องซื้อเพื่อบริหารค่าใช้จ่ายไม่ให้เกินความจำเป็น
-            แต่ท่านสามารถใช้ บริการให้เช่าเครื่องจักร กับเราได้ด้วย
-            ราคาเช่าเครื่องจักร ที่เป็นมิตร
-            เน้นการใช้ประโยชน์และตอบโจทย์ทุกการใช้งาน
-          </p>
+          <div className="py-6">
+            <h4 className="font-bold text-xl text-slate-700 py-2">
+              การควบคุมคุณภาพของพนักงานควบคุมเครื่องจักร (Operator)
+            </h4>
+            <p>
+              เราใช้โปรแกรมการอบรมที่จัดทำขึ้นโดยได้รับความร่วมมือจากผู้ผลิตในการอบรมพนักงานควบคุมเครื่องจักร
+              เฉพาะผู้ที่สอบผ่านโปรแกรมอบรมเท่านั้นที่จะถูกส่งไปยังไซต์งาน
+              อีกทั้งเรายังใช้ระบบเส้นทางความก้าวหน้าในสายอาชีพ (Career path)
+              และพยายามยกระดับความสามารถของพนักงานด้วย
+            </p>
 
-          <h3 className="font-bold mt-6">
-            พื้นที่บริการเช่าเครื่องจักรก่อสร้างและอุปกรณ์ต่าง ๆ
-          </h3>
-          <p className="mt-4">
-            เราพร้อมให้บริการท่านครอบคลุม
-            โดยเน้นบริเวณภาคตะวันออกและภาคกลางเป็นหลักไม่ว่าจะเป็น
-          </p>
-          <ul className="list-disc ml-6">
-            <li>
-              ภาคกลาง ให้เช่าเครื่องจักรสมุทรปราการ กรุงเทพ และปริมณฑลทุกพื้นที่
-              ให้เช่าเครื่องจักรปทุมธานี ให้เช่าเครื่องจักรอยุธยา ฯลฯ
-            </li>
-            <li>
-              ภาคตะวันออก ให้เช่าเครื่องจักร ชลบุรี ให้เช่าเครื่องจักร ระยอง
-              ให้เช่าเครื่องจักร มาบตาพุด ฯลฯ
-            </li>
-            <li>
-              ภาคตะวันออกเฉียงเหนือ ให้เช่าเครื่องจักร ขอนแก่น นครราชสีมา ฯลฯ
-            </li>
-            <li>ภาคตะวันตก ให้เช่าเครื่องจักร ประจวบคีรีขันธ์ กาญจนบุรี ฯลฯ</li>
-            <li>
-              ภาคเหนือและภาคใต้จะอยู่ห่างไกลจากสาขาของเรา
-              แต่สามารถพิจารณาให้บริการเช่าได้เป็นกรณีไป
-              โดยจะให้เช่าในลักษณะที่ไม่มีบริการซ่อมบำรุง
-            </li>
-          </ul>
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 my-4">
+              <div className="col-span-8">
+                <Image
+                  src={`/img/rts_career.png`}
+                  alt={`Rectangle 147`}
+                  width={834}
+                  height={436}
+                  quality={100}
+                  loading="lazy"
+                />
+              </div>
+              <div className="col-span-4 flex items-center flex-col justify-center">
+                <Image
+                  src={`/img/rts_quality1.png`}
+                  alt={`Rectangle 147`}
+                  width={834}
+                  height={436}
+                  quality={100}
+                  loading="lazy"
+                />
+                <Image
+                  src={`/img/rts_quality2.png`}
+                  alt={`Rectangle 147`}
+                  width={834}
+                  height={436}
+                  quality={100}
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="py-6">
+            <h4 className="font-bold text-xl text-slate-700 py-2">
+              ระบบขนส่งเครื่องจักรสำหรับเช่า
+            </h4>
+            <p>
+              เรามีจุดมุ่งหมายด้านการจัดส่งที่รวดเร็วและปลอดภัยโดยควบคุมการจัดคิวขนส่งจากส่วนกลาง
+              การจัดคิวขนส่งจากส่วนกลางทำให้สามารถใช้งานรถขนส่งได้อย่างมีประสิทธิภาพสูงสุด
+            </p>
+            <p>
+              นอกจากนี้เรายังสร้างความตระหนักด้านความปลอดภัยผ่านการฝึกอบรมคนขับเป็นประจำ
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 my-4">
+              <div className="col-span-4">
+                <Image
+                  src={`/img/rts_rent1.png`}
+                  alt={`Rectangle 147`}
+                  width={834}
+                  height={436}
+                  quality={100}
+                  loading="lazy"
+                />
+              </div>
+              <div className="col-span-8">
+                <Image
+                  src={`/img/rts_rent2.png`}
+                  alt={`Rectangle 147`}
+                  width={834}
+                  height={436}
+                  quality={100}
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
+          <div className="py-6">
+            <h4 className="font-bold text-xl text-slate-700 py-2">
+              ตัวแทนจำหน่ายเครื่องจักรแบรนด์ชั้นนำ
+              และจำหน่ายเครื่องจักรมือสองสภาพดี
+            </h4>
+            <p>
+              เราเป็นตัวแทนจำน่ายเครื่องจักรจากแบรนด์ชั้นนำ
+              โดยมีสต็อกสินค้ามากมายพร้อมส่งมอบให้ลูกค้าได้ทันที
+              มีบริการหลังการขายที่รวดเร็วและใส่ใจลูกค้า
+            </p>
+
+            <div className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-12 gap-4 my-4">
+              <div className="col-span-6">
+                <Image
+                  src={`/img/rts_sale1.jpg`}
+                  alt={`Rectangle 147`}
+                  width={834}
+                  height={436}
+                  quality={100}
+                  loading="lazy"
+                />
+              </div>
+              <div className="col-span-6 ">
+                <Image
+                  src={`/img/rts_sale2.jpg`}
+                  alt={`Rectangle 147`}
+                  width={834}
+                  height={436}
+                  quality={100}
+                  loading="lazy"
+                />
+              </div>
+            </div>
+          </div>
         </div>
         <div className="flex lg:flex-row flex-col lg:justify-between mt-10">
           <div className="flex flex-col gap-2">
