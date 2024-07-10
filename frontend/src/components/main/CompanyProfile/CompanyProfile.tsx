@@ -5,36 +5,13 @@ import { GoOrganization } from "react-icons/go";
 import { BsPersonFill, BsPinMap } from "react-icons/bs";
 import { TbReportMoney } from "react-icons/tb";
 import { FaCalendarDays, FaPeopleGroup } from "react-icons/fa6";
-import { LuShip } from "react-icons/lu";
+import { HiMiniWallet } from "react-icons/hi2";
+import { LuGoal } from "react-icons/lu";
 
 export default function CompanyProfile({ lng }: any) {
-  const text: any = {
-    en: {
-      name: "HANKYU HANSHIN EXPRESS (THAILAND) CO.,LTD.",
-      "head-office": `TAC House, 5th-7th Floor, No1 Soi Ruamruedee, Ploenchit Road, Lumpinee, Pathumwan, Bangkok 10330, Thailand\n\rTel : 02-126-8500 FAX : 02-650-8023`,
-      paid: "THB 20,000,000",
-      established: "February 7, 1992",
-      representative: "Mr.Hiromichi Funata / Managing Director",
-      employee:
-        "Total 434 persons (Thai Staff 427 persons ),(Japanese 7 persons ) as of Apr 2024",
-      business: "",
-    },
-    th: {
-      name: "บริษัท ฮันคิว ฮันชิน เอ็กซ์เพรส (ประเทศไทย) จำกัด",
-      "head-office":
-        "TAC House ชั้น 5-7 เลขที่ 1 ซอยร่วมฤดี ถนนเพลินจิต ลุมพินี ถนนสามสาย กรุงเทพฯ 10330 ประเทศไทย\r\nTel : 02-126-8500 FAX : 02-650-8023",
-      paid: "20,000,000 บาท",
-      established: "7 กุมภาพันธ์ 2535",
-      representative: "นาย. ฮิโรมิจิ ฟูนาตะ / กรรมการผู้จัดการ",
-      employee:
-        "รวม 434 คน (พนักงานไทย 427 คน ),(คนญี่ปุ่น 7 คน) ณ เมษายน 2567",
-      business: "",
-    },
-  };
   return (
-    // todo
     <>
-      <div className="bg-slate-50/20 from-blue-100 rounded-xl mt-4 p-10 md:p-20 text-[#002B7F]">
+      <div className="bg-slate-50/20 from-blue-100 rounded-xl mt-4 p-10 md:p-20 text-slate-500">
         <div className="w-full flex justify-center pb-20">
           <Logo color="#002B7F" />
         </div>
@@ -69,12 +46,46 @@ export default function CompanyProfile({ lng }: any) {
               <BsPinMap size={20} />
               ที่อยู่ของบริษัท
             </div>
-            <div className="col-span-5 md:col-span-4">22</div>
+            <div className="col-span-5 md:col-span-4">
+              <ol className="decimal">
+                <li>
+                  <p>สำนักงานใหญ่</p>
+                  เลขที่ 9/222-224, UM Tower, ถนนรามคำแหง, แขวงสวนหลวง,
+                  เขตสวนหลวง, กรุงเทพฯ 10250
+                </li>
+                <li>
+                  <p>สาขารังสิต</p>
+                  59/4 หมู่ 11 ตำบลคลองหนึ่ง อำเภอคลองหลวง จังหวัดปทุมธานี 12120
+                </li>
+                <li>
+                  <p>สาขาสมุทรปราการ</p>
+                  42/9 ถนนกิ่งแก้ว หมู่ที่ 3 ต.ราชาเทวะ อ.บางพลี จ.สมุทรปราการ
+                  10540
+                </li>
+                <li>
+                  <p>สาขาชลบุรี</p>
+                  เลขที่ 233 หมู่ 3 ถนนสุขุมวิท ต.คลองตำหรุ อ.เมืองชลบุรี
+                  จ.ชลบุรี 20000
+                </li>
+                <li>
+                  <p>สาขาบ่อวิน</p>
+                  276/844 หมู่ที่ 3 ตำบลบ่อวิน อำเภอศรีราชา จังหวัดชลบุรี 20230
+                </li>
+                <li>
+                  <p>สาขามาบตาพุด</p>
+                  99/99 ถนนทางหลวงหมายเลข 363 ตำบลมาบตาพุด อำเภอเมืองระยอง
+                  จังหวัดระยอง 21150
+                </li>
+                <li>
+                  <p>สาขาสมุทรสาคร</p>
+                  12/8 หมู่ 4 ตำบลนาดี อำเภอเมือง จังหวัดสมุทรสาคร 74000
+                </li>
+              </ol>
+            </div>
           </div>
-
           <div className="grid gap-4 grid-cols-1 md:grid-cols-6 grid-rows-1   border border-slate-400 px-4 py-6 rounded-lg shadow-md">
             <div className="font-bold flex items-center gap-2 md:col-span-2 md:border-r border-slate-300">
-              <BsPersonFill size={20} />
+              <LuGoal size={20} />
               จุดมุ่งหมายของบริษัท
             </div>
             <div className="col-span-5 md:col-span-4">
@@ -104,19 +115,22 @@ export default function CompanyProfile({ lng }: any) {
           </div>
           <div className="grid gap-4 grid-cols-1 md:grid-cols-6 grid-rows-1   border border-slate-400 px-4 py-6 rounded-lg shadow-md">
             <div className="font-bold flex items-center gap-2 md:col-span-2 md:border-r border-slate-300">
-              <LuShip size={20} />
+              <HiMiniWallet size={20} />
               รายชื่อผู้ถือหุ้น
             </div>
             <div className="col-span-5 md:col-span-4">
               <ol className="decimal">
-                <li>Air Freight</li>
-                <li>Sea Freight </li>
-                <li>Cross Border and In-transit Freight</li>
-                <li>Customs Clearance and Domestic Transportation</li>
-                <li>Warehouse and Distribution </li>
+                <li>เร้นท์ คอร์ปอเรชั่น ประเทศญี่ปุ่น 49%</li>
                 <li>
-                  Value Added Service : Packing, re-pallet, sorting, inspection,
-                  on-site. etc.
+                  <p>Rent Trade & Service Co.,Ltd. 48%</p>
+                  (บริษัทเทรดดิ้ง
+                  ให้บริการพนักงานควบคุมเครื่องจักรและงานขนส่งในไทย
+                  ซึ่งอยู่ในเครือบริษัทของเร้นท์ฯ ประเทศญี่ปุ่น)
+                </li>
+                <li>
+                  <p>บริษัท เมว่าเอนเตอร์ไพรซ์ (ประเทศไทย) จำกัด 3%</p>
+                  (บริษัทไทยตัวแทนจำหน่ายเครื่องอัดลม แอร์คอมเพรสเซอร์
+                  "โคเบลโก้")
                 </li>
               </ol>
             </div>
