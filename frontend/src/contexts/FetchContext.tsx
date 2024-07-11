@@ -271,6 +271,12 @@ export default function FetchProvider({ children, user, token }: any) {
       if (method.toUpperCase() === "PUT") {
         route = `${seoRoute}/${id}`;
       }
+    } else if (type == "banner") {
+      if (method.toUpperCase() === "PUT") {
+        route = `${bannerRoute}/${id}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = bannerRoute;
+      }
     }
 
     const swalWithBootstrapButtons = Swal.mixin({

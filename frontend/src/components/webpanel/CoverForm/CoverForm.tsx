@@ -40,7 +40,7 @@ export default function CoverForm({
               setState: onChangeState,
               keyProp: "title",
               type: "input",
-              languages: languages,
+
               required: true,
             },
 
@@ -51,7 +51,6 @@ export default function CoverForm({
               setState: onChangeState,
               keyProp: "link",
               type: "input",
-              languages: languages,
             },
           ]}
         />
@@ -72,7 +71,7 @@ export default function CoverForm({
                 type: "image",
                 ratio: "16/5",
                 required: true,
-                height: "200px",
+                height: "auto",
                 multiple: false,
               },
               {

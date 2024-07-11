@@ -109,6 +109,8 @@ export default function Product({ type }: any) {
     fetchProduct();
   }, []);
 
+  console.log(mainCat);
+
   return (
     <div>
       <ProductFilter

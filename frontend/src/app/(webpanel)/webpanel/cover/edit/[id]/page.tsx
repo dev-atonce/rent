@@ -22,22 +22,20 @@ export default function EditCoverPage({ params }: { params: { id: string } }) {
   const onSaveGeneral = () => {
     const modifiedState = { ...serviceState };
 
-    delete modifiedState?.serviceSeo;
     delete modifiedState?.id;
     delete modifiedState?.createdAt;
     delete modifiedState?.updatedAt;
     delete modifiedState?.sort;
     delete modifiedState?.status;
     delete modifiedState?.originalTitleTH;
-    delete modifiedState?.originalTitleEN;
 
     onSave(
       modifiedState,
       "PUT",
       id,
 
-      "project",
-      "update project"
+      "banner",
+      "update banner"
     );
   };
 
@@ -94,7 +92,7 @@ export default function EditCoverPage({ params }: { params: { id: string } }) {
     <DefaultLayout>
       <Breadcrumb
         pageName={serviceState?.originalTitleTH}
-        prevPage={{ pageName: "Project", url: "/webpanel/project" }}
+        prevPage={{ pageName: "Banner", url: "/webpanel/cover" }}
       />
 
       <CoverForm
