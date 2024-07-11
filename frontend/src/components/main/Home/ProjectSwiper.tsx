@@ -11,69 +11,6 @@ import Image from "next/image";
 import { FaAngleDoubleRight, FaCircle } from "react-icons/fa";
 import Link from "next/link";
 
-const data = [
-  {
-    id: 1,
-    title: "ARE AWESOME",
-    tagline: "NEXTJS 13 & SWIPER SLIDER",
-    image: "/img/slide1.jpeg",
-    url: "/rental-product",
-    buttons: [
-      {
-        id: 1,
-        text: "Roberto Nickson",
-        link: "https://www.pexels.com/@rpnickson/",
-        type: "btn-dark btn-circle",
-      },
-    ],
-  },
-  {
-    id: 2,
-    title: "GIVE IT A SHOOT",
-    tagline: "IF YOU LIKE IT",
-    image: "/img/slide2.jpeg",
-    url: "/rental-product",
-    buttons: [
-      {
-        id: 1,
-        text: "Julia M Cameron",
-        link: "https://www.pexels.com/@julia-m-cameron/",
-        type: "btn-dark btn-circle",
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: "GIVE IT A SHOOT",
-    tagline: "IF YOU LIKE IT",
-    image: "/img/slide3.jpeg",
-    url: "/rental-product",
-    buttons: [
-      {
-        id: 1,
-        text: "Julia M Cameron",
-        link: "https://www.pexels.com/@julia-m-cameron/",
-        type: "btn-dark btn-circle",
-      },
-    ],
-  },
-  {
-    id: 3,
-    title: "GIVE IT A SHOOT",
-    tagline: "IF YOU LIKE IT",
-    image: "/img/slide4.jpeg",
-    url: "/rental-product",
-    buttons: [
-      {
-        id: 1,
-        text: "Julia M Cameron",
-        link: "https://www.pexels.com/@julia-m-cameron/",
-        type: "btn-dark btn-circle",
-      },
-    ],
-  },
-];
-
 export default function ProjectSwiper({ projectData }: any) {
   return (
     <div className="py-10 container mx-auto project">

@@ -1,6 +1,6 @@
 const CategorySub = require("../../models/CategorySub.js");
 const config = require("../../configs/app");
-const fs = require("fs");
+const fs = require("fs/promises");
 const multer = require("multer");
 const { ensureDirectoryExistence } = require("../../helpers/checkDirectory.helper");
 const { ErrorBadRequest, ErrorNotFound } = require("../../configs/errorMethods");

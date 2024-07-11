@@ -16,16 +16,17 @@ export default function ProductCard({ item, type, urlPre, product }: any) {
       }
       className="group shadow-md  border border-slate-100 pb-4 transition-all duration-500 col-span-12 md:col-span-6 lg:col-span-4 xl:col-span-3 rounded-lg overflow-hidden"
     >
-      <Image
+      <img
         src={
           item?.image
             ? `${process.env.NEXT_PUBLIC_BASE_URL}${item?.image}`
             : `${process.env.NEXT_PUBLIC_BASE_URL}public\\image\\no_image.webp`
         }
         alt={item.nameTH}
-        width={400}
-        height={400}
+        // width={400}
+        // height={400}
         className="w-full object-cover aspect-4/3"
+        // loading="lazy"
       />
       <div className="text-center group-hover:text-[#0DA1DB]">
         {product ? item?.productNameTH : item?.nameTH}

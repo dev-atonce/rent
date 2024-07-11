@@ -174,8 +174,8 @@ export default function FileInput({
               />
             ) : state[keyProp] ? (
               <img
-                src={"/img/about_1.png"}
-                // src={`http://192.168.0.199:3000/public/uploads/categoryMain/1717060703795-dmk.png`}
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${state[keyProp]}`}
+          
                 className="h-full w-full object-cover"
               />
             ) : (

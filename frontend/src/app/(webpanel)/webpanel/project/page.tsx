@@ -143,7 +143,7 @@ export default function ProjectPage() {
               )}
 
             <Link
-              href="project/create"
+              href="/webpanel/project/create"
               className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
             >
               CREATE PROJECT

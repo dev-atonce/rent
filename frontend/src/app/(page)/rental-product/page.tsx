@@ -2,7 +2,7 @@ import Cover from "@/components/main/Cover/Cover";
 import Loading from "@/components/main/Loading/Loading";
 import Product from "@/components/main/Product/Product";
 
-export default function RentPage() {
+export default async function RentPage() {
   return (
     <>
       <Loading />

@@ -8,7 +8,7 @@ import {
   Button
 } from "@nextui-org/react";
 import { Empty } from "antd";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { MdCloudUpload, MdArrowBackIos } from "react-icons/md";
 
 const mediaImages = [
@@ -19,33 +19,6 @@ const mediaImages = [
   {"src":"Rectangle 139.png","alt":"Rectangle 139"},
   {"src":"Rectangle 147.png","alt":"Rectangle 147"},
 ];
-
-const styles = {
-  container: {
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "center",
-    alignItems: "center",
-    paddingTop: 50,
-  },
-  preview: {
-    marginTop: 50,
-    display: "flex",
-    flexDirection: "column",
-  },
-  image: { maxWidth: "100%", maxHeight: 320 },
-  delete: {
-    cursor: "pointer",
-    padding: 15,
-    background: "red",
-    color: "white",
-    border: "none",
-  },
-};
-
-
-
-
 
  
 export default function ImageModal({imgVisible, closeImgHandler, title, select}:any)
@@ -64,12 +37,10 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
         setSelectedImage(arr);
       }
     }
-    function removeElementAt(index:any)
-    {
+    function removeElementAt(index:any) {
       let frontPart = selectedImage.slice(0, index);
-      let lastPart  = selectedImage.slice( index+1 );
-      let newArr = [...frontPart,...lastPart];
-      setSelectedImage(newArr.length?newArr:'');
+      let lastPart  = selectedImage.slice( index + 1 ); // index to end of array
+      setSelectedImage([...frontPart, ...lastPart]);
    }
 
     const formatFileSize = function (bytes:any) {
@@ -77,7 +48,6 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
         const i = Math.floor(Math.log(bytes) / Math.log(1024));
         return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sufixes[i]}`;
     };
-
 
     return <>
       <Modal 
@@ -152,36 +122,34 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                               id="file_input" 
                               type="file"
                               multiple={true}
-                              accept="image/*"
                             />
-                            {selectedImage.length > 0 && 
-                            <div className="grid grid-cols-12 gap-4 mx-2">
-                              {Array.from(selectedImage).map((v:any,k:any) => 
-                              <div className="relative col-span-6 p-1 bg-slate-100 border border-slate-200 rounded-lg img-selected" key={k}>
-                                <div className="flex">
-                                  <div className="w-28 h-28 bg-white flex items-center justify-center rounded-lg">
-                                    <img
-                                      src={v.src}
-                                      className="h-auto object-cover"
-                                      alt="Thumb"
-                                      width="150"
-                                    />
+                            {selectedImage && 
+                              <div className="grid grid-cols-12 gap-4 mx-2">
+                                {Array.from(selectedImage).map((v:any,k:any) => <div className="relative col-span-6 p-1 bg-slate-100 border border-slate-200 rounded-lg img-selected" key={k}>
+                                  <div className="flex">
+                                    <div className="w-28 h-28 bg-white flex items-center justify-center rounded-lg">
+                                      <img
+                                        src={v.src}
+                                        className="h-auto object-cover"
+                                        alt="Thumb"
+                                        width="150"
+                                      />
+                                    </div>
+                                    <div className="p-2 text-sm">
+                                      <p className="font-bold">
+                                        {v.name}
+                                      </p>
+                                      <p className="mt-1">Size: {formatFileSize(v.size)}</p>
+                                    </div>
                                   </div>
-                                  <div className="p-2 text-sm">
-                                    <p className="font-bold">
-                                      {v.name}
-                                    </p>
-                                    <p className="mt-1">Size: {formatFileSize(v.size)}</p>
-                                  </div>
+                                  <button 
+                                    onClick={()=>removeElementAt(k)} 
+                                    className="absolute bg-red text-white rounded-lg top-1 right-1 w-6 h-6">
+                                    X
+                                  </button>
                                 </div>
-                                <button 
-                                  onClick={()=>removeElementAt(k)} 
-                                  className="absolute bg-red text-white rounded-lg top-1 right-1 w-6 h-6">
-                                  X
-                                </button>
+                                )}
                               </div>
-                              )}
-                            </div>
                             }
                           </div>
                         </div>

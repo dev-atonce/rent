@@ -34,6 +34,7 @@ export default function FetchProvider({ children, user, token }: any) {
   const projectSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/project/sort`;
   const trainingRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/training-course`;
   const calendarRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/calendar`;
+  const bannerRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/banner`;
   const onFetchOne = async (type: any, id: any) => {
     let route = "";
     if (id) {
@@ -59,6 +60,8 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${trainingRoute}/${id}`;
       } else if (type === "calendar") {
         route = `${calendarRoute}/${id}`;
+      } else if (type === "banner") {
+        route = `${bannerRoute}/${id}`;
       }
     } else {
       if (type === "service") {
@@ -83,6 +86,8 @@ export default function FetchProvider({ children, user, token }: any) {
         route = subCategoryRoute;
       } else if (type === "calendar") {
         route = calendarRoute;
+      } else if (type === "banner") {
+        route = bannerRoute;
       }
     }
     try {
@@ -265,6 +270,12 @@ export default function FetchProvider({ children, user, token }: any) {
     } else if (type == "seo") {
       if (method.toUpperCase() === "PUT") {
         route = `${seoRoute}/${id}`;
+      }
+    } else if (type == "banner") {
+      if (method.toUpperCase() === "PUT") {
+        route = `${bannerRoute}/${id}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = bannerRoute;
       }
     }
 

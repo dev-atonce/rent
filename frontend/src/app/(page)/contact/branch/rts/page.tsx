@@ -34,14 +34,6 @@ export default async function RtsPage() {
             บริษัทในเครือ Rent Group ที่เชี่ยวชาญด้านการกระจายสินค้า และการขนส่ง
             เราสามารถให้บริการได้อย่างมีประสิทธิภาพมากขึ้นโดยการแบ่งการบริหารจัดการ
           </p>
-<<<<<<< Updated upstream
-          <p className="text-orange-500">
-            สนใจเช่า หรือต้องการสอบถามเกี่ยวกับสินค้า
-            กรุณาส่งอีเมล์ระบุชื่อเรื่อง &quot;สนใจเช่า/สอบถามราคา&quot; มาที่ contact
-            @rent.co.th
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
-=======
           <>
             <div className="bg-slate-50/20 from-blue-100 rounded-xl mt-4 px-10 md:px-10 text-slate-500">
               <div className="flex flex-col gap-4">
@@ -116,7 +108,6 @@ export default async function RtsPage() {
           </>
 
           {/* <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 my-4">
->>>>>>> Stashed changes
             {images.map((image, index) => (
               <div key={index} className="aspect-[4/2] object-cover w-full">
                 <Image
@@ -310,8 +301,8 @@ export default async function RtsPage() {
               </div>
               <p>
                 สนใจเช่า หรือต้องการสอบถามเกี่ยวกับสินค้า
-                กรุณาส่งอีเมล์ระบุชื่อเรื่อง &quot;สนใจเช่า/สอบถามราคา&quot; มาที่ contact
-                @rent.co.th
+                กรุณาส่งอีเมล์ระบุชื่อเรื่อง &quot;สนใจเช่า/สอบถามราคา&quot;
+                มาที่ contact @rent.co.th
               </p>
             </div>
           </div>
@@ -334,7 +325,7 @@ export default async function RtsPage() {
           <Image
             className="aspect-[4/2] object-cover w-full col-span-2 lg:col-span-1 rounded-lg"
             alt={`บริษัท เร้นท์ (ประเทศไทย) จำกัด`}
-            src={`/img/contact_rent.jpg`}
+            src={`/img/contact_rent1.jpg`}
             width={834}
             height={436}
             quality={100}

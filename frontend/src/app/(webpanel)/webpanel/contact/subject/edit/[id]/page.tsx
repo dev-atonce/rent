@@ -23,7 +23,6 @@ export default function SubjectEdit({
   };
 
   const onEdit = async () => {
-    console.log(data);
     //   @ts-ignore
     onSave(data, "PUT", id, "subject", `Edit Subject ${data?.nameEN}`);
   };
@@ -39,7 +38,7 @@ export default function SubjectEdit({
   return (
     <DefaultLayout>
       <Breadcrumb
-      // @ts-ignore
+        // @ts-ignore
         pageName={`Edit Contact Subject: ${data?.initialName}`}
         prevPage={{ pageName: `Contact`, url: "/webpanel/contact" }}
       />

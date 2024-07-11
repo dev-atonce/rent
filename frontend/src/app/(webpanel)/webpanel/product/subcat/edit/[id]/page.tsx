@@ -33,7 +33,6 @@ export default function SubCatEditPage({ params: { id } }: any) {
   };
 
   const onEdit = async () => {
-    console.log(data);
     onSave(
       // @ts-ignore
       data,

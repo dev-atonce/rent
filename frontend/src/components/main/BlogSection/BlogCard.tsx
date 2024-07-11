@@ -20,7 +20,6 @@ function formatDate(dateTimeString: any) {
 }
 
 const BlogCard = ({ data, type }: BlogCardProps) => {
-  console.log(data);
   return data?.map((item: any, key: any) => {
     return (
       <Col
@@ -42,10 +41,10 @@ const BlogCard = ({ data, type }: BlogCardProps) => {
                 alt="example"
                 src={
                   type?.includes("project")
-                    ? "/img/about_1.png"
+                    ? // @ts-ignore
+                      `${process.env.NEXT_PUBLIC_BASE_URL}${item?.image}`
                     : item?.thumbnail
                 }
-                // src={item?.image}
                 width={500}
                 height={300}
                 quality={80}

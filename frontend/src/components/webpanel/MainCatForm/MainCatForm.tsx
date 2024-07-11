@@ -25,9 +25,7 @@ export default function MainCatForm({
 
   useEffect(() => {
     onFetchMainCat();
-    if (data) {
-      console.log(data);
-    }
+
     // onChangeState(data?.mainCategory?.nameTH, "mainCategory");
   }, []);
 

@@ -51,7 +51,7 @@ export default async function ContactPage() {
           <Image
             className="aspect-[4/2] object-cover rounded-xl"
             alt={`บริษัท เร้นท์ (ประเทศไทย) จำกัด`}
-            src={`/img/contact_rent.jpg`}
+            src={`/img/contact_rent1.jpg`}
             width={834}
             height={436}
             quality={100}

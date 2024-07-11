@@ -16,6 +16,7 @@ import SubCatRecord from "./SubCatRecord";
 import ProjectRecord from "./ProjectRecord";
 import TrainingRecord from "./TrainingRecord";
 import CalendarRecord from "./CalendarRecord";
+import CoverRecord from "./CoverRecord";
 
 const TableThree = ({
   onFetchCalendar,
@@ -110,6 +111,21 @@ const TableThree = ({
             {type === "project" &&
               data?.map((i: any, key: any) => (
                 <ProjectRecord
+                  i={i}
+                  index={key}
+                  modal={modal}
+                  drag={drag}
+                  onDragEnd={handleSort}
+                  dragItem={dragItem}
+                  dragOverItem={dragOverItem}
+                  onChangeStatus={onChangeStatus}
+                  key={key}
+                  onDelete={onDelete}
+                />
+              ))}
+            {type === "banner" &&
+              data?.map((i: any, key: any) => (
+                <CoverRecord
                   i={i}
                   index={key}
                   modal={modal}
