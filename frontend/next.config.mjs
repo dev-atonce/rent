@@ -22,6 +22,11 @@ const nextConfig = {
         hostname: "api.rent.co.th",
         port: "",
       },
+      {
+        protocol: "http",
+        hostname: "192.168.0.113",
+        port: "3000",
+      },
     ],
   },
 };

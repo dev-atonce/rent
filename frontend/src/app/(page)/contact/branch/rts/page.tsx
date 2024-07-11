@@ -325,7 +325,7 @@ export default async function RtsPage() {
           <Image
             className="aspect-[4/2] object-cover w-full col-span-2 lg:col-span-1 rounded-lg"
             alt={`บริษัท เร้นท์ (ประเทศไทย) จำกัด`}
-            src={`/img/contact_rent.jpg`}
+            src={`/img/contact_rent1.jpg`}
             width={834}
             height={436}
             quality={100}
