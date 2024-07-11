@@ -21,7 +21,7 @@ export default function UserPage() {
 
   async function fetchData() {
     const data = await onFetchOne("log", null);
-    console.log(data);
+
     setData(data?.rows);
   }
 

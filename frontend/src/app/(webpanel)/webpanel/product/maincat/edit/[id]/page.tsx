@@ -59,7 +59,6 @@ export default function MainCatEditPage({ params: { id } }: any) {
     onFetch();
   }, []);
 
-  console.log(data);
   return (
     <DefaultLayout>
       <Breadcrumb

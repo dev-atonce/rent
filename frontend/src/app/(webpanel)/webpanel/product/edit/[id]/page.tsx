@@ -78,7 +78,7 @@ export default function ProductEditPage({ params: { id } }: any) {
   useEffect(() => {
     onFetch();
   }, []);
-  console.log(data);
+
   return (
     <DefaultLayout>
       <Breadcrumb

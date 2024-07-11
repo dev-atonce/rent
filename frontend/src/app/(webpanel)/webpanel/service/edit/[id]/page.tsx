@@ -53,7 +53,6 @@ export default function EditServicePage({
     delete modifiedState?.originalTitleTH;
     delete modifiedState?.originalTitleEN;
 
-    console.log(modifiedState);
     onSave(
       modifiedState,
       "PUT",

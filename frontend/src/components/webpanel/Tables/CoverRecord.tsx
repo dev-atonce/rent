@@ -5,8 +5,9 @@ import { RiDeleteBinLine, RiDraggable } from "react-icons/ri";
 import { RxDragHandleHorizontal } from "react-icons/rx";
 import SwitcherThree from "../Switchers/SwitcherThree";
 import { useEffect, useState } from "react";
+import Image from "next/image";
 
-export default function ProjectRecord({
+export default function SubjectRecord({
   i,
   index,
   modal,
@@ -119,9 +120,23 @@ export default function ProjectRecord({
             {index + 1}
           </td>
           <td className="border-b  border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-            <h5 className="font-medium text-black dark:text-white">
-              {i?.projectNameTH}
-            </h5>
+            <div className="h-[50px]">
+              <Image
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${i?.image}`}
+                alt={i?.imageAlt}
+                height={100}
+                width={100}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </td>
+          <td className="border-b  border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+            <p className="font-medium text-xs text-black dark:text-white">
+              {i?.title}
+            </p>
+            <p className="font-medium text-xs text-black dark:text-white">
+              {i?.link}
+            </p>
           </td>
           <td className="border-b  border-[#eee] px-4 py-5 dark:border-strokedark text-xs">
             <p className="text-black dark:text-white">{createdDate}</p>
@@ -129,14 +144,8 @@ export default function ProjectRecord({
           <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <div className="flex items-center gap-1">
               <Link
-                href={`/project/${i?.id}`}
-                className="hover:text-white hover:bg-blue-400 text-blue-400 border-blue-400 border p-2 rounded-full"
-              >
-                <MdOutlineRemoveRedEye size={20} />
-              </Link>
-              <Link
                 className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"
-                href={`/webpanel/project/edit/${i?.id}`}
+                href={`/webpanel/cover/edit/${i?.id}`}
               >
                 <BiEdit size={20} />
               </Link>

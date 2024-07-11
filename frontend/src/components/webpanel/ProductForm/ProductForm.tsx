@@ -271,7 +271,7 @@ export default function ProductForm({
                   <MdDeleteForever size={20} />
                 </div>
                 <Image
-                  src={"/img/about_1.png"}
+                  src={`${process.env.NEXT_PUBLIC_BASE_URL}${item}`}
                   alt="gallery"
                   width="400"
                   height="400"

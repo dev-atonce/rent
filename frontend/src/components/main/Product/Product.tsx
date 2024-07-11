@@ -103,8 +103,6 @@ export default function Product({ type }: any) {
       setFilteredProducts(filteredProduct);
     }
   };
-  console.log(filteredProducts);
-  console.log(filter);
 
   useEffect(() => {
     fetchCat();

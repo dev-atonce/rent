@@ -11,7 +11,6 @@ const fetchCat = async (id: any) => {
   const filteredSubCat = subCatData.rows.filter(
     (i: any) => i?.mainCategory?.id == id
   );
-  console.log(filteredSubCat);
 
   return filteredSubCat;
   // setMainCat(data.rows);

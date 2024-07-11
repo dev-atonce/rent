@@ -1,8 +1,6 @@
 import DynamicContent from "../DynamicContent/DynamicContent";
 import { Image } from "antd";
 export default function ProjectContent({ data }: any) {
-  console.log(data?.projectDetailTH);
-  console.log(data);
   return (
     <div className="w-full">
       {data?.gallery && (
@@ -17,7 +15,7 @@ export default function ProjectContent({ data }: any) {
                   className="rounded-xl aspect-[3/2] object-cover w-full h-full"
                   width={"auto"}
                   height={"auto"}
-                  src="/img/about_1.png"
+                  src={`${process.env.NEXT_PUBLIC_BASE_URL}${v}`}
                   alt="IATA 2024"
                 />
               </div>

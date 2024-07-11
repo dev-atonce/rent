@@ -3,6 +3,7 @@ import { Row } from "antd";
 import TrainingCourseCard from "./TraningCourseCard";
 import { useEffect, useState } from "react";
 import AntPagination from "@/components/common/AntPagination/AntPagination";
+import { Image } from "antd";
 
 const Training = () => {
   const [page, setPage] = useState<number>(1);
@@ -104,6 +105,28 @@ const Training = () => {
           pageSize={Number(process.env.NEXT_PUBLIC_COURSE_PERPAGE)}
         />
       )}
+      <>
+        {gallery && (
+          <div className="grid grid-cols-12 w-full gap-4 pb-4">
+            {data?.gallery?.map((v: any, i: number) => {
+              return (
+                <div
+                  key={i}
+                  className="bg-slate-100 rounded-lg  col-span-6 md:col-span-4 xl:col-span-3"
+                >
+                  <Image
+                    className="rounded-xl aspect-[3/2] object-cover w-full h-full"
+                    width={"auto"}
+                    height={"auto"}
+                    src={`${process.env.NEXT_PUBLIC_BASE_URL}${v}`}
+                    alt="IATA 2024"
+                  />
+                </div>
+              );
+            })}
+          </div>
+        )}
+      </>
     </>
   );
 };

@@ -18,7 +18,6 @@ export default function ServiceForm({
   const [langState, setLangState] = useState(
     process.env.NEXT_PUBLIC_MAIN_LANGUAGE
   );
-  console.log(serviceState);
 
   const maxImgUpload = 12;
   const currentImgAmount = serviceState?._gallery
@@ -103,7 +102,7 @@ export default function ServiceForm({
                       <MdDeleteForever size={20} />
                     </div>
                     <Image
-                      src={"/img/about_1.png"}
+                      src={`${process.env.NEXT_PUBLIC_BASE_URL}${item}`}
                       alt="gallery"
                       width="400"
                       height="400"
@@ -150,7 +149,7 @@ export default function ServiceForm({
             </button>
           ))}
         </div>
-        
+
         {languages?.map(
           (i: any, k: any) =>
             i?.toLowerCase() === langState && (
