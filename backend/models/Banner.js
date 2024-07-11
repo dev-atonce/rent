@@ -29,9 +29,9 @@ schema.methods.toJSON = function () {
     return {
         id: this._id,
         title: this.title,
-        image: this.start,
-        imageAlt: this.end,
-        link: this.trainingCourse,
+        image: this.image,
+        imageAlt: this.imageAlt,
+        link: this.link,
         status: this.status,
         sort: this.sort,
         createdAt: this.createdAt,
