@@ -7,6 +7,7 @@ const product = require("./product");
 const category = require("./category");
 const trainingCourse = require("./trainingCourse");
 const calendar = require("./calendar");
+const banner = require("./banner");
 
 const validators = {
   user,
@@ -14,7 +15,8 @@ const validators = {
   product,
   category,
   trainingCourse,
-  calendar
+  calendar,
+  banner
 };
 
 module.exports = {
