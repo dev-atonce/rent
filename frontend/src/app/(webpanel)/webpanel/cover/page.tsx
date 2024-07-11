@@ -32,7 +32,7 @@ export default function CoverPage() {
   const [modalState, setModalState] = useState(initialModalState);
 
   async function fetchData() {
-    const data = await onFetchOne("project", "all");
+    const data = await onFetchOne("banner", "all");
 
     setInitData(data?.rows);
 

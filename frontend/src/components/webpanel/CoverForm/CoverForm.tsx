@@ -24,6 +24,7 @@ export default function CoverForm({
     ? serviceState?._gallery?.length
     : 0;
   const uploadAmount = maxImgUpload - currentImgAmount;
+  console.log(serviceState);
 
   return (
     <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
