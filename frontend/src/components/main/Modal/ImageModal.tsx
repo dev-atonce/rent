@@ -7,7 +7,8 @@ import {
   ModalFooter, 
   Button
 } from "@nextui-org/react";
-import { useState } from "react";
+import { Empty } from "antd";
+import { useEffect, useState } from "react";
 import { MdCloudUpload, MdArrowBackIos } from "react-icons/md";
 
 const mediaImages = [
@@ -49,24 +50,35 @@ const styles = {
  
 export default function ImageModal({imgVisible, closeImgHandler, title, select}:any)
 {
-    const [selectedImage, setSelectedImage] = useState('');
-    const [fileName, setFileName] = useState('');
-    const [fileSize, setFileSize] = useState('');
-    const handleFileUpload = (e) => {
+    const [selectedImage, setSelectedImage] = useState<any>('');
+    const handleFileUpload = (e:any) => {
       if (e.target.files && e.target.files.length > 0) {
-        setSelectedImage(e.target.files[0]);
-        setFileName(e.target.files[0].name);
-        setFileSize(e.target.files[0].size);
+        let arr = [];
+        for (const file of e.target.files) {
+          arr.push({
+            'src':URL.createObjectURL(file),
+            'name':file.name,
+            'size':file.size,
+          });
+        }
+        setSelectedImage(arr);
       }
     }
+    function removeElementAt(index:any)
+    {
+      let frontPart = selectedImage.slice(0, index);
+      let lastPart  = selectedImage.slice( index+1 );
+      let newArr = [...frontPart,...lastPart];
+      setSelectedImage(newArr.length?newArr:'');
+   }
+
     const formatFileSize = function (bytes:any) {
         const sufixes = ['B', 'kB', 'MB', 'GB', 'TB'];
         const i = Math.floor(Math.log(bytes) / Math.log(1024));
         return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sufixes[i]}`;
     };
-    const removeSelectedImage = () => {
-      setSelectedImage('');
-    };
+
+
     return <>
       <Modal 
           id="imgModal"
@@ -132,40 +144,45 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                           <div className="input-group bg-slate-50 h-full border-2 border-dashed border-slate-200 rounded-lg">
                             <label 
                               className={`w-full ${!selectedImage?`h-full `:`h-10 `}flex items-center justify-center font-bold`} 
-                              htmlFor="file_input">Select File</label>
+                              htmlFor="file_input"
+                            >Select File</label>
                             <input 
                               onChange={handleFileUpload}
                               className="hidden" 
                               id="file_input" 
-                              type="file" />
-                            {selectedImage && (
-                              <div className="grid grid-cols-12 gap-4 mx-2">
-                                <div className="relative col-span-6 p-1 bg-slate-100 border border-slate-200 rounded-lg">
-                                  <div className="flex">
-                                    <div className="w-28 h-28 bg-white flex items-center justify-center rounded-lg">
-                                      <img
-                                        //@ts-ignore
-                                        src={URL.createObjectURL(selectedImage)}
-                                        className="h-auto object-cover"
-                                        alt="Thumb"
-                                        width="150"
-                                      />
-                                    </div>
-                                    <div className="p-2 text-sm">
-                                      <p className="font-bold">
-                                        {fileName}
-                                      </p>
-                                      <p className="mt-1">Size: {formatFileSize(fileSize)}</p>
-                                    </div>
+                              type="file"
+                              multiple={true}
+                              accept="image/*"
+                            />
+                            {selectedImage.length > 0 && 
+                            <div className="grid grid-cols-12 gap-4 mx-2">
+                              {Array.from(selectedImage).map((v:any,k:any) => 
+                              <div className="relative col-span-6 p-1 bg-slate-100 border border-slate-200 rounded-lg img-selected" key={k}>
+                                <div className="flex">
+                                  <div className="w-28 h-28 bg-white flex items-center justify-center rounded-lg">
+                                    <img
+                                      src={v.src}
+                                      className="h-auto object-cover"
+                                      alt="Thumb"
+                                      width="150"
+                                    />
                                   </div>
-                                  <button 
-                                    onClick={removeSelectedImage} 
-                                    className="absolute bg-red text-white rounded-lg top-1 right-1 w-6 h-6">
-                                    X
-                                  </button>
+                                  <div className="p-2 text-sm">
+                                    <p className="font-bold">
+                                      {v.name}
+                                    </p>
+                                    <p className="mt-1">Size: {formatFileSize(v.size)}</p>
+                                  </div>
                                 </div>
+                                <button 
+                                  onClick={()=>removeElementAt(k)} 
+                                  className="absolute bg-red text-white rounded-lg top-1 right-1 w-6 h-6">
+                                  X
+                                </button>
                               </div>
-                            )}
+                              )}
+                            </div>
+                            }
                           </div>
                         </div>
                       </>
