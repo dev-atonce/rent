@@ -74,7 +74,7 @@ const Training = () => {
           <Image
             src={"/img/course1.png"}
             alt="training"
-            width={"auto"}
+            width={"100%"}
             height={"auto"}
             className="w-full h-auto"
           />
@@ -147,9 +147,9 @@ const Training = () => {
           <Image
             src={"/img/course2.png"}
             alt="training"
-            width={"auto"}
+            width={"100%"}
             height={"auto"}
-            className="w-full h-auto"
+            className="w-full "
           />
         </div>
 
