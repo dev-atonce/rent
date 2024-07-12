@@ -11,7 +11,7 @@ export default function NewsPage() {
         prevPage={{ pageName: "หน้าแรก", url: "/" }}
       />
       <div className="container mx-auto">
-        <div className="flex justify-center sm:justify-end sm:translate-y-[-55px] pb-4 sm:pb-0 ">
+        {/* <div className="flex justify-center sm:justify-end sm:translate-y-[-55px] pb-4 sm:pb-0 ">
           <div className="flex gap-[2px] items-center">
             <input
               className="bg-slate-100 rounded-md p-2 focus:outline-[#0DA1DB] focus:border-0"
@@ -22,7 +22,7 @@ export default function NewsPage() {
               ค้นหา
             </button>
           </div>
-        </div>
+        </div> */}
         <BlogSection
           limit={12}
           typeBlog={["general", "customer", "selfedit"]}

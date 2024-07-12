@@ -119,7 +119,7 @@ const data = [
   },
 ];
 
-export default function CoverSwiper() {
+export default function CoverSwiper({ banner }: any) {
   return (
     <div className="header-slider">
       <div className="w-full header-cover">
@@ -137,16 +137,16 @@ export default function CoverSwiper() {
           // onSwiper={(swiper) => console.log(swiper)}
         >
           <ul>
-            {data.map((v, i) => {
+            {banner.map((v: any, i: any) => {
               return (
                 <SwiperSlide key={`${i}`} className="ralative ">
-                  <Link href={v?.url}>
+                  <Link href={"/rental-product"}>
                     <Image
-                      src={v.image}
-                      alt={v.title}
+                      src={`${process.env.NEXT_PUBLIC_BASE_URL}${v?.image}`}
+                      alt={v.imageAlt}
                       width={1920}
                       height={618}
-                      className=" object-cover  w-full aspect-[3/1.5"
+                      className=" object-cover  w-full aspect-[16/6]"
                     />
                   </Link>
                 </SwiperSlide>

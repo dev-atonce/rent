@@ -31,7 +31,7 @@ const BlogCard = ({ data, type }: BlogCardProps) => {
       >
         <a
           // @ts-ignore
-          href={type.includes("project") ? `/project/${item?.id}` : "item?.url"}
+          href={type.includes("project") ? `/project/${item?.id}` : item?.url}
         >
           <Card
             hoverable

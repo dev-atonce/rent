@@ -14,7 +14,7 @@ export default function CareerPage() {
         <BlogSection
           limit={8}
           // typeBlog={["recruitment"]}
-          typeBlog={["general", "customer", "selfedit", "recruitment"]}
+          typeBlog={["recruitment"]}
           home={false}
         />
       </div>

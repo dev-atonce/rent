@@ -84,13 +84,19 @@ export default function Product({ type, main }: any) {
       if (filter?.keyword) {
         keywordMatch =
           // @ts-ignore
-          item?.subCategory?.nameTH?.toLowerCase().includes(filter?.keyword) ||
+          item?.subCategory?.nameTH
+            ?.toLowerCase()
+            // @ts-ignore
+            .includes(filter?.keyword?.toLowerCase()) ||
           item?.subCategory?.mainCategory?.nameTH
             ?.toLowerCase()
             // @ts-ignore
-            .includes(filter?.keyword) ||
+            .includes(filter?.keyword?.toLowerCase()) ||
           // @ts-ignore
-          item?.productNameTH?.toLowerCase().includes(filter?.keyword);
+          item?.productNameTH
+            ?.toLowerCase()
+            // @ts-ignore
+            .includes(filter?.keyword?.toLowerCase());
       }
       return keywordMatch && subCategoryMatch && mainCategoryMatch;
     });
@@ -119,9 +125,10 @@ export default function Product({ type, main }: any) {
         onClear={onClear}
         onSearch={onSearch}
       />
-      {filteredProducts.length > 0 &&
-        // @ts-ignore
-        (filter?.keyword || filter?.subCategory || filter?.mainCategory) && (
+      {
+        filteredProducts.length > 0 && (
+          // @ts-ignore
+          // (filter?.keyword || filter?.subCategory || filter?.mainCategory) && (
           <div className="w-full pb-4  border-b border-slate-200 ">
             <ProductGrid
               title="สินค้าที่ค้นพบ"
@@ -131,7 +138,10 @@ export default function Product({ type, main }: any) {
               product={true}
             />
           </div>
-        )}
+        )
+
+        // )
+      }
       {notFound && (
         <div className="w-full text-center text-2xl text-slate-500 py-6  bg-slate-100 shadow-sm rounded-xl">
           ไม่พบสินค้าที่ค้นหา

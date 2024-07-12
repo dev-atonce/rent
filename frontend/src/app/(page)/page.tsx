@@ -9,7 +9,16 @@ import Blog from "@/components/main/Home/Blog";
 import FacebookEmbed from "./FacebookEmbed";
 const fetchProject = async () => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/project/`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/project/all`
+    // `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/project/`
+  );
+  const data = await res.json();
+  return data.rows;
+};
+const fetchBanner = async () => {
+  const res = await fetch(
+    // `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/banner/all`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/banner`
   );
   const data = await res.json();
   return data.rows;
@@ -17,11 +26,14 @@ const fetchProject = async () => {
 export default async function Home() {
   const subjectColor = "#455A64";
   const data = await fetchProject();
+  const banner = await fetchBanner();
+
   return (
     <>
       <Loading />
       {/* cover */}
-      <CoverSwiper />
+      {/* @ts-ignore */}
+      <CoverSwiper banner={banner} />
       {/* About Us */}
       <About />
       {/* Project Swiper */}

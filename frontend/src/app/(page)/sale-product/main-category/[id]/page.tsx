@@ -13,8 +13,6 @@ const fetchCat = async (id: any) => {
   );
 
   return filteredSubCat;
-  // setMainCat(data.rows);
-  // setInitSubCat(subCatData.rows);
 };
 
 const fetchMainCat = async (id: any) => {
@@ -29,6 +27,8 @@ const fetchMainCat = async (id: any) => {
 export default async function RentMainCatPage({ params: { id } }: any) {
   const data = await fetchCat(id);
   const mainCatData = await fetchMainCat(id);
+  console.log("asdf");
+  // console.log(data);
   return (
     <>
       <Loading />

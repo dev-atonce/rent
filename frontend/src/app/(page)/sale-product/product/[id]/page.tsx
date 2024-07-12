@@ -23,7 +23,7 @@ export default async function ProductPage({ params: { id } }: any) {
         pageName={data?.productNameTH}
         prevPage={{
           pageName: data?.subCategory?.nameTH,
-          url: `/rental-product/sub-category/${data?.subCategory?.id}`,
+          url: `/sale-product/sub-category/${data?.subCategory?.id}`,
         }}
       />
       <div className="container mx-auto">
