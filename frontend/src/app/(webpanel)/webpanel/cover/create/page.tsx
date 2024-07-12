@@ -22,8 +22,8 @@ export default function CreateCoverPage() {
       serviceState,
       "POST",
       null,
-      "project",
-      `Create New Project:${serviceState?.projectNameTH}`
+      "banner",
+      `Create New Banner:${serviceState?.title}`
     );
   };
   // Tracking Form Change

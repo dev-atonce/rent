@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import ProductFilter from "../ProductFilter/ProductFilter";
 import ProductGrid from "../ProductGrid/ProductGrid";
 
-export default function Product({ type }: any) {
+export default function Product({ type, main }: any) {
   const [mainCat, setMainCat] = useState([]);
   const [subCat, setSubCat] = useState([]);
   const [initSubCat, setInitSubCat] = useState([]);
@@ -109,8 +109,6 @@ export default function Product({ type }: any) {
     fetchProduct();
   }, []);
 
-  console.log(mainCat);
-
   return (
     <div>
       <ProductFilter
@@ -142,7 +140,7 @@ export default function Product({ type }: any) {
 
       <ProductGrid
         title={"หมวดหมู่สินค้า"}
-        data={mainCat}
+        data={main}
         type={type}
         urlPre={"/main-category"}
         product={false}
