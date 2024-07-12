@@ -132,7 +132,7 @@ export default function FetchProvider({ children, user, token }: any) {
       } else if (type === "project") {
         route = `${projectRoute}/${id}`;
       } else if (type === "training") {
-        route = `${trainingRoute}/${id}`;
+        route = `${trainingRoute}/${id}?page=${page}&${query}`;
       } else if (type === "calendar") {
         route = `${calendarRoute}/${id}`;
       }
@@ -647,7 +647,6 @@ export default function FetchProvider({ children, user, token }: any) {
           const response = await fetch(route, { method: "DELETE" });
 
           const res = await response.json();
-          console.log(res);
 
           if (res?.error) {
             const msg = res?.error?.message;

@@ -68,8 +68,8 @@ const methods = {
 
     async onDelete(req, res) {
         try {
-            await Product.delete(req.params.id);
-            res.success("success", 204);
+            const result = await Product.delete(req.params.id);
+            res.success(result);
         } catch (error) {
             res.error(error);
         }

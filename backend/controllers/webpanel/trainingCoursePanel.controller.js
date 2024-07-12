@@ -67,8 +67,7 @@ const methods = {
   async onDelete(req, res) {
     try {
       const result = await trainingCourse.delete(req.params.id);
-
-      res.success("success", 204);
+      res.success(result);
     } catch (error) {
       res.error(error);
     }

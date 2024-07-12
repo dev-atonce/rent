@@ -111,6 +111,7 @@ const methods = {
   async delete(id) {
     try {
       const obj = await CategorySub.findOneAndDelete({ _id: id }).exec();
+      if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
       if (obj?.image) {
         try {
           await fs.unlink(obj.image);

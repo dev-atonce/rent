@@ -5,72 +5,15 @@ import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import { useContext, useEffect, useState } from "react";
 import TableThree from "@/components/webpanel/Tables/TableThree";
 import Link from "next/link";
-import Input from "@/components/webpanel/Input/Input";
-import SelectGroupOne from "@/components/webpanel/SelectGroup/SelectGroupOne";
 import { FetchContext } from "@/contexts/FetchContext";
-
-// export const metadata: Metadata = {
-//   title: "Next.js Form Layout | TailAdmin - Next.js Dashboard Template",
-//   description:
-//     "This is Next.js Form Layout page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
-// };
+import AntPagination from "@/components/common/AntPagination/AntPagination";
 
 export default function TrainingPage() {
-  const { onFetchOne, onDelete }: any = useContext(FetchContext);
+  const [pageState, setPageState] = useState(1);
+  const [total, setTotal] = useState(0);
+  const { onFetchPage, onDelete }: any = useContext(FetchContext);
   const [data, setData] = useState([]);
-  const [initData, setInitData] = useState([]);
   const [dragState, setDragState] = useState(false);
-  const [filterState, setFilterState] = useState({ keyword: "", status: "0" });
-  const envLangs: string | undefined = process.env.NEXT_PUBLIC_LANGUAGES;
-
-  // @ts-ignore
-  const languages: undefined | string[] = envLangs
-    .split(",")
-    .map((i: any) => i.toUpperCase());
-
-  const initialModalState = {};
-  const [modalState, setModalState] = useState(initialModalState);
-
-  async function fetchData() {
-    const data = await onFetchOne("training", "all");
-
-    setInitData(data?.rows);
-
-    setData(filter(data?.rows));
-  }
-
-  const filter = (data: any) => {
-    const keyword = filterState?.keyword?.toLowerCase();
-    const status: string | boolean = filterState?.status;
-
-    const filteredData = data?.filter((item: any) => {
-      let keywordMatch = true;
-      let statusMatch = true;
-
-      if (keyword) {
-        keywordMatch =
-          item?.serviceNameEN?.toLowerCase().includes(keyword) ||
-          item?.serviceNameTH?.toLowerCase().includes(keyword);
-      }
-      // @ts-ignore
-      if (status !== undefined && status !== "all" && status !== "0") {
-        // Handle status as boolean strings
-        let convertedStatus;
-        if (status === "true") {
-          convertedStatus = true;
-        } else if (status === "false") {
-          convertedStatus = false;
-        } else {
-          convertedStatus = status;
-        }
-        statusMatch = item?.status === convertedStatus;
-      }
-
-      return keywordMatch && statusMatch;
-    });
-
-    return filteredData;
-  };
 
   const onDeleteItem = async (id: any) => {
     try {
@@ -83,18 +26,15 @@ export default function TrainingPage() {
     }
   };
 
-  useEffect(() => {
-    fetchData();
-  }, []);
+  async function fetchData() {
+    const data = await onFetchPage("training", "all", pageState);
+    setTotal(data?.total);
+    setData(data?.rows);
+  }
 
   useEffect(() => {
     fetchData();
-  }, [modalState]);
-
-  useEffect(() => {
-    fetchData();
-    setDragState(false);
-  }, [filterState]);
+  }, [pageState]);
 
   return (
     <DefaultLayout>
@@ -105,17 +45,12 @@ export default function TrainingPage() {
       <>
         <div className="flex justify-end  item-center">
           <div className="flex items-center gap-1">
-            {(!filterState?.keyword || filterState?.keyword.length === 0) &&
-              (filterState?.status === "0" ||
-                filterState?.status === "all") && (
-                <button
-                  onClick={() => setDragState(!dragState)}
-                  className={`${!dragState ? "border-yellow-400 text-yellow-600" : "border-green-400 text-green-600"} bg-white border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
-                >
-                  {!dragState ? "SORT" : "DONE"}
-                </button>
-              )}
-
+            <button
+              onClick={() => setDragState(!dragState)}
+              className={`${!dragState ? "border-yellow-400 text-yellow-600" : "border-green-400 text-green-600"} bg-white border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
+            >
+              {!dragState ? "SORT" : "DONE"}
+            </button>
             <Link
               href="training/create"
               className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
@@ -128,7 +63,6 @@ export default function TrainingPage() {
           onDelete={onDeleteItem}
           drag={dragState}
           type="training"
-          modal={{ modalState, setModalState }}
           data={data}
           setData={setData}
           col={[
@@ -138,6 +72,14 @@ export default function TrainingPage() {
             { title: "Status", minWidth: "" },
           ]}
         />
+        {total > Number(process.env.NEXT_PUBLIC_COURSE_PERPAGE) && (
+          <AntPagination
+            total={total}
+            currentPage={pageState}
+            setCurrentPage={setPageState}
+            pageSize={Number(process.env.NEXT_PUBLIC_COURSE_PERPAGE)}
+          />
+        )}
       </>
     </DefaultLayout>
   );

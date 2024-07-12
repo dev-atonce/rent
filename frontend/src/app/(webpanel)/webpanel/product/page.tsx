@@ -10,12 +10,6 @@ import SelectGroupOne from "@/components/webpanel/SelectGroup/SelectGroupOne";
 import { FetchContext } from "@/contexts/FetchContext";
 import AntPagination from "@/components/common/AntPagination/AntPagination";
 
-// export const metadata: Metadata = {
-//   title: "Next.js Form Layout | TailAdmin - Next.js Dashboard Template",
-//   description:
-//     "This is Next.js Form Layout page for TailAdmin - Next.js Tailwind CSS Admin Dashboard Template",
-// };
-
 export default function ProductPage() {
   const { onFetchOne, onDelete, onFetchPage }: any = useContext(FetchContext);
   const [data, setData] = useState([]);

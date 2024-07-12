@@ -11,15 +11,6 @@ const methods = {
     }
   },
 
-  async onGetByUrl(req, res) {
-    try {
-      let result = await Product.findByUrl(req.params.url);
-      res.success(result);
-    } catch (error) {
-      res.error(error);
-    }
-  },
-
   async onGetById(req, res) {
     try {
       let result = await Product.findById(req.params.id);

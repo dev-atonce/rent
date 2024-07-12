@@ -23,7 +23,7 @@ const upload = multer({
 
 const methods = {
   async findAll(req) {
-    const limit = +(req.query.size || config.pageLimit);
+    const limit = +(req.query.size || 10);
     const offset = +(limit * ((req.query.page || 1) - 1));
     try {
       const rows = await TrainingCourse.find()
@@ -155,20 +155,9 @@ const methods = {
           }
         }
       }
-      if (obj?.gallery) {
-        obj.gallery.map(async (item) => {
-          try {
-            await fs.unlink(item);
-          } catch (error) {
-            if (error.code !== "ENOENT") {
-              throw error;
-            }
-          }
-        });
-      }
       return { msg: "deleted success" };
     } catch (error) {
-      return Promise.reject(ErrorBadRequest(error.message));
+      return reject(ErrorBadRequest(error.message));
     }
   },
 
