@@ -5,7 +5,8 @@ import Project from "@/components/main/Project/Project";
 const fetchProject = async () => {
   const res = await fetch(
     // `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/project/all`
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/project/`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/project/`,
+    { cache: "no-store" }
   );
   const data = await res.json();
   return data.rows;
