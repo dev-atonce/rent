@@ -11,6 +11,7 @@ router.use("/page/category-main", require("./page/categoryMainPage"));
 router.use("/page/category-sub", require("./page/categorySubPage"));
 router.use("/page/training-course", require("./page/traningCoursePage"));
 router.use("/page/calendar", require("./page/calendarPage"));
+router.use("/page/banner", require("./page/bannerPage"));
 
 //////////////
 
@@ -27,6 +28,7 @@ router.use("/webpanel/category-sub", require("./webpanel/categorySubPanel"));
 router.use("/webpanel/training-course", require("./webpanel/trainingCoursePanel"));
 router.use("/webpanel/calendar", require("./webpanel/calendarPanel"));
 router.use("/webpanel/banner", require("./webpanel/bannerPanel"));
+router.use("/webpanel/media", require("./webpanel/mediaPanel"));
 
 //////////////
 
