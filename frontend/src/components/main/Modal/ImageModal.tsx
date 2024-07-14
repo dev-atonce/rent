@@ -7,9 +7,9 @@ import {
   ModalFooter, 
   Button
 } from "@nextui-org/react";
-import { Empty } from "antd";
+
 import { useState } from "react";
-import { MdCloudUpload, MdArrowBackIos } from "react-icons/md";
+import { MdCloudUpload, MdArrowBackIos, MdOutlineSearch, MdRefresh } from "react-icons/md";
 
 const mediaImages = [
   {"src":"Rectangle 114.png","alt":"Rectangle 114"},
@@ -24,6 +24,7 @@ const mediaImages = [
 export default function ImageModal({imgVisible, closeImgHandler, title, select}:any)
 {
     const [selectedImage, setSelectedImage] = useState<any>('');
+    const [imgTitile, setImgTitle] = useState<Boolean>(true);
     const handleFileUpload = (e:any) => {
       if (e.target.files && e.target.files.length > 0) {
         let arr = [];
@@ -48,6 +49,10 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
         const i = Math.floor(Math.log(bytes) / Math.log(1024));
         return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sufixes[i]}`;
     };
+    const SetImageTitle = (e:any) => {
+      let change = e.currentTarget.checked == true ? false : true;
+      setImgTitle(change);
+    }
 
     return <>
       <Modal 
@@ -59,14 +64,96 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
           style={{width:"800px",maxWidth:'100vw'}}
           closeButton
         >
-        <ModalContent>
+        <ModalContent className="modal-content">
           {(onClose) => 
             <>
               <ModalHeader className="flex flex-col gap-1 w-full py-3 text-center">{title}</ModalHeader>
               <ModalBody className="w-full">
                 <div className="tabs">
-                  {
-                    select.imgTab == 'current' ?
+                  {select.imgTab == 'current' && 
+                    <>
+                      <div className="image-tools pb-2">
+                        <div className="grid grid-cols-4 gap-4">
+                        <div>
+                          <div className="rounded p-1 border border-slate-300">
+                            {select.preview && <div className="h-30 w-full relative flex align-middle content-center items-center"><img className="preview w-full" alt="preview" src={select.preview}/></div> }
+                            {!select.preview && <div className="h-30 w-full relative flex justify-center items-center">Prview</div>}
+                          </div>
+                        </div>
+                        <div className="col-span-4">
+                          <div className="flex">
+                              <input
+                                type="text"
+                                placeholder={"Image URL"}
+                                onKeyUp={select.previewImg}
+                                name="url"
+                                value={select.preview}
+                                className="bg-white w-full rounded-s border-[1.5px] border-stroke bg-transparent p-1 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                              />
+                              <Button 
+                                  className="inline-flex items-center bg-transparent hover:bg-slate-200 border-[1.5px] border-l-0 border-stroke rounded-e-lg dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" 
+                                  onClick={()=>select.setImgTab('select')}><MdOutlineSearch />
+                              </Button>
+                            </div>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-4 gap-4">
+                          <div className="col-span-2">
+                            <label className="text-sm" htmlFor="label">alt:</label>
+                            <input
+                              type="text"
+                              placeholder={"alt"}
+                              id="label"
+                              className="bg-white w-full rounded border-[1.5px] border-stroke bg-transparent p-1 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm" htmlFor="width">width:</label>
+                            <input
+                              type="text"
+                              placeholder={"width"}
+                              id="width"
+                              className="bg-white w-full rounded border-[1.5px] border-stroke bg-transparent p-1 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm" htmlFor="height">height:</label>
+                            <input
+                              type="text"
+                              placeholder={"height"}
+                              id="height"
+                              className="bg-white w-full rounded border-[1.5px] border-stroke bg-transparent p-1 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            />
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-4 gap-4 mt-3">
+                          <div className="flex items-center mb-4">
+                              <input 
+                                id="default-checkbox" 
+                                onChange={SetImageTitle} 
+                                type="checkbox" 
+                                value="" 
+                                className="w-4 h-4 outline-none text-blue-600 bg-slate-100 border-slate-300 rounded dark:bg-slate-700 dark:border-slate-600" 
+                              />
+                              <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium text-slate-900 dark:text-slate-300">Image title</label>
+                          </div>
+                        </div>
+                        <div className="grid grid-cols-4 gap-4">
+                          <div className="col-span-2">
+                            <input
+                              type="text"
+                              placeholder={"Image title"}
+                              //@ts-ignore
+                              disabled={imgTitile}
+                              
+                              className="bg-white w-full rounded-s border-[1.5px] border-stroke bg-transparent p-1 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </>
+                  }
+                  {select.imgTab == 'select' &&
                       <>
                         <div className="image-tools flex justify-between border-b border-slate-200 pb-2">
                           <div className="tabs justify-start ">
@@ -105,10 +192,11 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                           </div>
                         </div>
                       </>
-                    :
+                    }
+                    {select.imgTab == 'upload' &&
                       <>
                         <div className="image-tools flex justify-between pb-2">
-                          <Button className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7" onClick={()=>select.setImgTab('current')}><MdArrowBackIos/> Back</Button>
+                          <Button className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7" onClick={()=>select.setImgTab('select')}><MdArrowBackIos/> Back</Button>
                         </div>
                         <div className="images-upload" style={{height:'500px',maxHeight:'500px',overflowY:'auto'}}>
                           <div className="input-group bg-slate-50 h-full border-2 border-dashed border-slate-200 rounded-lg">
@@ -158,13 +246,13 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                 </div>
               </ModalBody>
               <ModalFooter className="w-full">
-                {select.imgTab == 'current' ?
+              {select.imgTab == 'current' &&
                   <>
                     <Button 
-                      onClick={select.insertImg}
+                      onClick={(e)=>select.insertImg(e)}
                       // onPress={onClose}
                       className={`bg-blue-200 text-white font-bold hover:bg-blue-700 focus:ring focus:ring-blue-300 rounded-lg`}>
-                      Select
+                      Save
                     </Button>
                     <Button 
                       variant="light" 
@@ -173,7 +261,24 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                       Cancel
                     </Button>
                   </>
-                  :<>
+                }
+                {select.imgTab == 'select' &&
+                  <>
+                    <Button 
+                      onClick={(e)=>select.copyToSelect(e)}
+                      // onPress={onClose}
+                      className={`bg-blue-200 text-white font-bold hover:bg-blue-700 focus:ring focus:ring-blue-300 rounded-lg`}>
+                      Select
+                    </Button>
+                    <Button 
+                      variant="light" 
+                      className="text-slate-400 font-bold rounded-lg hover:text-rose-500 hover:bg-rose-100 focus:ring focus:ring-rose-300" 
+                      onClick={()=>{onClose; select.setImgTab('current')}}>
+                      Cancel
+                    </Button>
+                  </>
+                }
+                {select.imgTab == 'upload' && <>
                     <Button 
                       // onClick={select.insertImg}
                       // onPress={onClose}
@@ -183,7 +288,7 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                     <Button 
                       variant="light" 
                       className="text-slate-400 font-bold rounded-lg hover:text-rose-500 hover:bg-rose-100 focus:ring focus:ring-rose-300" 
-                      onClick={()=>select.setImgTab('current')}>
+                      onClick={()=>{onClose; select.setImgTab('current')}}>
                       Cancel
                     </Button>
                   </>
