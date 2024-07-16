@@ -208,21 +208,21 @@ export default function Header() {
                   }}
                 />
                 <a
-                  href="https://www.facebook.com"
+                  href="https://www.facebook.com/rentalmachines/"
                   target="_blank"
                   className="rounded-full p-2 bg-blue-600"
                 >
                   <FaFacebookF fontSize="1.2em" color="white" />
                 </a>
                 <a
-                  href="https://line.me/th"
+                  href="https://line.me/ti/p/~ID@rent_thailand"
                   target="_blank"
                   className="rounded-full p-2 bg-green-500 ml-1"
                 >
                   <FaLine fontSize="1.2em" color="white" />
                 </a>
                 <a
-                  href="https://www.youtube.com"
+                  href="https://youtube.com/@rent_thailand"
                   target="_blank"
                   className="rounded-full p-2 bg-red ml-1"
                 >

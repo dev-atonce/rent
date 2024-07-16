@@ -45,10 +45,9 @@ export default function Contact({ data }: any) {
     },
   ];
 
-
   const initList = data?.map((i: any, key: any) => ({
     ...i,
-    thumbnail: imgs[key].thumbnail,
+    thumbnail: imgs[key]?.thumbnail,
   }));
 
   const list = [

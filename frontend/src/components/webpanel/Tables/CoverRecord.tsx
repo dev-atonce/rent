@@ -59,39 +59,34 @@ export default function SubjectRecord({
           <td className="hover:cursor-move text-center border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
             <RxDragHandleHorizontal size={25} />
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-            <h5 className="font-medium text-black dark:text-white">
-              {i?.serviceNameEN}
-            </h5>
-            <p className="text-sm"> {i?.serviceNameTH}</p>
-          </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark text-xs">
-            <p className="text-black dark:text-white">
-              {i?.serviceDescriptionTH}
-            </p>
-            <p className="text-black dark:text-white">
-              {i?.serviceDescriptionEN}
-            </p>
-          </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-            <p className="text-black dark:text-white">{i?.seoDescriptionTH}</p>
-            <p className="text-black dark:text-white">{i?.seoDescriptionEN}</p>
-          </td>
 
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark text-xs">
-            <p className="text-center">{createdDate}</p>
+          <td className="border-b  border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+            <div className="h-[50px]">
+              <Image
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${i?.image}`}
+                alt={i?.imageAlt}
+                height={100}
+                width={100}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </td>
+          <td className="border-b  border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+            <p className="font-medium text-xs text-black dark:text-white">
+              {i?.title}
+            </p>
+            <p className="font-medium text-xs text-black dark:text-white">
+              {i?.link}
+            </p>
+          </td>
+          <td className="border-b  border-[#eee] px-4 py-5 dark:border-strokedark text-xs">
+            <p className="text-black dark:text-white">{createdDate}</p>
           </td>
           <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <div className="flex items-center gap-1">
               <Link
-                href={`/en/service/${i?.serviceUrl}`}
-                className="hover:text-white hover:bg-blue-400 text-blue-400 border-blue-400 border p-2 rounded-full"
-              >
-                <MdOutlineRemoveRedEye size={20} />
-              </Link>
-              <Link
                 className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"
-                href={`service/edit/${i?.id}`}
+                href={`/webpanel/cover/edit/${i?.id}`}
               >
                 <BiEdit size={20} />
               </Link>

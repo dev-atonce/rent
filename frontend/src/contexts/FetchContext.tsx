@@ -35,6 +35,7 @@ export default function FetchProvider({ children, user, token }: any) {
   const trainingRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/training-course`;
   const calendarRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/calendar`;
   const bannerRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/banner`;
+  const bannerSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/banner/sort`;
   const onFetchOne = async (type: any, id: any) => {
     let route = "";
     if (id) {
@@ -549,8 +550,10 @@ export default function FetchProvider({ children, user, token }: any) {
       route = `${mainCategorySortRoute}/${id}`;
     } else if (type == "project") {
       route = `${projectSortRoute}/${id}`;
+    } else if (type == "banner") {
+      route = `${bannerSortRoute}/${id}`;
     }
-
+    console.log(route);
     try {
       const response = await fetch(route, {
         method: "PUT",
@@ -621,8 +624,6 @@ export default function FetchProvider({ children, user, token }: any) {
     } else if (type === "banner") {
       route = `${bannerRoute}/${id}`;
     }
-
-    console.log(route);
 
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
