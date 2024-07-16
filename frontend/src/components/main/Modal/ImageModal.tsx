@@ -74,19 +74,20 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                     <>
                       <div className="image-tools pb-2">
                         <div className="grid grid-cols-4 gap-4">
-                        <div>
-                          <div className="rounded p-1 border border-slate-300">
-                            {select.preview && <div className="h-30 w-full relative flex align-middle content-center items-center"><img className="preview w-full" alt="preview" src={select.preview}/></div> }
-                            {!select.preview && <div className="h-30 w-full relative flex justify-center items-center">Prview</div>}
+                          <div>
+                            <div className="rounded p-1 border border-slate-300">
+                              {select.preview && <div className="h-30 w-full relative flex align-middle content-center items-center"><img className="preview w-full" alt="preview" src={select.preview}/></div> }
+                              {!select.preview && <div className="h-30 w-full relative flex justify-center items-center">Prview</div>}
+                            </div>
                           </div>
-                        </div>
-                        <div className="col-span-4">
-                          <div className="flex">
+                          <div className="col-span-4">
+                            <div className="flex">
                               <input
                                 type="text"
+                                name="url"
                                 placeholder={"Image URL"}
                                 onKeyUp={select.previewImg}
-                                name="url"
+                                onChange={select.previewImg}
                                 value={select.preview}
                                 className="bg-white w-full rounded-s border-[1.5px] border-stroke bg-transparent p-1 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                               />
@@ -97,31 +98,54 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                             </div>
                           </div>
                         </div>
-                        <div className="grid grid-cols-4 gap-4">
-                          <div className="col-span-2">
-                            <label className="text-sm" htmlFor="label">alt:</label>
+                        <div className="grid grid-cols-1 gap-4">
+                          <div>
+                            <label className="font-medium text-slate-900 dark:text-slate-30" htmlFor="label">alt:</label>
                             <input
+                              id="label"
                               type="text"
                               placeholder={"alt"}
-                              id="label"
+                              onKeyUp={(e)=>select.setAlt(e.currentTarget.value)}
+                              onChange={(e)=>select.setAlt(e.currentTarget.value)}
+                              value={select.alt}
                               className="bg-white w-full rounded border-[1.5px] border-stroke bg-transparent p-1 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                             />
                           </div>
-                          <div>
-                            <label className="text-sm" htmlFor="width">width:</label>
+                        </div>
+                        <div className="grid grid-cols-12 gap-4">
+                          <div className="col-span-8">
+                          <label className="font-medium text-slate-900 dark:text-slate-30" htmlFor="className">class name:</label>
                             <input
+                              id="className"
+                              type="text"
+                              placeholder={"class name"}
+                              onKeyUp={(e)=>select.setClassName(e.currentTarget.value)}
+                              onChange={(e)=>select.setClassName(e.currentTarget.value)}
+                              value={select.className}
+                              className="bg-white w-full rounded border-[1.5px] border-stroke bg-transparent p-1 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                            />
+                          </div>
+                          <div className="col-span-2">
+                            <label className="font-medium text-slate-900 dark:text-slate-30" htmlFor="width">width:</label>
+                            <input
+                              id="width"
                               type="text"
                               placeholder={"width"}
-                              id="width"
+                              onKeyUp={(e)=>select.setWidth(e.currentTarget.value)}
+                              onChange={(e)=>select.setWidth(e.currentTarget.value)}
+                              value={select.width}
                               className="bg-white w-full rounded border-[1.5px] border-stroke bg-transparent p-1 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                             />
                           </div>
-                          <div>
-                            <label className="text-sm" htmlFor="height">height:</label>
+                          <div className="col-span-2">
+                            <label className="font-medium text-slate-900 dark:text-slate-30" htmlFor="height">height:</label>
                             <input
+                              id="height"
                               type="text"
                               placeholder={"height"}
-                              id="height"
+                              onKeyUp={(e)=>select.setHeight(e.currentTarget.value)}
+                              onChange={(e)=>select.setHeight(e.currentTarget.value)}
+                              value={select.height}
                               className="bg-white w-full rounded border-[1.5px] border-stroke bg-transparent p-1 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                             />
                           </div>
@@ -130,9 +154,9 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                           <div className="flex items-center mb-4">
                               <input 
                                 id="default-checkbox" 
+                                type="checkbox"
                                 onChange={SetImageTitle} 
-                                type="checkbox" 
-                                value="" 
+                                value={select.imageTitle}
                                 className="w-4 h-4 outline-none text-blue-600 bg-slate-100 border-slate-300 rounded dark:bg-slate-700 dark:border-slate-600" 
                               />
                               <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium text-slate-900 dark:text-slate-300">Image title</label>
@@ -145,7 +169,9 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                               placeholder={"Image title"}
                               //@ts-ignore
                               disabled={imgTitile}
-                              
+                              onKeyUp={(e)=>select.setTitle(e.currentTarget.value)}
+                              onChange={(e)=>select.setTitle(e.currentTarget.value)}
+                              value={select.title ? select.title : ""}
                               className="bg-white w-full rounded-s border-[1.5px] border-stroke bg-transparent p-1 text-black outline-none transition focus:border-primary active:border-primary disabled:cursor-default disabled:bg-whiter dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                             />
                           </div>
@@ -199,9 +225,9 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                           <Button className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7" onClick={()=>select.setImgTab('select')}><MdArrowBackIos/> Back</Button>
                         </div>
                         <div className="images-upload" style={{height:'500px',maxHeight:'500px',overflowY:'auto'}}>
-                          <div className="input-group bg-slate-50 h-full border-2 border-dashed border-slate-200 rounded-lg">
+                          <div className="input-group h-full border-2 border-dashed border-slate-200 rounded-lg">
                             <label 
-                              className={`w-full ${!selectedImage?`h-full `:`h-10 `}flex items-center justify-center font-bold`} 
+                              className={`w-full ${selectedImage.length < 1 ?`h-full `:`h-10 `}flex items-center justify-center font-bold`} 
                               htmlFor="file_input"
                             >Select File</label>
                             <input 
@@ -280,10 +306,10 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                 }
                 {select.imgTab == 'upload' && <>
                     <Button 
-                      // onClick={select.insertImg}
+                      onClick={(e)=>select.upload(e)}
                       // onPress={onClose}
                       className={`${selectedImage?`bg-blue-500`:`bg-blue-200`} text-white font-bold hover:bg-blue-700 focus:ring focus:ring-blue-300 rounded-lg`}>
-                      Upload
+                     {selectedImage.length>0?`(${selectedImage.length})`:``} Upload
                     </Button>
                     <Button 
                       variant="light" 

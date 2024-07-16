@@ -2,8 +2,13 @@ const Project = require("../../models/Project");
 const config = require("../../configs/app");
 const fs = require("fs/promises");
 const multer = require("multer");
-const { ensureDirectoryExistence } = require("../../helpers/checkDirectory.helper");
-const { ErrorBadRequest, ErrorNotFound } = require("../../configs/errorMethods");
+const {
+  ensureDirectoryExistence,
+} = require("../../helpers/checkDirectory.helper");
+const {
+  ErrorBadRequest,
+  ErrorNotFound,
+} = require("../../configs/errorMethods");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -99,6 +104,7 @@ const methods = {
 
   async update(req, res) {
     return new Promise(async (resolve, reject) => {
+      console.log(req);
       try {
         upload(req, res, async (err) => {
           if (err) {
@@ -127,8 +133,11 @@ const methods = {
                   return reject(ErrorBadRequest("Gallery is full"));
                 const galleryLeft = 12 - obj.gallery.length;
                 if (galleryLeft < req.files.gallery.length)
-                  return reject(ErrorBadRequest(`You can upload ${galleryLeft} picture to the gallery`)
-                );
+                  return reject(
+                    ErrorBadRequest(
+                      `You can upload ${galleryLeft} picture to the gallery`
+                    )
+                  );
                 if (obj.gallery.length > 0) {
                   data.gallery = obj.gallery;
                   req.files?.gallery.map((file) => {

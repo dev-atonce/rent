@@ -49,7 +49,7 @@ const methods = {
   async onUpdateSort(req, res) {
     try {
       checkAllowFields(req.body, allowFields.updateSort);
-      const result = await Project.update(req.params.id, req.body);
+      const result = await Project.update(req, req);
       res.success(result);
     } catch (error) {
       res.error(error);
