@@ -13,7 +13,8 @@ export default function Product({ type, main }: any) {
   const [notFound, setNotFound] = useState(false);
   const fetchProduct = async () => {
     const subCat = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/product`
+      `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/product`,
+      { cache: "no-store" }
       // `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product/all`
     );
     const products = await subCat.json();
@@ -26,11 +27,13 @@ export default function Product({ type, main }: any) {
   };
   const fetchCat = async () => {
     const res = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/category-main`
+      `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/category-main`,
+      { cache: "no-store" }
     );
     const data = await res.json();
     const subCat = await fetch(
-      `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/category-sub`
+      `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/category-sub`,
+      { cache: "no-store" }
     );
     const subCatData = await subCat.json();
 

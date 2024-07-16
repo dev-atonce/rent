@@ -5,7 +5,8 @@ import ProductGrid from "@/components/main/ProductGrid/ProductGrid";
 
 const fetchProduct = async (id: any) => {
   const subCat = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/product`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/product`,
+    { cache: "no-store" }
     // `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product/all`
   );
   const products = await subCat.json();
@@ -20,7 +21,8 @@ const fetchProduct = async (id: any) => {
 
 const fetchSubCat = async (id: any) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/category-sub/${id}`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/category-sub/${id}`,
+    { cache: "no-store" }
   );
   const data = await res.json();
 

@@ -6,7 +6,8 @@ import ProductGrid from "@/components/main/ProductGrid/ProductGrid";
 
 const fetchProduct = async (id: any) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/product/${id}`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/product/${id}`,
+    { cache: "no-store" }
   );
   const data = await res.json();
 
