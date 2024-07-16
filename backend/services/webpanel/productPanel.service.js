@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Product = require("../../models/Product");
 const config = require("../../configs/app");
 const fs = require("fs/promises");
@@ -27,12 +28,12 @@ const upload = multer({
 const methods = {
   scopeSearch(req) {
     $or = [];
-    if (req.query.keyword)
-      $or.push({ productNameTH: { $regex: req.query.keyword } });
+    if (req.query.category && req.query.category !== "all")
+      $or.push({ 'subCategory.mainCategory': new mongoose.Types.ObjectId(req.query.category) });
     if (req.query.status && req.query.status !== "all")
       $or.push({ status: req.query.status });
-    if (req.query.category && req.query.category !== "all")
-      $or.push({ subCategory: req.query.category });
+    if (req.query.keyword)
+      $or.push({ productNameTH: { $regex: req.query.keyword, $options: 'i' } });
     const query = $or.length > 0 ? { $or } : {};
     return { query: query };
   },
@@ -40,30 +41,58 @@ const methods = {
   async findAll(req) {
     const limit = +(req.query.size || 50);
     const offset = +(limit * ((req.query.page || 1) - 1));
-    const _q = methods.scopeSearch(req);
-
+    const _q = this.scopeSearch(req);
+    console.log(_q.query);
     try {
-      const rows = await Product.find(_q.query)
-        .populate({
-          path: "subCategory",
-          select: "nameTH mainCategory",
-          populate: {
-            path: "mainCategory",
-            select: "nameTH",
+      const rows = await Product.aggregate([
+        {
+          $lookup: {
+            from: "categorysubs", 
+            localField: "subCategory",
+            foreignField: "_id",
+            as: "subCategory",
           },
-        })
-        .sort({ sort: "asc" })
-        .limit(limit)
-        .skip(offset);
-      const count = await Product.countDocuments(_q.query);
+        },
+        { $unwind: "$subCategory" }, // Deconstruct the joined array
+        {
+          $lookup: {
+            from: "categorymains", 
+            localField: "subCategory.mainCategory",
+            foreignField: "_id",
+            as: "mainCategory",
+          },
+        },
+        { $unwind: "$mainCategory" }, // Deconstruct the joined array
+        {
+          $match: _q.query,
+        },
+        { $sort: { sort: 1 } },
+        { $skip: offset },
+        { $limit: limit },
+      ]);
+
+      const count = await Product.aggregate([
+        {
+          $lookup: {
+            from: "categorysubs", 
+            localField: "subCategory",
+            foreignField: "_id",
+            as: "subCategory",
+          },
+        },
+        { $unwind: "$subCategory" }, // Deconstruct the joined array
+        {
+          $match: _q.query,
+        },
+      ]);
       return {
-        total: count,
-        lastPage: Math.ceil(count / limit),
+        count: count.length > 0 ? count.length : 0,
+        lastPage: Math.ceil(count.length / limit),
         currPage: +req.query.page || 1,
         rows: rows,
       };
     } catch (error) {
-      return Promise.reject(ErrorNotFound(error.message));
+      return Promise.reject(ErrorBadRequest(error.message));
     }
   },
 
@@ -144,8 +173,11 @@ const methods = {
                   return reject(ErrorBadRequest("Gallery is full"));
                 const galleryLeft = 12 - obj.gallery.length;
                 if (galleryLeft < req.files.gallery.length)
-                  return reject(ErrorBadRequest(`You can upload ${galleryLeft} picture to the gallery`)
-                );
+                  return reject(
+                    ErrorBadRequest(
+                      `You can upload ${galleryLeft} picture to the gallery`
+                    )
+                  );
                 if (obj.gallery.length > 0) {
                   data.gallery = obj.gallery;
                   req.files?.gallery.map((file) => {
