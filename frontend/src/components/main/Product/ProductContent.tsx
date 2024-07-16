@@ -12,7 +12,11 @@ export default function ProductContent({ data }: any) {
               className="w-full h-full object-cover "
               width={"100%"}
               height={"100%"}
-              src={`${process.env.NEXT_PUBLIC_BASE_URL}${data?.image}`}
+              src={
+                data?.image
+                  ? `${process.env.NEXT_PUBLIC_BASE_URL}${data?.image}`
+                  : `${process.env.NEXT_PUBLIC_BASE_URL}public\\image\\no_image.webp`
+              }
               alt={data?.imageAlt}
             />
           </div>

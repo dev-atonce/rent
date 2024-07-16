@@ -78,7 +78,7 @@ export default function CoverPage() {
 
   const onDeleteItem = async (id: any) => {
     try {
-      const res = await onDelete(id, "project", "Delete Project");
+      const res = await onDelete(id, "banner", "Delete Banner");
       if (res.success) {
         fetchData();
       }
