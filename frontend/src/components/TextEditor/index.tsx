@@ -34,6 +34,8 @@ import ModalDialog from "../main/Modal";
 import ImageModal from "../main/Modal/ImageModal";
 import { Button } from "@nextui-org/react";
 import "../../css/Custom.scss";
+import { title } from "process";
+
 
 const mediaImages = [
   { src: "Rectangle 114.png", alt: "Rectangle 114" },
@@ -368,18 +370,30 @@ const TextEditor = ({ id }: any) => {
   const [imgCount, setImgCount] = useState<any>(0);
   const [imgTab, setImgTab] = useState<String>("current");
   const [preview, setPreview] = useState<any>('');
-  // const [remark, setRemark] = useState<HTMLElement>();
-  const [height, setHeight] = useState<String>(minHeight);
+  const [alt, setAlt] = useState<any>('');
+  const [width, setWidth] = useState<any>('');
+  const [height, setHeight] = useState<any>('');
+  const [className, setClassName] = useState<any>('');
+  const [title, setTitle] = useState<any>('');
+  const [selected, setSelected] = useState<any>([]);
 
   // const { onOpen, onOpenChange} = useDisclosure();
 
   const handler = () => setVisible(true);
+  const closeHandler = () => setVisible(false);
+  const closeImgHandler = () => setImgVisible(false);
+
   const imgModal = (e: any) => {
     setImgVisible(true);
     remark(e.currentTarget);
+    const img = e.currentTarget.querySelector('img');
+    if(img.getAttribute('alt')) setAlt(img.getAttribute('alt'));
+    if(img.getAttribute('width')) setWidth(img.getAttribute('width'));
+    if(img.getAttribute('height')) setHeight(img.getAttribute('height'));
+    if(img.getAttribute('class')) setClassName(img.getAttribute('class'));
+    if(e.target.querySelector('.img-title')) setTitle(e.target.querySelector('.img-title').innerText);
+    if(img.getAttribute('src')) setPreview(img.getAttribute('src'));
   };
-  const closeHandler = () => setVisible(false);
-  const closeImgHandler = () => setImgVisible(false);
 
   const OpenDropdown = (list: String) => {
     if (openDropdown == list) {
@@ -438,37 +452,41 @@ const TextEditor = ({ id }: any) => {
   const previewImg = (e:any) => {
     const input = e.currentTarget;
     const value = input.value;
-    console.log(value)
     setPreview(value)
   }
-  const copyToSelect = (el:any) => {
-    let value
+  const copyToSelect = () => {
     setImgTab('current');
-    const Modal = el.target.closest('.modal-content');
-    // const preview = Modal.querySelector('.preview');
-    console.log(Modal)
-    // console.log(preview)
-    imgSelect.map((v: any, k: any) => {
-        setPreview(v);
-    })
+    imgSelect.map((v: any, k: any) => { setPreview(v) });
   }
   const insertImg = (el:any) => {
     const preview = el.currentTarget.closest('.modal-content').querySelector('.preview');
     const remark = document.querySelector(".img-remark");
     if (remark) {
-        remark.querySelectorAll("img")?.forEach((v) => {
-          v.remove();
-        });
+        remark.querySelectorAll("img")?.forEach((v) => { v.remove() });
       // imgSelect.map((v: any, k: any) => {
         let img = document.createElement("img");
         img.setAttribute("src", preview.src);
         img.setAttribute("class", "w-full h-full");
-        remark.append(img);
-      // });
-      closeImgHandler();
-      remark.classList.remove("img-remark");
-      setImgSelect([]);
-      setPreview('')
+        if(alt) img.setAttribute("alt", alt);
+        if(width) img.setAttribute("width", width);
+        if(height) img.setAttribute("height", height);
+        if(className) img.setAttribute("class", className);
+        if(title) {
+            remark.classList.remove(...['flex','justify-center','items-center']);
+            remark.querySelector(".img-title")?.remove();
+            const newNode = document.createElement("div");
+            newNode.classList.add("img-title","text-center");
+            newNode.innerText = title;
+            remark.append(img,newNode);
+        }else{
+          remark.append(img);
+        }
+        // });
+        closeImgHandler();
+        remark.classList.remove("img-remark");
+        setImgSelect([]);
+        setPreview('');
+      
     }
   };
 
@@ -503,8 +521,8 @@ const TextEditor = ({ id }: any) => {
           );
           column.setAttribute("data-image", "true");
           column.setAttribute("data-text", "image");
+          rowElement.append(column);
         }
-        rowElement.append(column);
       });
       const controlBox = document.createElement("div");
       controlBox.setAttribute(
@@ -512,10 +530,10 @@ const TextEditor = ({ id }: any) => {
         "absolute bg-slate-300 row-panel right-0 top-0 overflow-hidden rounded-lg z-30"
       );
       controlBox.innerHTML = `
-            <button class="rounded px-2 py-1 text-slate-800 hover:bg-slate-300" title="Soure code">
-            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-            </button>
-            `;
+          <button class="rounded px-2 py-1 text-slate-800 hover:bg-slate-300" title="Soure code">
+          <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+          </button>
+      `;
       const removeBtn = document.createElement("button");
       removeBtn.setAttribute("title", "Remove row");
       removeBtn.setAttribute(
@@ -523,11 +541,49 @@ const TextEditor = ({ id }: any) => {
         "rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100"
       );
       removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
-      controlBox.append(removeBtn);
+      controlBox.append(removeBtn)
       rowElement.prepend(controlBox);
       editorBody?.append(rowElement);
     }
   };
+
+
+  const upload = (e:any) => {
+    const setSelectedImage = document.querySelector('.modal-content')?.querySelectorAll('img');
+    if(setSelectedImage){
+      Array.from(setSelectedImage).map((v,k)=>{
+
+        console.log(v.src)
+        console.log(v.src.split('base64,')[1])
+        
+      });
+    }
+  }
+  function b64toBlob({b64Data, contentType, sliceSize}:any) {
+    contentType = contentType || '';
+    sliceSize = sliceSize || 512;
+
+    const byteCharacters = atob(b64Data);
+    const byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+        const slice = byteCharacters.slice(offset, offset + sliceSize);
+
+        const byteNumbers = new Array(slice.length);
+        for (var i = 0; i < slice.length; i++) {
+            byteNumbers[i] = slice.charCodeAt(i);
+        }
+
+        const byteArray = new Uint8Array(byteNumbers);
+
+        byteArrays.push(byteArray);
+    }
+
+  const blob = new Blob(byteArrays, {type: contentType});
+  return blob;
+}
+  const uploadImage = async(el:any) => {
+  }
   const Heading = (select: String) => {
     document.getSelection();
     if (select != "") {
@@ -582,16 +638,18 @@ const TextEditor = ({ id }: any) => {
         images={mediaImages}
         select={{
           Select,
-          imgSelect,
-          imgUnselect,
-          imgCount,
-          setImgCount,
+          imgSelect,imgUnselect,
+          imgCount,setImgCount,
           insertImg,
-          imgTab,
-          setImgTab,
+          imgTab,setImgTab,
           copyToSelect,
-          preview,
-          previewImg
+          preview,previewImg,
+          alt,setAlt,
+          width,setWidth,
+          height,setHeight,
+          className,setClassName,
+          title,setTitle,
+          upload
         }}
         title="Image"
       />
