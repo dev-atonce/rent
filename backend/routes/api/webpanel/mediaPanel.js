@@ -10,9 +10,9 @@ router.post("/product/:id", [validator.product.findById, validator.check], contr
 /////// ///////////// ///////
 
 /////// Project Image ///////
-// router.get("/:id", [validator.project.findById, validator.check], controllers.onGetProjectById);
+router.get("/project/:id", [validator.project.findById, validator.check], controllers.onGetProjectById);
 
-// router.post("/project", controllers.onInsertProject);
+router.post("/project/:id", [validator.project.findById, validator.check], controllers.onInsertProject);
 /////// ///////////// ///////
 
 router.delete("/", controllers.onDeleteMedia);

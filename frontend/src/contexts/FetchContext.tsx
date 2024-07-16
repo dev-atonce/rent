@@ -622,6 +622,8 @@ export default function FetchProvider({ children, user, token }: any) {
       route = `${bannerRoute}/${id}`;
     }
 
+    console.log(route);
+
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
         confirmButton:

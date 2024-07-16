@@ -4,7 +4,8 @@ import Product from "@/components/main/Product/Product";
 
 const fetchCat = async () => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/category-main`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/category-main`,
+    { cache: "no-store" }
   );
   const data = await res.json();
 

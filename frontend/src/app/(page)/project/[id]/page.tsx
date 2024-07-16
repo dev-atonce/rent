@@ -7,7 +7,8 @@ import ProjectContent from "@/components/main/ProjectContent/ProjectContent";
 
 const fetchProject = async (id: any) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/project/${id}`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/project/${id}`,
+    { cache: "no-store" }
   );
   const data = await res.json();
 
