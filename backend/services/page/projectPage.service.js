@@ -24,19 +24,6 @@ const methods = {
     }
   },
 
-  async findByUrl(url) {
-    try {
-      const obj = await Project.findOne({
-        ProjectUrl: url,
-        status: true,
-      }).exec();
-      if (!obj) return Promise.reject(ErrorNotFound("url: not found"));
-      return obj;
-    } catch (error) {
-      return Promise.reject(ErrorNotFound("url: not found"));
-    }
-  },
-
   async findById(id) {
     try {
       const obj = await Project.findById(id);
