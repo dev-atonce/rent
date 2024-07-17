@@ -8,23 +8,29 @@ import {
   Button
 } from "@nextui-org/react";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { MdCloudUpload, MdArrowBackIos, MdOutlineSearch, MdRefresh } from "react-icons/md";
 
-const mediaImages = [
-  {"src":"Rectangle 114.png","alt":"Rectangle 114"},
-  {"src":"Rectangle 136.png","alt":"Rectangle 136"},
-  {"src":"Rectangle 137.png","alt":"Rectangle 137"},
-  {"src":"Rectangle 138.png","alt":"Rectangle 138"},
-  {"src":"Rectangle 139.png","alt":"Rectangle 139"},
-  {"src":"Rectangle 147.png","alt":"Rectangle 147"},
-];
+// const mediaImages = [
+//   {"src":"Rectangle 114.png","alt":"Rectangle 114"},
+//   {"src":"Rectangle 136.png","alt":"Rectangle 136"},
+//   {"src":"Rectangle 137.png","alt":"Rectangle 137"},
+//   {"src":"Rectangle 138.png","alt":"Rectangle 138"},
+//   {"src":"Rectangle 139.png","alt":"Rectangle 139"},
+//   {"src":"Rectangle 147.png","alt":"Rectangle 147"},
+// ];
 
  
-export default function ImageModal({imgVisible, closeImgHandler, title, select}:any)
+export default function ImageModal({imgVisible, closeImgHandler, title, select, dataId}:any)
 {
     const [selectedImage, setSelectedImage] = useState<any>('');
     const [imgTitile, setImgTitle] = useState<Boolean>(true);
+    const [allImages, setAllImages] = useState<any>([]);
+
+    useEffect(() => {
+      getAllImages();
+    }, []);
+
     const handleFileUpload = (e:any) => {
       if (e.target.files && e.target.files.length > 0) {
         let arr = [];
@@ -38,17 +44,25 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
         setSelectedImage(arr);
       }
     }
-    function removeElementAt(index:any) {
-      let frontPart = selectedImage.slice(0, index);
-      let lastPart  = selectedImage.slice( index + 1 ); // index to end of array
-      setSelectedImage([...frontPart, ...lastPart]);
-   }
+
+    const getAllImages = async () => {
+      const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media/project/${dataId}`);
+      const response = await request.json();
+      if(response) setAllImages(response.data);
+    }
+
+  //   function removeElementAt(index:any) {
+  //     let frontPart = selectedImage.slice(0, index);
+  //     let lastPart  = selectedImage.slice( index + 1 ); // index to end of array
+  //     setSelectedImage([...frontPart, ...lastPart]);
+  //  }
 
     const formatFileSize = function (bytes:any) {
         const sufixes = ['B', 'kB', 'MB', 'GB', 'TB'];
         const i = Math.floor(Math.log(bytes) / Math.log(1024));
         return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sufixes[i]}`;
     };
+
     const SetImageTitle = (e:any) => {
       let change = e.currentTarget.checked == true ? false : true;
       setImgTitle(change);
@@ -180,94 +194,91 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select}:
                     </>
                   }
                   {select.imgTab == 'select' &&
-                      <>
-                        <div className="image-tools flex justify-between border-b border-slate-200 pb-2">
-                          <div className="tabs justify-start ">
-                            <Button 
-                                className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7" 
-                                onClick={()=>select.setImgTab('upload')}><MdCloudUpload/>Upload
-                            </Button>
-                          </div>
-                          <div className="actions justify-end">
-                            <Button 
-                              className={`${select.imgCount>0?`bg-slate-400 text-white hover:bg-slate-600`:`bg-slate-100`} rounded-lg px-3 h-7`} 
-                              disabled={select.imgCount>0?false:true}
-                              onClick={()=>{
-                                select.imgUnselect();
-                                select.setImgCount(0);
-                              }}
-                            >Unselect</Button>
-                            <Button className={`${select.imgCount>0?`bg-rose-400 text-white hover:bg-red`:`bg-slate-100`} rounded-lg px-3 h-7 ml-2`} disabled={select.imgCount>0?false:true}>
-                              Delete
-                            </Button>
-                          </div>
+                    <>
+                      <div className="image-tools flex justify-between border-b border-slate-200 pb-2">
+                        <div className="tabs justify-start ">
+                          <Button 
+                              className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7" 
+                              onClick={()=>select.setImgTab('upload')}><MdCloudUpload/>Upload
+                          </Button>
                         </div>
-                        <div className="images-gallery p-1" style={{height:'500px',maxHeight:'500px',overflowY:'auto'}}>
-                          <div className="grid grid-cols-12 gap-4">
-                            {Array.from(mediaImages).map((v:any, k:any) =>
-                              <div 
-                                key={k} 
-                                className="col-span-2 rounded overflow-hidden bg-slate-100 cursor-pointer transition-all duration-300 ease-in-out"
-                                onClick={(e)=>select.Select(e)}
-                              >
-                                <div className="h-full relative flex align-middle content-center items-center min-h-24">
-                                  <img src={`/${v.src}`} alt={v.alt} style={{height:'min-content'}}/>
-                                </div>
+                        <div className="actions justify-end">
+                          <Button 
+                            className={`${select.imgCount>0?`bg-slate-400 text-white hover:bg-slate-600`:`bg-slate-100`} rounded-lg px-3 h-7`} 
+                            disabled={select.imgCount>0?false:true}
+                            onClick={()=>{
+                              select.imgUnselect();
+                              select.setImgCount(0);
+                            }}
+                          >Unselect</Button>
+                          <Button 
+                            className={`${select.imgCount>0?`bg-rose-400 text-white hover:bg-red`:`bg-slate-100`} rounded-lg px-3 h-7 ml-2`} 
+                            disabled={select.imgCount>0?false:true}
+                            onClick={select.removeImage}
+                          >
+                            Delete
+                          </Button>
+                        </div>
+                      </div>
+                      <div className="images-gallery p-1" style={{height:'500px',maxHeight:'500px',overflowY:'auto'}}>
+                        <div className="grid grid-cols-12 gap-4">
+                          {Array.from(allImages).map((v:any, k:any) =>
+                            <div 
+                              key={k} 
+                              className="col-span-2 rounded overflow-hidden bg-slate-100 cursor-pointer transition-all duration-300 ease-in-out"
+                              onClick={(e)=>select.Select(e)}
+                            >
+                              <div className="h-full relative flex align-middle content-center items-center min-h-24">
+                                <img src={`${v}`} style={{height:'min-content'}} />
                               </div>
-                            )}
-                          </div>
+                            </div>
+                          )}
                         </div>
-                      </>
-                    }
-                    {select.imgTab == 'upload' &&
-                      <>
-                        <div className="image-tools flex justify-between pb-2">
-                          <Button className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7" onClick={()=>select.setImgTab('select')}><MdArrowBackIos/> Back</Button>
-                        </div>
-                        <div className="images-upload" style={{height:'500px',maxHeight:'500px',overflowY:'auto'}}>
-                          <div className="input-group h-full border-2 border-dashed border-slate-200 rounded-lg">
-                            <label 
-                              className={`w-full ${selectedImage.length < 1 ?`h-full `:`h-10 `}flex items-center justify-center font-bold`} 
-                              htmlFor="file_input"
-                            >Select File</label>
-                            <input 
-                              onChange={handleFileUpload}
-                              className="hidden" 
-                              id="file_input" 
-                              type="file"
-                              multiple={true}
-                            />
-                            {selectedImage && 
-                              <div className="grid grid-cols-12 gap-4 mx-2">
-                                {Array.from(selectedImage).map((v:any,k:any) => <div className="relative col-span-6 p-1 bg-slate-100 border border-slate-200 rounded-lg img-selected" key={k}>
-                                  <div className="flex">
-                                    <div className="w-28 h-28 bg-white flex items-center justify-center rounded-lg">
-                                      <img
-                                        src={v.src}
-                                        className="h-auto object-cover"
-                                        alt="Thumb"
-                                        width="150"
-                                      />
-                                    </div>
-                                    <div className="p-2 text-sm">
-                                      <p className="font-bold">
-                                        {v.name}
-                                      </p>
-                                      <p className="mt-1">Size: {formatFileSize(v.size)}</p>
-                                    </div>
+                      </div>
+                    </>
+                  }
+                  {select.imgTab == 'upload' &&
+                    <>
+                      <div className="image-tools flex justify-between pb-2">
+                        <Button className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7" onClick={()=>select.setImgTab('select')}><MdArrowBackIos/> Back</Button>
+                      </div>
+                      <div className="images-upload" style={{height:'500px',maxHeight:'500px',overflowY:'auto'}}>
+                        <div className="input-group h-full border-2 border-dashed border-slate-200 rounded-lg">
+                          <label 
+                            className={`w-full ${selectedImage.length < 1 ?`h-full `:`h-10 `}flex items-center justify-center font-bold`} 
+                            htmlFor="file_input"
+                          >Select File</label>
+                          <input 
+                            onChange={handleFileUpload}
+                            className="hidden" 
+                            id="file_input" 
+                            type="file"
+                            multiple={true}
+                          />
+                          {selectedImage && 
+                            <div className="grid grid-cols-12 gap-4 mx-2">
+                              {Array.from(selectedImage).map((v:any,k:any) => <div className="relative col-span-6 p-1 bg-slate-100 border border-slate-200 rounded-lg img-selected" key={k}>
+                                <div className="flex">
+                                  <div className="w-28 h-28 bg-white flex items-center justify-center rounded-lg">
+                                    <img
+                                      src={v.src}
+                                      className="h-auto object-cover"
+                                      alt="Thumb"
+                                      width="150"
+                                    />
                                   </div>
-                                  <button 
-                                    onClick={()=>removeElementAt(k)} 
-                                    className="absolute bg-red text-white rounded-lg top-1 right-1 w-6 h-6">
-                                    X
-                                  </button>
+                                  <div className="p-2 text-sm">
+                                    <p className="font-bold">{v.name}</p>
+                                    <p className="mt-1">Size: {formatFileSize(v.size)}</p>
+                                  </div>
                                 </div>
-                                )}
                               </div>
-                            }
-                          </div>
+                              )}
+                            </div>
+                          }
                         </div>
-                      </>
+                      </div>
+                    </>
                   }
                 </div>
               </ModalBody>

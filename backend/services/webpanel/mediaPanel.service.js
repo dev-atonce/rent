@@ -123,6 +123,7 @@ const methods = {
 
     async deleteMedia(req, res) {
         const files = req.body.imagePath;
+        console.log(req.body);
         try {
             const deletePromises = files.map(file => fs.unlink(file));
             // Wait for all delete operations to complete
@@ -132,7 +133,8 @@ const methods = {
             if (error.code === 'ENOENT') {
                 return Promise.reject(ErrorNotFound("Directory or images not found"));
             }
-            return Promise.reject(ErrorBadRequest("Failed to delete images"));
+            return Promise.reject(error.message);
+            // return Promise.reject(ErrorBadRequest("Failed to delete images"));
         }
     },
 };
