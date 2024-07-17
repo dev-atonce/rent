@@ -18,12 +18,14 @@ export default async function RentPage() {
     <>
       <Loading />
       <Cover
-        pageName={"บริการ ให้เช่าเครื่องจักร งานก่อสร้าง"}
+        pageName={
+          "บริษัท เร้นท์ (ประเทศไทย) จำกัด บริการ ให้เช่าเครื่องจักร งานก่อสร้าง"
+        }
         prevPage={{ pageName: "หน้าแรก", url: "/" }}
       />
       <div className="container mx-auto">
         <Product type={"rent"} main={data} />
-        <div className="flex flex-col gap-4 text-slate-600">
+        <div className="flex flex-col gap-4 text-slate-600 pb-4">
           <h2 className="text-center font-semibold text-2xl text-[#0FA1DD]">
             บริษัท เร้นท์ (ประเทศไทย) จำกัด บริการ ให้เช่าเครื่องจักร
             งานก่อสร้าง
