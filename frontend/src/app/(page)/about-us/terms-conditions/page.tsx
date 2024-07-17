@@ -117,7 +117,7 @@ export default function TermsPage() {
     return (
       <div className="min-h-100 w-full">
         <h1 className="w-full text-2xl font-bold mb-6">
-          ขั้นตอนและเอกสารสำหรับลูกใหม่
+          ขั้นตอนและเอกสารสำหรับลูกค้าใหม่
         </h1>
         <p className="indent-10 mb-4">
           ลูกค้าที่ประสงค์จะเช่าเครื่องจักรกับบริษัท เร้นท์ (ประเทศไทย) จำกัด
@@ -204,7 +204,7 @@ export default function TermsPage() {
   const tabItem = [
     { id: "tab_1", label: "ข้อกำหนดและเงื่อนไขในการเช่า", children: tab1 },
     { id: "tab_2", label: "ความคุ้มครองเครื่องจักร", children: tab2 },
-    { id: "tab_3", label: "ขั้นตอนและเอกสารสำหรับลูกใหม่", children: tab3 },
+    { id: "tab_3", label: "ขั้นตอนและเอกสารสำหรับลูกค้าใหม่", children: tab3 },
     { id: "tab_3", label: "ช่องทางการชำระเงิน", children: tab4 },
   ];
 
