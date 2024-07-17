@@ -29,7 +29,7 @@ const fetchMainCat = async (id: any) => {
 export default async function RentMainCatPage({ params: { id } }: any) {
   const data = await fetchCat(id);
   const mainCatData = await fetchMainCat(id);
-  console.log("asdf");
+
   // console.log(data);
   return (
     <>
