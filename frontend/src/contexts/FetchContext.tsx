@@ -131,11 +131,13 @@ export default function FetchProvider({ children, user, token }: any) {
       } else if (type === "subCategory") {
         route = `${subCategoryRoute}/${id}`;
       } else if (type === "project") {
-        route = `${projectRoute}/${id}`;
+        route = `${projectRoute}/${id}?page=${page}&${query}`;
       } else if (type === "training") {
         route = `${trainingRoute}/${id}?page=${page}&${query}`;
       } else if (type === "calendar") {
         route = `${calendarRoute}/${id}`;
+      } else if (type === "banner") {
+        route = `${bannerRoute}/${id}?page=${page}&${query}`;
       }
     } else {
       if (type === "service") {
