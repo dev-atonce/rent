@@ -72,12 +72,12 @@ export default function TrainingPage() {
             { title: "Status", minWidth: "" },
           ]}
         />
-        {total > Number(process.env.NEXT_PUBLIC_COURSE_PERPAGE) && (
+        {total > Number(process.env.NEXT_PUBLIC_PERPAGE) && (
           <AntPagination
             total={total}
             currentPage={pageState}
             setCurrentPage={setPageState}
-            pageSize={Number(process.env.NEXT_PUBLIC_COURSE_PERPAGE)}
+            pageSize={Number(process.env.NEXT_PUBLIC_PERPAGE)}
           />
         )}
       </>
