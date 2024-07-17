@@ -26,7 +26,6 @@ export default function ProductPage() {
 
   const [pageState, setPageState] = useState(1);
   const [total, setTotal] = useState(0);
-
   const initialModalState = {};
   const [modalState, setModalState] = useState(initialModalState);
 

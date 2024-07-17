@@ -27,14 +27,14 @@ const upload = multer({
 
 const methods = {
   scopeSearch(req) {
-    $or = [];
+    $and = [];
     if (req.query.category && req.query.category !== "all")
-      $or.push({ 'subCategory.mainCategory': new mongoose.Types.ObjectId(req.query.category) });
+      $and.push({ 'subCategory.mainCategory': new mongoose.Types.ObjectId(req.query.category) });
     if (req.query.status && req.query.status !== "all")
-      $or.push({ status: req.query.status });
+      $and.push({ status: req.query.status === "true" ? true : false });
     if (req.query.keyword)
-      $or.push({ productNameTH: { $regex: req.query.keyword, $options: 'i' } });
-    const query = $or.length > 0 ? { $or } : {};
+      $and.push({ productNameTH: { $regex: req.query.keyword, $options: 'i' } });
+    const query = $and.length > 0 ? { $and } : {};
     return { query: query };
   },
 
@@ -42,7 +42,6 @@ const methods = {
     const limit = +(req.query.size || 50);
     const offset = +(limit * ((req.query.page || 1) - 1));
     const _q = this.scopeSearch(req);
-    console.log(_q.query);
     try {
       const rows = await Product.aggregate([
         {
@@ -74,7 +73,7 @@ const methods = {
       const count = await Product.aggregate([
         {
           $lookup: {
-            from: "categorysubs", 
+            from: "categorysubs",
             localField: "subCategory",
             foreignField: "_id",
             as: "subCategory",
@@ -85,8 +84,9 @@ const methods = {
           $match: _q.query,
         },
       ]);
+
       return {
-        count: count.length > 0 ? count.length : 0,
+        total: count.length > 0 ? count.length : 0,
         lastPage: Math.ceil(count.length / limit),
         currPage: +req.query.page || 1,
         rows: rows,
