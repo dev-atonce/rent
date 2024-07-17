@@ -3,8 +3,13 @@ const Product = require("../../models/Product");
 const config = require("../../configs/app");
 const fs = require("fs/promises");
 const multer = require("multer");
-const { ensureDirectoryExistence } = require("../../helpers/checkDirectory.helper");
-const { ErrorBadRequest, ErrorNotFound } = require("../../configs/errorMethods");
+const {
+  ensureDirectoryExistence,
+} = require("../../helpers/checkDirectory.helper");
+const {
+  ErrorBadRequest,
+  ErrorNotFound,
+} = require("../../configs/errorMethods");
 
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
@@ -29,11 +34,21 @@ const methods = {
   scopeSearch(req) {
     $and = [];
     if (req.query.category && req.query.category !== "all")
-      $and.push({ 'subCategory.mainCategory': new mongoose.Types.ObjectId(req.query.category) });
+      $and.push({
+        "subCategory.mainCategory": new mongoose.Types.ObjectId(
+          req.query.category
+        ),
+      });
     if (req.query.status && req.query.status !== "all")
       $and.push({ status: req.query.status === "true" ? true : false });
     if (req.query.keyword)
-      $and.push({ productNameTH: { $regex: req.query.keyword, $options: 'i' } });
+      $and.push({
+        $or: [
+          { productNameTH: { $regex: req.query.keyword, $options: "i" } },
+          { "subCategory.nameTH": { $regex: req.query.keyword, $options: "i" } },
+          { "mainCategory.nameTH": { $regex: req.query.keyword, $options: "i" } },
+        ],
+      });
     const query = $and.length > 0 ? { $and } : {};
     return { query: query };
   },
@@ -46,7 +61,7 @@ const methods = {
       const rows = await Product.aggregate([
         {
           $lookup: {
-            from: "categorysubs", 
+            from: "categorysubs",
             localField: "subCategory",
             foreignField: "_id",
             as: "subCategory",
@@ -55,7 +70,7 @@ const methods = {
         { $unwind: "$subCategory" }, // Deconstruct the joined array
         {
           $lookup: {
-            from: "categorymains", 
+            from: "categorymains",
             localField: "subCategory.mainCategory",
             foreignField: "_id",
             as: "mainCategory",
