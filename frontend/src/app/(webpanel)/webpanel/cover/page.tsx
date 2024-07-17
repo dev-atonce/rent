@@ -73,12 +73,12 @@ export default function CoverPage() {
             { title: "Status", minWidth: "" },
           ]}
         />
-        {total > Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE) && (
+        {total > Number(process.env.NEXT_PUBLIC_PERPAGE) && (
           <AntPagination
             total={total}
             currentPage={pageState}
             setCurrentPage={setPageState}
-            pageSize={Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE)}
+            pageSize={Number(process.env.NEXT_PUBLIC_PERPAGE)}
           />
         )}
       </>
