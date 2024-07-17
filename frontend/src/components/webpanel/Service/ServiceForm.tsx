@@ -135,7 +135,7 @@ export default function ServiceForm({
         </div>
       </div>
       <div className="col-span-2">
-        <TextEditor />
+        <TextEditor dataType="project" dataId={id} id={`editForm${id}`}/>
       </div>
       <div className="col-span-2 ">
         <div className="flex gap-[1px] translate-y-2 translate-x-2 relative z-0">

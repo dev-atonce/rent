@@ -34,7 +34,8 @@ import ModalDialog from "../main/Modal";
 import ImageModal from "../main/Modal/ImageModal";
 import { Button } from "@nextui-org/react";
 import "../../css/Custom.scss";
-import { title } from "process";
+import { env, title } from "process";
+import { log } from "console";
 
 
 const mediaImages = [
@@ -45,6 +46,7 @@ const mediaImages = [
   { src: "Rectangle 139.png", alt: "Rectangle 139" },
   { src: "Rectangle 147.png", alt: "Rectangle 147" },
 ];
+
 const fontSize = {
   h1: "text-5xl",
   h2: "text-4xl",
@@ -359,9 +361,10 @@ const CreateTable = (el: any) => {
 };
 
 // Main Component
-const TextEditor = ({ id }: any) => {
+const TextEditor = ({ id, dataId, dataType }: any) => {
   const EditorId = id ? id : new Date().getTime();
 
+  
   const [visible, setVisible] = useState<Boolean>(false);
   const [imgVisible, setImgVisible] = useState<Boolean>(false);
   const [row, setRow] = useState<any>();
@@ -548,41 +551,65 @@ const TextEditor = ({ id }: any) => {
   };
 
 
-  const upload = (e:any) => {
+  const upload = async (e:any) => 
+  {
     const setSelectedImage = document.querySelector('.modal-content')?.querySelectorAll('img');
     if(setSelectedImage){
-      Array.from(setSelectedImage).map((v,k)=>{
-
-        console.log(v.src)
-        console.log(v.src.split('base64,')[1])
-        
-      });
-    }
-  }
-  function b64toBlob({b64Data, contentType, sliceSize}:any) {
-    contentType = contentType || '';
-    sliceSize = sliceSize || 512;
-
-    const byteCharacters = atob(b64Data);
-    const byteArrays = [];
-
-    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
-        const slice = byteCharacters.slice(offset, offset + sliceSize);
-
-        const byteNumbers = new Array(slice.length);
-        for (var i = 0; i < slice.length; i++) {
-            byteNumbers[i] = slice.charCodeAt(i);
+      let formData = new FormData();
+      let files = e.currentTarget.closest('.modal-content').querySelector('[type="file"]').files;
+      let uploadAmount = files?.length;
+      if (files.length>0)
+      {
+        for (let i = 0; i < files?.length; i++) {
+            if (i < uploadAmount) formData.append("image", files?.[i]);
+        }
+        const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media/${dataType}/${dataId}`, {
+            method: 'POST',
+            body: formData,
+        });   
+        const response = await request.json();
+        if(uploadAmount == response.images.length){
+          alert("Images uploaded successfully");
+        }else{
+          alert("Some images not uploaded");
         }
 
-        const byteArray = new Uint8Array(byteNumbers);
-
-        byteArrays.push(byteArray);
+      }
     }
-
-  const blob = new Blob(byteArrays, {type: contentType});
-  return blob;
-}
-  const uploadImage = async(el:any) => {
+  }
+  const removeImage = async (e:any) => 
+  {
+    if(confirm("Are you sure you want to remove this image?") === true)
+    {
+      let setSelectedImage = e.currentTarget.closest('.modal-content')?.querySelectorAll('.image-select');
+      // let formData = new FormData();
+      let removeAmount = setSelectedImage?.length ?? 0;
+      let imagePath = [];
+      if (removeAmount > 0) {
+          for (let i = 0; i < removeAmount; i++) {
+              // @ts-ignore
+              imagePath.push(setSelectedImage[i].querySelector('img').src);
+              // formData.append("imagePath", setSelectedImage[i].querySelector('img').src);
+          }
+          console.log(imagePath);
+          const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media`, {
+              method: 'DELETE',
+              //@ts-ignore
+              body: {"imagePath": imagePath},
+          });
+          if (!request.ok) {
+              alert(`${request.status} ${request.statusText}`);
+          } else {
+            const response = await request.json();
+            if (response.status == "success") {
+              setSelectedImage?.forEach((c)=>c.remove());
+            } else {
+              alert(`${response.status} ${response.message}`);
+            }
+          }
+             
+      }
+    }
   }
   const Heading = (select: String) => {
     document.getSelection();
@@ -635,7 +662,7 @@ const TextEditor = ({ id }: any) => {
       <ImageModal
         imgVisible={imgVisible}
         closeImgHandler={closeImgHandler}
-        images={mediaImages}
+        dataId={dataId}
         select={{
           Select,
           imgSelect,imgUnselect,
@@ -649,7 +676,7 @@ const TextEditor = ({ id }: any) => {
           height,setHeight,
           className,setClassName,
           title,setTitle,
-          upload
+          upload,removeImage
         }}
         title="Image"
       />
