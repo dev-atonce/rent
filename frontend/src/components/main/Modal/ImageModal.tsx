@@ -32,6 +32,10 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
     }, []);
 
     const handleFileUpload = (e:any) => {
+      if(e.target.files.length > 12){
+        alert('You can only upload 12 images at a time');
+        return;
+      }
       if (e.target.files && e.target.files.length > 0) {
         let arr = [];
         for (const file of e.target.files) {
@@ -43,6 +47,10 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
         }
         setSelectedImage(arr);
       }
+    }
+    const resetSelectedImage = (e:any) => {
+      setSelectedImage('');
+      e.currentTarget.closest('.modal-content').querySelector('input[type="file"]').value = null;
     }
 
     const getAllImages = async () => {
@@ -242,24 +250,25 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
                       <div className="image-tools flex justify-between pb-2">
                         <Button className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7" onClick={()=>select.setImgTab('select')}><MdArrowBackIos/> Back</Button>
                       </div>
-                      <div className="images-upload" style={{height:'500px',maxHeight:'500px',overflowY:'auto'}}>
-                        <div className="input-group h-full border-2 border-dashed border-slate-200 rounded-lg">
+                      <div className="images-upload">
+                        <div className="input-group h-full border-2 border-dashed border-slate-200 rounded-lg" style={{height:'500px',maxHeight:'500px',overflowY:'auto'}}>
                           <label 
                             className={`w-full ${selectedImage.length < 1 ?`h-full `:`h-10 `}flex items-center justify-center font-bold`} 
                             htmlFor="file_input"
-                          >Select File</label>
+                          >Select File (Max. 12 files)</label>
                           <input 
                             onChange={handleFileUpload}
                             className="hidden" 
                             id="file_input" 
                             type="file"
+                            accept="image/*"
                             multiple={true}
                           />
                           {selectedImage && 
                             <div className="grid grid-cols-12 gap-4 mx-2">
                               {Array.from(selectedImage).map((v:any,k:any) => <div className="relative col-span-6 p-1 bg-slate-100 border border-slate-200 rounded-lg img-selected" key={k}>
                                 <div className="flex">
-                                  <div className="w-28 h-28 bg-white flex items-center justify-center rounded-lg">
+                                  <div className="min-w-28 w-28 minh-28 h-28 bg-white flex items-center justify-center rounded-lg overflow-hidden">
                                     <img
                                       src={v.src}
                                       className="h-auto object-cover"
@@ -267,8 +276,8 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
                                       width="150"
                                     />
                                   </div>
-                                  <div className="p-2 text-sm">
-                                    <p className="font-bold">{v.name}</p>
+                                  <div className="p-2 text-sm overflow-hidden">
+                                    <div className="font-bold text-ellipsis overflow-hidden">{v.name}</div>
                                     <p className="mt-1">Size: {formatFileSize(v.size)}</p>
                                   </div>
                                 </div>
@@ -316,6 +325,15 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
                   </>
                 }
                 {select.imgTab == 'upload' && <>
+                    { selectedImage
+                      ? <Button 
+                          className="bg-rose-400 hover:bg-red text-white font-bold rounded-lg"
+                          onClick={(e)=>resetSelectedImage(e)}
+                        >
+                          <MdRefresh className="text-lg"/>Reset
+                        </Button>
+                      : ''
+                    }
                     <Button 
                       onClick={(e)=>select.upload(e)}
                       // onPress={onClose}

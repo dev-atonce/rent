@@ -427,3 +427,15 @@ ol.decimal
 .img-resizer{
     
 }
+.images-upload .input-group::-webkit-scrollbar{
+    border-radius: 10px;
+    width: 8px;
+    background: transparent;
+}
+.images-upload .input-group::-webkit-scrollbar-track{
+    background: transparent;
+}
+.images-upload .input-group::-webkit-scrollbar-thumb{
+    border-radius: 10px;
+    background: rgb(184, 193, 203);
+}

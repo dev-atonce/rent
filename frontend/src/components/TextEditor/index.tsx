@@ -568,8 +568,11 @@ const TextEditor = ({ id, dataId, dataType }: any) => {
             body: formData,
         });   
         const response = await request.json();
-        if(uploadAmount == response.images.length){
+        if(uploadAmount == response.image.length){
           alert("Images uploaded successfully");
+          Array.from(setSelectedImage).map((el:any)=>el.remove());
+          //@ts-ignore
+          document.querySelector('.modal-content').querySelector('input[type="file"]').value = null;
         }else{
           alert("Some images not uploaded");
         }
@@ -584,25 +587,26 @@ const TextEditor = ({ id, dataId, dataType }: any) => {
       let setSelectedImage = e.currentTarget.closest('.modal-content')?.querySelectorAll('.image-select');
       // let formData = new FormData();
       let removeAmount = setSelectedImage?.length ?? 0;
-      let imagePath = [];
+      let imagePath: any = [];
       if (removeAmount > 0) {
           for (let i = 0; i < removeAmount; i++) {
               // @ts-ignore
               imagePath.push(setSelectedImage[i].querySelector('img').src);
               // formData.append("imagePath", setSelectedImage[i].querySelector('img').src);
           }
+          // formData.append("imagePath", imagePath);
           console.log(imagePath);
           const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media`, {
               method: 'DELETE',
-              //@ts-ignore
-              body: {"imagePath": imagePath},
+              headers: {"Content-Type":"application/json"},
+              body: JSON.stringify({"imagePath":imagePath})
           });
           if (!request.ok) {
               alert(`${request.status} ${request.statusText}`);
           } else {
             const response = await request.json();
             if (response.status == "success") {
-              setSelectedImage?.forEach((c)=>c.remove());
+              setSelectedImage?.forEach((c:any)=>c.remove());
             } else {
               alert(`${response.status} ${response.message}`);
             }

@@ -123,7 +123,6 @@ const methods = {
 
     async deleteMedia(req, res) {
         const files = req.body.imagePath;
-        console.log(req.body);
         try {
             const deletePromises = files.map(file => fs.unlink(file));
             // Wait for all delete operations to complete
