@@ -29,23 +29,11 @@ import {
   RxDividerHorizontal,
 } from "react-icons/rx";
 import { CgUndo, CgRedo } from "react-icons/cg";
-import { useEffect, useState, cloneElement } from "react";
+import { useEffect, useState } from "react";
 import ModalDialog from "../main/Modal";
 import ImageModal from "../main/Modal/ImageModal";
 import { Button } from "@nextui-org/react";
 import "../../css/Custom.scss";
-import { env, title } from "process";
-import { log } from "console";
-
-
-const mediaImages = [
-  { src: "Rectangle 114.png", alt: "Rectangle 114" },
-  { src: "Rectangle 136.png", alt: "Rectangle 136" },
-  { src: "Rectangle 137.png", alt: "Rectangle 137" },
-  { src: "Rectangle 138.png", alt: "Rectangle 138" },
-  { src: "Rectangle 139.png", alt: "Rectangle 139" },
-  { src: "Rectangle 147.png", alt: "Rectangle 147" },
-];
 
 const fontSize = {
   h1: "text-5xl",
@@ -390,12 +378,20 @@ const TextEditor = ({ id, dataId, dataType }: any) => {
     setImgVisible(true);
     remark(e.currentTarget);
     const img = e.currentTarget.querySelector('img');
-    if(img.getAttribute('alt')) setAlt(img.getAttribute('alt'));
-    if(img.getAttribute('width')) setWidth(img.getAttribute('width'));
-    if(img.getAttribute('height')) setHeight(img.getAttribute('height'));
-    if(img.getAttribute('class')) setClassName(img.getAttribute('class'));
-    if(e.target.querySelector('.img-title')) setTitle(e.target.querySelector('.img-title').innerText);
-    if(img.getAttribute('src')) setPreview(img.getAttribute('src'));
+    const title = e.currentTarget.querySelector('.img-title');
+    if (img) {
+      if(img.getAttribute('alt')) setAlt(img.getAttribute('alt')); else setAlt('');
+      if(img.getAttribute('width')) setWidth(img.getAttribute('width')); else setWidth('');
+      if(img.getAttribute('height')) setHeight(img.getAttribute('height')); else setHeight('');
+      if(img.getAttribute('class')) setClassName(img.getAttribute('class')); else setClassName('');
+      if(title) setTitle(title.innerText); else setTitle('');
+      if(img.getAttribute('src')) setPreview(img.getAttribute('src')); else setPreview('');
+    } else {
+      setUnselect()
+    }
+  };
+  const setUnselect = () => {
+    setAlt('');setWidth('');setHeight('');setClassName('');setTitle('');setPreview('');
   };
 
   const OpenDropdown = (list: String) => {
@@ -441,7 +437,7 @@ const TextEditor = ({ id, dataId, dataType }: any) => {
     });
   };
   const remark = (e: any) => {
-    document.querySelector("img-remark")?.classList.remove("img-remark");
+    document.querySelector(".img-remark")?.classList.remove("img-remark");
     if (e) e.classList.toggle("img-remark");
   };
   const textRemark = (e: any) => {
@@ -469,7 +465,7 @@ const TextEditor = ({ id, dataId, dataType }: any) => {
       // imgSelect.map((v: any, k: any) => {
         let img = document.createElement("img");
         img.setAttribute("src", preview.src);
-        img.setAttribute("class", "w-full h-full");
+        // img.setAttribute("class", "w-full h-full");
         if(alt) img.setAttribute("alt", alt);
         if(width) img.setAttribute("width", width);
         if(height) img.setAttribute("height", height);
@@ -514,18 +510,11 @@ const TextEditor = ({ id, dataId, dataType }: any) => {
         }
         if (v.content == "image") {
           column.onclick = imgModal;
-          column.classList.add(
-            "col-image",
-            "bg-slate-100",
-            "flex",
-            "justify-center",
-            "items-center",
-            "cursor-pointer"
-          );
+          column.classList.add("col-image","flex","justify-center","items-center","cursor-pointer");
           column.setAttribute("data-image", "true");
           column.setAttribute("data-text", "image");
-          rowElement.append(column);
         }
+        rowElement.append(column);
       });
       const controlBox = document.createElement("div");
       controlBox.setAttribute(
@@ -585,17 +574,13 @@ const TextEditor = ({ id, dataId, dataType }: any) => {
     if(confirm("Are you sure you want to remove this image?") === true)
     {
       let setSelectedImage = e.currentTarget.closest('.modal-content')?.querySelectorAll('.image-select');
-      // let formData = new FormData();
       let removeAmount = setSelectedImage?.length ?? 0;
       let imagePath: any = [];
       if (removeAmount > 0) {
           for (let i = 0; i < removeAmount; i++) {
               // @ts-ignore
               imagePath.push(setSelectedImage[i].querySelector('img').src);
-              // formData.append("imagePath", setSelectedImage[i].querySelector('img').src);
           }
-          // formData.append("imagePath", imagePath);
-          console.log(imagePath);
           const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media`, {
               method: 'DELETE',
               headers: {"Content-Type":"application/json"},
@@ -636,6 +621,22 @@ const TextEditor = ({ id, dataId, dataType }: any) => {
     document.getSelection();
     document.execCommand("italic", false, undefined);
   };
+  const OrderList = () => {
+    document.getSelection();
+    document.execCommand('insertOrderedList',false,'null');
+    // document.execCommand('indent', false, undefined);
+  }
+  const UnderOrderList = () => {
+    document.getSelection();
+    document.execCommand('insertunorderedlist',false,'null');
+    setTimeout(()=>{
+      const obj = document.getSelection();
+      //@ts-ignore
+      const element = obj.baseNode.parentNode;
+      console.log(element);
+      // .closest('ul').classList.add('list-decimal ml-6');
+    }) 
+  }
 
   const deleteRow = (e: any) => {
     e.closest(".grid").remove();
@@ -651,6 +652,11 @@ const TextEditor = ({ id, dataId, dataType }: any) => {
       const removeRowBtn = e.target.closest(".row-panel");
       if (removeRowBtn) {
         deleteRow(removeRowBtn);
+      }
+      //@ts-ignore
+      const txtRemark = e.target.closest(".txt-remark");
+      if(!txtRemark){
+        document.querySelector(".txt-remark")?.classList.remove("txt-remark");
       }
     });
   }, []);
@@ -803,18 +809,15 @@ const TextEditor = ({ id, dataId, dataType }: any) => {
                       type="button"
                       title="Unordered"
                       className="tools-item hover:bg-slate-200 text-slate-500 hover:text-slate-900 p-2"
+                      onClick={()=>UnderOrderList()}
                     >
-                      <RiListUnordered
-                        onClick={() => {
-                          document.execCommand("insertUnorderedList");
-                        }}
-                      />
+                      <RiListUnordered/>
                     </button>
                     <div
                       title="Unordered"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
-                      onClick={() => OpenDropdown("unordered")}
+                      onClick={(e) => { OpenDropdown("unordered")}}
                     >
                       <RxCaretDown />
                     </div>
