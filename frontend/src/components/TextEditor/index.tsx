@@ -34,6 +34,7 @@ import ModalDialog from "../main/Modal";
 import ImageModal from "../main/Modal/ImageModal";
 import { Button } from "@nextui-org/react";
 import "../../css/Custom.scss";
+import { FaLessThanEqual } from "react-icons/fa";
 
 const fontSize = {
   h1: "text-5xl",
@@ -349,10 +350,11 @@ const CreateTable = (el: any) => {
 };
 
 // Main Component
-const TextEditor = ({ id, dataId, dataType }: any) => {
+const TextEditor = ({ id, dataId, dataType }: any) => 
+{
+
   const EditorId = id ? id : new Date().getTime();
 
-  
   const [visible, setVisible] = useState<Boolean>(false);
   const [imgVisible, setImgVisible] = useState<Boolean>(false);
   const [row, setRow] = useState<any>();
@@ -403,12 +405,47 @@ const TextEditor = ({ id, dataId, dataType }: any) => {
   };
   const handleSetSelect = (e: any) => {
     const current = e.target.closest(".grid");
-    e.target
-      .closest(".bg-stripes-pink")
-      .querySelector(".select-row")
-      ?.classList.toggle("select-row");
-    let selectedRow = current.getAttribute("data-content");
-    current.classList.toggle("select-row");
+    let selectRow = e.target.closest(".bg-stripes-pink").querySelectorAll(".select-row");
+    let selectedRow:any = [];
+    let count = selectRow ? selectRow.length : 0;
+    
+    
+    let remove = 0;
+    let action = 'increment';
+    if(current.classList.contains("select-row"))
+    {
+      action = 'decrement';
+      remove = current.getAttribute('data-select');
+      current.removeAttribute('data-select');
+      current.classList.remove("select-row");
+      current.querySelector('.count').remove();
+    }else{
+      count++;
+      action = 'increment';
+      current.classList.add("select-row");
+      current.setAttribute("data-select", count);
+      let countEl = document.createElement('div');
+        countEl.setAttribute('class','absolute p-2 bg-indigo-500 rounded-xl w-7 h-7 text-white count text-sm flex justify-center items-center -mt-3 ml-2');
+        countEl.innerText = `${count}`;
+        current.append(countEl);
+    }
+    
+    if(remove>0){
+      let selectRow = e.target.closest(".bg-stripes-pink").querySelectorAll(".select-row");
+      Array.from(selectRow).map((el:any,k:any)=>{
+        if((k+1)>=remove){
+          el.setAttribute('data-select',(k+1));
+          el.querySelector('.count').innerHTML = (k+1);
+        }
+      });
+    }
+    Array.from(e.target.closest(".bg-stripes-pink").querySelectorAll(".select-row")).map((v,k)=>{
+      //@ts-ignore
+      if(v.getAttribute("data-content")) {
+        //@ts-ignore
+        selectedRow[v.getAttribute("data-select")] = JSON.parse(v.getAttribute("data-content"));
+      }
+    })
     setRow(selectedRow);
   };
   // select image
@@ -491,51 +528,61 @@ const TextEditor = ({ id, dataId, dataType }: any) => {
 
   const createRow = () => {
     if (row) {
-      let newRow = JSON.parse(row);
+
+      // let newRow = JSON.parse(row);
       let editor = document.getElementById(EditorId);
       let editorBody = editor?.querySelector(".editor-body");
-      const rowElement = document.createElement("div");
-      rowElement.setAttribute(
-        "class",
-        "grid grid-cols-1 md:grid-cols-12 gap-4 relative pt-6 pb-4"
-      );
-      newRow.map((v: any, k: any) => {
-        let column = document.createElement("div");
-        column.setAttribute("class", v.col);
-        if (v.content == "text") {
-          column.setAttribute("contenteditable", "true");
-          column.setAttribute("data-text", "text");
-          column.classList.add("col-text");
-          column.onclick = textRemark;
+      
+      row.map((row: any, k: any) => 
+      {
+        if(k > 0)
+        {
+          let rowElement = document.createElement("div");
+          rowElement.setAttribute(
+            "class",
+            "grid grid-cols-1 md:grid-cols-12 gap-4 relative pt-6 pb-4"
+          );
+          Array.from(row).map((v:any)=>
+          {
+            let column = document.createElement("div");
+            column.setAttribute("class", v.col);
+            if (v.content == "text") {
+              column.setAttribute("contenteditable", "true");
+              column.setAttribute("data-text", "text");
+              column.classList.add("col-text");
+              column.onclick = textRemark;
+            }
+            if (v.content == "image") {
+              column.onclick = imgModal;
+              column.classList.add("col-image","flex","justify-center","items-center","cursor-pointer");
+              column.setAttribute("data-image", "true");
+              column.setAttribute("data-text", "image");
+            }
+            rowElement.append(column);
+            const controlBox = document.createElement("div");
+            controlBox.setAttribute(
+              "class",
+              "absolute bg-slate-300 row-panel right-0 top-0 overflow-hidden rounded-lg z-30"
+            );
+            controlBox.innerHTML = `
+                <button class="rounded px-2 py-1 text-slate-800 hover:bg-slate-300" title="Soure code">
+                <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+                </button>
+            `;
+            const removeBtn = document.createElement("button");
+            removeBtn.setAttribute("title", "Remove row");
+            removeBtn.setAttribute(
+              "class",
+              "rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100"
+            );
+            removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
+            controlBox.append(removeBtn)
+            rowElement.prepend(controlBox);
+            editorBody?.append(rowElement);
+          });
         }
-        if (v.content == "image") {
-          column.onclick = imgModal;
-          column.classList.add("col-image","flex","justify-center","items-center","cursor-pointer");
-          column.setAttribute("data-image", "true");
-          column.setAttribute("data-text", "image");
-        }
-        rowElement.append(column);
-      });
-      const controlBox = document.createElement("div");
-      controlBox.setAttribute(
-        "class",
-        "absolute bg-slate-300 row-panel right-0 top-0 overflow-hidden rounded-lg z-30"
-      );
-      controlBox.innerHTML = `
-          <button class="rounded px-2 py-1 text-slate-800 hover:bg-slate-300" title="Soure code">
-          <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-          </button>
-      `;
-      const removeBtn = document.createElement("button");
-      removeBtn.setAttribute("title", "Remove row");
-      removeBtn.setAttribute(
-        "class",
-        "rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100"
-      );
-      removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
-      controlBox.append(removeBtn)
-      rowElement.prepend(controlBox);
-      editorBody?.append(rowElement);
+
+      })
     }
   };
 
