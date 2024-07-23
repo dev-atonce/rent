@@ -32,6 +32,7 @@ import { CgUndo, CgRedo } from "react-icons/cg";
 import { useEffect, useState } from "react";
 import ModalDialog from "../main/Modal";
 import ImageModal from "../main/Modal/ImageModal";
+import SourceCodeModal from "../main/Modal/SourceCodeModal";
 import { Button } from "@nextui-org/react";
 import "../../css/Custom.scss";
 import { FaLessThanEqual } from "react-icons/fa";
@@ -357,6 +358,7 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
 
   const [visible, setVisible] = useState<Boolean>(false);
   const [imgVisible, setImgVisible] = useState<Boolean>(false);
+  const [codeVisible, setCodeVisible] = useState<Boolean>(false);
   const [row, setRow] = useState<any>();
   const [openDropdown, setOpenDropdown] = useState<String>("");
   const [imgSelect, setImgSelect] = useState<any>([]);
@@ -368,6 +370,7 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
   const [height, setHeight] = useState<any>('');
   const [className, setClassName] = useState<any>('');
   const [title, setTitle] = useState<any>('');
+  const [sourceCode, setSourceCode] = useState<any>('');
   const [selected, setSelected] = useState<any>([]);
 
   // const { onOpen, onOpenChange} = useDisclosure();
@@ -375,6 +378,7 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
   const handler = () => setVisible(true);
   const closeHandler = () => setVisible(false);
   const closeImgHandler = () => setImgVisible(false);
+  const closeCodeHandler = () => setCodeVisible(false);
 
   const imgModal = (e: any) => {
     setImgVisible(true);
@@ -542,6 +546,23 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
             "class",
             "grid grid-cols-1 md:grid-cols-12 gap-4 relative pt-6 pb-4"
           );
+          const controlBox = document.createElement("div");
+          controlBox.setAttribute(
+            "class",
+            "absolute bg-slate-300 row-panel right-0 top-0 overflow-hidden rounded-lg z-30"
+          );
+          controlBox.innerHTML = `
+              <button class="rounded px-2 py-1 text-slate-800 hover:bg-slate-300 source-code" title="Soure code">
+              <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+              </button>
+          `;
+          const removeBtn = document.createElement("button");
+          removeBtn.setAttribute("title", "Remove row");
+          removeBtn.setAttribute(
+            "class",
+            "rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100 remove-row"
+          );
+          rowElement.prepend(controlBox);
           Array.from(row).map((v:any)=>
           {
             let column = document.createElement("div");
@@ -559,25 +580,9 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
               column.setAttribute("data-text", "image");
             }
             rowElement.append(column);
-            const controlBox = document.createElement("div");
-            controlBox.setAttribute(
-              "class",
-              "absolute bg-slate-300 row-panel right-0 top-0 overflow-hidden rounded-lg z-30"
-            );
-            controlBox.innerHTML = `
-                <button class="rounded px-2 py-1 text-slate-800 hover:bg-slate-300" title="Soure code">
-                <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
-                </button>
-            `;
-            const removeBtn = document.createElement("button");
-            removeBtn.setAttribute("title", "Remove row");
-            removeBtn.setAttribute(
-              "class",
-              "rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100"
-            );
+            
             removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
-            controlBox.append(removeBtn)
-            rowElement.prepend(controlBox);
+            controlBox.append(removeBtn);
             editorBody?.append(rowElement);
           });
         }
@@ -586,6 +591,40 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
     }
   };
 
+  const SourceCode = (el:any) => 
+  { 
+    document.querySelector('.code-remark')?.classList.remove('code-remark');
+    const row = el.closest('.grid-cols-1');
+    row.classList.add('code-remark');
+    let newString:any = '';
+    Array.from(row.children).map((v:any, k:any) => {
+      if(k>0) newString += v.outerHTML;
+    })
+    setSourceCode(newString);
+    setCodeVisible(true);
+  }
+  const saveSourceCode = (el:any) => {
+    const stringCode = el.closest('.modal-content').querySelector('textarea').value;
+    const remark:any = document.querySelector('.code-remark');
+    console.log(stringCode);
+    var dom = new DOMParser().parseFromString(stringCode,"text/html");
+    Array.from(remark?.children).map((v:any,k:any)=>{ if (k > 0) v.remove(); });
+    //@ts-ignore
+    Array.from(dom.querySelector('body')?.children).map((v:any)=>{ remark.append(v) });
+    setCodeVisible(false);
+    setSourceCode('');
+  }
+  const fullScreenMode = (el:any) => {
+    const editor = document.getElementById(EditorId);
+    editor?.classList.toggle('full-screen-mode');
+
+  }
+
+  function addLink() {
+      var linkURL = prompt('Enter a URL:', 'http://');
+      var sText = document.getSelection();
+      document.execCommand('insertHTML', false, '<a class="link" href="' + linkURL + '" target="_blank">' + sText + '</a>');
+  }
 
   const upload = async (e:any) => 
   {
@@ -696,7 +735,7 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
         console.log(colText);
       }
       // @ts-ignore
-      const removeRowBtn = e.target.closest(".row-panel");
+      const removeRowBtn = e.target.closest(".remove-row");
       if (removeRowBtn) {
         deleteRow(removeRowBtn);
       }
@@ -704,6 +743,11 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
       const txtRemark = e.target.closest(".txt-remark");
       if(!txtRemark){
         document.querySelector(".txt-remark")?.classList.remove("txt-remark");
+      }
+      //@ts-ignore
+      const sourceCode = e.target.closest(".source-code");
+      if(sourceCode){
+        SourceCode(sourceCode);
       }
     });
   }, []);
@@ -736,6 +780,14 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
           upload,removeImage
         }}
         title="Image"
+      />
+      <SourceCodeModal
+        codeVisible={codeVisible}
+        sourceCode={sourceCode}
+        setSourceCode={setSourceCode}
+        closeCodeHandler={closeCodeHandler}
+        saveSourceCode={saveSourceCode}
+        title="Source Code"
       />
       <div
         id={EditorId}
@@ -1002,24 +1054,9 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                     type="button"
                     title="Insert Link"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
+                    onClick={addLink}
                   >
                     <BsLink45Deg />
-                  </button>
-                  <button
-                    type="button"
-                    title="Insert Image"
-                    className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
-                  >
-                    <BsCardImage />
-                  </button>
-                </div>
-                <div className="px-1">
-                  <button
-                    type="button"
-                    title="Exist Full Screen"
-                    className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
-                  >
-                    <BsCodeSlash />
                   </button>
                 </div>
               </div>
@@ -1030,6 +1067,7 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                     type="button"
                     title="Full Screen"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
+                    onClick={fullScreenMode}
                   >
                     <RiFullscreenFill />
                   </button>
