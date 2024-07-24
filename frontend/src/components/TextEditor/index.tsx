@@ -35,7 +35,12 @@ import ImageModal from "../main/Modal/ImageModal";
 import SourceCodeModal from "../main/Modal/SourceCodeModal";
 import { Button } from "@nextui-org/react";
 import "../../css/Custom.scss";
-import { FaLessThanEqual } from "react-icons/fa";
+import {
+  ButtonGroup,
+  DropdownToggle,
+  DropdownMenu,
+  DropdownItem,
+} from "reactstrap";
 
 const fontSize = {
   h1: "text-5xl",
@@ -46,33 +51,7 @@ const fontSize = {
   h6: "text-lg",
 };
 const minHeight = "25rem";
-const DropdownUnorderedList = () => {
-  return (
-    <ul
-      className="absolute rounded bg-white border z-20 border-slate-200 DropdownUnorderedList"
-      style={{ top: "0", marginTop: "33px", width: "max-content" }}
-    >
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="">
-        Default
-      </li>
-      <li
-        className="px-4 py-1 text-[14px] hover:bg-slate-100"
-        data-type="circle"
-      >
-        Circle
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="dot">
-        Dot
-      </li>
-      <li
-        className="px-4 py-1 text-[14px] hover:bg-slate-100"
-        data-type="square"
-      >
-        Square
-      </li>
-    </ul>
-  );
-};
+
 const DropdownOrderedList = () => {
   return (
     <ul
@@ -118,137 +97,93 @@ const DropdownOrderedList = () => {
     </ul>
   );
 };
-const FontSizeList = ({ height }: any) => {
-  return (
-    <ul
-      className="absolute rounded bg-white border z-20 border-slate-200"
-      style={{
-        top: "0",
-        marginTop: "33px",
-        width: "max-content",
-        height: minHeight,
-        overflowY: "auto",
-        overflowX: "hidden",
-      }}
-    >
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="8px">
-        8px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="9px">
-        9px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="10px">
-        10px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="11px">
-        11px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="12px">
-        12px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="14px">
-        14px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="16px">
-        16px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="24px">
-        24px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="30px">
-        30px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="36px">
-        36px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="48px">
-        48px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="60px">
-        60px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="72px">
-        72px
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-size="96px">
-        96px
-      </li>
-    </ul>
-  );
-};
-const HeadingList = () => {
-  return (
-    <ul
-      className="absolute rounded bg-white border z-20 border-slate-200"
-      style={{ top: "0", marginTop: "33px", width: "max-content" }}
-    >
-      {/* {Array.from(fontSize).map((v)=>(<li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type={v}>Heading 1</li>))} */}
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="p">
-        Paragraph
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="h1">
-        Heading 1
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="h2">
-        Heading 2
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="h3">
-        Heading 3
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="h4">
-        Heading 4
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="h5">
-        Heading 5
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="h6">
-        Heading 6
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="pre">
-        Pre
-      </li>
-      <li
-        className="px-4 py-1 text-[14px] hover:bg-slate-100"
-        data-type="blockquote"
-      >
-        Blockquote
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="code">
-        Code
-      </li>
-    </ul>
-  );
-};
-const LineHeightList = () => {
-  return (
-    <ul
-      className="absolute rounded bg-white border z-20 border-slate-200"
-      style={{ top: "0", marginTop: "33px", width: "max-content" }}
-    >
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1">
-        1
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="2">
-        2
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1.1">
-        1.1
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1.2">
-        1.2
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1.3">
-        1.3
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1.4">
-        1.4
-      </li>
-      <li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type="1.5">
-        1.5
-      </li>
-    </ul>
-  );
-};
+// const FontSizeList = ({ FontSize }: any) => {
+//   return (
+//   <div
+//     className="absolute rounded bg-white border z-20 border-slate-200"
+//     style={{
+//       top: "0",
+//       marginTop: "33px",
+//       width: "max-content",
+//       height: minHeight,
+//       overflowY: "auto",
+//       overflowX: "hidden",
+//     }}>
+//     <ul>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize('8px')}>8px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("9px")}>9px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("10px")}>10px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("11px")}>11px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("12px")}>12px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("14px")}>14px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("16px")}>16px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("24px")}>24px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("30px")}>30px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("36px")}>36px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("48px")}>48px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("60px")}>60px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("72px")}>72px</a></li>
+//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("96px")}>96px</a></li>
+//     </ul>
+//   </div>
+//   );
+// };
+// const HeadingList = ({Heading,headingVisible}:any) => {
+//   return (
+//     <div>
+//       <ul
+//         className={`absolute${headingVisible==false?` hidden`:``} rounded text-left bg-white border z-20 border-slate-200}`}
+//         style={{left:0,  top: "0", marginTop: "30px", width: "max-content" }}
+//       >
+//         {/* {Array.from(fontSize).map((v)=>(<li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type={v}>Heading 1</li>))} */}
+//         <li><a onClick={()=>Heading("p")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Paragraph</a></li>
+//         <li><a onClick={()=>Heading("h1")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 1</a></li>
+//         <li><a onClick={()=>Heading("h2")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 2</a></li>
+//         <li><a onClick={()=>Heading("h3")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 3</a></li>
+//         <li><a onClick={()=>Heading("h4")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 4</a></li>
+//         <li><a onClick={()=>Heading("h5")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 5</a></li>
+//         <li><a onClick={()=>Heading("h6")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 6</a></li>
+//         <li><a onClick={()=>Heading("pre")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Pre</a></li>
+//         <li><a onClick={()=>Heading("blockqoute")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Blockquote</a></li>
+//         <li><a onClick={()=>Heading("code")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Code</a></li>
+//       </ul>
+//     </div>
+//   );
+// };
+// const LineHeightList = () => {
+//   return (
+//     <div
+//       className="absolute rounded bg-white border z-20 border-slate-200 text-left"
+//       style={{left:0, top: 0, marginTop: "33px", width: "max-content" }}
+//     >
+//       <ul
+        
+//       >
+//         <li>
+//           <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(1)}>1</a>
+//         </li>
+//         <li>
+//         <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(2)}>2</a>
+//         </li>
+//         <li>
+//           <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(1.1)}>1.1</a>
+//         </li>
+//         <li>
+//         <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(1.2)}>1.2</a>
+//         </li>
+//         <li>
+//         <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(1.3)}>1.3</a>
+//         </li>
+//         <li>
+//         <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(1.4)}>1.4</a>
+//         </li>
+//         <li>
+//         <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(1.5)}>1.5</a>
+//         </li>
+//       </ul>
+//     </div>
+//   );
+// };
 const HoverSelect = (el: any) => {
   const current = el.target;
   const rowElement = current.parentNode;
@@ -350,6 +285,7 @@ const CreateTable = (el: any) => {
   TextEditor.querySelector(".txt-remark").append(table);
 };
 
+
 // Main Component
 const TextEditor = ({ id, dataId, dataType }: any) => 
 {
@@ -371,6 +307,12 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
   const [className, setClassName] = useState<any>('');
   const [title, setTitle] = useState<any>('');
   const [sourceCode, setSourceCode] = useState<any>('');
+  const [ulVisible, setUlVisible] = useState<Boolean>(false);
+  const [olVisible, setOlVisible] = useState<Boolean>(false);
+  const [fontSizeVisible, setFontSizeVisible] = useState<any>('');
+  const [headingVisible, setHeadingVisible] = useState<Boolean>(false);
+  const [lineHeight, setLineHeight] = useState<any>('');
+  const [selection, setSelection] = useState<any>(null);
   const [selected, setSelected] = useState<any>([]);
 
   // const { onOpen, onOpenChange} = useDisclosure();
@@ -379,6 +321,7 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
   const closeHandler = () => setVisible(false);
   const closeImgHandler = () => setImgVisible(false);
   const closeCodeHandler = () => setCodeVisible(false);
+
 
   const imgModal = (e: any) => {
     setImgVisible(true);
@@ -412,8 +355,6 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
     let selectRow = e.target.closest(".bg-stripes-pink").querySelectorAll(".select-row");
     let selectedRow:any = [];
     let count = selectRow ? selectRow.length : 0;
-    
-    
     let remove = 0;
     let action = 'increment';
     if(current.classList.contains("select-row"))
@@ -606,7 +547,6 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
   const saveSourceCode = (el:any) => {
     const stringCode = el.closest('.modal-content').querySelector('textarea').value;
     const remark:any = document.querySelector('.code-remark');
-    console.log(stringCode);
     var dom = new DOMParser().parseFromString(stringCode,"text/html");
     Array.from(remark?.children).map((v:any,k:any)=>{ if (k > 0) v.remove(); });
     //@ts-ignore
@@ -686,18 +626,27 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
       }
     }
   }
+
   const Heading = (select: String) => {
     document.getSelection();
-    if (select != "") {
-      document.execCommand("formatBlock", false, `<h1>`);
-      // @ts-ignore
-      selection.anchorNode.parentNode.setAttribute(
-        "class",
-        `${fontSize.h1} font-bold`
-      );
-    } else {
-      document.execCommand("formatBlock", false, `<${select}>`);
+    let className = '';
+    switch (select) {
+      case 'h1': className = 'text-4xl font-bold mb-3'; break;
+      case 'h2': className = 'text-3xl font-bold mb-3'; break;
+      case 'h3': className = 'text-2xl font-bold mb-3'; break;
+      case 'h4': className = 'text-xl font-bold mb-3'; break;
+      case 'h5': className = 'text-lg font-bold mb-3'; break;
+      case 'h6': className = 'text-base font-bold mb-3'; break;
+      case 'code': className = 'text-sm text-slate-500 dark:text-slate-400 whitespace-pre'; break;
+      default: break;
     }
+    let html= '';
+    if(select == 'code'){
+      html = `<pre class="p-2 bg-slate-50 rounded-lg"><${select}${className?` class="${className}"`:``}>${selection}</${select}></pre>`;
+    }else{
+      html = `<${select}${className?` class="${className}"`:``}>${selection}</${select}>`;
+    }
+    document.execCommand("insertHTML", false, html);
   };
   const TextBold = () => {
     document.getSelection();
@@ -707,23 +656,43 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
     document.getSelection();
     document.execCommand("italic", false, undefined);
   };
-  const OrderList = () => {
-    document.getSelection();
-    document.execCommand('insertOrderedList',false,'null');
-    // document.execCommand('indent', false, undefined);
+  const UnderOrderList = (style:any) => {
+    if(selection){
+      document.execCommand('insertHTML', false, `<ul class="${style} ml-6"><li>${selection}</li></ul>`);
+      setTimeout(()=>{
+        setUlVisible(false);
+        setOpenDropdown('');
+      },100);
+    }
   }
-  const UnderOrderList = () => {
-    document.getSelection();
-    document.execCommand('insertunorderedlist',false,'null');
-    setTimeout(()=>{
-      const obj = document.getSelection();
+  const OrderList = (style:any) => {
+    if(selection){
+      document.execCommand('insertHTML', false, `<ol class="${style} ml-6"><li>${selection}</li></ol>`);
+      setTimeout(()=>{
+        setUlVisible(false);
+        setOpenDropdown('');
+      },100);
+    }
+  }
+  const FontSize = (size:any) => {
+      // document.execCommand("fontSize", false, size);
+      document.execCommand("insertHTML", false, `<p style="font-size:${size}; line-height:normal">${selection}</p>`);
+  }
+  const LineHeight = () => {
+    // document.execCommand("insertHTML", false, `<p style="line-height:${lineHeight};">${selection}</p>`);
+      document.execCommand('formatblock', false, 'p');
+      var selectedElement = null;
+      var selectedNodes:any = [];
+      var sel = rangy.getSelection();
+      for (var i = 0; i < sel.rangeCount; i++) {
+          selectedNodes = selectedNodes.concat(sel.getRangeAt(i).getNodes());
+          selectedNodes.style.height = "20px";       
+      }
       //@ts-ignore
-      const element = obj.baseNode.parentNode;
-      console.log(element);
-      // .closest('ul').classList.add('list-decimal ml-6');
-    }) 
+      selectedElement = window.getSelection().focusNode.parentNode;
+      //@ts-ignore
+      selectedElement.style.height = "20px";
   }
-
   const deleteRow = (e: any) => {
     e.closest(".grid").remove();
   };
@@ -749,8 +718,25 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
       if(sourceCode){
         SourceCode(sourceCode);
       }
+       //@ts-ignore
+      const editor = e.target.closest(".editor");
     });
+    //@ts-ignore
+    document.getElementById(EditorId).addEventListener("selectstart", (e) => {
+      //@ts-ignore
+      handleSelectionChange(e.currentTarget)
+    })
   }, []);
+
+  function handleSelectionChange(): void {
+    document.onmouseup = () => retrieveSelection();
+    document.onkeyup = () => retrieveSelection();
+  }
+  function retrieveSelection() : void {
+    const selection = document.getSelection();
+    if (!selection || !selection.toString()) { return; }
+    setSelection(selection);
+  }
 
   return (
     <>
@@ -908,19 +894,34 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                       type="button"
                       title="Unordered"
                       className="tools-item hover:bg-slate-200 text-slate-500 hover:text-slate-900 p-2"
-                      onClick={()=>UnderOrderList()}
+                      onClick={()=>{ UnderOrderList('list-disc'); }}
                     >
                       <RiListUnordered/>
                     </button>
-                    <div
+                    <button
+                      type="button"
+                      id="dropdownDividerButton"
+                      data-dropdown-toggle="dropdownDivider" 
                       title="Unordered"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
-                      onClick={(e) => { OpenDropdown("unordered")}}
+                      onMouseOver={()=>setUlVisible(true)} onMouseOut={()=>setUlVisible(false)}
                     >
                       <RxCaretDown />
-                    </div>
-                    {openDropdown == "unordered" && <DropdownUnorderedList />}
+                      <div 
+                        id='dropdownDivider' 
+                        aria-labelledby="dropdownDividerButton"
+                        className={`absolute ${ulVisible==false?`hidden`:``} rounded bg-white border z-20 border-slate-200 text-left DropdownUnorderedList`}
+                        style={{ left:"0", top: "0", marginTop: "30px", width: "max-content" }}
+                      >
+                        <ul>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={(e)=>{UnderOrderList('list-disc')}}>Default</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={(e)=>{UnderOrderList('list-circle')}}>Circle</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={(e)=>{UnderOrderList('list-square')}}>Square</a></li>
+                        </ul>
+                      </div>
+                    </button>
+                    {/* <DropdownUnorderedList id={`dropdownDivider`} ulVisible={ulVisible} UnderOrderList={UnderOrderList}/> */}
                   </div>
                   <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
                     <button
@@ -934,15 +935,28 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                         }}
                       />
                     </button>
-                    <div
+                    <button
                       title="Ordered"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
-                      onClick={() => OpenDropdown("ordered")}
+                      // onClick={(e) =>{ e.preventDefault(); OpenDropdown("ordered"); }}
+                      onMouseOver={()=>setOlVisible(true)} onMouseOut={()=>setOlVisible(false)}
                     >
                       <RxCaretDown />
-                    </div>
-                    {openDropdown == "ordered" && <DropdownOrderedList />}
+                      <div 
+                        className={`absolute ${!olVisible?`hidden`:``} rounded bg-white border z-20 border-slate-200 text-left DropdownUnorderedList`}
+                        style={{ left:"0", top: "0", marginTop: "30px", width: "max-content" }}
+                      >
+                        <ul>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-decimal")}>Default</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-alpha]")}>Lower Alpha</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-greek]")}>Lower Greek</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-roman]")}>Lower Roman</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[upper-alpha]")}>Upper Alpha</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[upper-roman]")}>Upper Roman</a></li>
+                        </ul>
+                      </div>
+                    </button>
                   </div>
                   <button
                     type="button"
@@ -975,33 +989,72 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                     >
                       <RxFontSize />
                     </button>
-                    <div
+                    <button
+                      type="button"
                       title="Font Size"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
-                      onClick={() => OpenDropdown("fontSize")}
+                      onMouseOver={()=>setFontSizeVisible(true)} onMouseOut={()=>setFontSizeVisible(false)}
                     >
                       <RxCaretDown />
-                    </div>
-                    {openDropdown == "fontSize" && <FontSizeList />}
+                      <div
+                        className={`absolute${fontSizeVisible==false?` hidden`:``} rounded bg-white border z-20 border-slate-200`}
+                        style={{left:0,top:0,marginTop:"30px",width:"max-content",height:minHeight,overflowY:"auto",overflowX:"hidden"}}>
+                        <ul>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize('8px')}>8px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("9px")}>9px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("10px")}>10px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("11px")}>11px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("12px")}>12px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("14px")}>14px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("16px")}>16px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("24px")}>24px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("30px")}>30px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("36px")}>36px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("48px")}>48px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("60px")}>60px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("72px")}>72px</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("96px")}>96px</a></li>
+                        </ul>
+                      </div>
+                    </button>
                   </div>
                   <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
                     <button
                       type="button"
                       title="Heading"
                       className="tools-item hover:bg-slate-200 text-slate-700 hover:text-slate-900 p-2"
+                      onClick={()=>Heading("h1")}
                     >
                       <RiHeading2 />
                     </button>
-                    <div
+                    <button
+                      type="button"
                       title="Heading"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
-                      onClick={() => OpenDropdown("heading")}
+                      onMouseOver={()=>setHeadingVisible(true)} onMouseOut={()=>setHeadingVisible(false)}
                     >
                       <RxCaretDown />
-                    </div>
-                    {openDropdown == "heading" && <HeadingList />}
+                      <div>
+                        <ul
+                          className={`absolute${headingVisible==false?` hidden`:``} rounded text-left bg-white border z-20 border-slate-200 overflow-hidden`}
+                          style={{left:0,  top: "0", marginTop: "30px", width: "max-content" }}
+                        >
+                          {/* {Array.from(fontSize).map((v)=>(<li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type={v}>Heading 1</li>))} */}
+                          <li><a onClick={()=>Heading("p")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Paragraph</a></li>
+                          <li><a onClick={()=>Heading("h1")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 1</a></li>
+                          <li><a onClick={()=>Heading("h2")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 2</a></li>
+                          <li><a onClick={()=>Heading("h3")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 3</a></li>
+                          <li><a onClick={()=>Heading("h4")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 4</a></li>
+                          <li><a onClick={()=>Heading("h5")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 5</a></li>
+                          <li><a onClick={()=>Heading("h6")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 6</a></li>
+                          <li><a onClick={()=>Heading("pre")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Pre</a></li>
+                          <li><a onClick={()=>Heading("blockqoute")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Blockquote</a></li>
+                          <li><a onClick={()=>Heading("code")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Code</a></li>
+                        </ul>
+                      </div>
+                    </button>
                   </div>
                   <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
                     <button
@@ -1011,15 +1064,28 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                     >
                       <RxLineHeight />
                     </button>
-                    <div
+                    <button
                       title="Heading"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
                       onClick={() => OpenDropdown("lineHeight")}
                     >
                       <RxCaretDown />
-                    </div>
-                    {openDropdown == "lineHeight" && <LineHeightList />}
+                      <div
+                        className={`absolute${lineHeight==false?` hidden`:``} rounded bg-white border z-20 border-slate-200 text-left`}
+                        style={{left:0, top: 0, marginTop: "33px", width: "max-content" }}
+                      >
+                        <ul>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(1)}>1</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(2)}>2</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(1.1)}>1.1</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(1.2)}>1.2</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(1.3)}>1.3</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(1.4)}>1.4</a></li>
+                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(1.5)}>1.5</a></li>
+                        </ul>
+                      </div>
+                    </button>
                   </div>
                 </div>
                 <div className="group flex border-r px-1 border-slate-300">
