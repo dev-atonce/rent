@@ -678,12 +678,13 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
       // document.execCommand("fontSize", false, size);
       document.execCommand("insertHTML", false, `<p style="font-size:${size}; line-height:normal">${selection}</p>`);
   }
-  const LineHeight = () => {
+  const LineHeight = (height:any) => {
     // document.execCommand("insertHTML", false, `<p style="line-height:${lineHeight};">${selection}</p>`);
       document.execCommand('formatblock', false, 'p');
       var selectedElement = null;
       var selectedNodes:any = [];
-      var sel = rangy.getSelection();
+      //@ts-ignore
+      var sel = document.getElementById(EditorId).getSelection();
       for (var i = 0; i < sel.rangeCount; i++) {
           selectedNodes = selectedNodes.concat(sel.getRangeAt(i).getNodes());
           selectedNodes.style.height = "20px";       
@@ -1068,21 +1069,21 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                       title="Heading"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
-                      onClick={() => OpenDropdown("lineHeight")}
+                      onMouseOver={()=>setLineHeight(true)} onMouseOut={()=>setLineHeight(false)}
                     >
                       <RxCaretDown />
                       <div
                         className={`absolute${lineHeight==false?` hidden`:``} rounded bg-white border z-20 border-slate-200 text-left`}
-                        style={{left:0, top: 0, marginTop: "33px", width: "max-content" }}
+                        style={{left:0, top: 0, marginTop: "30px", width: "max-content" }}
                       >
                         <ul>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(1)}>1</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(2)}>2</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(1.1)}>1.1</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(1.2)}>1.2</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(1.3)}>1.3</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(1.4)}>1.4</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight(1.5)}>1.5</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight('1')}>1</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight('2')}>2</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.1")}>1.1</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.2")}>1.2</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.3")}>1.3</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.4")}>1.4</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.5")}>1.5</a></li>
                         </ul>
                       </div>
                     </button>
