@@ -563,6 +563,10 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
       })
     }
   }
+  const HorizontalLine = () => {
+    document.getSelection();
+    document.execCommand('insertHTML',false,'<hr class="mt-2 mb-2"></hr>');
+  }
   const deleteRow = (e: any) => {
     e.closest(".grid").remove();
   };
@@ -575,9 +579,12 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
   const enableDragList = (list:any) => Array.prototype.map.call(list.children, (item) => {enableDragItem(item)});
   const enableDragItem = (item:any) =>
   {
-      item.setAttribute('draggable', true)
-      item.ondrag = handleDrag;
-      item.ondragend = handleDrop;
+      item.setAttribute('draggable', true);
+      if(item.querySelector('.sort-btn')){
+
+        item.ondrag = handleDrag;
+        item.ondragend = handleDrop;
+      }
   }
   const handleDrag = (item:any) =>
   {
@@ -595,9 +602,6 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
     }
   }
   const handleDrop = (item:any) => item.target.closest('.grid').classList.remove('focus');
-  
-  
-  
 
 
   useEffect(() => {
@@ -854,9 +858,9 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                         style={{ left:"0", top: "0", marginTop: "30px", width: "max-content" }}
                       >
                         <ul>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={(e)=>{UnderOrderList('list-disc')}}>Default</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={(e)=>{UnderOrderList('list-circle')}}>Circle</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={(e)=>{UnderOrderList('list-square')}}>Square</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={(e)=>{UnderOrderList('list-disc')}}>Default</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={(e)=>{UnderOrderList('list-circle')}}>Circle</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={(e)=>{UnderOrderList('list-square')}}>Square</a></li>
                         </ul>
                       </div>
                     </button>
@@ -887,12 +891,12 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                         style={{ left:"0", top: "0", marginTop: "30px", width: "max-content" }}
                       >
                         <ul>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-decimal")}>Default</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-alpha]")}>Lower Alpha</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-greek]")}>Lower Greek</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-roman]")}>Lower Roman</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[upper-alpha]")}>Upper Alpha</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[upper-roman]")}>Upper Roman</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-decimal")}>Default</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-alpha]")}>Lower Alpha</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-greek]")}>Lower Greek</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-roman]")}>Lower Roman</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[upper-alpha]")}>Upper Alpha</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[upper-roman]")}>Upper Roman</a></li>
                         </ul>
                       </div>
                     </button>
@@ -940,20 +944,20 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                         className={`absolute${fontSizeVisible==false?` hidden`:``} rounded bg-white border z-20 border-slate-200`}
                         style={{left:0,top:0,marginTop:"30px",width:"max-content",height:minHeight,overflowY:"auto",overflowX:"hidden"}}>
                         <ul>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize('8px')}>8px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("9px")}>9px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("10px")}>10px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("11px")}>11px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("12px")}>12px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("14px")}>14px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("16px")}>16px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("24px")}>24px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("30px")}>30px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("36px")}>36px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("48px")}>48px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("60px")}>60px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("72px")}>72px</a></li>
-                          <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("96px")}>96px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize('8px')}>8px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("9px")}>9px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("10px")}>10px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("11px")}>11px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("12px")}>12px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("14px")}>14px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("16px")}>16px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("24px")}>24px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("30px")}>30px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("36px")}>36px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("48px")}>48px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("60px")}>60px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("72px")}>72px</a></li>
+                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("96px")}>96px</a></li>
                         </ul>
                       </div>
                     </button>
@@ -1032,6 +1036,7 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                     type="button"
                     title="Horizontal Line"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
+                    onClick={HorizontalLine}
                   >
                     <RxDividerHorizontal />
                   </button>
