@@ -74,7 +74,15 @@ export default function ServiceForm({
               keyProp: "imageAlt",
               type: "input",
               required: true,
-            },
+            },{
+              label: "Detail TH",
+              placeHolder: "Detail TH",
+              state: serviceState,
+              setState: onChangeState,
+              keyProp: "projectDetailTH",
+              type: "textarea",
+              required: true,
+            }
           ]}
         />
       </div>
@@ -135,7 +143,21 @@ export default function ServiceForm({
         </div>
       </div>
       <div className="col-span-2">
-        <TextEditor dataType="project" dataId={id} id={`editForm${id}`}/>
+        <div className="rounded-lg bg-white p-2">
+          <label className="p-3">Detail</label>
+          <TextEditor 
+            dataType="project" 
+            dataId={id} 
+            id={`editForm${id}`} 
+            input={{
+              keyProp: "projectDetailTH",
+              placeholder: "Detail",
+              onChange: onChangeState,
+              state: serviceState,
+              required: true
+            }}
+          />
+        </div>
       </div>
       <div className="col-span-2 ">
         <div className="flex gap-[1px] translate-y-2 translate-x-2 relative z-0">

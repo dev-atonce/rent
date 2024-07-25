@@ -8,7 +8,7 @@ import {
   Button
 } from "@nextui-org/react";
 
-const SourceCodeModal = ({title,codeVisible,closeCodeHandler,sourceCode,setSourceCode,saveSourceCode}:any) => {
+const SourceCodeModal = ({title,codeVisible,closeCodeHandler,sourceCode,saveSourceCode}:any) => {
     return <>
       <Modal 
           id="imgModal"

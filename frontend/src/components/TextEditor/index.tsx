@@ -6,8 +6,7 @@ import {
   BsTypeStrikethrough,
   BsEraser,
   BsLink45Deg,
-  BsTable,
-  BsArrowsMove
+  BsTable
 } from "react-icons/bs";
 import {
   RiListUnordered,
@@ -136,7 +135,7 @@ const CreateTable = (el: any) => {
 
 
 // Main Component
-const TextEditor = ({ id, dataId, dataType }: any) => 
+const TextEditor = ({ id, dataId, dataType, input}: any) => 
 {
 
   const EditorId = id ? id : new Date().getTime();
@@ -163,7 +162,6 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
   const [lineHeight, setLineHeight] = useState<any>('');
   const [selection, setSelection] = useState<any>(null);
   const [tableVisible, setTableVisible] = useState<any>(false);
-  const [selected, setSelected] = useState<any>([]);
 
   // const { onOpen, onOpenChange} = useDisclosure();
 
@@ -294,10 +292,8 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
     const remark = document.querySelector(".img-remark");
     if (remark) {
         remark.querySelectorAll("img")?.forEach((v) => { v.remove() });
-      // imgSelect.map((v: any, k: any) => {
         let img = document.createElement("img");
         img.setAttribute("src", preview.src);
-        // img.setAttribute("class", "w-full h-full");
         if(alt) img.setAttribute("alt", alt);
         if(width) img.setAttribute("width", width);
         if(height) img.setAttribute("height", height);
@@ -312,7 +308,6 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
         }else{
           remark.append(img);
         }
-        // });
         closeImgHandler();
         remark.classList.remove("img-remark");
         setImgSelect([]);
@@ -385,6 +380,9 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
       enableDragSort('drag-sort-enable');
     }
   };
+  const deleteRow = (e: any) => {
+    e.closest(".grid").remove();
+  };
 
   const SourceCode = (el:any) => 
   { 
@@ -408,17 +406,7 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
     setCodeVisible(false);
     setSourceCode('');
   }
-  const fullScreenMode = (el:any) => {
-    const editor = document.getElementById(EditorId);
-    editor?.classList.toggle('full-screen-mode');
-
-  }
-
-  function addLink() {
-      var linkURL = prompt('Enter a URL:', 'http://');
-      var sText = document.getSelection();
-      document.execCommand('insertHTML', false, '<a class="link" href="' + linkURL + '" target="_blank">' + sText + '</a>');
-  }
+  
 
   const upload = async (e:any) => 
   {
@@ -480,19 +468,67 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
       }
     }
   }
-
+  
+  // 3. Text bold
+  const TextBold = () => {
+    document.getSelection();
+    document.execCommand("bold", false, undefined);
+  };
+  // 4. Text italic
+  const TextItalic = () => {
+    document.getSelection();
+    document.execCommand("italic", false, undefined);
+  };
+  // 7.
+  const ClearFormat = () => {
+    let setlection:any = document.getSelection();
+    for (var i = 0; i < setlection.rangeCount; i++) 
+    {
+      let nodes:any = getNodesInRange(setlection.getRangeAt(i));
+      Array.from(nodes).map((el:any, k:any)=>{
+        try {
+          el.removeAttribute('style');
+        } catch(e:any){
+          console.log(e.message)
+        }
+      })
+    }
+  }
+  // 10. Under Order List (ul)
+  const UnderOrderList = (style:any) => {
+    if(selection){
+      document.execCommand('insertHTML', false, `<ul class="${style} ml-6"><li>${selection}</li></ul>`);
+      setTimeout(()=>{
+        setUlVisible(false);
+      },100);
+    }
+  }
+  // 11. Order List (ol)
+  const OrderList = (style:any) => {
+    if(selection){
+      document.execCommand('insertHTML', false, `<ol class="${style} ml-6"><li>${selection}</li></ol>`);
+      setTimeout(()=>{
+        setUlVisible(false);
+      },100);
+    }
+  }
+  // 14. Font size
+  const FontSize = (size:any) => {
+      document.execCommand("insertHTML", false, `<p style="font-size:${size}; line-height:normal">${selection}</p>`);
+  }
+  // 15.
   const Heading = (select: String) => {
     document.getSelection();
     let className = '';
     switch (select) {
-      case 'h1': className = 'text-4xl font-bold mb-3'; break;
-      case 'h2': className = 'text-3xl font-bold mb-3'; break;
-      case 'h3': className = 'text-2xl font-bold mb-3'; break;
-      case 'h4': className = 'text-xl font-bold mb-3'; break;
-      case 'h5': className = 'text-lg font-bold mb-3'; break;
-      case 'h6': className = 'text-base font-bold mb-3'; break;
-      case 'code': className = 'text-sm text-slate-500 dark:text-slate-400 whitespace-pre'; break;
-      default: break;
+        case 'h1': className = 'text-4xl font-bold mb-3'; break;
+        case 'h2': className = 'text-3xl font-bold mb-3'; break;
+        case 'h3': className = 'text-2xl font-bold mb-3'; break;
+        case 'h4': className = 'text-xl font-bold mb-3'; break;
+        case 'h5': className = 'text-lg font-bold mb-3'; break;
+        case 'h6': className = 'text-base font-bold mb-3'; break;
+        case 'code': className = 'text-sm text-slate-500 dark:text-slate-400 whitespace-pre'; break;
+        default: break;
     }
     let html= '';
     if(select == 'code'){
@@ -502,38 +538,8 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
     }
     document.execCommand("insertHTML", false, html);
   };
-  const TextBold = () => {
-    document.getSelection();
-    document.execCommand("bold", false, undefined);
-  };
-  const TextItalic = () => {
-    document.getSelection();
-    document.execCommand("italic", false, undefined);
-  };
-  const UnderOrderList = (style:any) => {
-    if(selection){
-      document.execCommand('insertHTML', false, `<ul class="${style} ml-6"><li>${selection}</li></ul>`);
-      setTimeout(()=>{
-        setUlVisible(false);
-        setOpenDropdown('');
-      },100);
-    }
-  }
-  const OrderList = (style:any) => {
-    if(selection){
-      document.execCommand('insertHTML', false, `<ol class="${style} ml-6"><li>${selection}</li></ol>`);
-      setTimeout(()=>{
-        setUlVisible(false);
-        setOpenDropdown('');
-      },100);
-    }
-  }
-  const FontSize = (size:any) => {
-      // document.execCommand("fontSize", false, size);
-      document.execCommand("insertHTML", false, `<p style="font-size:${size}; line-height:normal">${selection}</p>`);
-  }
+  // 16.
   const LineHeight = (height:any) => {
-    // document.execCommand("insertHTML", false, `<p style="line-height:${lineHeight};">${selection}</p>`);
       let setlection:any = document.getSelection();
       for (var i = 0; i < setlection.rangeCount; i++) 
       {
@@ -549,27 +555,21 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
         })    
       }
   }
-  const ClearFormat = () => {
-    let setlection:any = document.getSelection();
-    for (var i = 0; i < setlection.rangeCount; i++) 
-    {
-      let nodes:any = getNodesInRange(setlection.getRangeAt(i));
-      Array.from(nodes).map((el:any, k:any)=>{
-        try {
-          el.removeAttribute('style');
-        } catch(e:any){
-          console.log(e.message)
-        }
-      })
-    }
-  }
+  // 17.
   const HorizontalLine = () => {
     document.getSelection();
     document.execCommand('insertHTML',false,'<hr class="mt-2 mb-2"></hr>');
   }
-  const deleteRow = (e: any) => {
-    e.closest(".grid").remove();
-  };
+  // 21. insert link
+  function addLink() {
+      var linkURL = prompt('Enter a URL:', 'http://');
+      var sText = document.getSelection();
+      document.execCommand('insertHTML', false, '<a class="link" href="' + linkURL + '" target="_blank">' + sText + '</a>');
+  }
+  // 22. Full screen
+  const fullScreenMode = () => document.getElementById(EditorId)?.classList.toggle('full-screen-mode');
+  
+  
 
   const enableDragSort = (listClass:any) =>
   {
@@ -632,7 +632,6 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
       //@ts-ignore
       handleSelectionChange(e.currentTarget)
     })
-    // enableDragSort('drag-sort-enable');
   }, []);
 
   function handleSelectionChange(): void {
@@ -721,6 +720,13 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
         id={EditorId}
         className="rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark h-full overflow-hidden"
       >
+        <textarea 
+          className="hidden" 
+          name={input.name} 
+          placeholder="" 
+          onChange={(e: any) => input.setState(e.target.value, input.keyProp)}
+          value={input.state && input.state[input.keyProp]}
+        ></textarea>
         <div className="text-editor">
           <div className="header">
             <div className="tools flex justify-stretch p-1">
@@ -1057,7 +1063,7 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                       onMouseOut={()=>setTableVisible(false)}
                     >
                       <RxCaretDown />
-                      <TableList tableVisible={tableVisible} setTableVisible={setTableVisible} btn={{ setOpenDropdown }} />
+                      <TableList tableVisible={tableVisible} setTableVisible={setTableVisible}/>
                     </button>
        
                  
