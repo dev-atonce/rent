@@ -418,14 +418,9 @@ ol.decimal
 .image-select{
     box-shadow: 0 0 0 3px rgba(15, 115, 246, 90%);
 }
-.z-50{
-    z-index:50;
-}
+.z-50{ z-index:50; }
 .backdrop-blur-md{
     background-color: rgba(0,0,0,0.575);
-}
-.img-resizer{
-    
 }
 .images-upload .input-group::-webkit-scrollbar{
     border-radius: 10px;
@@ -447,9 +442,13 @@ ol.decimal
     left: 0;
     z-index: 2000;
 }
-.link{
-    cursor: pointer;
+.sort-btn{ cursor: move; }
+.focus{
+    background-color: rgba(248, 250, 252 ,0.8);
+    border:1px solid rgba(203, 213, 225, 0.8);
+    border-radius: 10px;
 }
+.link{ cursor: pointer; }
 .list-circle{list-style-type: circle;}
 .list-square{list-style-type: square;}
 .list-decimal{list-style-type: decimal;}
@@ -468,6 +467,10 @@ ol.decimal
 .z-800{ z-index: 800; }
 .z-900{ z-index: 900; }
 .z-1000{ z-index: 1000; }
+.z-1100{ z-index: 1100; }
+.z-1200{ z-index: 1200; }
+.z-1300{ z-index: 1300; }
+.z-1400{ z-index: 1400; }
 .z-2000{ z-index: 2000; }
 .z-3000{ z-index: 3000; }
 .z-4000{ z-index: 4000; }
@@ -476,3 +479,23 @@ ol.decimal
 .z-7000{ z-index: 7000; }
 .z-8000{ z-index: 8000; }
 .z-9000{ z-index: 9000; }
+.backdrop-blur-md{
+    z-index: 3000;
+}
+[tabindex="-1"] .w-screen{
+    z-index: 3001;
+}
+.max-h-75vh{
+    max-height: 75vh;
+    overflow-y: auto;
+}
+.full-screen-mode{
+    .editor-body{
+        height: 100% !important;
+    }
+    .editor-footer{
+        bottom: 0;
+        position: absolute;
+        width: 100%;
+    }
+}

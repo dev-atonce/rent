@@ -26,8 +26,8 @@ export default function ModalDialog({visible, closeHandler, title, select}:any) 
           isOpen={visible} 
           onOpenChange={closeHandler} 
           backdrop="blur"
-          className={`rounded-lg bg-white border border-slate-300 z-[2000]`}
-          style={{width:"600px",maxWidth:'100vw'}}
+          className={`rounded-lg bg-white border border-slate-300`}
+          style={{width:"600px",maxWidth:'100vw', zIndex:3000}}
           closeButton
         >
         <ModalContent>

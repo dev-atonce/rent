@@ -6,9 +6,8 @@ import {
   BsTypeStrikethrough,
   BsEraser,
   BsLink45Deg,
-  BsCardImage,
-  BsCodeSlash,
   BsTable,
+  BsArrowsMove
 } from "react-icons/bs";
 import {
   RiListUnordered,
@@ -35,155 +34,8 @@ import ImageModal from "../main/Modal/ImageModal";
 import SourceCodeModal from "../main/Modal/SourceCodeModal";
 import { Button } from "@nextui-org/react";
 import "../../css/Custom.scss";
-import {
-  ButtonGroup,
-  DropdownToggle,
-  DropdownMenu,
-  DropdownItem,
-} from "reactstrap";
 
-const fontSize = {
-  h1: "text-5xl",
-  h2: "text-4xl",
-  h3: "text-3xl",
-  h4: "text-2xl",
-  h5: "text-xl",
-  h6: "text-lg",
-};
 const minHeight = "25rem";
-
-const DropdownOrderedList = () => {
-  return (
-    <ul
-      className="absolute rounded bg-white border z-20 border-slate-200 DropdownOrderedList"
-      style={{ top: "0", marginTop: "33px", width: "max-content" }}
-    >
-      <li
-        className="px-4 py-1 text-[14px] hover:bg-slate-100"
-        data-type="decimal"
-      >
-        Default
-      </li>
-      <li
-        className="px-4 py-1 text-[14px] hover:bg-slate-100"
-        data-type="lower-alpha"
-      >
-        Lower Alpha
-      </li>
-      <li
-        className="px-4 py-1 text-[14px] hover:bg-slate-100"
-        data-type="lower-greek"
-      >
-        Lower Greek
-      </li>
-      <li
-        className="px-4 py-1 text-[14px] hover:bg-slate-100"
-        data-type="lower-roman"
-      >
-        Lower Roman
-      </li>
-      <li
-        className="px-4 py-1 text-[14px] hover:bg-slate-100"
-        data-type="upper-alpha"
-      >
-        Upper Alpha
-      </li>
-      <li
-        className="px-4 py-1 text-[14px] hover:bg-slate-100"
-        data-type="upper-roman"
-      >
-        Upper Roman
-      </li>
-    </ul>
-  );
-};
-// const FontSizeList = ({ FontSize }: any) => {
-//   return (
-//   <div
-//     className="absolute rounded bg-white border z-20 border-slate-200"
-//     style={{
-//       top: "0",
-//       marginTop: "33px",
-//       width: "max-content",
-//       height: minHeight,
-//       overflowY: "auto",
-//       overflowX: "hidden",
-//     }}>
-//     <ul>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize('8px')}>8px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("9px")}>9px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("10px")}>10px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("11px")}>11px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("12px")}>12px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("14px")}>14px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("16px")}>16px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("24px")}>24px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("30px")}>30px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("36px")}>36px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("48px")}>48px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("60px")}>60px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("72px")}>72px</a></li>
-//       <li><a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("96px")}>96px</a></li>
-//     </ul>
-//   </div>
-//   );
-// };
-// const HeadingList = ({Heading,headingVisible}:any) => {
-//   return (
-//     <div>
-//       <ul
-//         className={`absolute${headingVisible==false?` hidden`:``} rounded text-left bg-white border z-20 border-slate-200}`}
-//         style={{left:0,  top: "0", marginTop: "30px", width: "max-content" }}
-//       >
-//         {/* {Array.from(fontSize).map((v)=>(<li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type={v}>Heading 1</li>))} */}
-//         <li><a onClick={()=>Heading("p")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Paragraph</a></li>
-//         <li><a onClick={()=>Heading("h1")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 1</a></li>
-//         <li><a onClick={()=>Heading("h2")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 2</a></li>
-//         <li><a onClick={()=>Heading("h3")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 3</a></li>
-//         <li><a onClick={()=>Heading("h4")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 4</a></li>
-//         <li><a onClick={()=>Heading("h5")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 5</a></li>
-//         <li><a onClick={()=>Heading("h6")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 6</a></li>
-//         <li><a onClick={()=>Heading("pre")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Pre</a></li>
-//         <li><a onClick={()=>Heading("blockqoute")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Blockquote</a></li>
-//         <li><a onClick={()=>Heading("code")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Code</a></li>
-//       </ul>
-//     </div>
-//   );
-// };
-// const LineHeightList = () => {
-//   return (
-//     <div
-//       className="absolute rounded bg-white border z-20 border-slate-200 text-left"
-//       style={{left:0, top: 0, marginTop: "33px", width: "max-content" }}
-//     >
-//       <ul
-        
-//       >
-//         <li>
-//           <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(1)}>1</a>
-//         </li>
-//         <li>
-//         <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(2)}>2</a>
-//         </li>
-//         <li>
-//           <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(1.1)}>1.1</a>
-//         </li>
-//         <li>
-//         <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(1.2)}>1.2</a>
-//         </li>
-//         <li>
-//         <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(1.3)}>1.3</a>
-//         </li>
-//         <li>
-//         <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(1.4)}>1.4</a>
-//         </li>
-//         <li>
-//         <a className="px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>setLineHeight(1.5)}>1.5</a>
-//         </li>
-//       </ul>
-//     </div>
-//   );
-// };
 const HoverSelect = (el: any) => {
   const current = el.target;
   const rowElement = current.parentNode;
@@ -211,42 +63,39 @@ const HoverSelect = (el: any) => {
   });
 };
 // Create a box to select the table. (column x row)
-const TableList = ({ btn }: any) => {
+const TableList = ({ tableVisible,setTableVisible, btn }: any) => {
   let index = 0;
-  return (
-    <>
-      <div
-        className="absolute rounded bg-white border border-slate-200 p-2 z-20"
-        style={{ top: "0", marginTop: "33px", width: "max-content" }}
-      >
-        {Array.from(Array(10).keys()).map((v: any, i: any) => (
-          <div className="grid grid-cols-10 gap-1 mb-1" key={i}>
-            {Array.from(Array(10).keys()).map((vs: any, j: any) => {
-              if (j > 0) index++;
-              //@ts-ignore
-              return (
-                <div
-                  key={index}
-                  className="border border-slate-200 w-4 h-4"
-                  data-index={index}
-                  onMouseOver={HoverSelect}
-                  onClick={(el) => {
-                    CreateTable(el);
-                    btn.setOpenDropdown("");
-                  }}
-                  //   @ts-ignore
-                  btn={btn}
-                ></div>
-              );
-            })}
-          </div>
-        ))}
-        <div className="w-full flex justify-center mt-2">
-          <span className="mr-2 x">1</span> x <span className="ml-2 y">1</span>
+  return <div
+    className={`${tableVisible==false?`hidden `:``}absolute rounded bg-white border border-slate-200 p-2 z-20`}
+    style={{ left:0, top: "0", marginTop: "30px", width: "max-content" }}
+  >
+      {Array.from(Array(10).keys()).map((v: any, i: any) => (
+        <div className="grid grid-cols-10 gap-1 mb-1" key={i}>
+          {Array.from(Array(10).keys()).map((vs: any, j: any) => {
+            if (j > 0) index++;
+            //@ts-ignore
+            return (
+              <div
+                key={index}
+                className="border border-slate-200 w-4 h-4"
+                data-index={index}
+                onMouseOver={HoverSelect}
+                onClick={(el) => {
+                  CreateTable(el);
+                  btn.setOpenDropdown("");
+                  setTableVisible(false);
+                }}
+                //   @ts-ignore
+                btn={btn}
+              ></div>
+            );
+          })}
         </div>
+      ))}
+      <div className="w-full flex justify-center mt-2">
+        <span className="mr-2 x">1</span> x <span className="ml-2 y">1</span>
       </div>
-    </>
-  );
+</div>
 };
 
 // Create table in to text content
@@ -313,6 +162,7 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
   const [headingVisible, setHeadingVisible] = useState<Boolean>(false);
   const [lineHeight, setLineHeight] = useState<any>('');
   const [selection, setSelection] = useState<any>(null);
+  const [tableVisible, setTableVisible] = useState<any>(false);
   const [selected, setSelected] = useState<any>([]);
 
   // const { onOpen, onOpenChange} = useDisclosure();
@@ -343,13 +193,13 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
     setAlt('');setWidth('');setHeight('');setClassName('');setTitle('');setPreview('');
   };
 
-  const OpenDropdown = (list: String) => {
-    if (openDropdown == list) {
-      setOpenDropdown("");
-    } else {
-      setOpenDropdown(list);
-    }
-  };
+  // const OpenDropdown = (list: String) => {
+  //   if (openDropdown == list) {
+  //     setOpenDropdown("");
+  //   } else {
+  //     setOpenDropdown(list);
+  //   }
+  // };
   const handleSetSelect = (e: any) => {
     const current = e.target.closest(".grid");
     let selectRow = e.target.closest(".bg-stripes-pink").querySelectorAll(".select-row");
@@ -472,8 +322,8 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
   };
 
   const createRow = () => {
-    if (row) {
-
+    if (row) 
+    {
       // let newRow = JSON.parse(row);
       let editor = document.getElementById(EditorId);
       let editorBody = editor?.querySelector(".editor-body");
@@ -485,8 +335,9 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
           let rowElement = document.createElement("div");
           rowElement.setAttribute(
             "class",
-            "grid grid-cols-1 md:grid-cols-12 gap-4 relative pt-6 pb-4"
+            "grid grid-cols-1 md:grid-cols-12 gap-4 relative pt-6 pb-4 drag-sort-enable"
           );
+          rowElement.setAttribute("draggable","true");
           const controlBox = document.createElement("div");
           controlBox.setAttribute(
             "class",
@@ -497,14 +348,19 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
               <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
               </button>
           `;
+          const sortBtn = document.createElement('button');
+          sortBtn.setAttribute("class",'rounded px-2 py-1 text-slate-800 hover:bg-slate-300 sort-btn')
+          sortBtn.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="15" width="15" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10M.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8"></path></svg>`;
+
           const removeBtn = document.createElement("button");
           removeBtn.setAttribute("title", "Remove row");
           removeBtn.setAttribute(
             "class",
             "rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100 remove-row"
           );
+          removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
           rowElement.prepend(controlBox);
-          Array.from(row).map((v:any)=>
+          Array.from(row).map((v:any) =>
           {
             let column = document.createElement("div");
             column.setAttribute("class", v.col);
@@ -521,14 +377,12 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
               column.setAttribute("data-text", "image");
             }
             rowElement.append(column);
-            
-            removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
-            controlBox.append(removeBtn);
+            controlBox.append(sortBtn,removeBtn);
             editorBody?.append(rowElement);
           });
         }
-
       })
+      enableDragSort('drag-sort-enable');
     }
   };
 
@@ -680,23 +534,72 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
   }
   const LineHeight = (height:any) => {
     // document.execCommand("insertHTML", false, `<p style="line-height:${lineHeight};">${selection}</p>`);
-      document.execCommand('formatblock', false, 'p');
-      var selectedElement = null;
-      var selectedNodes:any = [];
-      //@ts-ignore
-      var sel = document.getElementById(EditorId).getSelection();
-      for (var i = 0; i < sel.rangeCount; i++) {
-          selectedNodes = selectedNodes.concat(sel.getRangeAt(i).getNodes());
-          selectedNodes.style.height = "20px";       
+      let setlection:any = document.getSelection();
+      for (var i = 0; i < setlection.rangeCount; i++) 
+      {
+        let nodes:any = getNodesInRange(setlection.getRangeAt(i));
+        Array.from(nodes).map((el:any, k:any)=>{
+          if (k == 0) {
+            try {
+              el.style.lineHeight = height;
+            } catch(e:any){
+              console.log(e.message)
+            }
+          }
+        })    
       }
-      //@ts-ignore
-      selectedElement = window.getSelection().focusNode.parentNode;
-      //@ts-ignore
-      selectedElement.style.height = "20px";
+  }
+  const ClearFormat = () => {
+    let setlection:any = document.getSelection();
+    for (var i = 0; i < setlection.rangeCount; i++) 
+    {
+      let nodes:any = getNodesInRange(setlection.getRangeAt(i));
+      Array.from(nodes).map((el:any, k:any)=>{
+        try {
+          el.removeAttribute('style');
+        } catch(e:any){
+          console.log(e.message)
+        }
+      })
+    }
   }
   const deleteRow = (e: any) => {
     e.closest(".grid").remove();
   };
+
+  const enableDragSort = (listClass:any) =>
+  {
+      const sortableLists = document.getElementsByClassName(listClass);
+      Array.prototype.map.call(sortableLists, (list) => {enableDragList(list)});
+  }
+  const enableDragList = (list:any) => Array.prototype.map.call(list.children, (item) => {enableDragItem(item)});
+  const enableDragItem = (item:any) =>
+  {
+      item.setAttribute('draggable', true)
+      item.ondrag = handleDrag;
+      item.ondragend = handleDrop;
+  }
+  const handleDrag = (item:any) =>
+  {
+    const selectedItem = item.target.closest('.grid'),
+          list = selectedItem.parentNode,
+          //@ts-ignore
+          x = event.clientX, y = event.clientY;
+
+    selectedItem.classList.add('focus');
+    let swapItem = document.elementFromPoint(x, y) === null ? selectedItem : document.elementFromPoint(x, y);
+    
+    if (list === swapItem.parentNode) {
+      swapItem = swapItem !== selectedItem.nextSibling ? swapItem : swapItem.nextSibling;
+      list.insertBefore(selectedItem, swapItem);
+    }
+  }
+  const handleDrop = (item:any) => item.target.closest('.grid').classList.remove('focus');
+  
+  
+  
+
+
   useEffect(() => {
     document.addEventListener("click", (e) => {
       const colText = e.target;
@@ -719,14 +622,13 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
       if(sourceCode){
         SourceCode(sourceCode);
       }
-       //@ts-ignore
-      const editor = e.target.closest(".editor");
     });
     //@ts-ignore
     document.getElementById(EditorId).addEventListener("selectstart", (e) => {
       //@ts-ignore
       handleSelectionChange(e.currentTarget)
     })
+    // enableDragSort('drag-sort-enable');
   }, []);
 
   function handleSelectionChange(): void {
@@ -737,6 +639,41 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
     const selection = document.getSelection();
     if (!selection || !selection.toString()) { return; }
     setSelection(selection);
+  }
+  
+
+
+  //@ts-ignore
+  const getNextNode = ({node, skipChildren, endNode}:any) =>
+  {
+    //if there are child nodes and we didn't come from a child node
+    if (endNode == node) return null;
+    if (node.firstChild && !skipChildren) return node.firstChild;
+    if (!node.parentNode) return null;
+    //@ts-ignore
+    return node.nextSibling || getNextNode(node.parentNode, true, endNode); 
+  };
+  const getNodesInRange = (range:any) =>
+  {
+      var start = range.startContainer;
+      var end = range.endContainer;
+      var commonAncestor = range.commonAncestorContainer;
+      var nodes = [];
+      var node;
+      // walk parent nodes from start to common ancestor
+      for (node = start.parentNode; node; node = node.parentNode)
+      {
+          nodes.push(node);
+          if (node == commonAncestor) break;
+      }
+      nodes.reverse();
+      // walk children and siblings from start until end is found
+      for (node = start; node; node = getNextNode(node))
+      {
+          nodes.push(node);
+          if (node == end) break;
+      }
+      return nodes;
   }
 
   return (
@@ -841,6 +778,7 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                     type="button"
                     title="Clear Formatting"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
+                    onClick={ClearFormat}
                   >
                     <BsEraser />
                   </button>
@@ -1105,17 +1043,19 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
                     >
                       <BsTable />
                     </button>
-                    <div
+                    <button
+                      type="button"
                       title="Heading"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
-                      onClick={() => OpenDropdown("table")}
+                      onMouseOver={()=>setTableVisible(true)} 
+                      onMouseOut={()=>setTableVisible(false)}
                     >
                       <RxCaretDown />
-                    </div>
-                    {openDropdown == "table" && (
-                      <TableList btn={{ setOpenDropdown }} />
-                    )}
+                      <TableList tableVisible={tableVisible} setTableVisible={setTableVisible} btn={{ setOpenDropdown }} />
+                    </button>
+       
+                 
                   </div>
                   <button
                     type="button"
@@ -1143,7 +1083,7 @@ const TextEditor = ({ id, dataId, dataType }: any) =>
             </div>
           </div>
           <div
-            className="editor-body border-t border-slate-300 min-h-100 p-2 focus:outline-none focus-visible:outline-none"
+            className="editor-body border-t border-slate-300 min-h-100 max-h-75vh p-2 focus:outline-none focus-visible:outline-none"
             suppressContentEditableWarning={true}
             contentEditable={false}
             aria-disabled="false"
