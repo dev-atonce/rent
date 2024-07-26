@@ -59,12 +59,6 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
       if(response) setAllImages(response.data);
     }
 
-  //   function removeElementAt(index:any) {
-  //     let frontPart = selectedImage.slice(0, index);
-  //     let lastPart  = selectedImage.slice( index + 1 ); // index to end of array
-  //     setSelectedImage([...frontPart, ...lastPart]);
-  //  }
-
     const formatFileSize = function (bytes:any) {
         const sufixes = ['B', 'kB', 'MB', 'GB', 'TB'];
         const i = Math.floor(Math.log(bytes) / Math.log(1024));
@@ -295,7 +289,7 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
               {select.imgTab == 'current' &&
                   <>
                     <Button 
-                      onClick={(e)=>select.insertImg(e)}
+                      onClick={(e)=>{select.insertImg(e); select.setCodeStateHandler();}}
                       // onPress={onClose}
                       className={`bg-blue-200 text-white font-bold hover:bg-blue-700 focus:ring focus:ring-blue-300 rounded-lg`}>
                       Save

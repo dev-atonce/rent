@@ -145,21 +145,22 @@ export default function ServiceForm({
       <div className="col-span-2">
         <div className="rounded-lg bg-white p-2">
           <label className="p-3">Detail</label>
-          <TextEditor 
-            dataType="project" 
-            dataId={id} 
-            id={`editForm${id}`} 
-            input={{
-              keyProp: "projectDetailTH",
-              placeholder: "Detail",
-              onChange: onChangeState,
-              state: serviceState,
-              required: true
-            }}
-          />
+          {languages?.map((i: any, k: any) =>
+            i?.toLowerCase() === langState && (
+            <TextEditor 
+              id= {`editForm${id}`} 
+              dataType="project" 
+              dataId={id} 
+              key={k}
+              setState={onChangeState}
+              state={serviceState}
+              prop={serviceState && `projectDetail${i}`}
+              placeholder="Detail"
+            />
+          ))}
         </div>
       </div>
-      <div className="col-span-2 ">
+      {/* <div className="col-span-2 ">
         <div className="flex gap-[1px] translate-y-2 translate-x-2 relative z-0">
           {languages.map((i: any, k: any) => (
             <button
@@ -183,7 +184,7 @@ export default function ServiceForm({
               />
             )
         )}
-      </div>
+      </div> */}
       <button
         onClick={onSaveGeneral}
         className="mt-[-20px] flex w-full col-span-2 justify-center rounded-lg bg-primary p-3 font-medium text-gray hover:bg-opacity-90"

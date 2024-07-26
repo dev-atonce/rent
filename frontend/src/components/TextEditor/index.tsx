@@ -27,7 +27,7 @@ import {
   RxDividerHorizontal,
 } from "react-icons/rx";
 import { CgUndo, CgRedo } from "react-icons/cg";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import ModalDialog from "../main/Modal";
 import ImageModal from "../main/Modal/ImageModal";
 import SourceCodeModal from "../main/Modal/SourceCodeModal";
@@ -81,7 +81,6 @@ const TableList = ({ tableVisible,setTableVisible, btn }: any) => {
                 onMouseOver={HoverSelect}
                 onClick={(el) => {
                   CreateTable(el);
-                  btn.setOpenDropdown("");
                   setTableVisible(false);
                 }}
                 //   @ts-ignore
@@ -135,7 +134,7 @@ const CreateTable = (el: any) => {
 
 
 // Main Component
-const TextEditor = ({ id, dataId, dataType, input}: any) => 
+const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}: any) => 
 {
 
   const EditorId = id ? id : new Date().getTime();
@@ -144,7 +143,6 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
   const [imgVisible, setImgVisible] = useState<Boolean>(false);
   const [codeVisible, setCodeVisible] = useState<Boolean>(false);
   const [row, setRow] = useState<any>();
-  const [openDropdown, setOpenDropdown] = useState<String>("");
   const [imgSelect, setImgSelect] = useState<any>([]);
   const [imgCount, setImgCount] = useState<any>(0);
   const [imgTab, setImgTab] = useState<String>("current");
@@ -157,11 +155,12 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
   const [sourceCode, setSourceCode] = useState<any>('');
   const [ulVisible, setUlVisible] = useState<Boolean>(false);
   const [olVisible, setOlVisible] = useState<Boolean>(false);
-  const [fontSizeVisible, setFontSizeVisible] = useState<any>('');
+  const [fontSizeVisible, setFontSizeVisible] = useState<any>(false);
   const [headingVisible, setHeadingVisible] = useState<Boolean>(false);
-  const [lineHeight, setLineHeight] = useState<any>('');
+  const [lineHeight, setLineHeight] = useState<any>(false);
   const [selection, setSelection] = useState<any>(null);
   const [tableVisible, setTableVisible] = useState<any>(false);
+  const editorRef = useRef<any>(null);
 
   // const { onOpen, onOpenChange} = useDisclosure();
 
@@ -170,12 +169,63 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
   const closeImgHandler = () => setImgVisible(false);
   const closeCodeHandler = () => setCodeVisible(false);
 
+  const fetchState = () => {
+    const editorBody:any = document.getElementById(EditorId)?.querySelector('.editor-body');
+    if(state && state[prop]){
+      console.log(state[prop])
+      const makeElement = document.createElement('div');
 
+      //
+      makeElement.innerHTML = state[prop];
+      makeElement.querySelectorAll('.grid')?.forEach((row:any)=>{
+        const controlElement = document.createElement("div");
+        controlElement.setAttribute(
+          "class",
+          "absolute bg-slate-300 row-panel right-0 top-0 overflow-hidden rounded-lg z-30"
+        );
+        controlElement.innerHTML = `
+            <button class="rounded px-2 py-1 text-slate-800 hover:bg-slate-300 source-code" title="Soure code">
+            <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
+            </button>
+        `;
+        const sortBtn = document.createElement('button');
+        sortBtn.setAttribute("class",'rounded px-2 py-1 text-slate-800 hover:bg-slate-300 sort-btn')
+        sortBtn.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="15" width="15" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10M.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8"></path></svg>`;
+  
+        const removeBtn = document.createElement("button");
+        removeBtn.setAttribute("title", "Remove row");
+        removeBtn.setAttribute(
+          "class",
+          "rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100 remove-row"
+        );
+        removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
+        controlElement.append(sortBtn,removeBtn)
+        row.prepend(controlElement);
+        row.querySelectorAll('[data-text="text"]')?.forEach((el:any)=>el.setAttribute('contenteditable', 'true'));
+      })
+      editorBody.innerHTML = makeElement.innerHTML;
+    }
+  }  
+  const setCodeStateHandler = () => {
+    const editorBody = document.getElementById(EditorId);
+    if(editorBody?.querySelector('.editor-body'))
+    {
+      let makeElement = document.createElement('div');
+      //@ts-ignore
+      makeElement.innerHTML = editorBody.querySelector('.editor-body').innerHTML;
+      makeElement.querySelectorAll('.row-panel').forEach((el:any)=>el.remove());
+      makeElement.querySelectorAll('[contenteditable="true"]').forEach((el:any)=>el.removeAttribute('contenteditable'));
+      makeElement.querySelectorAll('[draggable="true"]').forEach((el:any)=>el.removeAttribute('draggable'));
+      let newString = makeElement.innerHTML;
+      setState(newString, prop);
+    }
+  }
   const imgModal = (e: any) => {
+    e.preventDefault();
     setImgVisible(true);
-    remark(e.currentTarget);
-    const img = e.currentTarget.querySelector('img');
-    const title = e.currentTarget.querySelector('.img-title');
+    e.target.classList.toggle("img-remark");
+    const img = e.target.querySelector('img');
+    const title = e.target.querySelector('.img-title');
     if (img) {
       if(img.getAttribute('alt')) setAlt(img.getAttribute('alt')); else setAlt('');
       if(img.getAttribute('width')) setWidth(img.getAttribute('width')); else setWidth('');
@@ -191,20 +241,13 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
     setAlt('');setWidth('');setHeight('');setClassName('');setTitle('');setPreview('');
   };
 
-  // const OpenDropdown = (list: String) => {
-  //   if (openDropdown == list) {
-  //     setOpenDropdown("");
-  //   } else {
-  //     setOpenDropdown(list);
-  //   }
-  // };
   const handleSetSelect = (e: any) => {
     const current = e.target.closest(".grid");
     let selectRow = e.target.closest(".bg-stripes-pink").querySelectorAll(".select-row");
     let selectedRow:any = [];
     let count = selectRow ? selectRow.length : 0;
     let remove = 0;
-    let action = 'increment';
+    let action;
     if(current.classList.contains("select-row"))
     {
       action = 'decrement';
@@ -267,7 +310,7 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
     });
   };
   const remark = (e: any) => {
-    document.querySelector(".img-remark")?.classList.remove("img-remark");
+    // document.querySelector(".img-remark")?.classList.remove("img-remark");
     if (e) e.classList.toggle("img-remark");
   };
   const textRemark = (e: any) => {
@@ -320,8 +363,8 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
     if (row) 
     {
       // let newRow = JSON.parse(row);
-      let editor = document.getElementById(EditorId);
-      let editorBody = editor?.querySelector(".editor-body");
+      let editor:any = document.getElementById(EditorId);
+      let editorBody:any = editor?.querySelector(".editor-body");
       
       row.map((row: any, k: any) => 
       {
@@ -354,7 +397,9 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
             "rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100 remove-row"
           );
           removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
-          rowElement.prepend(controlBox);
+          controlBox.append(sortBtn,removeBtn);
+          rowElement.append(controlBox);
+
           Array.from(row).map((v:any) =>
           {
             let column = document.createElement("div");
@@ -366,18 +411,18 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
               column.onclick = textRemark;
             }
             if (v.content == "image") {
-              column.onclick = imgModal;
               column.classList.add("col-image","flex","justify-center","items-center","cursor-pointer");
               column.setAttribute("data-image", "true");
               column.setAttribute("data-text", "image");
+              column.onclick = imgModal;
             }
             rowElement.append(column);
-            controlBox.append(sortBtn,removeBtn);
-            editorBody?.append(rowElement);
           });
+          editorBody.append(rowElement);
         }
       })
       enableDragSort('drag-sort-enable');
+      setCodeStateHandler();
     }
   };
   const deleteRow = (e: any) => {
@@ -604,7 +649,7 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
   const handleDrop = (item:any) => item.target.closest('.grid').classList.remove('focus');
 
 
-  useEffect(() => {
+  useEffect(()=>{
     document.addEventListener("click", (e) => {
       const colText = e.target;
       // @ts-ignore
@@ -626,13 +671,28 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
       if(sourceCode){
         SourceCode(sourceCode);
       }
-    });
-    //@ts-ignore
-    document.getElementById(EditorId).addEventListener("selectstart", (e) => {
       //@ts-ignore
-      handleSelectionChange(e.currentTarget)
-    })
-  }, []);
+      const imageModal = e.target.closest('[data-image="true"]');
+      if(imageModal){ 
+        imgModal(e); 
+      }
+    });
+    // imgRef.current?.addEventListener("click", (e:any) => {
+    //   console.log(e.target);
+    //   //@ts-ignore
+    //   imgModal(e.target);
+    // });
+    if(state[prop]) fetchState();
+    editorRef.current = true;
+    return () => {
+      editorRef.current = false;
+    }
+    //@ts-ignore
+    // document.getElementById(EditorId).addEventListener("selectstart", (e) => {
+    //   //@ts-ignore
+    //   handleSelectionChange(e.currentTarget)
+    // })
+  },[state]);
 
   function handleSelectionChange(): void {
     document.onmouseup = () => retrieveSelection();
@@ -643,6 +703,7 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
     if (!selection || !selection.toString()) { return; }
     setSelection(selection);
   }
+  
   
 
 
@@ -679,6 +740,7 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
       return nodes;
   }
 
+  
   return (
     <>
       <ModalDialog
@@ -704,7 +766,8 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
           height,setHeight,
           className,setClassName,
           title,setTitle,
-          upload,removeImage
+          upload,removeImage,
+          setCodeStateHandler
         }}
         title="Image"
       />
@@ -721,13 +784,14 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
         className="rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark h-full overflow-hidden"
       >
         <textarea 
-          className="hidden" 
-          name={input.name} 
-          placeholder="" 
-          onChange={(e: any) => input.setState(e.target.value, input.keyProp)}
-          value={input.state && input.state[input.keyProp]}
+          className="hidden"
+          name={prop}
+          value={state && state[prop]}
+          // onChange={(e:any)=>setState(e.target.value, prop)}
+          // value={codeState}
+          placeholder={placeholder}
         ></textarea>
-        <div className="text-editor">
+        <div className="text-editor" >
           <div className="header">
             <div className="tools flex justify-stretch p-1">
               <div className="flex ">
@@ -1100,8 +1164,10 @@ const TextEditor = ({ id, dataId, dataType, input}: any) =>
             aria-disabled="false"
             tabIndex={-1}
             spellCheck="false"
+            ref={editorRef}
+            //@ts-ignore
+            // onInput={(e:any)=>setCodeStateHandler()}
           >
-            <p></p>
           </div>
           <div className="editor-footer p-2 border-slate-200 border-t">
             <div id="output"></div>
