@@ -160,7 +160,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   const [lineHeight, setLineHeight] = useState<any>(false);
   const [selection, setSelection] = useState<any>(null);
   const [tableVisible, setTableVisible] = useState<any>(false);
-  const [focus, setFocus] = useState<any>();
+
   const editorRef = useRef<any>(null);
 
   // const { onOpen, onOpenChange} = useDisclosure();
@@ -172,6 +172,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
 
   const setCodeStateHandler = () => {
     const editorBody = document.getElementById(EditorId);
+    console.log(editorBody)
     if(editorBody?.querySelector('.editor-body'))
     {
       let makeElement = document.createElement('div');
@@ -187,9 +188,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   const fetchState = () => {
     const editorBody:any = document.getElementById(EditorId)?.querySelector('.editor-body');
     if(state && state[prop]){
-      console.log(state[prop])
       const makeElement = document.createElement('div');
-
       //
       makeElement.innerHTML = state[prop];
       makeElement.querySelectorAll('.grid')?.forEach((row:any)=>{
@@ -223,9 +222,6 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
         });
       })
       editorBody.innerHTML = makeElement.innerHTML;
-      editorBody.querySelectorAll('[contenteditable="true"]')?.forEach((el:any)=>{
-        el.onblur = setCodeStateHandler;
-      });
       enableDragSort('drag-sort-enable');
     }
   }  
@@ -338,7 +334,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   }
   const copyToSelect = () => {
     setImgTab('current');
-    imgSelect.map((v: any, k: any) => { setPreview(v) });
+    imgSelect.map((v: any) => { setPreview(v) });
   }
   const insertImg = (el:any) => {
     const preview = el.currentTarget.closest('.modal-content').querySelector('.preview');
@@ -548,21 +544,21 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   }
   // 10. Under Order List (ul)
   const UnderOrderList = (style:any) => {
-    if(selection){
-      document.execCommand('insertHTML', false, `<ul class="${style} ml-6"><li>${selection}</li></ul>`);
-      setTimeout(()=>{
-        setUlVisible(false);
-      },100);
-    }
+    let selection = document.getSelection();
+    document.execCommand('insertHTML', false, `<ul class="${style} ml-6"><li>${selection}</li></ul>`);
+    setTimeout(()=>{
+      setUlVisible(false);
+    },100);
+    
   }
   // 11. Order List (ol)
   const OrderList = (style:any) => {
-    if(selection){
-      document.execCommand('insertHTML', false, `<ol class="${style} ml-6"><li>${selection}</li></ol>`);
-      setTimeout(()=>{
-        setUlVisible(false);
-      },100);
-    }
+    let selection = document.getSelection();
+    document.execCommand('insertHTML', false, `<ol class="${style} ml-6"><li>${selection}</li></ol>`);
+    setTimeout(()=>{
+      setUlVisible(false);
+    },100);
+    
   }
   // 14. Font size
   const FontSize = (size:any) => {
@@ -621,8 +617,6 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   // 22. Full screen
   const fullScreenMode = () => document.getElementById(EditorId)?.classList.toggle('full-screen-mode');
   
-  
-
   const enableDragSort = (listClass:any) =>
   {
       const sortableLists = document.getElementsByClassName(listClass);
@@ -632,9 +626,9 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   const enableDragItem = (item:any) =>
   {
       item.setAttribute('draggable', true);
-      if(item.querySelector('.sort-btn')){
-
-        item.ondrag = handleDrag;
+      if(item.querySelector('.sort-btn'))
+      {
+        item.ondrag = handleDrag
         item.ondragend = handleDrop;
       }
   }
@@ -654,38 +648,50 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
     }
   }
   const handleDrop = (item:any) => item.target.closest('.grid').classList.remove('focus');
-
-  let timer:any,timeoutVal = 1000; // 
-  function handleKeyPress() {
-    window.clearTimeout(timer);
-  }
-
-  function handleKeyUp() {
-    window.clearTimeout(timer);
-    timer = window.setTimeout(() => {
-      setCodeStateHandler()
-    },timeoutVal)
-  }  
-  const onBlur = (e:any) => {
-    if (
-      focus !== e.currentTarget &&
-      !e.currentTarget.contains(focus)
-    ) {
-      setCodeStateHandler();
+  //@ts-ignore
+  const getNextNode = ({node, skipChildren, endNode}:any) =>
+    {
+      //if there are child nodes and we didn't come from a child node
+      if (endNode == node) return null;
+      if (node.firstChild && !skipChildren) return node.firstChild;
+      if (!node.parentNode) return null;
+      //@ts-ignore
+      return node.nextSibling || getNextNode(node.parentNode, true, endNode); 
+    };
+    const getNodesInRange = (range:any) =>
+    {
+        var start = range.startContainer;
+        var end = range.endContainer;
+        var commonAncestor = range.commonAncestorContainer;
+        var nodes = [];
+        var node;
+        // walk parent nodes from start to common ancestor
+        for (node = start.parentNode; node; node = node.parentNode)
+        {
+            nodes.push(node);
+            if (node == commonAncestor) break;
+        }
+        nodes.reverse();
+        // walk children and siblings from start until end is found
+        for (node = start; node; node = getNextNode(node))
+        {
+            nodes.push(node);
+            if (node == end) break;
+        }
+        return nodes;
     }
-  }
+    const HandlerState = (e:any) => {
+      console.log(e.target.closest(".text-editor"));
+    }
 
   useEffect(()=>{
+
     document.addEventListener("click", (e) => {
-      const colText = e.target;
-      // @ts-ignore
-      if (colText.nodeName == "th") {
-        console.log(colText);
-      }
       // @ts-ignore
       const removeRowBtn = e.target.closest(".remove-row");
       if (removeRowBtn) {
         deleteRow(removeRowBtn);
+        setCodeStateHandler();
       }
       //@ts-ignore
       const txtRemark = e.target.closest(".txt-remark");
@@ -707,20 +713,13 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
       const contentEditable = e.target.closest('[contenteditable="true"]');
       if(contentEditable){
         textRemark(e)   
-        setFocus(e);
+      }    
+      //@ts-ignore
+      const editor = e.target.closest('.text-editor');
+      if(!editor){
+        setCodeStateHandler();
       }
-
-      
     });
-    // document.addEventListener("keypress", (e) => {
-    //   //@ts-ignore
-    //   if( e.target.getAttribute('contenteditable') == 'true') handleKeyPress();
-    // });
-    // document.addEventListener("keyup", (e) => {
-    //    //@ts-ignore
-    //    if( e.target.getAttribute('contenteditable') == 'true') handleKeyUp();
-    // });
-    
 
     if(state[prop]) fetchState();
     editorRef.current = true;
@@ -728,44 +727,6 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
       editorRef.current = false;
     }
   },[state]);
-
-
-  
-
-
-  //@ts-ignore
-  const getNextNode = ({node, skipChildren, endNode}:any) =>
-  {
-    //if there are child nodes and we didn't come from a child node
-    if (endNode == node) return null;
-    if (node.firstChild && !skipChildren) return node.firstChild;
-    if (!node.parentNode) return null;
-    //@ts-ignore
-    return node.nextSibling || getNextNode(node.parentNode, true, endNode); 
-  };
-  const getNodesInRange = (range:any) =>
-  {
-      var start = range.startContainer;
-      var end = range.endContainer;
-      var commonAncestor = range.commonAncestorContainer;
-      var nodes = [];
-      var node;
-      // walk parent nodes from start to common ancestor
-      for (node = start.parentNode; node; node = node.parentNode)
-      {
-          nodes.push(node);
-          if (node == commonAncestor) break;
-      }
-      nodes.reverse();
-      // walk children and siblings from start until end is found
-      for (node = start; node; node = getNextNode(node))
-      {
-          nodes.push(node);
-          if (node == end) break;
-      }
-      return nodes;
-  }
-
   
   return (
     <>
@@ -806,6 +767,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
         title="Source Code"
       />
       <div
+        
         id={EditorId}
         className="rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark h-full overflow-hidden"
       >
@@ -813,11 +775,9 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
           className="hidden"
           name={prop}
           value={state && state[prop]}
-          // onChange={(e:any)=>setState(e.target.value, prop)}
-          // value={codeState}
           placeholder={placeholder}
         ></textarea>
-        <div className="text-editor" >
+        <div className="text-editor" onBlur={HandlerState}>
           <div className="header">
             <div className="tools flex justify-stretch p-1">
               <div className="flex ">
@@ -960,7 +920,6 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
                         </ul>
                       </div>
                     </button>
-                    {/* <DropdownUnorderedList id={`dropdownDivider`} ulVisible={ulVisible} UnderOrderList={UnderOrderList}/> */}
                   </div>
                   <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
                     <button
@@ -978,7 +937,6 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
                       title="Ordered"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
-                      // onClick={(e) =>{ e.preventDefault(); OpenDropdown("ordered"); }}
                       onMouseOver={()=>setOlVisible(true)} onMouseOut={()=>setOlVisible(false)}
                     >
                       <RxCaretDown />
@@ -1104,6 +1062,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
                       <RxLineHeight />
                     </button>
                     <button
+                      type="button"
                       title="Heading"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
@@ -1155,8 +1114,6 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
                       <RxCaretDown />
                       <TableList tableVisible={tableVisible} setTableVisible={setTableVisible}/>
                     </button>
-       
-                 
                   </div>
                   <button
                     type="button"
@@ -1199,9 +1156,9 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
             <div id="output"></div>
             <Button
               onPress={handler}
-              className="bg-primary text-white hover:text-slate-200 hover:bg-blue-500 rounded-lg p-2 text-sm font-bold"
+              className="bg-indigo-400 text-white text-xs hover:bg-indigo-500 rounded-lg py-0 px-2 font-bold"
             >
-              Add row
+              Add Row
             </Button>
           </div>
         </div>
