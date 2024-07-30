@@ -17,7 +17,7 @@ export default async function RentMainCatPage({ params: { id } }: any) {
       <Loading />
       <Cover
         pageName={data[0]?.mainCategory.nameTH}
-        prevPage={{ pageName: "สินค้าเช่า", url: "/rent-product" }}
+        prevPage={{ pageName: "สินค้าเช่า", url: "/rental-product" }}
       />
       <div className="container mx-auto">
         <ProductGrid
