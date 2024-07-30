@@ -18,6 +18,15 @@ const methods = {
       res.error(error);
     }
   },
+
+  async onGetBySubCategory(req, res) {
+    try {
+      let result = await Product.findBySubCategory(req);
+      res.success(result);
+    } catch (error) {
+      res.error(error);
+    }
+  },
 };
 
 module.exports = { ...methods };

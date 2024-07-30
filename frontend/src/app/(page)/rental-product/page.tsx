@@ -1,7 +1,6 @@
 import Cover from "@/components/main/Cover/Cover";
 import Loading from "@/components/main/Loading/Loading";
 import Product from "@/components/main/Product/Product";
-import ProductGrid from "@/components/main/ProductGrid/ProductGrid";
 import { Metadata, ResolvingMetadata } from "next";
 
 const pageName = "rental-product";
