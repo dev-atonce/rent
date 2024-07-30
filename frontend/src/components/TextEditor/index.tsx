@@ -160,6 +160,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   const [lineHeight, setLineHeight] = useState<any>(false);
   const [selection, setSelection] = useState<any>(null);
   const [tableVisible, setTableVisible] = useState<any>(false);
+  const [focus, setFocus] = useState<any>();
   const editorRef = useRef<any>(null);
 
   // const { onOpen, onOpenChange} = useDisclosure();
@@ -169,6 +170,20 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   const closeImgHandler = () => setImgVisible(false);
   const closeCodeHandler = () => setCodeVisible(false);
 
+  const setCodeStateHandler = () => {
+    const editorBody = document.getElementById(EditorId);
+    if(editorBody?.querySelector('.editor-body'))
+    {
+      let makeElement = document.createElement('div');
+      //@ts-ignore
+      makeElement.innerHTML = editorBody.querySelector('.editor-body').innerHTML;
+      makeElement.querySelectorAll('.row-panel').forEach((el:any)=>el.remove());
+      makeElement.querySelectorAll('[contenteditable="true"]').forEach((el:any)=>el.removeAttribute('contenteditable'));
+      makeElement.querySelectorAll('[draggable="true"]').forEach((el:any)=>el.removeAttribute('draggable'));
+      let newString = makeElement.innerHTML;
+      setState(newString, prop);
+    }
+  }
   const fetchState = () => {
     const editorBody:any = document.getElementById(EditorId)?.querySelector('.editor-body');
     if(state && state[prop]){
@@ -191,7 +206,8 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
         const sortBtn = document.createElement('button');
         sortBtn.setAttribute("class",'rounded px-2 py-1 text-slate-800 hover:bg-slate-300 sort-btn')
         sortBtn.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="15" width="15" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10M.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8"></path></svg>`;
-  
+        sortBtn.setAttribute("draggable","true");
+
         const removeBtn = document.createElement("button");
         removeBtn.setAttribute("title", "Remove row");
         removeBtn.setAttribute(
@@ -201,25 +217,19 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
         removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
         controlElement.append(sortBtn,removeBtn)
         row.prepend(controlElement);
-        row.querySelectorAll('[data-text="text"]')?.forEach((el:any)=>el.setAttribute('contenteditable', 'true'));
+        row.querySelectorAll('[data-image="true"]').forEach((el:any)=> el.click = imgRemark);
+        row.querySelectorAll('[data-text="text"]')?.forEach((el:any)=>{
+          el.setAttribute('contenteditable', 'true');
+        });
       })
       editorBody.innerHTML = makeElement.innerHTML;
+      editorBody.querySelectorAll('[contenteditable="true"]')?.forEach((el:any)=>{
+        el.onblur = setCodeStateHandler;
+      });
+      enableDragSort('drag-sort-enable');
     }
   }  
-  const setCodeStateHandler = () => {
-    const editorBody = document.getElementById(EditorId);
-    if(editorBody?.querySelector('.editor-body'))
-    {
-      let makeElement = document.createElement('div');
-      //@ts-ignore
-      makeElement.innerHTML = editorBody.querySelector('.editor-body').innerHTML;
-      makeElement.querySelectorAll('.row-panel').forEach((el:any)=>el.remove());
-      makeElement.querySelectorAll('[contenteditable="true"]').forEach((el:any)=>el.removeAttribute('contenteditable'));
-      makeElement.querySelectorAll('[draggable="true"]').forEach((el:any)=>el.removeAttribute('draggable'));
-      let newString = makeElement.innerHTML;
-      setState(newString, prop);
-    }
-  }
+ 
   const imgModal = (e: any) => {
     e.preventDefault();
     setImgVisible(true);
@@ -309,15 +319,15 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
       v.classList.remove("image-select");
     });
   };
-  const remark = (e: any) => {
-    // document.querySelector(".img-remark")?.classList.remove("img-remark");
-    if (e) e.classList.toggle("img-remark");
+  const imgRemark = (e: any) => {
+    document.querySelector(".img-remark")?.classList.remove("img-remark");
+    if (e) e.classList.add("img-remark");
   };
   const textRemark = (e: any) => {
     document.querySelector(".txt-remark")?.classList.remove("txt-remark");
-    if (e.currentTarget) {
-      e.currentTarget.classList.toggle("txt-remark");
-      e.currentTarget.focus();
+    if (e?.target) {
+      e.target.classList.add("txt-remark");
+      e.target.focus();
       e.preventDefault();
     }
   };
@@ -362,7 +372,6 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   const createRow = () => {
     if (row) 
     {
-      // let newRow = JSON.parse(row);
       let editor:any = document.getElementById(EditorId);
       let editorBody:any = editor?.querySelector(".editor-body");
       
@@ -408,13 +417,11 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
               column.setAttribute("contenteditable", "true");
               column.setAttribute("data-text", "text");
               column.classList.add("col-text");
-              column.onclick = textRemark;
             }
             if (v.content == "image") {
               column.classList.add("col-image","flex","justify-center","items-center","cursor-pointer");
               column.setAttribute("data-image", "true");
               column.setAttribute("data-text", "image");
-              column.onclick = imgModal;
             }
             rowElement.append(column);
           });
@@ -648,6 +655,25 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   }
   const handleDrop = (item:any) => item.target.closest('.grid').classList.remove('focus');
 
+  let timer:any,timeoutVal = 1000; // 
+  function handleKeyPress() {
+    window.clearTimeout(timer);
+  }
+
+  function handleKeyUp() {
+    window.clearTimeout(timer);
+    timer = window.setTimeout(() => {
+      setCodeStateHandler()
+    },timeoutVal)
+  }  
+  const onBlur = (e:any) => {
+    if (
+      focus !== e.currentTarget &&
+      !e.currentTarget.contains(focus)
+    ) {
+      setCodeStateHandler();
+    }
+  }
 
   useEffect(()=>{
     document.addEventListener("click", (e) => {
@@ -665,6 +691,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
       const txtRemark = e.target.closest(".txt-remark");
       if(!txtRemark){
         document.querySelector(".txt-remark")?.classList.remove("txt-remark");
+        // setCodeStateHandler();
       }
       //@ts-ignore
       const sourceCode = e.target.closest(".source-code");
@@ -676,34 +703,33 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
       if(imageModal){ 
         imgModal(e); 
       }
+      //@ts-ignore
+      const contentEditable = e.target.closest('[contenteditable="true"]');
+      if(contentEditable){
+        textRemark(e)   
+        setFocus(e);
+      }
+
+      
     });
-    // imgRef.current?.addEventListener("click", (e:any) => {
-    //   console.log(e.target);
+    // document.addEventListener("keypress", (e) => {
     //   //@ts-ignore
-    //   imgModal(e.target);
+    //   if( e.target.getAttribute('contenteditable') == 'true') handleKeyPress();
     // });
+    // document.addEventListener("keyup", (e) => {
+    //    //@ts-ignore
+    //    if( e.target.getAttribute('contenteditable') == 'true') handleKeyUp();
+    // });
+    
+
     if(state[prop]) fetchState();
     editorRef.current = true;
     return () => {
       editorRef.current = false;
     }
-    //@ts-ignore
-    // document.getElementById(EditorId).addEventListener("selectstart", (e) => {
-    //   //@ts-ignore
-    //   handleSelectionChange(e.currentTarget)
-    // })
   },[state]);
 
-  function handleSelectionChange(): void {
-    document.onmouseup = () => retrieveSelection();
-    document.onkeyup = () => retrieveSelection();
-  }
-  function retrieveSelection() : void {
-    const selection = document.getSelection();
-    if (!selection || !selection.toString()) { return; }
-    setSelection(selection);
-  }
-  
+
   
 
 
@@ -1166,7 +1192,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
             spellCheck="false"
             ref={editorRef}
             //@ts-ignore
-            // onInput={(e:any)=>setCodeStateHandler()}
+            
           >
           </div>
           <div className="editor-footer p-2 border-slate-200 border-t">

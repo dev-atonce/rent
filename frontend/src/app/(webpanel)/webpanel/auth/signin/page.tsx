@@ -301,7 +301,7 @@ const SignIn = () => {
                 <div className="mt-6 text-center">
                   <p>
                     Don’t have any account?{" "}
-                    <p className="text-primary">Contact your Website Admin</p>
+                    <span className="text-primary">Contact your Website Admin</span>
                   </p>
                 </div>
               </form>

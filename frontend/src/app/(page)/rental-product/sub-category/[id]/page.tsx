@@ -1,44 +1,25 @@
 import Cover from "@/components/main/Cover/Cover";
 import Loading from "@/components/main/Loading/Loading";
-import Product from "@/components/main/Product/Product";
 import ProductGrid from "@/components/main/ProductGrid/ProductGrid";
 
 const fetchProduct = async (id: any) => {
   const subCat = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/product`,
-    { cache: "no-store" }
-    // `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product/all`
-  );
-  const products = await subCat.json();
-
-  const filteredProducts = products.rows.filter(
-    (i: any) => i?.subCategory?.id == id && i?.type == "rent"
-  );
-
-  return filteredProducts;
-};
-
-const fetchSubCat = async (id: any) => {
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/category-sub/${id}`,
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/product/sub-category/rent/${id}`,
     { cache: "no-store" }
   );
-  const data = await res.json();
-
-  return data;
+  return await subCat.json();
 };
 
 export default async function RentSubCatPage({ params: { id } }: any) {
   const data = await fetchProduct(id);
-  const subCatData = await fetchSubCat(id);
   return (
     <>
       <Loading />
       <Cover
-        pageName={subCatData?.nameTH}
+        pageName={data[0].subCategory.nameTH}
         prevPage={{
-          pageName: subCatData?.mainCategory?.nameTH,
-          url: `/rental-product/main-category/${subCatData?.mainCategory?.id}`,
+          pageName: data[0].subCategory.mainCategory.nameTH,
+          url: `/rental-product/main-category/${data[0].subCategory.mainCategory.id}`,
         }}
       />
 
