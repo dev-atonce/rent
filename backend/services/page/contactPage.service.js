@@ -55,38 +55,6 @@ const methods = {
       return Promise.reject(ErrorNotFound("id: not found"));
     }
   },
-
-  async insert(data) {
-    try {
-      const obj = new Contact(data.body);
-      const inserted = await obj.save();
-      return inserted;
-    } catch (error) {
-      return Promise.reject(ErrorBadRequest(error.message));
-    }
-  },
-
-  async update(id, data) {
-    try {
-      const obj = await Contact.findById(id);
-      if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
-      await Contact.updateOne({ _id: id }, data);
-      return Object.assign(obj, data);
-    } catch (error) {
-      return Promise.reject(ErrorBadRequest(error.message));
-    }
-  },
-
-  async delete(id) {
-    try {
-      const obj = await Contact.findById(id);
-      if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
-      await Contact.deleteOne({ _id: id });
-      return { msg: "deleted success" };
-    } catch (error) {
-      return Promise.reject(ErrorBadRequest(error.message));
-    }
-  },
 };
 
 module.exports = { ...methods };

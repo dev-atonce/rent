@@ -6,15 +6,15 @@ const methods = {
   async find(req) {
     try {
       const rows = await Product.find({ status: true })
-      .populate({
-        path: "subCategory",
-        select: "nameTH mainCategory",
-        populate: {
-          path: "mainCategory",
-          select: "nameTH",
-        },
-      })
-      .sort({ sort: "asc" });
+        .populate({
+          path: "subCategory",
+          select: "nameTH mainCategory",
+          populate: {
+            path: "mainCategory",
+            select: "nameTH",
+          },
+        })
+        .sort({ sort: "asc" });
       const count = await Product.countDocuments({ status: true });
 
       return {
@@ -34,6 +34,26 @@ const methods = {
         populate: {
           path: "mainCategory",
           select: "nameTH",
+        },
+      });
+      if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
+      return obj;
+    } catch (error) {
+      return Promise.reject(ErrorNotFound("id: not found"));
+    }
+  },
+
+  async findBySubCategory(req) {
+    try {
+      const obj = await Product.find({
+        subCategory: req.params.id,
+        type: req.params.type,
+      }).populate({
+        path: "subCategory",
+        select: "nameTH mainCategory",
+        populate: {
+          path: "mainCategory",
+          select: "_id nameTH",
         },
       });
       if (!obj) return Promise.reject(ErrorNotFound("id: not found"));

@@ -1,8 +1,6 @@
 import Cover from "@/components/main/Cover/Cover";
 import Loading from "@/components/main/Loading/Loading";
-import Product from "@/components/main/Product/Product";
 import ProductContent from "@/components/main/Product/ProductContent";
-import ProductGrid from "@/components/main/ProductGrid/ProductGrid";
 
 const fetchProduct = async (id: any) => {
   const res = await fetch(
