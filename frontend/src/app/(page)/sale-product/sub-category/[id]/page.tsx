@@ -12,8 +12,7 @@ const fetchProduct = async (id: any) => {
   const filteredProducts = products.rows.filter(
     (i: any) => i?.subCategory?.id == id && i?.type == "sale"
   );
-  // console.log(products);
-  // console.log(filteredProducts);
+
   return filteredProducts;
 };
 
