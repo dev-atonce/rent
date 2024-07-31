@@ -36,6 +36,7 @@ export default function EditServicePage({
       descriptionEN: string;
     };
   }
+  const EditorId = new Date().getTime();
 
   const { onSave, onFetchOne, onDeleteGallery }: any = useContext(FetchContext);
   const [serviceState, setServiceState] = useState({} as any);
@@ -88,7 +89,7 @@ export default function EditServicePage({
 
   // Tracking Form Change
   const onChangeState = (e: any, field: string) => {
-    setServiceState((prevState: any) => ({ ...prevState, [field]: e }));
+    setServiceState((prevState: any) => ({ ...prevState, [field]: e }));   
   };
   const onChangeSeoState = (e: any, field: string) => {
     setServiceState((prevState: any) => ({
@@ -118,16 +119,18 @@ export default function EditServicePage({
         pageName={serviceState?.originalTitleTH}
         prevPage={{ pageName: "Project", url: "/webpanel/project" }}
       />
-
       <ServiceForm
         languages={languages}
         onSaveGeneral={onSaveGeneral}
         serviceState={serviceState}
+        setServiceState={setServiceState}
         onChangeState={onChangeState}
         id={id}
         onSaveSeo={onSaveSeo}
         onChangeSeoState={onChangeSeoState}
         onDeleteImageGallery={onDeleteImageGallery}
+        editor={true}
+        editorName={['projectDetail']}
       />
     </DefaultLayout>
   );

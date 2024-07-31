@@ -10,16 +10,6 @@ import {
 
 import { useEffect, useState } from "react";
 import { MdCloudUpload, MdArrowBackIos, MdOutlineSearch, MdRefresh } from "react-icons/md";
-
-// const mediaImages = [
-//   {"src":"Rectangle 114.png","alt":"Rectangle 114"},
-//   {"src":"Rectangle 136.png","alt":"Rectangle 136"},
-//   {"src":"Rectangle 137.png","alt":"Rectangle 137"},
-//   {"src":"Rectangle 138.png","alt":"Rectangle 138"},
-//   {"src":"Rectangle 139.png","alt":"Rectangle 139"},
-//   {"src":"Rectangle 147.png","alt":"Rectangle 147"},
-// ];
-
  
 export default function ImageModal({imgVisible, closeImgHandler, title, select, dataId}:any)
 {
@@ -65,10 +55,7 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
         return `${(bytes / Math.pow(1024, i)).toFixed(2)} ${sufixes[i]}`;
     };
 
-    const SetImageTitle = (e:any) => {
-      let change = e.currentTarget.checked == true ? false : true;
-      setImgTitle(change);
-    }
+
 
     return <>
       <Modal 
@@ -114,7 +101,7 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
                             </div>
                           </div>
                         </div>
-                        <div className="grid grid-cols-1 gap-4">
+                        <div className="grid grid-cols-1 gap-4 mt-2">
                           <div>
                             <label className="font-medium text-slate-900 dark:text-slate-30" htmlFor="label">alt:</label>
                             <input
@@ -128,7 +115,7 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
                             />
                           </div>
                         </div>
-                        <div className="grid grid-cols-12 gap-4">
+                        <div className="grid grid-cols-12 gap-4 mt-2">
                           <div className="col-span-8">
                           <label className="font-medium text-slate-900 dark:text-slate-30" htmlFor="className">class name:</label>
                             <input
@@ -166,25 +153,12 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
                             />
                           </div>
                         </div>
-                        <div className="grid grid-cols-4 gap-4 mt-3">
-                          <div className="flex items-center mb-4">
-                              <input 
-                                id="default-checkbox" 
-                                type="checkbox"
-                                onChange={SetImageTitle} 
-                                value={select.imageTitle}
-                                className="w-4 h-4 outline-none text-blue-600 bg-slate-100 border-slate-300 rounded dark:bg-slate-700 dark:border-slate-600" 
-                              />
-                              <label htmlFor="default-checkbox" className="ms-2 text-sm font-medium text-slate-900 dark:text-slate-300">Image title</label>
-                          </div>
-                        </div>
                         <div className="grid grid-cols-4 gap-4">
-                          <div className="col-span-2">
+                          <div className="col-span-2 mt-2">
+                          <label className="font-medium text-slate-900 dark:text-slate-30" htmlFor="height">Image label:</label>
                             <input
                               type="text"
-                              placeholder={"Image title"}
-                              //@ts-ignore
-                              disabled={imgTitile}
+                              placeholder={"Image label"}
                               onKeyUp={(e)=>select.setTitle(e.currentTarget.value)}
                               onChange={(e)=>select.setTitle(e.currentTarget.value)}
                               value={select.title ? select.title : ""}
@@ -289,7 +263,7 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
               {select.imgTab == 'current' &&
                   <>
                     <Button 
-                      onClick={(e)=>{select.insertImg(e); select.setCodeStateHandler();}}
+                      onClick={(e)=>select.insertImg(e)}
                       // onPress={onClose}
                       className={`bg-blue-200 text-white font-bold hover:bg-blue-700 focus:ring focus:ring-blue-300 rounded-lg`}>
                       Save

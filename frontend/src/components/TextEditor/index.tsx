@@ -134,7 +134,7 @@ const CreateTable = (el: any) => {
 
 
 // Main Component
-const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}: any) => 
+const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placeholder}: any) => 
 {
 
   const EditorId = id ? id : new Date().getTime();
@@ -158,8 +158,8 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   const [fontSizeVisible, setFontSizeVisible] = useState<any>(false);
   const [headingVisible, setHeadingVisible] = useState<Boolean>(false);
   const [lineHeight, setLineHeight] = useState<any>(false);
-  const [selection, setSelection] = useState<any>(null);
   const [tableVisible, setTableVisible] = useState<any>(false);
+  const [HTML , setHTML] = useState<any>('');
 
   const editorRef = useRef<any>(null);
 
@@ -172,7 +172,6 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
 
   const setCodeStateHandler = () => {
     const editorBody = document.getElementById(EditorId);
-    console.log(editorBody)
     if(editorBody?.querySelector('.editor-body'))
     {
       let makeElement = document.createElement('div');
@@ -182,15 +181,23 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
       makeElement.querySelectorAll('[contenteditable="true"]').forEach((el:any)=>el.removeAttribute('contenteditable'));
       makeElement.querySelectorAll('[draggable="true"]').forEach((el:any)=>el.removeAttribute('draggable'));
       let newString = makeElement.innerHTML;
-      setState(newString, prop);
+      setState(newString,prop);
     }
   }
-  const fetchState = () => {
-    const editorBody:any = document.getElementById(EditorId)?.querySelector('.editor-body');
-    if(state && state[prop]){
+  const setSubState = () => {
+    if(HTML=='') { 
+      setHTML(state && state[prop]); 
+      fetchSubState();
+    }
+  }
+  const fetchSubState = () => {
+    const textareaEl:any = document.querySelector(`textarea[name="${prop}"]`);
+    if(textareaEl.value)
+    {
+      const editorBody:any = document.getElementById(EditorId)?.querySelector('.editor-body');
       const makeElement = document.createElement('div');
       //
-      makeElement.innerHTML = state[prop];
+      makeElement.innerHTML = textareaEl.value;
       makeElement.querySelectorAll('.grid')?.forEach((row:any)=>{
         const controlElement = document.createElement("div");
         controlElement.setAttribute(
@@ -224,14 +231,15 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
       editorBody.innerHTML = makeElement.innerHTML;
       enableDragSort('drag-sort-enable');
     }
-  }  
+  }
  
   const imgModal = (e: any) => {
     e.preventDefault();
     setImgVisible(true);
-    e.target.classList.toggle("img-remark");
-    const img = e.target.querySelector('img');
-    const title = e.target.querySelector('.img-title');
+    // console.log(e.target.closest('.col-image'))
+    let col = e.target.closest('.col-image');
+    const img = col.querySelector('img');
+    const title = col.querySelector('.img-title');
     if (img) {
       if(img.getAttribute('alt')) setAlt(img.getAttribute('alt')); else setAlt('');
       if(img.getAttribute('width')) setWidth(img.getAttribute('width')); else setWidth('');
@@ -317,7 +325,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   };
   const imgRemark = (e: any) => {
     document.querySelector(".img-remark")?.classList.remove("img-remark");
-    if (e) e.classList.add("img-remark");
+    if (e) e.closest('.col-image').classList.add("img-remark");
   };
   const textRemark = (e: any) => {
     document.querySelector(".txt-remark")?.classList.remove("txt-remark");
@@ -339,6 +347,8 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   const insertImg = (el:any) => {
     const preview = el.currentTarget.closest('.modal-content').querySelector('.preview');
     const remark = document.querySelector(".img-remark");
+    console.log(remark);
+    
     if (remark) {
         remark.querySelectorAll("img")?.forEach((v) => { v.remove() });
         let img = document.createElement("img");
@@ -361,7 +371,6 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
         remark.classList.remove("img-remark");
         setImgSelect([]);
         setPreview('');
-      
     }
   };
 
@@ -566,7 +575,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   }
   // 15.
   const Heading = (select: String) => {
-    document.getSelection();
+    let selection = document.getSelection();
     let className = '';
     switch (select) {
         case 'h1': className = 'text-4xl font-bold mb-3'; break;
@@ -650,54 +659,46 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
   const handleDrop = (item:any) => item.target.closest('.grid').classList.remove('focus');
   //@ts-ignore
   const getNextNode = ({node, skipChildren, endNode}:any) =>
-    {
-      //if there are child nodes and we didn't come from a child node
-      if (endNode == node) return null;
-      if (node.firstChild && !skipChildren) return node.firstChild;
-      if (!node.parentNode) return null;
-      //@ts-ignore
-      return node.nextSibling || getNextNode(node.parentNode, true, endNode); 
-    };
-    const getNodesInRange = (range:any) =>
-    {
-        var start = range.startContainer;
-        var end = range.endContainer;
-        var commonAncestor = range.commonAncestorContainer;
-        var nodes = [];
-        var node;
-        // walk parent nodes from start to common ancestor
-        for (node = start.parentNode; node; node = node.parentNode)
-        {
-            nodes.push(node);
-            if (node == commonAncestor) break;
-        }
-        nodes.reverse();
-        // walk children and siblings from start until end is found
-        for (node = start; node; node = getNextNode(node))
-        {
-            nodes.push(node);
-            if (node == end) break;
-        }
-        return nodes;
-    }
-    const HandlerState = (e:any) => {
-      console.log(e.target.closest(".text-editor"));
-    }
+  {
+    //if there are child nodes and we didn't come from a child node
+    if (endNode == node) return null;
+    if (node.firstChild && !skipChildren) return node.firstChild;
+    if (!node.parentNode) return null;
+    //@ts-ignore
+    return node.nextSibling || getNextNode(node.parentNode, true, endNode); 
+  };
+  const getNodesInRange = (range:any) =>
+  {
+      var start = range.startContainer;
+      var end = range.endContainer;
+      var commonAncestor = range.commonAncestorContainer;
+      var nodes = [];
+      var node;
+      // walk parent nodes from start to common ancestor
+      for (node = start.parentNode; node; node = node.parentNode)
+      {
+          nodes.push(node);
+          if (node == commonAncestor) break;
+      }
+      nodes.reverse();
+      // walk children and siblings from start until end is found
+      for (node = start; node; node = getNextNode(node))
+      {
+          nodes.push(node);
+          if (node == end) break;
+      }
+      return nodes;
+  }
+
 
   useEffect(()=>{
 
     document.addEventListener("click", (e) => {
-      // @ts-ignore
-      const removeRowBtn = e.target.closest(".remove-row");
-      if (removeRowBtn) {
-        deleteRow(removeRowBtn);
-        setCodeStateHandler();
-      }
+
       //@ts-ignore
       const txtRemark = e.target.closest(".txt-remark");
       if(!txtRemark){
         document.querySelector(".txt-remark")?.classList.remove("txt-remark");
-        // setCodeStateHandler();
       }
       //@ts-ignore
       const sourceCode = e.target.closest(".source-code");
@@ -706,7 +707,8 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
       }
       //@ts-ignore
       const imageModal = e.target.closest('[data-image="true"]');
-      if(imageModal){ 
+      if(imageModal){
+        imgRemark(e.target)
         imgModal(e); 
       }
       //@ts-ignore
@@ -714,17 +716,15 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
       if(contentEditable){
         textRemark(e)   
       }    
-      //@ts-ignore
-      const editor = e.target.closest('.text-editor');
-      if(!editor){
-        setCodeStateHandler();
-      }
-    });
 
-    if(state[prop]) fetchState();
+    });
+    // setSubState()
+
+    if(state[prop]) setSubState();
     editorRef.current = true;
     return () => {
       editorRef.current = false;
+      document.removeEventListener("click",setCodeStateHandler);
     }
   },[state]);
   
@@ -753,8 +753,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
           height,setHeight,
           className,setClassName,
           title,setTitle,
-          upload,removeImage,
-          setCodeStateHandler
+          upload,removeImage
         }}
         title="Image"
       />
@@ -767,7 +766,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
         title="Source Code"
       />
       <div
-        
+        key={key}
         id={EditorId}
         className="rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark h-full overflow-hidden"
       >
@@ -777,7 +776,7 @@ const TextEditor = ({ id, dataType, dataId, state, setState, prop, placeholder}:
           value={state && state[prop]}
           placeholder={placeholder}
         ></textarea>
-        <div className="text-editor" onBlur={HandlerState}>
+        <div className="text-editor" onBlur={setCodeStateHandler}>
           <div className="header">
             <div className="tools flex justify-stretch p-1">
               <div className="flex ">

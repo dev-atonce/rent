@@ -151,7 +151,6 @@ export default function ServiceForm({
               id= {`editForm${id}`} 
               dataType="project" 
               dataId={id} 
-              key={k}
               setState={onChangeState}
               state={serviceState}
               prop={serviceState && `projectDetail${i}`}
