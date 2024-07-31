@@ -6,6 +6,7 @@ import { FetchContext } from "@/contexts/FetchContext";
 import Jodit from "../Editor/Jodit";
 import Image from "next/image";
 import { MdDeleteForever } from "react-icons/md";
+import TextEditor from "@/components/TextEditor";
 
 export default function ProductForm({
   data,
@@ -298,6 +299,22 @@ export default function ProductForm({
               },
             ]}
           />
+        </div>
+        <div className="col-span-2">
+          <div className="rounded-lg bg-white p-2">
+            <label className="p-3">Detail</label>
+            {languages?.map((i: any, k: any) =>
+              <TextEditor 
+                id= {`productDescription${i?.toUpperCase()}`} 
+                dataType="project" 
+                dataId={id} 
+                setState={onChangeState}
+                state={data}
+                prop={data && `productDescription${i?.toUpperCase()}`}
+                placeholder="Detail"
+              />
+            )}
+          </div>
         </div>
         <div className="w-full  sm:col-span-2 py-2 flex flex-col">
           <span>Spec Sheet</span>
