@@ -948,7 +948,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                         type="button"
                         id="dropdownDividerButton"
                         data-dropdown-toggle="dropdownDivider" 
-                        title="Unordered"
+                        title="Font Color"
                         className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                         style={{ height: "32px" }}
                         onMouseOver={()=>setFcVisible(true)} onMouseOut={()=>setFcVisible(false)}
