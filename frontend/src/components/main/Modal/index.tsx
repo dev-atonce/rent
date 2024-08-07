@@ -17,6 +17,7 @@ export default function ModalDialog({visible, closeHandler, title, select}:any) 
       [{'col':'col-span-3','content':'image'},{"col":"col-span-3","content":"image"},{"col":"col-span-6","content":"text"}],
       [{'col':'col-span-8','content':'text'},{"col":"col-span-4","content":"image"}],
       [{'col':'col-span-6','content':'text'},{"col":"col-span-6","content":"image"}],
+      [{'col':'col-span-6','content':'image'},{"col":"col-span-6","content":"text"}],
       [{'col':'col-span-12','content':'image'}],
   ];
   return (

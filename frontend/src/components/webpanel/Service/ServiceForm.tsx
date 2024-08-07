@@ -11,6 +11,7 @@ export default function ServiceForm({
   serviceState,
   onChangeState,
   id,
+  editor,
   onSaveSeo,
   onChangeSeoState,
   onDeleteImageGallery,
@@ -142,23 +143,26 @@ export default function ServiceForm({
           />
         </div>
       </div>
-      <div className="col-span-2">
-        <div className="rounded-lg bg-white p-2">
-          <label className="p-3">Detail</label>
-          {languages?.map((i: any, k: any) =>
-            i?.toLowerCase() === langState && (
-            <TextEditor 
-              id= {`editForm${id}`} 
-              dataType="project" 
-              dataId={id} 
-              setState={onChangeState}
-              state={serviceState}
-              prop={serviceState && `projectDetail${i}`}
-              placeholder="Detail"
-            />
-          ))}
-        </div>
-      </div>
+      {editor.editor ==true && 
+        (<div className="col-span-2">
+          <div className="rounded-lg bg-white p-2">
+            <label className="p-3">Detail</label>
+            {languages?.map((i: any, k: any) =>
+              i?.toLowerCase() === langState && (
+              <TextEditor 
+                id= {`${editor.name}${i}`} 
+                dataType="project" 
+                dataId={id} 
+                setState={onChangeState}
+                state={serviceState}
+                prop={serviceState && `${editor.name}${i}`}
+                placeholder="Detail"
+                editor={editor}
+              />
+            ))}
+          </div>
+        </div>)
+      }
       {/* <div className="col-span-2 ">
         <div className="flex gap-[1px] translate-y-2 translate-x-2 relative z-0">
           {languages.map((i: any, k: any) => (

@@ -129,8 +129,14 @@ export default function EditServicePage({
         onSaveSeo={onSaveSeo}
         onChangeSeoState={onChangeSeoState}
         onDeleteImageGallery={onDeleteImageGallery}
-        editor={true}
-        editorName={['projectDetail']}
+        editor={{
+          editor: true,
+          name:'projectDetail',
+          images: {
+            getPath: `project/${id}`,
+            uploadPath: `project/${id}`,
+          }
+        }}
       />
     </DefaultLayout>
   );

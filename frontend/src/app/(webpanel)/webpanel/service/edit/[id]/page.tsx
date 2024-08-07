@@ -112,6 +112,14 @@ export default function EditServicePage({
         id={id}
         onSaveSeo={onSaveSeo}
         onChangeSeoState={onChangeSeoState}
+        editor={{
+          editor:true,
+          name:'serviceDetail',
+          images: {
+            getPath: `service/${id}`,
+            uploadPath: `service/${id}`,
+          }
+        }}
       />
     </DefaultLayout>
   );

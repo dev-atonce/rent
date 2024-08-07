@@ -1,21 +1,23 @@
 "use client";
 import {
+  BsTable,
+  BsEraser,
   BsTypeBold,
+  BsLink45Deg,
   BsTypeItalic,
+  BsArrowDownUp,
   BsTypeUnderline,
   BsTypeStrikethrough,
-  BsEraser,
-  BsLink45Deg,
-  BsTable
 } from "react-icons/bs";
 import {
-  RiListUnordered,
-  RiListOrdered2,
   RiHeading2,
+  RiFontColor,
   RiAlignLeft,
   RiAlignCenter,
   RiAlignRight,
   RiAlignJustify,
+  RiListOrdered2,
+  RiListUnordered,
   RiIndentDecrease,
   RiIndentIncrease,
   RiFullscreenFill,
@@ -32,7 +34,8 @@ import ModalDialog from "../main/Modal";
 import ImageModal from "../main/Modal/ImageModal";
 import SourceCodeModal from "../main/Modal/SourceCodeModal";
 import { Button } from "@nextui-org/react";
-import "../../css/Custom.scss";
+import { HexColorPicker } from "react-colorful";
+import "./editor.scss";
 
 const minHeight = "25rem";
 const HoverSelect = (el: any) => {
@@ -133,12 +136,13 @@ const CreateTable = (el: any) => {
 };
 
 
-// Main Component
-const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placeholder}: any) => 
+//================= Begin: Main Component =================//
+const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, editor}: any) => 
 {
 
   const EditorId = id ? id : new Date().getTime();
-
+  const [allImages, setAllImages] = useState<any>([]);
+  const [selectedImage, setSelectedImage] = useState<any>('');  
   const [visible, setVisible] = useState<Boolean>(false);
   const [imgVisible, setImgVisible] = useState<Boolean>(false);
   const [codeVisible, setCodeVisible] = useState<Boolean>(false);
@@ -153,6 +157,7 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
   const [className, setClassName] = useState<any>('');
   const [title, setTitle] = useState<any>('');
   const [sourceCode, setSourceCode] = useState<any>('');
+  const [fcVisible, setFcVisible] = useState<Boolean>(false);
   const [ulVisible, setUlVisible] = useState<Boolean>(false);
   const [olVisible, setOlVisible] = useState<Boolean>(false);
   const [fontSizeVisible, setFontSizeVisible] = useState<any>(false);
@@ -160,6 +165,8 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
   const [lineHeight, setLineHeight] = useState<any>(false);
   const [tableVisible, setTableVisible] = useState<any>(false);
   const [HTML , setHTML] = useState<any>('');
+  const [sortActive, setSortActive] = useState<Boolean>(false);
+  const [color, setColor] = useState("#aabbcc");
 
   const editorRef = useRef<any>(null);
 
@@ -169,6 +176,20 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
   const closeHandler = () => setVisible(false);
   const closeImgHandler = () => setImgVisible(false);
   const closeCodeHandler = () => setCodeVisible(false);
+
+  const getAllImages = async () => {
+    const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media/${editor.images.getPath}`,{
+      headers: {
+        authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+      },
+    });
+    const response = await request.json();
+    if(response) setAllImages(response.data);
+  }
+  const resetSelectedImage = (e:any) => {
+    setSelectedImage('');
+    e.currentTarget.closest('.modal-content').querySelector('input[type="file"]').value = null;
+  }
 
   const setCodeStateHandler = () => {
     const editorBody = document.getElementById(EditorId);
@@ -209,19 +230,15 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
             <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
             </button>
         `;
-        const sortBtn = document.createElement('button');
-        sortBtn.setAttribute("class",'rounded px-2 py-1 text-slate-800 hover:bg-slate-300 sort-btn')
-        sortBtn.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="15" width="15" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10M.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8"></path></svg>`;
-        sortBtn.setAttribute("draggable","true");
-
         const removeBtn = document.createElement("button");
         removeBtn.setAttribute("title", "Remove row");
         removeBtn.setAttribute(
           "class",
           "rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100 remove-row"
         );
+        removeBtn.onclick = (el:any) => el.target.closest('.grid').remove(); 
         removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
-        controlElement.append(sortBtn,removeBtn)
+        controlElement.append(removeBtn)
         row.prepend(controlElement);
         row.querySelectorAll('[data-image="true"]').forEach((el:any)=> el.click = imgRemark);
         row.querySelectorAll('[data-text="text"]')?.forEach((el:any)=>{
@@ -229,10 +246,11 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
         });
       })
       editorBody.innerHTML = makeElement.innerHTML;
-      enableDragSort('drag-sort-enable');
+      
     }
   }
- 
+//=====================================================//
+//================= begin: Image Modal =================//
   const imgModal = (e: any) => {
     e.preventDefault();
     setImgVisible(true);
@@ -255,6 +273,8 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
     setAlt('');setWidth('');setHeight('');setClassName('');setTitle('');setPreview('');
   };
 
+
+  //================= begin: Select Modal =================//
   const handleSetSelect = (e: any) => {
     const current = e.target.closest(".grid");
     let selectRow = e.target.closest(".bg-stripes-pink").querySelectorAll(".select-row");
@@ -318,7 +338,6 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
   };
   const imgUnselect = () => {
     setImgSelect([]);
-    console.log(document.querySelectorAll(".image-select"));
     document.querySelectorAll(".image-select").forEach((v: any) => {
       v.classList.remove("image-select");
     });
@@ -344,11 +363,10 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
     setImgTab('current');
     imgSelect.map((v: any) => { setPreview(v) });
   }
-  const insertImg = (el:any) => {
+  const insertImg = (el:any) => 
+  {
     const preview = el.currentTarget.closest('.modal-content').querySelector('.preview');
-    const remark = document.querySelector(".img-remark");
-    console.log(remark);
-    
+    const remark = document.querySelector(".img-remark")
     if (remark) {
         remark.querySelectorAll("img")?.forEach((v) => { v.remove() });
         let img = document.createElement("img");
@@ -373,6 +391,7 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
         setPreview('');
     }
   };
+  //================= end: Select Modal =================//
 
   const createRow = () => {
     if (row) 
@@ -389,7 +408,7 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
             "class",
             "grid grid-cols-1 md:grid-cols-12 gap-4 relative pt-6 pb-4 drag-sort-enable"
           );
-          rowElement.setAttribute("draggable","true");
+          // rowElement.setAttribute("draggable","true");
           const controlBox = document.createElement("div");
           controlBox.setAttribute(
             "class",
@@ -400,10 +419,7 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
               <svg xmlns="http://www.w3.org/2000/svg" class="feather feather-code" fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24" width="15"><polyline points="16 18 22 12 16 6"/><polyline points="8 6 2 12 8 18"/></svg>
               </button>
           `;
-          const sortBtn = document.createElement('button');
-          sortBtn.setAttribute("class",'rounded px-2 py-1 text-slate-800 hover:bg-slate-300 sort-btn')
-          sortBtn.innerHTML = `<svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 16 16" height="15" width="15" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M7.646.146a.5.5 0 0 1 .708 0l2 2a.5.5 0 0 1-.708.708L8.5 1.707V5.5a.5.5 0 0 1-1 0V1.707L6.354 2.854a.5.5 0 1 1-.708-.708zM8 10a.5.5 0 0 1 .5.5v3.793l1.146-1.147a.5.5 0 0 1 .708.708l-2 2a.5.5 0 0 1-.708 0l-2-2a.5.5 0 0 1 .708-.708L7.5 14.293V10.5A.5.5 0 0 1 8 10M.146 8.354a.5.5 0 0 1 0-.708l2-2a.5.5 0 1 1 .708.708L1.707 7.5H5.5a.5.5 0 0 1 0 1H1.707l1.147 1.146a.5.5 0 0 1-.708.708zM10 8a.5.5 0 0 1 .5-.5h3.793l-1.147-1.146a.5.5 0 0 1 .708-.708l2 2a.5.5 0 0 1 0 .708l-2 2a.5.5 0 0 1-.708-.708L14.293 8.5H10.5A.5.5 0 0 1 10 8"></path></svg>`;
-
+         
           const removeBtn = document.createElement("button");
           removeBtn.setAttribute("title", "Remove row");
           removeBtn.setAttribute(
@@ -411,7 +427,7 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
             "rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100 remove-row"
           );
           removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
-          controlBox.append(sortBtn,removeBtn);
+          controlBox.append(removeBtn);
           rowElement.append(controlBox);
 
           Array.from(row).map((v:any) =>
@@ -433,7 +449,6 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
           editorBody.append(rowElement);
         }
       })
-      enableDragSort('drag-sort-enable');
       setCodeStateHandler();
     }
   };
@@ -464,7 +479,6 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
     setSourceCode('');
   }
   
-
   const upload = async (e:any) => 
   {
     const setSelectedImage = document.querySelector('.modal-content')?.querySelectorAll('img');
@@ -477,16 +491,22 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
         for (let i = 0; i < files?.length; i++) {
             if (i < uploadAmount) formData.append("image", files?.[i]);
         }
-        const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media/${dataType}/${dataId}`, {
+        const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media/${editor.images.uploadPath}`, {
             method: 'POST',
+            headers: {
+              authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+            },
             body: formData,
         });   
         const response = await request.json();
         if(uploadAmount == response.image.length){
-          alert("Images uploaded successfully");
+          getAllImages();
+          setImgTab('select')
+          // alert("Images uploaded successfully");
           Array.from(setSelectedImage).map((el:any)=>el.remove());
           //@ts-ignore
           document.querySelector('.modal-content').querySelector('input[type="file"]').value = null;
+
         }else{
           alert("Some images not uploaded");
         }
@@ -525,7 +545,10 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
       }
     }
   }
-  
+//================= end: Image Modal =================//
+//=====================================================//
+
+//================= begin: Exec Command ==================//
   // 3. Text bold
   const TextBold = () => {
     document.getSelection();
@@ -536,6 +559,25 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
     document.getSelection();
     document.execCommand("italic", false, undefined);
   };
+  // 6. font color
+  const setColorHandler = (color:any) => 
+  {
+    let setlection:any = document.getSelection();
+    let last:any = null;
+    for (var i = 0; i < setlection.rangeCount; i++)
+    {
+      let nodes:any = getNodesInRange(setlection.getRangeAt(i));
+      last = nodes[nodes.length - 2];
+    }
+    try{
+      //@ts-ignore
+      document.execCommand('styleWithCSS', false, true);
+      document.execCommand('foreColor', false, color);
+      try{last.style.color = color;}catch(e:any){console.log(e.message)}
+    }catch(e:any){
+      console.log(e.message)
+    }
+  }
   // 7.
   const ClearFormat = () => {
     let setlection:any = document.getSelection();
@@ -571,6 +613,7 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
   }
   // 14. Font size
   const FontSize = (size:any) => {
+    let selection = document.getSelection();
       document.execCommand("insertHTML", false, `<p style="font-size:${size}; line-height:normal">${selection}</p>`);
   }
   // 15.
@@ -625,23 +668,41 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
   }
   // 22. Full screen
   const fullScreenMode = () => document.getElementById(EditorId)?.classList.toggle('full-screen-mode');
-  
+  //================= end: Exec Command ==================//
+  //======================================================//
+
+  const sortHandler = (e:any) => {
+    setSortActive(!sortActive);
+    e.target.closest('.tools-item')?.classList.toggle('active');
+    const editor:any = document.getElementById(EditorId);
+    editor.querySelectorAll('.drag-sort-enable').forEach((el:any) => {
+      el.classList.toggle('on-drag');
+      el.querySelector('.remove-row')?.classList.toggle('hidden');
+      el.querySelector('.source-code')?.classList.toggle('hidden');
+      let edit = (!sortActive)? false: true;
+      el.querySelector('[contenteditable]')?.setAttribute('contenteditable',edit);
+    });
+    enableDragSort('drag-sort-enable');
+  }
+
   const enableDragSort = (listClass:any) =>
   {
-      const sortableLists = document.getElementsByClassName(listClass);
-      Array.prototype.map.call(sortableLists, (list) => {enableDragList(list)});
+    const sortableLists:any = document.getElementsByClassName(listClass);
+    if(!sortActive){
+      Array.prototype.map.call(sortableLists, (list) => enableDragList(list));
+    }else{
+      Array.prototype.map.call(sortableLists, (list) => list.removeAttribute('draggable'));
+    }
   }
-  const enableDragList = (list:any) => Array.prototype.map.call(list.children, (item) => {enableDragItem(item)});
+  // const enableDragList = (list:any) => Array.prototype.map.call(list.children, (item) => {enableDragItem(item)});
+  const enableDragList = (list:any) => {enableDragItem(list)};
   const enableDragItem = (item:any) =>
   {
-      item.setAttribute('draggable', true);
-      if(item.querySelector('.sort-btn'))
-      {
-        item.ondrag = handleDrag
-        item.ondragend = handleDrop;
-      }
+    item.setAttribute('draggable', true);
+    item.ondrag = OnDrag;
+    item.ondragend = HandleDrop;
   }
-  const handleDrag = (item:any) =>
+  const OnDrag = (item:any) =>
   {
     const selectedItem = item.target.closest('.grid'),
           list = selectedItem.parentNode,
@@ -656,7 +717,7 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
       list.insertBefore(selectedItem, swapItem);
     }
   }
-  const handleDrop = (item:any) => item.target.closest('.grid').classList.remove('focus');
+  const HandleDrop = (item:any) => item.target.closest('.grid').classList.remove('focus');
   //@ts-ignore
   const getNextNode = ({node, skipChildren, endNode}:any) =>
   {
@@ -689,38 +750,76 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
       }
       return nodes;
   }
+  const removeRemark = () => {
+    let Editor = document.getElementById(EditorId);
+    Editor?.querySelectorAll('.txt-remark').forEach((el:any) => el.remove());
+    Editor?.querySelectorAll('.img-remark').forEach((el:any) => el.remove());
+    Editor?.querySelectorAll('.focused').forEach((el:any) => el.remove());
+  }
+  const removeTableRemark = () => {
+    let Editor:any = document.getElementById(EditorId);
+    Editor?.querySelectorAll('.focused').forEach((el:any) => el.remove());
+
+  }
+  const removeTable = () => {
+    
+  }
 
 
   useEffect(()=>{
 
     document.addEventListener("click", (e) => {
 
-      //@ts-ignore
-      const txtRemark = e.target.closest(".txt-remark");
-      if(!txtRemark){
-        document.querySelector(".txt-remark")?.classList.remove("txt-remark");
-      }
-      //@ts-ignore
-      const sourceCode = e.target.closest(".source-code");
-      if(sourceCode){
-        SourceCode(sourceCode);
-      }
-      //@ts-ignore
-      const imageModal = e.target.closest('[data-image="true"]');
-      if(imageModal){
-        imgRemark(e.target)
-        imgModal(e); 
-      }
-      //@ts-ignore
-      const contentEditable = e.target.closest('[contenteditable="true"]');
-      if(contentEditable){
-        textRemark(e)   
-      }    
+        //@ts-ignore
+        const txtRemark = e.target.closest(".txt-remark");
+        if(!txtRemark){
+          document.querySelector(".txt-remark")?.classList.remove("txt-remark");
+        }
+        //@ts-ignore
+        const sourceCode = e.target.closest(".source-code");
+        if(sourceCode){
+          SourceCode(sourceCode);
+        }
+        //@ts-ignore
+        const imageModal = e.target.closest('[data-image="true"]');
+        if(imageModal){
+          imgRemark(e.target)
+          imgModal(e); 
+        }
+        //@ts-ignore
+        const contentEditable = e.target.closest('[contenteditable="true"]');
+        if(contentEditable){
+          textRemark(e)   
+        }    
+        //@ts-ignore
+        const removeRowBtn = e.target.closest(".remove-row");
+        if(removeRowBtn){
+          deleteRow(removeRowBtn);
+        }
+        //@ts-ignore
+        const thEl = e.target.closest('th');
+        if(thEl){
+          // console.log(thEl)
+          document.querySelectorAll('th').forEach(el => el.classList.remove('focused'))
+          document.querySelectorAll('td').forEach(el => el.classList.remove('focused'))
+          thEl.classList.toggle('focused');
+        }
+         //@ts-ignore
+        const tdEl = e.target.closest('td');
+        if(tdEl){
+          document.querySelectorAll('th').forEach(el => el.classList.remove('focused'))
+          document.querySelectorAll('td').forEach(el => el.classList.remove('focused'))
+          tdEl.classList.toggle('focused')
+        }
+
+
+      // console.log(thEl)
 
     });
-    // setSubState()
 
-    if(state[prop]) setSubState();
+    getAllImages();
+
+    if(prop && state[prop]) setSubState();
     editorRef.current = true;
     return () => {
       editorRef.current = false;
@@ -729,7 +828,7 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
   },[state]);
   
   return (
-    <>
+    <div key={key}>
       <ModalDialog
         visible={visible}
         closeHandler={closeHandler}
@@ -740,6 +839,8 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
         imgVisible={imgVisible}
         closeImgHandler={closeImgHandler}
         dataId={dataId}
+        editor={editor}
+        allImages={allImages}
         select={{
           Select,
           imgSelect,imgUnselect,
@@ -753,7 +854,9 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
           height,setHeight,
           className,setClassName,
           title,setTitle,
-          upload,removeImage
+          upload,removeImage,
+          selectedImage,resetSelectedImage,
+          setSelectedImage
         }}
         title="Image"
       />
@@ -766,9 +869,8 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
         title="Source Code"
       />
       <div
-        key={key}
         id={EditorId}
-        className="rounded-lg border border-stroke bg-white dark:border-strokedark dark:bg-boxdark h-full overflow-hidden"
+        className="rounded-lg bg-white dark:border-strokedark dark:bg-boxdark h-full"
       >
         <textarea 
           className="hidden"
@@ -776,8 +878,8 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
           value={state && state[prop]}
           placeholder={placeholder}
         ></textarea>
-        <div className="text-editor" onBlur={setCodeStateHandler}>
-          <div className="header">
+        <div className="text-editor relative" onBlur={setCodeStateHandler}>
+          <div className="header sticky z-999 top-17 border border-slate-300 bg-white">
             <div className="tools flex justify-stretch p-1">
               <div className="flex ">
                 <div className="group flex border-r pr-1 border-slate-300">
@@ -833,6 +935,43 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
                       }}
                     />
                   </button>
+                  <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
+                    <button
+                      type="button"
+                      title="Unordered"
+                      className="tools-item hover:bg-slate-200 text-slate-500 hover:text-slate-900 p-2"
+                      onClick={()=>{ UnderOrderList('list-disc'); }}
+                    >
+                      <RiFontColor/>
+                    </button>
+                    <button
+                        type="button"
+                        id="dropdownDividerButton"
+                        data-dropdown-toggle="dropdownDivider" 
+                        title="Unordered"
+                        className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
+                        style={{ height: "32px" }}
+                        onMouseOver={()=>setFcVisible(true)} onMouseOut={()=>setFcVisible(false)}
+                      >
+                        <RxCaretDown color={color} {...setColor}/>
+                        <div 
+                          id='dropdownDivider' 
+                          aria-labelledby="dropdownDividerButton"
+                          className={`absolute ${fcVisible==false?`hidden`:``} rounded bg-white border z-20 border-slate-200 text-left DropdownUnorderedList`}
+                          style={{ left:"0", top: "0", marginTop: "30px", width: "max-content" }}
+                        >
+
+                          <div className="p-2 bg-white">
+                            <HexColorPicker color={color} onChange={setColorHandler}/>
+                          </div>
+                          {/* <ul>
+                            <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-disc')}}>Default</button></li>
+                            <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-circle')}}>Circle</button></li>
+                            <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-square')}}>Square</button></li>
+                          </ul> */}
+                        </div>
+                      </button>
+                    </div>
                   <button
                     type="button"
                     title="Clear Formatting"
@@ -876,6 +1015,7 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
                       }}
                     />
                   </button>
+                  
                   <button
                     type="button"
                     title="Align justify"
@@ -913,9 +1053,9 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
                         style={{ left:"0", top: "0", marginTop: "30px", width: "max-content" }}
                       >
                         <ul>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={(e)=>{UnderOrderList('list-disc')}}>Default</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={(e)=>{UnderOrderList('list-circle')}}>Circle</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={(e)=>{UnderOrderList('list-square')}}>Square</a></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-disc')}}>Default</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-circle')}}>Circle</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-square')}}>Square</button></li>
                         </ul>
                       </div>
                     </button>
@@ -944,12 +1084,12 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
                         style={{ left:"0", top: "0", marginTop: "30px", width: "max-content" }}
                       >
                         <ul>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-decimal")}>Default</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-alpha]")}>Lower Alpha</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-greek]")}>Lower Greek</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-roman]")}>Lower Roman</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[upper-alpha]")}>Upper Alpha</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[upper-roman]")}>Upper Roman</a></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-decimal")}>Default</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-alpha]")}>Lower Alpha</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-greek]")}>Lower Greek</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[lower-roman]")}>Lower Roman</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[upper-alpha]")}>Upper Alpha</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[upper-roman]")}>Upper Roman</button></li>
                         </ul>
                       </div>
                     </button>
@@ -997,20 +1137,20 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
                         className={`absolute${fontSizeVisible==false?` hidden`:``} rounded bg-white border z-20 border-slate-200`}
                         style={{left:0,top:0,marginTop:"30px",width:"max-content",height:minHeight,overflowY:"auto",overflowX:"hidden"}}>
                         <ul>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize('8px')}>8px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("9px")}>9px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("10px")}>10px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("11px")}>11px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("12px")}>12px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("14px")}>14px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("16px")}>16px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("24px")}>24px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("30px")}>30px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("36px")}>36px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("48px")}>48px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("60px")}>60px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("72px")}>72px</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("96px")}>96px</a></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize('8px')}>8px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("9px")}>9px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("10px")}>10px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("11px")}>11px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("12px")}>12px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("14px")}>14px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("16px")}>16px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("24px")}>24px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("30px")}>30px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("36px")}>36px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("48px")}>48px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("60px")}>60px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("72px")}>72px</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("96px")}>96px</button></li>
                         </ul>
                       </div>
                     </button>
@@ -1038,16 +1178,16 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
                           style={{left:0,  top: "0", marginTop: "30px", width: "max-content" }}
                         >
                           {/* {Array.from(fontSize).map((v)=>(<li className="px-4 py-1 text-[14px] hover:bg-slate-100" data-type={v}>Heading 1</li>))} */}
-                          <li><a onClick={()=>Heading("p")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Paragraph</a></li>
-                          <li><a onClick={()=>Heading("h1")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 1</a></li>
-                          <li><a onClick={()=>Heading("h2")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 2</a></li>
-                          <li><a onClick={()=>Heading("h3")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 3</a></li>
-                          <li><a onClick={()=>Heading("h4")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 4</a></li>
-                          <li><a onClick={()=>Heading("h5")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 5</a></li>
-                          <li><a onClick={()=>Heading("h6")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 6</a></li>
-                          <li><a onClick={()=>Heading("pre")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Pre</a></li>
-                          <li><a onClick={()=>Heading("blockqoute")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Blockquote</a></li>
-                          <li><a onClick={()=>Heading("code")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Code</a></li>
+                          <li><button type="button" onClick={()=>Heading("p")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Paragraph</button></li>
+                          <li><button type="button" onClick={()=>Heading("h1")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 1</button></li>
+                          <li><button type="button" onClick={()=>Heading("h2")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 2</button></li>
+                          <li><button type="button" onClick={()=>Heading("h3")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 3</button></li>
+                          <li><button type="button" onClick={()=>Heading("h4")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 4</button></li>
+                          <li><button type="button" onClick={()=>Heading("h5")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 5</button></li>
+                          <li><button type="button" onClick={()=>Heading("h6")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Heading 6</button></li>
+                          <li><button type="button" onClick={()=>Heading("pre")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Pre</button></li>
+                          <li><button type="button" onClick={()=>Heading("blockqoute")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Blockquote</button></li>
+                          <li><button type="button" onClick={()=>Heading("code")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Code</button></li>
                         </ul>
                       </div>
                     </button>
@@ -1073,13 +1213,13 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
                         style={{left:0, top: 0, marginTop: "30px", width: "max-content" }}
                       >
                         <ul>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight('1')}>1</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight('2')}>2</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.1")}>1.1</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.2")}>1.2</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.3")}>1.3</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.4")}>1.4</a></li>
-                          <li><a className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.5")}>1.5</a></li>
+                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight('1')}>1</button></li>
+                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight('2')}>2</button></li>
+                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.1")}>1.1</button></li>
+                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.2")}>1.2</button></li>
+                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.3")}>1.3</button></li>
+                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.4")}>1.4</button></li>
+                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.5")}>1.5</button></li>
                         </ul>
                       </div>
                     </button>
@@ -1123,6 +1263,14 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
                     <BsLink45Deg />
                   </button>
                 </div>
+                <button 
+                  type="button" 
+                  title="Sort" 
+                  className={`tools-item${sortActive?` bg-slate-200`:` bg-white`} rounded  text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2 ml-1`}
+                  onClick={sortHandler}
+                >
+                  <BsArrowDownUp />
+                </button>
               </div>
               <div className="w-full"></div>
               <div className="flex-none">
@@ -1140,7 +1288,7 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
             </div>
           </div>
           <div
-            className="editor-body border-t border-slate-300 min-h-100 max-h-75vh p-2 focus:outline-none focus-visible:outline-none"
+            className="editor-body relative min-h-100 p-2 focus:outline-none focus-visible:outline-none border-l border-r border-slate-300"
             suppressContentEditableWarning={true}
             contentEditable={false}
             aria-disabled="false"
@@ -1151,18 +1299,18 @@ const TextEditor = ({ key, id, dataType, dataId, state, setState, prop, placehol
             
           >
           </div>
-          <div className="editor-footer p-2 border-slate-200 border-t">
+          <div className="editor-footer border border-slate-300 p-2">
             <div id="output"></div>
             <Button
               onPress={handler}
-              className="bg-indigo-400 text-white text-xs hover:bg-indigo-500 rounded-lg py-0 px-2 font-bold"
+              className="bg-slate-400 text-white text-xs hover:bg-slate-500 rounded-lg py-0 px-2 font-bold"
             >
               Add Row
             </Button>
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 export default TextEditor;
