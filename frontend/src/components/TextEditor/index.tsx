@@ -236,7 +236,6 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
           "class",
           "rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100 remove-row"
         );
-        removeBtn.onclick = (el:any) => el.target.closest('.grid').remove(); 
         removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
         controlElement.append(removeBtn)
         row.prepend(controlElement);
@@ -454,6 +453,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
   };
   const deleteRow = (e: any) => {
     e.closest(".grid").remove();
+    setCodeStateHandler();
   };
 
   const SourceCode = (el:any) => 
