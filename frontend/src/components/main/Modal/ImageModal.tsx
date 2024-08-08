@@ -11,15 +11,15 @@ import {
 import { useEffect, useState } from "react";
 import { MdCloudUpload, MdArrowBackIos, MdOutlineSearch, MdRefresh } from "react-icons/md";
  
-export default function ImageModal({imgVisible, closeImgHandler, title, select, dataId}:any)
+export default function ImageModal({imgVisible, closeImgHandler, title, allImages, select, dataId}:any)
 {
     const [selectedImage, setSelectedImage] = useState<any>('');
-    const [imgTitile, setImgTitle] = useState<Boolean>(true);
-    const [allImages, setAllImages] = useState<any>([]);
+    // const [imgTitile, setImgTitle] = useState<Boolean>(true);
+    // const [allImages, setAllImages] = useState<any>([]);
 
-    useEffect(() => {
-      getAllImages();
-    }, []);
+    // useEffect(() => {
+    //   getAllImages();
+    // }, []);
 
     const handleFileUpload = (e:any) => {
       if(e.target.files.length > 12){
@@ -43,11 +43,11 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
       e.currentTarget.closest('.modal-content').querySelector('input[type="file"]').value = null;
     }
 
-    const getAllImages = async () => {
-      const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media/project/${dataId}`);
-      const response = await request.json();
-      if(response) setAllImages(response.data);
-    }
+    // const getAllImages = async () => {
+    //   const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media/project/${dataId}`);
+    //   const response = await request.json();
+    //   if(response) setAllImages(response.data);
+    // }
 
     const formatFileSize = function (bytes:any) {
         const sufixes = ['B', 'kB', 'MB', 'GB', 'TB'];
@@ -177,6 +177,10 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
                               className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7" 
                               onClick={()=>select.setImgTab('upload')}><MdCloudUpload/>Upload
                           </Button>
+                          <Button 
+                            className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7"
+                            onClick={select.getAllImages()}
+                          ><MdRefresh className="text-lg"/> Refresh</Button>
                         </div>
                         <div className="actions justify-end">
                           <Button 

@@ -506,6 +506,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
           Array.from(setSelectedImage).map((el:any)=>el.remove());
           //@ts-ignore
           document.querySelector('.modal-content').querySelector('input[type="file"]').value = null;
+          getAllImages();
 
         }else{
           alert("Some images not uploaded");
@@ -856,7 +857,8 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
           title,setTitle,
           upload,removeImage,
           selectedImage,resetSelectedImage,
-          setSelectedImage
+          setSelectedImage,
+          getAllImages
         }}
         title="Image"
       />
@@ -964,11 +966,6 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                           <div className="p-2 bg-white">
                             <HexColorPicker color={color} onChange={setColorHandler}/>
                           </div>
-                          {/* <ul>
-                            <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-disc')}}>Default</button></li>
-                            <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-circle')}}>Circle</button></li>
-                            <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-square')}}>Square</button></li>
-                          </ul> */}
                         </div>
                       </button>
                     </div>
