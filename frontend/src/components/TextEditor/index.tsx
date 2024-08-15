@@ -200,7 +200,12 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
       makeElement.innerHTML = editorBody.querySelector('.editor-body').innerHTML;
       makeElement.querySelectorAll('.row-panel').forEach((el:any)=>el.remove());
       makeElement.querySelectorAll('[contenteditable="true"]').forEach((el:any)=>el.removeAttribute('contenteditable'));
-      makeElement.querySelectorAll('[draggable="true"]').forEach((el:any)=>el.removeAttribute('draggable'));
+      makeElement.querySelectorAll('[draggable="true"]').forEach((el:any)=>{
+        el.removeAttribute('draggable');
+        if(sortActive==true){
+          el.classList.remove('on-drag');
+        }
+      });
       let newString = makeElement.innerHTML;
       setState(newString,prop);
     }
@@ -500,7 +505,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
         });   
         const response = await request.json();
         if(uploadAmount == response.image.length){
-          getAllImages();
+
           setImgTab('select')
           // alert("Images uploaded successfully");
           Array.from(setSelectedImage).map((el:any)=>el.remove());
@@ -818,7 +823,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
 
     });
 
-    getAllImages();
+    // getAllImages();
 
     if(prop && state[prop]) setSubState();
     editorRef.current = true;
@@ -842,6 +847,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
         dataId={dataId}
         editor={editor}
         allImages={allImages}
+        getAllImages={getAllImages}
         select={{
           Select,
           imgSelect,imgUnselect,
@@ -858,7 +864,6 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
           upload,removeImage,
           selectedImage,resetSelectedImage,
           setSelectedImage,
-          getAllImages
         }}
         title="Image"
       />

@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { MdCloudUpload, MdArrowBackIos, MdOutlineSearch, MdRefresh } from "react-icons/md";
  
-export default function ImageModal({imgVisible, closeImgHandler, title, allImages, select, dataId}:any)
+export default function ImageModal({imgVisible, closeImgHandler, title, select, allImages, getAllImages}:any)
 {
     const [selectedImage, setSelectedImage] = useState<any>('');
     // const [imgTitile, setImgTitle] = useState<Boolean>(true);
@@ -19,7 +19,7 @@ export default function ImageModal({imgVisible, closeImgHandler, title, allImage
 
     // useEffect(() => {
     //   getAllImages();
-    // }, []);
+    // }, [allImages]);
 
     const handleFileUpload = (e:any) => {
       if(e.target.files.length > 12){
@@ -44,7 +44,11 @@ export default function ImageModal({imgVisible, closeImgHandler, title, allImage
     }
 
     // const getAllImages = async () => {
-    //   const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media/project/${dataId}`);
+    //   const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media/${select.images.getPath}`,{
+    //     headers: {
+    //       authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+    //     },
+    //   });
     //   const response = await request.json();
     //   if(response) setAllImages(response.data);
     // }
@@ -79,7 +83,7 @@ export default function ImageModal({imgVisible, closeImgHandler, title, allImage
                         <div className="grid grid-cols-4 gap-4">
                           <div>
                             <div className="rounded p-1 border border-slate-300">
-                              {select.preview && <div className="h-30 w-full relative flex align-middle content-center items-center"><img className="preview w-full" alt="preview" src={select.preview}/></div> }
+                              {select.preview && <div className="h-30 w-full relative flex align-middle content-center items-center overflow-hidden w-full"><img className="preview w-full" alt="preview" src={select.preview}/></div> }
                               {!select.preview && <div className="h-30 w-full relative flex justify-center items-center">Prview</div>}
                             </div>
                           </div>
@@ -96,7 +100,7 @@ export default function ImageModal({imgVisible, closeImgHandler, title, allImage
                               />
                               <Button 
                                   className="inline-flex items-center bg-transparent hover:bg-slate-200 border-[1.5px] border-l-0 border-stroke rounded-e-lg dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary" 
-                                  onClick={()=>select.setImgTab('select')}><MdOutlineSearch />
+                                  onClick={()=>{select.setImgTab('select');getAllImages()}}><MdOutlineSearch />
                               </Button>
                             </div>
                           </div>
@@ -179,7 +183,7 @@ export default function ImageModal({imgVisible, closeImgHandler, title, allImage
                           </Button>
                           <Button 
                             className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7"
-                            onClick={select.getAllImages()}
+                            onClick={select.getAllImages}
                           ><MdRefresh className="text-lg"/> Refresh</Button>
                         </div>
                         <div className="actions justify-end">
