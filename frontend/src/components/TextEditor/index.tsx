@@ -34,7 +34,7 @@ import ModalDialog from "../main/Modal";
 import ImageModal from "../main/Modal/ImageModal";
 import SourceCodeModal from "../main/Modal/SourceCodeModal";
 import { Button } from "@nextui-org/react";
-import { HexColorPicker } from "react-colorful";
+import { HexColorPicker,HexColorInput } from "react-colorful";
 import "./editor.scss";
 
 const minHeight = "25rem";
@@ -166,7 +166,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
   const [tableVisible, setTableVisible] = useState<any>(false);
   const [HTML , setHTML] = useState<any>('');
   const [sortActive, setSortActive] = useState<Boolean>(false);
-  const [color, setColor] = useState("#aabbcc");
+  const [color, setColor] = useState("#000000");
 
   const editorRef = useRef<any>(null);
 
@@ -576,6 +576,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
       last = nodes[nodes.length - 2];
     }
     try{
+      setColor(color);
       //@ts-ignore
       document.execCommand('styleWithCSS', false, true);
       document.execCommand('foreColor', false, color);
@@ -947,7 +948,8 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                       type="button"
                       title="Unordered"
                       className="tools-item hover:bg-slate-200 text-slate-500 hover:text-slate-900 p-2"
-                      onClick={()=>{ UnderOrderList('list-disc'); }}
+                      onClick={()=>setColorHandler(color)}
+                      style={{color:color?color:"#000000"}}
                     >
                       <RiFontColor/>
                     </button>
@@ -960,7 +962,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                         style={{ height: "32px" }}
                         onMouseOver={()=>setFcVisible(true)} onMouseOut={()=>setFcVisible(false)}
                       >
-                        <RxCaretDown color={color} {...setColor}/>
+                        <RxCaretDown {...setColor}/>
                         <div 
                           id='dropdownDivider' 
                           aria-labelledby="dropdownDividerButton"
@@ -968,8 +970,9 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                           style={{ left:"0", top: "0", marginTop: "30px", width: "max-content" }}
                         >
 
-                          <div className="p-2 bg-white">
+                          <div className="p-4 bg-white">
                             <HexColorPicker color={color} onChange={setColorHandler}/>
+                            <HexColorInput color={color} onChange={setColorHandler} className="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 mt-2 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                           </div>
                         </div>
                       </button>
