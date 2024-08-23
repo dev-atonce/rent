@@ -34,7 +34,7 @@ import ModalDialog from "../main/Modal";
 import ImageModal from "../main/Modal/ImageModal";
 import SourceCodeModal from "../main/Modal/SourceCodeModal";
 import { Button } from "@nextui-org/react";
-import { HexColorPicker } from "react-colorful";
+import { HexColorPicker,HexColorInput } from "react-colorful";
 import "./editor.scss";
 
 const minHeight = "25rem";
@@ -166,7 +166,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
   const [tableVisible, setTableVisible] = useState<any>(false);
   const [HTML , setHTML] = useState<any>('');
   const [sortActive, setSortActive] = useState<Boolean>(false);
-  const [color, setColor] = useState("#aabbcc");
+  const [color, setColor] = useState("#000000");
 
   const editorRef = useRef<any>(null);
 
@@ -200,7 +200,12 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
       makeElement.innerHTML = editorBody.querySelector('.editor-body').innerHTML;
       makeElement.querySelectorAll('.row-panel').forEach((el:any)=>el.remove());
       makeElement.querySelectorAll('[contenteditable="true"]').forEach((el:any)=>el.removeAttribute('contenteditable'));
-      makeElement.querySelectorAll('[draggable="true"]').forEach((el:any)=>el.removeAttribute('draggable'));
+      makeElement.querySelectorAll('[draggable="true"]').forEach((el:any)=>{
+        el.removeAttribute('draggable');
+        if(sortActive==true){
+          el.classList.remove('on-drag');
+        }
+      });
       let newString = makeElement.innerHTML;
       setState(newString,prop);
     }
@@ -236,7 +241,6 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
           "class",
           "rounded px-2 py-1 text-slate-800 hover:bg-red hover:text-slate-100 remove-row"
         );
-        removeBtn.onclick = (el:any) => el.target.closest('.grid').remove(); 
         removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
         controlElement.append(removeBtn)
         row.prepend(controlElement);
@@ -454,6 +458,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
   };
   const deleteRow = (e: any) => {
     e.closest(".grid").remove();
+    setCodeStateHandler();
   };
 
   const SourceCode = (el:any) => 
@@ -500,12 +505,13 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
         });   
         const response = await request.json();
         if(uploadAmount == response.image.length){
-          getAllImages();
+
           setImgTab('select')
           // alert("Images uploaded successfully");
           Array.from(setSelectedImage).map((el:any)=>el.remove());
           //@ts-ignore
           document.querySelector('.modal-content').querySelector('input[type="file"]').value = null;
+          getAllImages();
 
         }else{
           alert("Some images not uploaded");
@@ -570,6 +576,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
       last = nodes[nodes.length - 2];
     }
     try{
+      setColor(color);
       //@ts-ignore
       document.execCommand('styleWithCSS', false, true);
       document.execCommand('foreColor', false, color);
@@ -817,7 +824,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
 
     });
 
-    getAllImages();
+    // getAllImages();
 
     if(prop && state[prop]) setSubState();
     editorRef.current = true;
@@ -841,6 +848,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
         dataId={dataId}
         editor={editor}
         allImages={allImages}
+        getAllImages={getAllImages}
         select={{
           Select,
           imgSelect,imgUnselect,
@@ -856,7 +864,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
           title,setTitle,
           upload,removeImage,
           selectedImage,resetSelectedImage,
-          setSelectedImage
+          setSelectedImage,
         }}
         title="Image"
       />
@@ -940,7 +948,8 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                       type="button"
                       title="Unordered"
                       className="tools-item hover:bg-slate-200 text-slate-500 hover:text-slate-900 p-2"
-                      onClick={()=>{ UnderOrderList('list-disc'); }}
+                      onClick={()=>setColorHandler(color)}
+                      style={{color:color?color:"#000000"}}
                     >
                       <RiFontColor/>
                     </button>
@@ -953,7 +962,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                         style={{ height: "32px" }}
                         onMouseOver={()=>setFcVisible(true)} onMouseOut={()=>setFcVisible(false)}
                       >
-                        <RxCaretDown color={color} {...setColor}/>
+                        <RxCaretDown {...setColor}/>
                         <div 
                           id='dropdownDivider' 
                           aria-labelledby="dropdownDividerButton"
@@ -961,14 +970,10 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                           style={{ left:"0", top: "0", marginTop: "30px", width: "max-content" }}
                         >
 
-                          <div className="p-2 bg-white">
+                          <div className="p-4 bg-white">
                             <HexColorPicker color={color} onChange={setColorHandler}/>
+                            <HexColorInput color={color} onChange={setColorHandler} className="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 mt-2 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                           </div>
-                          {/* <ul>
-                            <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-disc')}}>Default</button></li>
-                            <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-circle')}}>Circle</button></li>
-                            <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-square')}}>Square</button></li>
-                          </ul> */}
                         </div>
                       </button>
                     </div>
