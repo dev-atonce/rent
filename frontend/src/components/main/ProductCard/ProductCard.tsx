@@ -1,5 +1,8 @@
-import Image from "next/image";
 import Link from "next/link";
+
+import dynamic from "next/dynamic";
+import Image from "next/image";
+
 export default function ProductCard({ item, type, urlPre, product }: any) {
   return (
     <Link
@@ -23,11 +26,11 @@ export default function ProductCard({ item, type, urlPre, product }: any) {
             : `${process.env.NEXT_PUBLIC_BASE_URL}public\\image\\no_image.webp`
         }
         alt={item.nameTH}
-        // width={400}
-        // height={400}
+        width="280"
+        height="280"
         className="w-full object-cover aspect-4/3"
-        // loading="lazy"
       />
+
       <div className="text-center group-hover:text-[#0DA1DB]">
         {product ? item?.productNameTH : item?.nameTH}
       </div>
