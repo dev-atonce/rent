@@ -4,22 +4,28 @@ const auth = require("../../auth");
 const validator = require("../../../validators");
 
 router.get("/", controllers.onGetAll);
+
 router.get("/:id", auth.required, controllers.onGetById);
+
 router.post(
   "/",
   [validator.user.create, validator.check],
   controllers.onInsert
 );
+
 router.put(
   "/:id",
   [validator.user.update, validator.check],
   controllers.onUpdate
 );
+
 router.delete(
   "/:id",
   [validator.user.deleteById, validator.check],
   controllers.onDelete
 );
+
+router.get("/check/auth", auth.required, controllers.onCheckAuth);
 
 router.post("/login", controllers.onLogin);
 router.post("/register", controllers.onRegister);
