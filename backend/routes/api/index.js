@@ -12,6 +12,7 @@ router.use("/page/category-sub", require("./page/categorySubPage"));
 router.use("/page/training-course", require("./page/traningCoursePage"));
 router.use("/page/calendar", require("./page/calendarPage"));
 router.use("/page/banner", require("./page/bannerPage"));
+router.use("/page/logo", require("./page/logoPage"));
 
 //////////////
 
@@ -29,6 +30,7 @@ router.use("/webpanel/training-course", require("./webpanel/trainingCoursePanel"
 router.use("/webpanel/calendar", require("./webpanel/calendarPanel"));
 router.use("/webpanel/banner", require("./webpanel/bannerPanel"));
 router.use("/webpanel/media", require("./webpanel/mediaPanel"));
+router.use("/webpanel/logo", require("./webpanel/logoPanel"));
 
 //////////////
 
