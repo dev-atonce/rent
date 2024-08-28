@@ -162,6 +162,17 @@ export default function ProductPage() {
         </div>
       </div>
       <>
+        <h4 className="text-xl">Type Of product</h4>
+        <Link 
+          href="product/type/rent" 
+          className="bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700"
+        >RENT</Link>
+        <Link 
+          href="product/type/sell" 
+          className="bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700"
+        >SELL</Link>
+      </>
+      <>
         <h2 className="text-2xl mt-6">All Product</h2>
         <div className="flex justify-between  item-center">
           <div className="flex items-center gap-1">
@@ -251,6 +262,7 @@ export default function ProductPage() {
           />
         }
       </>
+      
       {/* <Jodit /> */}
     </DefaultLayout>
   );
