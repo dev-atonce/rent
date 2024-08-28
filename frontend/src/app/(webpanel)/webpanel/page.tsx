@@ -1,18 +1,11 @@
-import ECommerce from "@/components/webpanel/Dashboard/E-commerce";
-import { Metadata } from "next";
+import Dashboard from "@/components/webpanel/Dashboard/Dashboard";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-
-export const metadata: Metadata = {
-  title:
-    "Next.js E-commerce Dashboard | TailAdmin - Next.js Dashboard Template",
-  description: "This is Next.js Home for TailAdmin Dashboard Template",
-};
 
 export default function Home() {
   return (
     <>
       <DefaultLayout>
-        <ECommerce />
+        <Dashboard />
       </DefaultLayout>
     </>
   );

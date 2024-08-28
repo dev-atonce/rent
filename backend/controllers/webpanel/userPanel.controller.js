@@ -72,6 +72,14 @@ const methods = {
       res.error(error);
     }
   },
+
+  async onCheckAuth(req, res) {
+    try {
+      res.success({ status: "200" });
+    } catch (error) {
+      res.error(error);
+    }
+  },
 };
 
 module.exports = { ...methods };

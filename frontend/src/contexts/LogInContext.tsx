@@ -1,13 +1,6 @@
 "use client";
 
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useState,
-  useMemo,
-  use,
-} from "react";
+import { createContext, useContext, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Swal from "sweetalert2";
 import { FetchContext } from "./FetchContext";
@@ -36,7 +29,6 @@ export default function LogInProvider({
         body: JSON.stringify(formData),
       });
       const res = await response.json();
-      console.log(res);
 
       if (res?.error) {
         let msg = "Log In Failed";
@@ -54,7 +46,7 @@ export default function LogInProvider({
           timer: 1500,
         });
       } else {
-        localStorage.setItem("accessToken", JSON.stringify(res?.accessToken));
+        localStorage.setItem("accessToken", res?.accessToken);
         localStorage.setItem("userData", JSON.stringify(res?.userData));
         setToken(res?.accessToken);
         setUser(res?.userData);
@@ -81,33 +73,74 @@ export default function LogInProvider({
     }
   };
 
-  const noAuth = () => {
-    router.push("/webpanel");
-  };
-  const onLogOut = () => {
+  const onLogOut = (type: any) => {
     onInsertLog(user?.id, user?.id, "user", `${user?.username} Log Out`);
     setUser({});
     localStorage.removeItem("accessToken");
     localStorage.removeItem("userData");
-    Swal.fire({
-      toast: true,
-      position: "top",
-      icon: "success",
-      title: "Logged Out Successfully",
-      showConfirmButton: false,
-      timer: 1500,
-    });
+    if (type == "manual") {
+      Swal.fire({
+        toast: true,
+        position: "top",
+        icon: "success",
+        title: "Logged Out Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
     setTimeout(() => {
       router.push("/webpanel/auth/signin");
     }, 1500);
   };
-  useEffect(() => {
-    const userData = localStorage.getItem("userData");
-    const token = localStorage.getItem("accessToken");
-  }, []);
+
+  const onCheckAuth = async () => {
+    let route = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/users/check/auth`;
+
+    try {
+      const response = await fetch(route, {
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+
+      const data = await response.json();
+
+      return data;
+
+    } catch (error) {
+      console.error("There was a problem with the fetch operation:", error);
+      Swal.fire({
+        position: "top-right",
+        toast: true,
+        icon: "warning",
+        title: "Session Timeout, Log In Again!",
+        showConfirmButton: false,
+        timer: 2500,
+      });
+      onLogOut("auto");
+      setTimeout(() => {
+        router.push("/webpanel/auth/signin");
+      }, 2500);
+    }
+  };
+
+  const noAuth = () => {
+    router.push("/webpanel");
+  };
+
+  // useEffect(() => {
+  //   const userData = localStorage.getItem("userData");
+  //   const token = localStorage.getItem("accessToken");
+  // }, []);
 
   return (
-    <LogInContext.Provider value={{ user, onLogOut, noAuth, onLogIn }}>
+    <LogInContext.Provider
+      value={{ user, onLogOut, noAuth, onLogIn, onCheckAuth }}
+    >
       {children}
     </LogInContext.Provider>
   );

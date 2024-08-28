@@ -1,7 +1,8 @@
 "use client";
-import React, { useState, ReactNode } from "react";
-import Sidebar from "@/components/webpanel/Sidebar";
+import React, { useState, useEffect, useContext } from "react";
+import Sidebar from "@/components/webpanel/Sidebar/Sidebar";
 import Header from "@/components/webpanel/Header";
+import { LogInContext } from "@/contexts/LogInContext";
 
 export default function DefaultLayout({
   children,
@@ -9,6 +10,11 @@ export default function DefaultLayout({
   children: React.ReactNode;
 }) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const { onCheckAuth }: any = useContext(LogInContext);
+
+  useEffect(() => {
+    onCheckAuth();
+  }, []);
   return (
     <>
       {/* <!-- ===== Page Wrapper Start ===== --> */}
@@ -25,7 +31,7 @@ export default function DefaultLayout({
 
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
-            <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            <div className="mx-auto p-4 md:p-6 2xl:p-10">
               {children}
             </div>
           </main>
