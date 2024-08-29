@@ -64,24 +64,25 @@ const TableThree = ({
     setData(__data);
   };
   return (
-    <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-1">
+    <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-10">
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
           <thead>
             <tr className="bg-gray-2 text-left dark:bg-meta-4">
               {drag ? (
-                <th className="px-4 py-4 font-medium text-black dark:text-white xl:pl-11 ">
+                <th className=" px-4 pl-7 py-4 font-medium text-black dark:text-white">
                   <RxDragHandleHorizontal size={25} />
                 </th>
               ) : (
-                <th className="px-4 py-4 font-medium text-black dark:text-white xl:pl-11">
+                <th className=" px-4 pl-7 py-4 font-medium text-black dark:text-white">
                   No.
                 </th>
               )}
               {col?.map((i: any, k: any) => (
                 <th
                   key={k}
-                  className={` ${i?.minWidth && `min-w-[${i?.minWidth}]`}  px-4 py-4 font-medium text-black dark:text-white xl:pl-11`}
+                  className={`px-4 pl-7 py-4 font-medium text-black dark:text-white`}
+                  style={{ minWidth: i.minWidth }}
                 >
                   {i?.title}
                 </th>
@@ -92,21 +93,6 @@ const TableThree = ({
             {type === "seo" &&
               data?.map((i: any, key: any) => (
                 <SeoRecord i={i} index={key} modal={modal} key={key} />
-              ))}
-            {type === "service" &&
-              data?.map((i: any, key: any) => (
-                <ServiceRecord
-                  i={i}
-                  index={key}
-                  modal={modal}
-                  drag={drag}
-                  onDragEnd={handleSort}
-                  dragItem={dragItem}
-                  dragOverItem={dragOverItem}
-                  onChangeStatus={onChangeStatus}
-                  key={key}
-                  onDelete={onDelete}
-                />
               ))}
             {type === "project" &&
               data?.map((i: any, key: any) => (
@@ -196,23 +182,6 @@ const TableThree = ({
                   onDelete={onDelete}
                 />
               ))}
-            {type === "subject" &&
-              data?.map((i: any, key: any) => {
-                return (
-                  <SubjectRecord
-                    i={i}
-                    index={key}
-                    modal={modal}
-                    key={key}
-                    drag={drag}
-                    onDragEnd={handleSort}
-                    dragItem={dragItem}
-                    dragOverItem={dragOverItem}
-                    onChangeStatus={onChangeStatus}
-                    onDelete={onDelete}
-                  />
-                );
-              })}
             {type === "mainCategory" &&
               data?.map((i: any, key: any) => {
                 return (

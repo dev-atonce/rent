@@ -28,7 +28,7 @@ const Dashboard: React.FC = () => {
         <CardDataStats title="About Us" link="/webpanel/about-us">
           <ImProfile size={20} />
         </CardDataStats>
-        <CardDataStats title="Banner" link="/webpanel/banner">
+        <CardDataStats title="Banner" link="/webpanel/cover">
           <IoMdImages size={20} />
         </CardDataStats>
         <CardDataStats title="Career" link="/webpanel/career">
