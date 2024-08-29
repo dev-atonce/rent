@@ -1,7 +1,12 @@
 "use client";
 import React from "react";
 import CardDataStats from "../CardDataStats";
-import { FaHome, FaPeopleArrows, FaShippingFast } from "react-icons/fa";
+import {
+  FaCalendarAlt,
+  FaHome,
+  FaPeopleArrows,
+  FaShippingFast,
+} from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { IoMdImages } from "react-icons/io";
 import { SlEnvolope } from "react-icons/sl";
@@ -26,16 +31,19 @@ const Dashboard: React.FC = () => {
         <CardDataStats title="Banner" link="/webpanel/banner">
           <IoMdImages size={20} />
         </CardDataStats>
-        <CardDataStats title="Client" link="/webpanel/client">
+        <CardDataStats title="Career" link="/webpanel/career">
           <FaPeopleArrows size={20} />
         </CardDataStats>
-        <CardDataStats title="Service" link="/webpanel/service">
+        <CardDataStats title="Project" link="/webpanel/project">
           <FaShippingFast size={20} />
         </CardDataStats>
-        <CardDataStats title="Contact Form" link="/webpanel/contact-form">
+        <CardDataStats title="Product" link="/webpanel/product">
           <SlEnvolope size={20} />
         </CardDataStats>
-        <CardDataStats title="Contact List" link="/webpanel/contact-list">
+        <CardDataStats title="Training" link="/webpanel/training">
+          <FaCalendarAlt size={20} />
+        </CardDataStats>
+        <CardDataStats title="Contact List" link="/webpanel/contact">
           <RiContactsBook2Fill size={20} />
         </CardDataStats>
         {user?.role !== "user" && (

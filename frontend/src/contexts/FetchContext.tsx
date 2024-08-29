@@ -36,6 +36,8 @@ export default function FetchProvider({ children, user, token }: any) {
   const calendarRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/calendar`;
   const bannerRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/banner`;
   const bannerSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/banner/sort`;
+  const logoRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/logo`;
+  
   const onFetchOne = async (type: any, id: any) => {
     let route = "";
     if (id) {
@@ -63,6 +65,8 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${calendarRoute}/${id}`;
       } else if (type === "banner") {
         route = `${bannerRoute}/${id}`;
+      } else if (type === "logo") {
+        route = `${logoRoute}/${id}`;
       }
     } else {
       if (type === "service") {

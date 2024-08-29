@@ -6,7 +6,12 @@ import Link from "next/link";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import { LogInContext } from "@/contexts/LogInContext";
 import { MdPowerSettingsNew } from "react-icons/md";
-import { FaHome, FaPeopleArrows, FaShippingFast } from "react-icons/fa";
+import {
+  FaCalendarAlt,
+  FaHome,
+  FaPeopleArrows,
+  FaShippingFast,
+} from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
 import { IoMdImages } from "react-icons/io";
 import { SlEnvolope } from "react-icons/sl";
@@ -143,60 +148,73 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               {/* <!-- Menu Item Banner --> */}
 
-              {/* <!-- Menu Item Services --> */}
+              {/* <!-- Menu Item Project --> */}
               <li>
                 <Link
-                  href="/webpanel/service"
+                  href="/webpanel/project"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("seo") && "bg-graydark dark:bg-meta-4"
+                    pathname.includes("project") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <FaShippingFast />
-                  Service
+                  Project
                 </Link>
               </li>
-              {/* <!-- Menu Item services --> */}
+              {/* <!-- Menu Item Project --> */}
 
-              {/* <!-- Menu Item Client --> */}
+              {/* <!-- Menu Item product --> */}
               <li>
                 <Link
-                  href="/webpanel/client"
+                  href="/webpanel/product"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("client") && "bg-graydark dark:bg-meta-4"
+                    pathname.includes("product") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <FaPeopleArrows />
-                  Client
+                  Product
                 </Link>
               </li>
-              {/* <!-- Menu Item Client --> */}
+              {/* <!-- Menu Item product --> */}
 
-              {/* <!-- Menu Item Contact Form --> */}
+              {/* <!-- Menu Item career --> */}
               <li>
                 <Link
-                  href="/webpanel/contact-form"
+                  href="/webpanel/career"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("contact-form") &&
-                    "bg-graydark dark:bg-meta-4"
+                    pathname.includes("career") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <SlEnvolope />
-                  Contact Forms
+                  Career
                 </Link>
               </li>
-              {/* <!-- Menu Item Contact Form --> */}
+              {/* <!-- Menu Item career --> */}
+
+              {/* <!-- Menu Item training --> */}
+              <li>
+                <Link
+                  href="/webpanel/training"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("training") &&
+                    "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <FaCalendarAlt />
+                  Training
+                </Link>
+              </li>
+              {/* <!-- Menu Item training --> */}
 
               {/* <!-- Menu Item Contact List --> */}
               <li>
                 <Link
-                  href="/webpanel/contact-list"
+                  href="/webpanel/contact"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("contact-list") &&
-                    "bg-graydark dark:bg-meta-4"
+                    pathname.includes("contact") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <RiContactsBook2Fill />
-                  Contact Info
+                  Contact
                 </Link>
               </li>
               {/* <!-- Menu Item Contact List --> */}
