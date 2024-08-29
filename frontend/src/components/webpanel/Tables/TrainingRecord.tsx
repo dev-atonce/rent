@@ -129,14 +129,14 @@ export default function TrainingRecord({
           <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
             <div className="flex items-center gap-1">
               <Link
-                href={`/training/${i?.id}`}
+                href={`/webpanel/training/${i?.id}`}
                 className="hover:text-white hover:bg-blue-400 text-blue-400 border-blue-400 border p-2 rounded-full"
               >
                 <MdOutlineRemoveRedEye size={20} />
               </Link>
               <Link
                 className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"
-                href={`training/edit/${i?.id}`}
+                href={`/webpanel/training/edit/${i?.id}`}
               >
                 <BiEdit size={20} />
               </Link>

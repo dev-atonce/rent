@@ -97,7 +97,7 @@ export default function MainCatRecord({
             <div className="flex items-center gap-1">
               <Link
                 className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"
-                href={`product/maincat/edit/${i?.id}`}
+                href={`/webpanel/product/maincat/edit/${i?.id}`}
               >
                 <BiEdit size={20} />
               </Link>

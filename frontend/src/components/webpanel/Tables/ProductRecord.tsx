@@ -155,7 +155,7 @@ export default function ServiceRecord({
               </Link>
               <Link
                 className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"
-                href={`webpanel/product/edit/${i?._id}`}
+                href={`/webpanel/product/edit/${i?._id}`}
               >
                 <BiEdit size={20} />
               </Link>

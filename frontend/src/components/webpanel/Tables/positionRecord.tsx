@@ -94,7 +94,7 @@ export default function PositionRecord({
             <div className="flex items-center gap-1">
               <Link
                 className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"
-                href={`career/edit/${i?.id}`}
+                href={`/webpanel/career/edit/${i?.id}`}
               >
                 <BiEdit size={20} />
               </Link>
