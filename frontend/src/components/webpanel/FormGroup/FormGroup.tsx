@@ -1,9 +1,6 @@
 import Input from "@/components/webpanel/Input/Input";
 
 import TextArea from "../Input/TextArea";
-import { SketchPicker } from "react-color";
-import SelectGroupTwo from "../SelectGroup/SelectGroupTwo";
-import MultiSelect from "@/components/FormElements/MultiSelect";
 import SelectGroupOne from "../SelectGroup/SelectGroupOne";
 import FileInput from "../FileInput/FileInput";
 
@@ -55,8 +52,8 @@ export default function FormGroup({
             />
           ) : i?.type === "image" ? (
             <FileInput
+              key={index}
               multiple={i?.multiple}
-              // path={"upload-banner"}
               setState={i?.setState}
               state={i?.state}
               objectState={true}

@@ -34,10 +34,6 @@ const SignIn = () => {
             <div className="px-26 py-17.5 text-center">
               <div className="flex flex-col justify-center gap-4 items-center">
                 <Logo color="#002B7F" />
-
-                <p className="2xl:px-20">
-                  Hankyu Hanshin Express (Thailand) Website Management System!
-                </p>
               </div>
 
               <span className="mt-15 inline-block">
