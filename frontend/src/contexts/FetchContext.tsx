@@ -10,6 +10,7 @@ export default function FetchProvider({ children, user, token }: any) {
   const router = useRouter();
   const userId = user?.id;
 
+  const aboutUsRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/about-us`;
   const serviceRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/service`;
   const serviceSeoRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/service/seo`;
   const serviceSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/service/sort`;
@@ -36,6 +37,7 @@ export default function FetchProvider({ children, user, token }: any) {
   const calendarRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/calendar`;
   const bannerRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/banner`;
   const bannerSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/banner/sort`;
+
   const onFetchOne = async (type: any, id: any) => {
     let route = "";
     if (id) {
@@ -63,6 +65,8 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${calendarRoute}/${id}`;
       } else if (type === "banner") {
         route = `${bannerRoute}/${id}`;
+      } else if (type === "about-us") {
+        route = `${aboutUsRoute}?type=${id}`;
       }
     } else {
       if (type === "service") {

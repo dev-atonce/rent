@@ -83,7 +83,7 @@ export default function AddressRecord({
             <div className="flex items-center gap-1">
               <Link
                 className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"
-                href={`contact/edit/${i?.id}`}
+                href={`/webpanel/contact/edit/${i?.id}`}
               >
                 <BiEdit size={20} />
               </Link>
