@@ -11,17 +11,11 @@ export default function FetchProvider({ children, user, token }: any) {
   const userId = user?.id;
 
   const aboutUsRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/about-us`;
-  const serviceRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/service`;
-  const serviceSeoRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/service/seo`;
-  const serviceSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/service/sort`;
-  const serviceStatusRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/service/status`;
   const userRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/users`;
   const seoRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/seo`;
   const logRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/log`;
   const addressRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact`;
   const addressSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact/sort`;
-  const subjectRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/subject`;
-  const subjectSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/subject/sort`;
   const positionRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/position`;
   const positionSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/position/sort`;
   const productRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product`;
@@ -38,18 +32,14 @@ export default function FetchProvider({ children, user, token }: any) {
   const bannerRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/banner`;
   const bannerSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/banner/sort`;
   const logoRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/logo`;
-  
+
   const onFetchOne = async (type: any, id: any) => {
     let route = "";
     if (id) {
-      if (type === "service") {
-        route = `${serviceRoute}/${id}`;
-      } else if (type === "user") {
+      if (type === "user") {
         route = `${userRoute}/${id}`;
       } else if (type === "address") {
         route = `${addressRoute}/${id}`;
-      } else if (type === "subject") {
-        route = `${subjectRoute}/${id}`;
       } else if (type === "position") {
         route = `${positionRoute}/${id}`;
       } else if (type === "product") {
@@ -72,9 +62,7 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${aboutUsRoute}?type=${id}`;
       }
     } else {
-      if (type === "service") {
-        route = serviceRoute;
-      } else if (type === "user") {
+      if (type === "user") {
         route = userRoute;
       } else if (type === "seo") {
         route = seoRoute;
@@ -82,8 +70,6 @@ export default function FetchProvider({ children, user, token }: any) {
         route = logRoute;
       } else if (type === "address") {
         route = addressRoute;
-      } else if (type === "subject") {
-        route = subjectRoute;
       } else if (type === "position") {
         route = positionRoute;
       } else if (type === "product") {
@@ -96,12 +82,14 @@ export default function FetchProvider({ children, user, token }: any) {
         route = calendarRoute;
       } else if (type === "banner") {
         route = bannerRoute;
+      } else if (type === "home") {
+        route = `${aboutUsRoute}?type=home`;
       }
     }
     try {
       const response = await fetch(route, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          authorization: `Bearer ${token}`,
         },
       });
 
@@ -121,14 +109,10 @@ export default function FetchProvider({ children, user, token }: any) {
   const onFetchPage = async (type: any, id: any, page: any, query: any) => {
     let route = "";
     if (id) {
-      if (type === "service") {
-        route = `${serviceRoute}/${id}`;
-      } else if (type === "user") {
+      if (type === "user") {
         route = `${userRoute}/${id}`;
       } else if (type === "address") {
         route = `${addressRoute}/${id}`;
-      } else if (type === "subject") {
-        route = `${subjectRoute}/${id}`;
       } else if (type === "position") {
         route = `${positionRoute}/${id}`;
       } else if (type === "product") {
@@ -147,9 +131,7 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${bannerRoute}/${id}?page=${page}&${query}`;
       }
     } else {
-      if (type === "service") {
-        route = serviceRoute;
-      } else if (type === "user") {
+      if (type === "user") {
         route = userRoute;
       } else if (type === "seo") {
         route = seoRoute;
@@ -157,8 +139,6 @@ export default function FetchProvider({ children, user, token }: any) {
         route = logRoute;
       } else if (type === "address") {
         route = addressRoute;
-      } else if (type === "subject") {
-        route = subjectRoute;
       } else if (type === "position") {
         route = positionRoute;
       } else if (type === "product") {
@@ -174,7 +154,7 @@ export default function FetchProvider({ children, user, token }: any) {
     try {
       const response = await fetch(route, {
         headers: {
-          Authorization: `Bearer ${token}`,
+          authorization: `Bearer ${token}`,
         },
       });
 
@@ -205,23 +185,11 @@ export default function FetchProvider({ children, user, token }: any) {
     data?.image && delete modifiedData?.image;
     data?.gallery && delete modifiedData?.gallery;
 
-    if (type == "service") {
-      if (method.toUpperCase() == "PUT") {
-        route = `${serviceRoute}/${id}`;
-      } else if (method.toUpperCase() == "POST") {
-        route = serviceRoute;
-      }
-    } else if (type == "address") {
+    if (type == "address") {
       if (method.toUpperCase() == "PUT") {
         route = `${addressRoute}/${id}`;
       } else if (method?.toUpperCase() == "POST") {
         route = addressRoute;
-      }
-    } else if (type == "subject") {
-      if (method.toUpperCase() == "PUT") {
-        route = `${subjectRoute}/${id}`;
-      } else if (method?.toUpperCase() == "POST") {
-        route = subjectRoute;
       }
     } else if (type == "position") {
       if (method.toUpperCase() == "PUT") {
@@ -265,12 +233,6 @@ export default function FetchProvider({ children, user, token }: any) {
       } else if (method?.toUpperCase() == "POST") {
         route = trainingRoute;
       }
-    } else if (type == "serviceSeo") {
-      route = `${serviceSeoRoute}/${id}`;
-    } else if (type == "serviceSort") {
-      route = `${serviceSortRoute}/${id}`;
-    } else if (type == "serviceStatus") {
-      route = `${serviceStatusRoute}/${id}`;
     } else if (type == "user") {
       if (method.toUpperCase() == "PUT") {
         route = `${userRoute}/${id}`;
@@ -286,6 +248,16 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${bannerRoute}/${id}`;
       } else if (method?.toUpperCase() == "POST") {
         route = bannerRoute;
+      }
+    } else if (type == "logo") {
+      if (method.toUpperCase() === "PUT") {
+        route = `${logoRoute}/${id}`;
+      }
+    } else if (type == "home") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${aboutUsRoute}?type=home`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = `${aboutUsRoute}?type=home`;
       }
     }
 
@@ -316,6 +288,7 @@ export default function FetchProvider({ children, user, token }: any) {
                 method: method?.toUpperCase(),
                 headers: {
                   "Content-Type": "application/json",
+                  authorization: `Bearer ${token}`,
                 },
                 body: JSON.stringify(modifiedData),
               });
@@ -543,12 +516,8 @@ export default function FetchProvider({ children, user, token }: any) {
   const onSort = async (order: any, id: any, type: any, activity: any) => {
     let route = "";
 
-    if (type == "service") {
-      route = `${serviceSortRoute}/${id}`;
-    } else if (type == "address") {
+    if (type == "address") {
       route = `${addressSortRoute}/${id}`;
-    } else if (type == "subject") {
-      route = `${subjectSortRoute}/${id}`;
     } else if (type == "position") {
       route = `${positionSortRoute}/${id}`;
     } else if (type == "product") {
@@ -562,7 +531,7 @@ export default function FetchProvider({ children, user, token }: any) {
     } else if (type == "banner") {
       route = `${bannerSortRoute}/${id}`;
     }
-    console.log(route);
+
     try {
       const response = await fetch(route, {
         method: "PUT",
@@ -612,10 +581,6 @@ export default function FetchProvider({ children, user, token }: any) {
       route = `${positionRoute}/${id}`;
     } else if (type === "user") {
       route = `${userRoute}/${id}`;
-    } else if (type === "service") {
-      route = `${serviceRoute}/${id}`;
-    } else if (type === "subject") {
-      route = `${subjectRoute}/${id}`;
     } else if (type === "address") {
       route = `${addressRoute}/${id}`;
     } else if (type === "mainCategory") {
