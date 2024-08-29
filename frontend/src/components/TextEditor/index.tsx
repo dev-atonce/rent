@@ -887,41 +887,38 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
           placeholder={placeholder}
         ></textarea>
         <div className="text-editor relative" onBlur={setCodeStateHandler}>
-          <div className="header sticky z-999 top-17 border border-slate-300 bg-white">
-            <div className="tools flex justify-stretch p-1">
-              <div className="flex ">
+          <div className="header z-999 top-0 border border-slate-300 bg-white">
+            <div className="tools relative p-1">
+              <div style={{display:'ruby'}}>
                 <div className="group flex border-r pr-1 border-slate-300">
-                  <button
-                    type="button"
+                  <div
                     title="Undo"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                   >
                     <CgUndo onClick={() => document.execCommand("undo")} />
-                  </button>
-                  <button
-                    type="button"
+                  </div>
+                  <div
                     title="Undo"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                   >
                     <CgRedo onClick={() => document.execCommand("redo")} />
-                  </button>
+                  </div>
                 </div>
                 <div className="group flex border-r px-1 border-slate-300">
-                  <button
-                    type="button"
+                  <div
                     title="Bold"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                   >
                     <BsTypeBold onClick={TextBold} />
-                  </button>
-                  <button
+                  </div>
+                  <div
                     type="button"
                     title="Italic"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                   >
                     <BsTypeItalic onClick={TextItalic} />
-                  </button>
-                  <button
+                  </div>
+                  <div
                     type="button"
                     title="Underline"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
@@ -931,9 +928,8 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                         document.execCommand("underline");
                       }}
                     />
-                  </button>
-                  <button
-                    type="button"
+                  </div>
+                  <div
                     title="Underline"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                   >
@@ -942,19 +938,17 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                         document.execCommand("strikethrough");
                       }}
                     />
-                  </button>
+                  </div>
                   <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
-                    <button
-                      type="button"
+                    <div
                       title="Unordered"
                       className="tools-item hover:bg-slate-200 text-slate-500 hover:text-slate-900 p-2"
                       onClick={()=>setColorHandler(color)}
                       style={{color:color?color:"#000000"}}
                     >
                       <RiFontColor/>
-                    </button>
-                    <button
-                        type="button"
+                    </div>
+                    <div
                         id="dropdownDividerButton"
                         data-dropdown-toggle="dropdownDivider" 
                         title="Font Color"
@@ -975,20 +969,18 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                             <HexColorInput color={color} onChange={setColorHandler} className="bg-slate-50 border border-slate-300 text-slate-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-1 mt-2 dark:bg-slate-700 dark:border-slate-600 dark:placeholder-slate-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
                           </div>
                         </div>
-                      </button>
+                      </div>
                     </div>
-                  <button
-                    type="button"
+                  <div
                     title="Clear Formatting"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                     onClick={ClearFormat}
                   >
                     <BsEraser />
-                  </button>
+                  </div>
                 </div>
                 <div className="group flex border-r px-1 border-slate-300">
-                  <button
-                    type="button"
+                  <div
                     title="Align left"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                   >
@@ -997,9 +989,8 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                         document.execCommand("justifyLeft");
                       }}
                     />
-                  </button>
-                  <button
-                    type="button"
+                  </div>
+                  <div
                     title="Align center"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                   >
@@ -1008,9 +999,8 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                         document.execCommand("justifyCenter");
                       }}
                     />
-                  </button>
-                  <button
-                    type="button"
+                  </div>
+                  <div
                     title="Align right"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                   >
@@ -1019,30 +1009,27 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                         document.execCommand("justifyRight");
                       }}
                     />
-                  </button>
+                  </div>
                   
-                  <button
-                    type="button"
+                  <div
                     title="Align justify"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                   >
                     <RiAlignJustify
                       onClick={() => document.execCommand("justifyFull")}
                     />
-                  </button>
+                  </div>
                 </div>
                 <div className="group flex border-r px-1 border-slate-300">
                   <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
-                    <button
-                      type="button"
+                    <div
                       title="Unordered"
                       className="tools-item hover:bg-slate-200 text-slate-500 hover:text-slate-900 p-2"
                       onClick={()=>{ UnderOrderList('list-disc'); }}
                     >
                       <RiListUnordered/>
-                    </button>
-                    <button
-                      type="button"
+                    </div>
+                    <div
                       id="dropdownDividerButton"
                       data-dropdown-toggle="dropdownDivider" 
                       title="Unordered"
@@ -1063,11 +1050,10 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                           <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>{UnderOrderList('list-square')}}>Square</button></li>
                         </ul>
                       </div>
-                    </button>
+                    </div>
                   </div>
                   <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
-                    <button
-                      type="button"
+                    <div
                       title="Ordered"
                       className="tools-item hover:bg-slate-200 text-slate-500 hover:text-slate-900 p-2"
                     >
@@ -1076,8 +1062,8 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                           document.execCommand("insertOrderedList");
                         }}
                       />
-                    </button>
-                    <button
+                    </div>
+                    <div
                       title="Ordered"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
@@ -1097,10 +1083,9 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                           <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>OrderList("list-[upper-roman]")}>Upper Roman</button></li>
                         </ul>
                       </div>
-                    </button>
+                    </div>
                   </div>
-                  <button
-                    type="button"
+                  <div
                     disabled={true}
                     title="Decrease Indent"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 disabled:opacity-75 disabled:bg-white disabled:text-slate-300 p-2"
@@ -1108,9 +1093,8 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                     <RiIndentDecrease
                       onClick={() => document.execCommand("outdent")}
                     />
-                  </button>
-                  <button
-                    type="button"
+                  </div>
+                  <div
                     title="Increase Indent"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                   >
@@ -1119,19 +1103,17 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                         document.execCommand("indent");
                       }}
                     />
-                  </button>
+                  </div>
                 </div>
                 <div className="group flex border-r px-1 border-slate-300">
                   <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
-                    <button
-                      type="button"
+                    <div
                       title="Font Size"
                       className="tools-item hover:bg-slate-200 text-slate-700 hover:text-slate-900 p-2"
                     >
                       <RxFontSize />
-                    </button>
-                    <button
-                      type="button"
+                    </div>
+                    <div
                       title="Font Size"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
@@ -1158,19 +1140,17 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                           <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>FontSize("96px")}>96px</button></li>
                         </ul>
                       </div>
-                    </button>
+                    </div>
                   </div>
                   <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
-                    <button
-                      type="button"
+                    <div
                       title="Heading"
                       className="tools-item hover:bg-slate-200 text-slate-700 hover:text-slate-900 p-2"
                       onClick={()=>Heading("h1")}
                     >
                       <RiHeading2 />
-                    </button>
-                    <button
-                      type="button"
+                    </div>
+                    <div
                       title="Heading"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
@@ -1195,18 +1175,16 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                           <li><button type="button" onClick={()=>Heading("code")} className="block px-4 py-1 text-[14px] hover:bg-slate-100">Code</button></li>
                         </ul>
                       </div>
-                    </button>
+                    </div>
                   </div>
                   <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
-                    <button
-                      type="button"
+                    <div
                       title="Heading"
                       className="tools-item hover:bg-slate-200 text-slate-700 hover:text-slate-900 p-2"
                     >
                       <RxLineHeight />
-                    </button>
-                    <button
-                      type="button"
+                    </div>
+                    <div
                       title="Heading"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
@@ -1218,37 +1196,35 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                         style={{left:0, top: 0, marginTop: "30px", width: "max-content" }}
                       >
                         <ul>
-                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight('1')}>1</button></li>
-                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight('2')}>2</button></li>
-                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.1")}>1.1</button></li>
-                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.2")}>1.2</button></li>
-                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.3")}>1.3</button></li>
-                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.4")}>1.4</button></li>
-                          <li><button className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.5")}>1.5</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight('1')}>1</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight('2')}>2</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.1")}>1.1</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.2")}>1.2</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.3")}>1.3</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.4")}>1.4</button></li>
+                          <li><button type="button" className="block px-4 py-1 text-[14px] hover:bg-slate-100" onClick={()=>LineHeight("1.5")}>1.5</button></li>
                         </ul>
                       </div>
-                    </button>
+                    </div>
                   </div>
                 </div>
                 <div className="group flex border-r px-1 border-slate-300">
-                  <button
-                    type="button"
+                  <div
                     title="Horizontal Line"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                     onClick={HorizontalLine}
                   >
                     <RxDividerHorizontal />
-                  </button>
+                  </div>
                   <div className="tool-item relative flex items-center border border-transparent hover:border hover:border-slate-200 cursor-pointer rounded">
-                    <button
+                    <div
                       type="button"
                       title="Heading"
                       className="tools-item hover:bg-slate-200 text-slate-700 hover:text-slate-900 p-2"
                     >
                       <BsTable />
-                    </button>
-                    <button
-                      type="button"
+                    </div>
+                    <div
                       title="Heading"
                       className="pointer bg-white hover:bg-slate-200 max-h[32] flex items-center"
                       style={{ height: "32px" }}
@@ -1257,37 +1233,36 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
                     >
                       <RxCaretDown />
                       <TableList tableVisible={tableVisible} setTableVisible={setTableVisible}/>
-                    </button>
+                    </div>
                   </div>
-                  <button
-                    type="button"
+                  <div
                     title="Insert Link"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                     onClick={addLink}
                   >
                     <BsLink45Deg />
-                  </button>
+                  </div>
                 </div>
-                <button 
-                  type="button" 
-                  title="Sort" 
-                  className={`tools-item${sortActive?` bg-slate-200`:` bg-white`} rounded  text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2 ml-1`}
-                  onClick={sortHandler}
-                >
-                  <BsArrowDownUp />
-                </button>
+                <div className="group flex border-r px-1 border-slate-300">
+                  <div 
+                    title="Sort" 
+                    className={`tools-item${sortActive?` bg-slate-200`:` bg-white`} rounded  text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2 ml-1`}
+                    onClick={sortHandler}
+                  >
+                    <BsArrowDownUp />
+                  </div>
+                </div>
               </div>
               <div className="w-full"></div>
-              <div className="flex-none">
+              <div className="absolute top-2 right-2">
                 <div className="group flex">
-                  <button
-                    type="button"
+                  <div
                     title="Full Screen"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                     onClick={fullScreenMode}
                   >
                     <RiFullscreenFill />
-                  </button>
+                  </div>
                 </div>
               </div>
             </div>

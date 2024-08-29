@@ -64,6 +64,9 @@
     left: 0;
     z-index: 2000;
 }
+.full-screen-mode .text-editor{
+    height: 100%;
+}
 .sort-btn{ cursor: move; }
 .focus{
     background-color: rgba(248, 250, 252 ,0.8);
@@ -123,6 +126,7 @@
     .editor-body{
         height: 100% !important;
         max-height: 89vh !important;
+        overflow-y: auto;
     }
     .editor-footer{
         bottom: 0;
@@ -170,4 +174,10 @@ th.focused{
     width: 20px;
     height: 20px;
     border-radius: 50%;
+}
+.tools .group:last-child{
+    border-right: unset !important;
+}
+.tools-item{
+    cursor: pointer;
 }
