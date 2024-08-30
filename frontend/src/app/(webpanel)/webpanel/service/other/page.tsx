@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 
 export default function index()
 {
-    const { onFetchPage }: any = useContext(FetchContext);
+    // const { onFetchPage }: any = useContext(FetchContext);
     const [ filterState, setFilterState] = useState({type: ""});
     const { onFetchOne, onSave }: any = useContext(FetchContext);
     const [ data, setData] = useState([]);
@@ -16,8 +16,8 @@ export default function index()
 
     async function fetchData(query:any)
     {
-        const data = await onFetchPage("about-us", `service-${params.get('type')}`, null, query);
-        setData(data?.rows);
+        const data = await onFetchOne("about-us", `other-${params.get('type')}`, null, null);
+        setData(data);
     }
     const onChangeState = (e: any, field: string) => 
     {
@@ -26,7 +26,7 @@ export default function index()
     const onEdit = async () => 
     {
         // @ts-ignore
-        onSave(data,"PUT",id,`service-${params.get('type')}`,`Edit Service ${data?.productNameTH}`);
+        onSave(data,"PUT",data.id,`other-${params.get('type')}`,`Edit Service ${data?.productNameTH}`);
     };
     const toUcFirst = (string:String|null) => 
     {
@@ -50,16 +50,15 @@ export default function index()
         <div className="grid grid-cols-1 gap-9">
             <div className="flex flex-col gap-9">
                 <TextEditor 
-                    id= {`categoryDescriptionTH`} 
-                    dataType="product" 
-                    dataId={`categoryDescriptionTH`} 
+                    id= {`aboutUsTH`}
+                    dataId={`aboutUsTH`} 
                     setState={onChangeState}
                     state={data}
-                    prop={data && `categoryDescriptionTH`}
-                    placeholder="categoryDescriptionTH"
+                    prop={data && `aboutUsTH`}
+                    placeholder="aboutUsTH"
                     editor={{
                         editor: true,
-                        name:'projectDetail',
+                        name:'aboutUsTH',
                         images: {
                             getPath: `about-us/product-rent`,
                             uploadPath: `about-us/product-rent`,

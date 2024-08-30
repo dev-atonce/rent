@@ -49,6 +49,7 @@ export default function AboutPage() {
     const document = await onFetchOne("about-us", "document");
     const payment = await onFetchOne("about-us", "payment");
     const rts = await onFetchOne("about-us", "rts");
+    console.log(history,organization)
     setHistoryState({ ...history });
     setOrganizationState({ ...organization });
     setConditionState({ ...condition });
@@ -113,10 +114,10 @@ export default function AboutPage() {
       rtsState,
     ];
 
-    //   state?.forEach((i: any) => {
-    //     console.log(i);
-    //     onSave(i, "PUT", null, "about-us", "update about-us");
-    //   });
+      state?.forEach((v:any, i:any) => {
+        // console.log(v,i);
+        onSave(i, "PUT", v.id, "about-us", "update about-us");
+      });
 
     console.log(state);
     // onSave(state[0], "PUT", null, "about-us", "update about-us");
@@ -129,7 +130,7 @@ export default function AboutPage() {
 
   useEffect(() => {
     fetchData();
-  }, [fetchData]);
+  }, []);
 
   const items: TabsProps["items"] = [
     {
@@ -142,7 +143,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}History`}
+                  id={`aboutUs${i.toUpperCase()}-History`}
                   setState={onChangeHistory}
                   state={historyState}
                   prop={historyState && `aboutUs${i.toUpperCase()}'`}
@@ -170,7 +171,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}Organization`}
+                  id={`aboutUs${i.toUpperCase()}-Organization`}
                   setState={onChangeOrganization}
                   state={organizationState}
                   prop={organizationState && `aboutUs${i.toUpperCase()}`}
@@ -198,7 +199,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}Condition`}
+                  id={`aboutUs${i.toUpperCase()}-Condition`}
                   setState={onChangeCondition}
                   state={conditionState}
                   prop={conditionState && `aboutUs${i.toUpperCase()}`}
@@ -226,7 +227,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}Insurance`}
+                  id={`aboutUs${i.toUpperCase()}-Insurance`}
                   setState={onChangeInsurance}
                   state={insuranceState}
                   prop={insuranceState && `aboutUs${i.toUpperCase()}`}
@@ -254,7 +255,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}Document`}
+                  id={`aboutUs${i.toUpperCase()}-Document`}
                   setState={onChangeDocument}
                   state={documentState}
                   prop={documentState && `aboutUs${i.toUpperCase()}`}
@@ -282,7 +283,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}Payment`}
+                  id={`aboutUs${i.toUpperCase()}-Payment`}
                   setState={onChangePayment}
                   state={paymentState}
                   prop={paymentState && `aboutUs${i.toUpperCase()}`}
@@ -310,7 +311,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}Rts`}
+                  id={`aboutUs${i.toUpperCase()}-Rts`}
                   setState={onChangeRts}
                   state={rtsState}
                   prop={rtsState && `aboutUs${i.toUpperCase()}`}
