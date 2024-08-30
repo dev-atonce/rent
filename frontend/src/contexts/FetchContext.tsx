@@ -259,7 +259,41 @@ export default function FetchProvider({ children, user, token }: any) {
       } else if (method?.toUpperCase() == "POST") {
         route = `${aboutUsRoute}?type=home`;
       }
-    }
+    } else if (type == "about-us") {
+      if (method.toUpperCase() === "PUT") {
+        route = aboutUsRoute;
+      }
+    } else if (type == "product-sell") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${aboutUsRoute}?type=product-sell`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = `${aboutUsRoute}?type=product-sell`;
+      }
+    }  else if (type == "product-rent") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${aboutUsRoute}?type=product-rent`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = `${aboutUsRoute}?type=product-rent`;
+      }
+    }  else if (type == "product-sale") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${aboutUsRoute}?type=product-sale`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = `${aboutUsRoute}?type=product-sale`;
+      }
+    }  else if (type == "other-training") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${aboutUsRoute}?type=other-training`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = `${aboutUsRoute}?type=other-training`;
+      }
+    }  else if (type == "other-inspection") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${aboutUsRoute}?type=other-inspection`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = `${aboutUsRoute}?type=other-inspection`;
+      }
+    } 
 
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {

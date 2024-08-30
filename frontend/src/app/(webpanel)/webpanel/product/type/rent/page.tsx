@@ -7,20 +7,19 @@ import TextEditor from "@/components/TextEditor";
 
 export default function index()
 {
-    const { onFetchOne,onSave }: any = useContext(FetchContext);
+    const { onFetchOne, onSave }: any = useContext(FetchContext);
     const [data, setData] = useState([]);
     async function fetchData() {
         const data = await onFetchOne("about-us", 'product-rent');
-        setData(data?.rows);
+        setData(data);
     }
     const onChangeState = (e: any, field: string) => {
         setData((prevState: any) => ({ ...prevState, [field]: e }));
     };
     const onEdit = async () => {
-        onSave(
-          // @ts-ignore
-          data,"PUT",id,"product",`Edit Product ${data?.productNameTH}`
-        );
+        console.log(data)
+        // @ts-ignore
+        onSave(data,"PUT",data.id,"product-rent",`Edit Product ${data?.aboutUsTH}`);
     };
     useEffect(() => {
         fetchData();
@@ -37,16 +36,16 @@ export default function index()
         <div className="grid grid-cols-1 gap-9">
             <div className="flex flex-col gap-9">
                 <TextEditor 
-                    id= {`categoryDescriptionTH`} 
-                    dataType="product" 
-                    dataId={`categoryDescriptionTH`} 
+                    id= {`aboutUsTH`} 
+                    dataType="about-us" 
+                    dataId={`aboutUsTH`} 
                     setState={onChangeState}
                     state={data}
-                    prop={data && `categoryDescriptionTH`}
-                    placeholder="categoryDescriptionTH"
+                    prop={data && `aboutUsTH`}
+                    placeholder="aboutUsTH"
                     editor={{
                         editor: true,
-                        name:'projectDetail',
+                        name:'aboutUsTH',
                         images: {
                             getPath: `about-us/product-rent`,
                             uploadPath: `about-us/product-rent`,
