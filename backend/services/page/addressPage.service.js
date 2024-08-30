@@ -1,11 +1,6 @@
-const Contact = require("../../models/Contact");
-// const User = require("../models/User");
+const Address = require("../../models/Address");
 const config = require("../../configs/app");
-const {
-  ErrorBadRequest,
-  ErrorNotFound,
-  ErrorUnauthorized,
-} = require("../../configs/errorMethods");
+const { ErrorBadRequest, ErrorNotFound } = require("../../configs/errorMethods");
 
 const methods = {
   scopeSearch(req) {
@@ -28,13 +23,13 @@ const methods = {
     const _q = methods.scopeSearch(req);
 
     try {
-      const rows = await Contact.find(_q.query)
+      const rows = await Address.find(_q.query)
         .sort({ sort: 1 })
         // .populate("userId")
         .exec(); // Populate the userId field with User document
       // .limit(limit)
       // .skip(offset);
-      const count = await Contact.countDocuments(_q.query);
+      const count = await Address.countDocuments(_q.query);
       return {
         total: count,
         lastPage: Math.ceil(count / limit),
@@ -48,7 +43,7 @@ const methods = {
 
   async findById(id) {
     try {
-      const obj = await Contact.findById(id);
+      const obj = await Address.findById(id);
       if (!obj) return Promise.reject(ErrorNotFound("id: not found"));
       return obj;
     } catch (error) {

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BiEdit } from "react-icons/bi";
 import { RiDeleteBinLine } from "react-icons/ri";
 import { RxDragHandleHorizontal } from "react-icons/rx";
+import Image from "next/image";
 
 export default function AddressRecord({
   i,
@@ -50,7 +51,17 @@ export default function AddressRecord({
             <RxDragHandleHorizontal size={25} />
           </td>
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
-            <p className="text-xs">{i?.nameEN}</p>
+            <div className="h-[80px]">
+              <Image
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${i?.image}`}
+                alt={i?.nameTH}
+                height={100}
+                width={100}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </td>
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-xs">{i?.nameTH}</p>
           </td>
 
@@ -76,9 +87,18 @@ export default function AddressRecord({
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             {index + 1}
           </td>
-          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">#</td>
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
-            <p className="text-xs">{i?.nameEN}</p>
+            <div className="h-[80px]">
+              <Image
+                src={`${process.env.NEXT_PUBLIC_BASE_URL}${i?.image}`}
+                alt={i?.nameTH}
+                height={100}
+                width={100}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          </td>
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-xs">{i?.nameTH}</p>
           </td>
 

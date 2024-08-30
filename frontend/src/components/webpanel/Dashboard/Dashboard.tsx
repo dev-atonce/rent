@@ -43,7 +43,7 @@ const Dashboard: React.FC = () => {
         <CardDataStats title="Training" link="/webpanel/training">
           <FaCalendarAlt size={20} />
         </CardDataStats>
-        <CardDataStats title="Contact List" link="/webpanel/contact">
+        <CardDataStats title="Address" link="/webpanel/contact">
           <RiContactsBook2Fill size={20} />
         </CardDataStats>
         {user?.role !== "user" && (

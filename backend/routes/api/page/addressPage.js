@@ -1,6 +1,5 @@
 const router = require("express").Router();
-const controllers = require("../../../controllers/page/contactPage.controller");
-const auth = require("../../auth");
+const controllers = require("../../../controllers/page/addressPage.controller");
 
 router.get("/", controllers.onGetAll);
 router.get("/:id", controllers.onGetById);

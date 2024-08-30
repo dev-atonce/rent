@@ -17,6 +17,7 @@ import ProjectRecord from "./ProjectRecord";
 import TrainingRecord from "./TrainingRecord";
 import CalendarRecord from "./CalendarRecord";
 import CoverRecord from "./CoverRecord";
+import ContactFormRecord from "./ContactFormRecord";
 
 const TableThree = ({
   onFetchCalendar,
@@ -259,6 +260,17 @@ const TableThree = ({
                   index={key}
                   modal={modal}
                   onDelete={onDelete}
+                />
+              ))}
+            {type === "contact-form" &&
+              data?.map((i: any, key: any) => (
+                <ContactFormRecord
+                  i={i}
+                  index={key}
+                  onChangeStatus={onChangeStatus}
+                  key={key}
+                  onDelete={onDelete}
+                  currentPage={currentPage}
                 />
               ))}
           </tbody>

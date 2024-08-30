@@ -15,6 +15,15 @@ export default function AddressForm({
           formLabel="Address Info."
           inputBox={[
             {
+              label: "Image",
+              placeHolder: "Image",
+              state: data,
+              setState: onChangeState,
+              keyProp: "image",
+              type: "image",
+              required: true,
+            },
+            {
               label: "Branch Name",
               placeHolder: "Branch Name",
               state: data,
@@ -24,7 +33,6 @@ export default function AddressForm({
               languages: languages,
               required: true,
             },
-
             {
               label: "Fax",
               placeHolder: "Fax",
@@ -67,45 +75,6 @@ export default function AddressForm({
           ]}
         />
       </div>
-
-      {/* <div className="flex flex-col gap-9">
-        <FormGroup
-          // modalState={show}
-          id={id}
-          onSave={onSaveSeo}
-          formLabel={"SEO Settings"}
-          inputBox={[
-            {
-              label: "Title",
-              placeHolder: "Page Title",
-              state: serviceState?.serviceSeo,
-              setState: onChangeSeoState,
-              keyProp: "title",
-              type: "input",
-              languages,
-            },
-            {
-              label: "Keywords",
-              placeHolder: "META Keywords",
-              state: serviceState?.serviceSeo,
-              setState: onChangeSeoState,
-              keyProp: "keyword",
-              type: "input",
-              languages,
-            },
-            {
-              label: "Description",
-              placeHolder: "META Description",
-              state: serviceState?.serviceSeo,
-              setState: onChangeSeoState,
-              keyProp: "description",
-              type: "textArea",
-              rows: 3,
-              languages,
-            },
-          ]}
-        />
-      </div> */}
     </div>
   );
 }

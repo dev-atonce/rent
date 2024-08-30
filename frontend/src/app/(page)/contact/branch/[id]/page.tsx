@@ -1,20 +1,15 @@
 import Cover from "@/components/main/Cover/Cover";
-import ForeignBranch from "@/components/main/ForeignBranch/ForeignBranch";
 import Loading from "@/components/main/Loading/Loading";
-import Contact from "@/components/main/Contact/page";
+import Contactform from "@/components/main/Contact/ContactForm";
 import Image from "next/image";
 import { MdFax } from "react-icons/md";
 import { FaPhoneAlt } from "react-icons/fa";
-import Contactform from "@/components/main/Contact/ContactForm";
 import { TbPointFilled } from "react-icons/tb";
-
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
 const pageName = "contact";
-export async function generateMetadata(
-  { params, searchParams }: any,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+
+export async function generateMetadata(): Promise<Metadata> {
   // read route params
   const lng = "TH";
 
@@ -34,7 +29,7 @@ export async function generateMetadata(
 
 const fetchData = async (id: any) => {
   const data = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact/${id}`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/address/${id}`
   );
   const json = await data.json();
   return json;

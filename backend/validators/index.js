@@ -9,6 +9,7 @@ const trainingCourse = require("./trainingCourse");
 const calendar = require("./calendar");
 const banner = require("./banner");
 const logo = require("./logo");
+const contactForm = require("./contactForm");
 
 const validators = {
   user,
@@ -18,7 +19,8 @@ const validators = {
   trainingCourse,
   calendar,
   banner,
-  logo
+  logo,
+  contactForm
 };
 
 module.exports = {

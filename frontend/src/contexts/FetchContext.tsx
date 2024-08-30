@@ -14,8 +14,8 @@ export default function FetchProvider({ children, user, token }: any) {
   const userRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/users`;
   const seoRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/seo`;
   const logRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/log`;
-  const addressRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact`;
-  const addressSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact/sort`;
+  const addressRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/address`;
+  const addressSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/address/sort`;
   const positionRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/position`;
   const positionSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/position/sort`;
   const productRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product`;
@@ -32,6 +32,8 @@ export default function FetchProvider({ children, user, token }: any) {
   const bannerRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/banner`;
   const bannerSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/banner/sort`;
   const logoRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/logo`;
+  const contactFormRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact-forms`;
+  const contactFormStatusRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact-forms/status`;
 
   const onFetchOne = async (type: any, id: any) => {
     let route = "";
@@ -129,6 +131,8 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${calendarRoute}/${id}`;
       } else if (type === "banner") {
         route = `${bannerRoute}/${id}?page=${page}&${query}`;
+      } else if (type === "contactForm") {
+        route = `${contactFormRoute}/${id}?page=${page}&${query}`;
       }
     } else {
       if (type === "user") {
@@ -530,6 +534,8 @@ export default function FetchProvider({ children, user, token }: any) {
       route = `${trainingRoute}/${id}`;
     } else if (type == "banner") {
       route = `${bannerRoute}/${id}`;
+    } else if (type == "contact-form") {
+      route = `${contactFormStatusRoute}/${id}`;
     }
     try {
       const response = await fetch(route, {
