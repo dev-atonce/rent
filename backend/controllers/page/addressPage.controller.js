@@ -1,9 +1,9 @@
-const Contact = require("../../services/page/contactPage.service");
+const Address = require("../../services/page/addressPage.service");
 
 const methods = {
   async onGetAll(req, res) {
     try {
-      let result = await Contact.find(req);
+      let result = await Address.find(req);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -12,7 +12,7 @@ const methods = {
 
   async onGetById(req, res) {
     try {
-      let result = await Contact.findById(req.params.id);
+      let result = await Address.findById(req.params.id);
       res.success(result);
     } catch (error) {
       res.error(error);

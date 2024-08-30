@@ -1,4 +1,4 @@
-const Contact = require("../../services/webpanel/contactPanel.service");
+const Address = require("../../services/webpanel/addressPanel.service");
 
 const { checkAllowFields } = require("../../helpers/field.helper");
 
@@ -10,7 +10,7 @@ const allowFields = {
 const methods = {
   async onGetAll(req, res) {
     try {
-      let result = await Contact.find(req);
+      let result = await Address.find(req);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -19,7 +19,7 @@ const methods = {
 
   async onGetById(req, res) {
     try {
-      let result = await Contact.findById(req.params.id);
+      let result = await Address.findById(req.params.id);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -28,7 +28,7 @@ const methods = {
 
   async onInsert(req, res) {
     try {
-      let result = await Contact.insert(req, res);
+      let result = await Address.insert(req, res);
       res.success(result, 201);
     } catch (error) {
       res.error(error);
@@ -37,7 +37,7 @@ const methods = {
   
   async onUpdate(req, res) {
     try {
-      const result = await Contact.update(req?.params?.id, req.body);
+      const result = await Address.update(req, res);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -47,7 +47,7 @@ const methods = {
   async onUpdateSort(req, res) {
     try {
       checkAllowFields(req.body, allowFields.updateSort);
-      const result = await Contact.update(req.params.id, req.body);
+      const result = await Address.update(req.params.id, req.body);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -56,7 +56,7 @@ const methods = {
 
   async onDelete(req, res) {
     try {
-      const result = await Contact.delete(req.params.id);
+      const result = await Address.delete(req.params.id);
       res.success(result);
     } catch (error) {
       res.error(error);

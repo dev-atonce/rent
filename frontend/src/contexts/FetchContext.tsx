@@ -14,8 +14,8 @@ export default function FetchProvider({ children, user, token }: any) {
   const userRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/users`;
   const seoRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/seo`;
   const logRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/log`;
-  const addressRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact`;
-  const addressSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact/sort`;
+  const addressRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/address`;
+  const addressSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/address/sort`;
   const positionRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/position`;
   const positionSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/position/sort`;
   const productRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/product`;

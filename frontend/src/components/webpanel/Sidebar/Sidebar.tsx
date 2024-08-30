@@ -214,7 +214,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   }`}
                 >
                   <RiContactsBook2Fill />
-                  Contact
+                  Address
                 </Link>
               </li>
               {/* <!-- Menu Item Contact List --> */}

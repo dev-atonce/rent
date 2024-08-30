@@ -9,7 +9,14 @@ export default function AddressEdit({
   params: { id },
   // data,
 }: any) {
-  const [data, setData] = useState({});
+  const [data, setData] = useState({
+    image: "",
+    nameTH: "",
+    tel: "",
+    fax: "",
+    addressTH: "",
+    googleMap: "",
+  });
   const { onFetchOne, onSave }: any = useContext(FetchContext);
   const envLangs = process.env.NEXT_PUBLIC_LANGUAGES;
   //   @ts-ignore
@@ -18,7 +25,7 @@ export default function AddressEdit({
   const onFetch = async () => {
     const data = await onFetchOne("address", id);
 
-    setData({ ...data, initialName: data?.nameEN });
+    setData({ ...data });
   };
 
   const onEdit = async () => {

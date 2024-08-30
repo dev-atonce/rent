@@ -2,7 +2,6 @@
 
 import Breadcrumb from "@/components/webpanel/Breadcrumbs/Breadcrumb";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import FormGroup from "@/components/webpanel/FormGroup/FormGroup";
 import { useContext, useEffect, useState } from "react";
 import TableThree from "@/components/webpanel/Tables/TableThree";
 import { FetchContext } from "@/contexts/FetchContext";
@@ -19,13 +18,9 @@ export default function EditContactPage() {
     const addressData = await onFetchOne("address", null);
     setAddressList(addressData?.rows);
 
-    const subjectData = await onFetchOne("subject", null);
-    setSubjectList(subjectData?.rows);
+    // const subjectData = await onFetchOne("subject", null);
+    // setSubjectList(subjectData?.rows);
   };
-
-  const envLangs = process.env.NEXT_PUBLIC_LANGUAGES;
-  //   @ts-ignore
-  const languages = envLangs.split(",").map((i: any) => i.toUpperCase());
 
   const onDeleteItem = async (id: any, type: any) => {
     if (type == "subject") {
@@ -93,9 +88,6 @@ export default function EditContactPage() {
               ]}
             />
           </div>
-          {/* Color Form */}
-
-          {/* <!-- Sign Up Form --> */}
         </div>
       </div>
     </DefaultLayout>

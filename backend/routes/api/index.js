@@ -5,7 +5,7 @@ router.use("/page/project", require("./page/projectPage"));
 router.use("/page/seo", require("./page/seoPage"));
 router.use("/page/email", require("./page/emailPage"));
 router.use("/page/position", require("./page/positionPage"));
-router.use("/page/contact", require("./page/contactPage"));
+router.use("/page/address", require("./page/addressPage"));
 router.use("/page/product", require("./page/productPage"));
 router.use("/page/category-main", require("./page/categoryMainPage"));
 router.use("/page/category-sub", require("./page/categorySubPage"));
@@ -23,14 +23,11 @@ router.use("/webpanel/seo", require("./webpanel/seoPanel"));
 router.use("/webpanel/users", require("./webpanel/userPanel"));
 router.use("/webpanel/log", require("./webpanel/logPanel"));
 router.use("/webpanel/product", require("./webpanel/productPanel"));
-router.use("/webpanel/contact", require("./webpanel/contactPanel"));
+router.use("/webpanel/address", require("./webpanel/addressPanel"));
 router.use("/webpanel/position", require("./webpanel/positionPanel"));
 router.use("/webpanel/category-main", require("./webpanel/categoryMainPanel"));
 router.use("/webpanel/category-sub", require("./webpanel/categorySubPanel"));
-router.use(
-  "/webpanel/training-course",
-  require("./webpanel/trainingCoursePanel")
-);
+router.use("/webpanel/training-course", require("./webpanel/trainingCoursePanel"));
 router.use("/webpanel/calendar", require("./webpanel/calendarPanel"));
 router.use("/webpanel/banner", require("./webpanel/bannerPanel"));
 router.use("/webpanel/media", require("./webpanel/mediaPanel"));
