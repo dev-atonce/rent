@@ -49,7 +49,7 @@ export default function AboutPage() {
     const document = await onFetchOne("about-us", "document");
     const payment = await onFetchOne("about-us", "payment");
     const rts = await onFetchOne("about-us", "rts");
-    console.log(history,organization)
+    console.log(condition)
     setHistoryState({ ...history });
     setOrganizationState({ ...organization });
     setConditionState({ ...condition });
@@ -137,16 +137,16 @@ export default function AboutPage() {
       key: "1",
       label: "ประวัติบริษัท",
       children: (
-        <div>
+        <>
           {languages?.map(
             (i: any, k: any) =>
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}-History`}
+                  id={`aboutUs${i.toUpperCase()}${k}-History`}
                   setState={onChangeHistory}
                   state={historyState}
-                  prop={historyState && `aboutUs${i.toUpperCase()}'`}
+                  prop={historyState && `aboutUs${i.toUpperCase()}`}
                   placeholder="Detail"
                   editor={{
                     name: `aboutUs${i.toUpperCase()}`,
@@ -158,20 +158,20 @@ export default function AboutPage() {
                 />
               )
           )}
-        </div>
+        </>
       ),
     },
     {
       key: "2",
       label: "ผังองค์กร",
       children: (
-        <div>
+        <>
           {languages?.map(
             (i: any, k: any) =>
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}-Organization`}
+                  id={`aboutUs${i.toUpperCase()}${k}-Organization`}
                   setState={onChangeOrganization}
                   state={organizationState}
                   prop={organizationState && `aboutUs${i.toUpperCase()}`}
@@ -186,20 +186,20 @@ export default function AboutPage() {
                 />
               )
           )}
-        </div>
+        </>
       ),
     },
     {
       key: "3",
       label: "ข้อกำหนดและเงื่อนไขในการเช่า",
       children: (
-        <div>
+        <>
           {languages?.map(
             (i: any, k: any) =>
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}-Condition`}
+                  id={`aboutUs${i.toUpperCase()}${k}-Condition`}
                   setState={onChangeCondition}
                   state={conditionState}
                   prop={conditionState && `aboutUs${i.toUpperCase()}`}
@@ -214,20 +214,20 @@ export default function AboutPage() {
                 />
               )
           )}
-        </div>
+        </>
       ),
     },
     {
       key: "4",
       label: "ความคุ้มครองเครื่องจักร",
       children: (
-        <div>
+        <>
           {languages?.map(
             (i: any, k: any) =>
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}-Insurance`}
+                  id={`aboutUs${i.toUpperCase()}${k}-Insurance`}
                   setState={onChangeInsurance}
                   state={insuranceState}
                   prop={insuranceState && `aboutUs${i.toUpperCase()}`}
@@ -242,20 +242,20 @@ export default function AboutPage() {
                 />
               )
           )}
-        </div>
+        </>
       ),
     },
     {
       key: "5",
       label: "ขั้นตอนและเอกสารสำหรับลูกค้าใหม่",
       children: (
-        <div>
+        <>
           {languages?.map(
             (i: any, k: any) =>
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}-Document`}
+                  id={`aboutUs${i.toUpperCase()}${k}-Document`}
                   setState={onChangeDocument}
                   state={documentState}
                   prop={documentState && `aboutUs${i.toUpperCase()}`}
@@ -270,20 +270,20 @@ export default function AboutPage() {
                 />
               )
           )}
-        </div>
+        </>
       ),
     },
     {
       key: "6",
       label: "ช่องทางการชำระเงิน",
       children: (
-        <div>
+        <>
           {languages?.map(
             (i: any, k: any) =>
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}-Payment`}
+                  id={`aboutUs${i.toUpperCase()}${k}-Payment`}
                   setState={onChangePayment}
                   state={paymentState}
                   prop={paymentState && `aboutUs${i.toUpperCase()}`}
@@ -298,20 +298,20 @@ export default function AboutPage() {
                 />
               )
           )}
-        </div>
+        </>
       ),
     },
     {
       key: "7",
       label: "RTS",
       children: (
-        <div>
+        <>
           {languages?.map(
             (i: any, k: any) =>
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
-                  id={`aboutUs${i.toUpperCase()}-Rts`}
+                  id={`aboutUs${i.toUpperCase()}${k}-Rts`}
                   setState={onChangeRts}
                   state={rtsState}
                   prop={rtsState && `aboutUs${i.toUpperCase()}`}
@@ -326,7 +326,7 @@ export default function AboutPage() {
                 />
               )
           )}
-        </div>
+        </>
       ),
     },
   ];

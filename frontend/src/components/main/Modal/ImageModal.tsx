@@ -11,7 +11,7 @@ import {
 import { useEffect, useState } from "react";
 import { MdCloudUpload, MdArrowBackIos, MdOutlineSearch, MdRefresh } from "react-icons/md";
  
-export default function ImageModal({imgVisible, closeImgHandler, title, select, allImages, getAllImages}:any)
+export default function ImageModal({id,imgVisible, closeImgHandler, title, select, allImages, getAllImages}:any)
 {
     const [selectedImage, setSelectedImage] = useState<any>('');
     // const [imgTitile, setImgTitle] = useState<Boolean>(true);
@@ -63,7 +63,7 @@ export default function ImageModal({imgVisible, closeImgHandler, title, select, 
 
     return <>
       <Modal 
-          id="imgModal"
+          id={id}
           isOpen={imgVisible} 
           onOpenChange={closeImgHandler} 
           backdrop="blur"

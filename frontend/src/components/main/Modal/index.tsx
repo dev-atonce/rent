@@ -8,7 +8,7 @@ import {
   Button
 } from "@nextui-org/react";
 
-export default function ModalDialog({visible, closeHandler, title, select}:any) {
+export default function ModalDialog({id,visible, closeHandler, title, select}:any) {
     const rows = [
       [{'col':'col-span-12','content':'text'}],
       [{'col':'col-span-4','content':'image'},{"col":"col-span-8","content":"text"}],
@@ -24,6 +24,7 @@ export default function ModalDialog({visible, closeHandler, title, select}:any) 
     <>
       {/* <Button onPress={onOpen}>Open Modal</Button> */}
       <Modal 
+      id={id}
           isOpen={visible} 
           onOpenChange={closeHandler} 
           backdrop="blur"

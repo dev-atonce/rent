@@ -217,7 +217,8 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
     }
   }
   const fetchSubState = () => {
-    const textareaEl:any = document.querySelector(`textarea[name="${prop}"]`);
+    //@ts-ignore
+    const textareaEl:any = document.getElementById(EditorId).querySelector(`textarea[name="${prop}"]`);
     if(textareaEl.value)
     {
       const editorBody:any = document.getElementById(EditorId)?.querySelector('.editor-body');
@@ -463,7 +464,9 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
 
   const SourceCode = (el:any) => 
   { 
-    document.querySelector('.code-remark')?.classList.remove('code-remark');
+    let editor = document.getElementById(EditorId);
+    // @ts-ignore
+    editor.querySelector('.code-remark')?.classList.remove('code-remark');
     const row = el.closest('.grid-cols-1');
     row.classList.add('code-remark');
     let newString:any = '';
@@ -473,9 +476,12 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
     setSourceCode(newString);
     setCodeVisible(true);
   }
-  const saveSourceCode = (el:any) => {
+  const saveSourceCode = (el:any) => 
+  {
+    let editor = document.getElementById(EditorId);
     const stringCode = el.closest('.modal-content').querySelector('textarea').value;
-    const remark:any = document.querySelector('.code-remark');
+    // @ts-ignore
+    const remark:any = editor.querySelector('.code-remark');
     var dom = new DOMParser().parseFromString(stringCode,"text/html");
     Array.from(remark?.children).map((v:any,k:any)=>{ if (k > 0) v.remove(); });
     //@ts-ignore
@@ -486,7 +492,9 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
   
   const upload = async (e:any) => 
   {
-    const setSelectedImage = document.querySelector('.modal-content')?.querySelectorAll('img');
+    let editor = document.getElementById(EditorId);
+    //@ts-ignore
+    const setSelectedImage = editor.querySelector('.modal-content')?.querySelectorAll('img');
     if(setSelectedImage){
       let formData = new FormData();
       let files = e.currentTarget.closest('.modal-content').querySelector('[type="file"]').files;
@@ -496,6 +504,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
         for (let i = 0; i < files?.length; i++) {
             if (i < uploadAmount) formData.append("image", files?.[i]);
         }
+        //@ts-ignore
         const request = await fetch(`${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/media/${editor.images.uploadPath}`, {
             method: 'POST',
             headers: {
@@ -775,54 +784,59 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
 
   useEffect(()=>{
 
-    document.addEventListener("click", (e) => {
+    const myFunction = () => console.log('do something')
 
-        //@ts-ignore
-        const txtRemark = e.target.closest(".txt-remark");
-        if(!txtRemark){
-          document.querySelector(".txt-remark")?.classList.remove("txt-remark");
-        }
-        //@ts-ignore
-        const sourceCode = e.target.closest(".source-code");
-        if(sourceCode){
-          SourceCode(sourceCode);
-        }
-        //@ts-ignore
-        const imageModal = e.target.closest('[data-image="true"]');
-        if(imageModal){
-          imgRemark(e.target)
-          imgModal(e); 
-        }
-        //@ts-ignore
-        const contentEditable = e.target.closest('[contenteditable="true"]');
-        if(contentEditable){
-          textRemark(e)   
-        }    
-        //@ts-ignore
-        const removeRowBtn = e.target.closest(".remove-row");
-        if(removeRowBtn){
-          deleteRow(removeRowBtn);
-        }
-        //@ts-ignore
-        const thEl = e.target.closest('th');
-        if(thEl){
-          // console.log(thEl)
-          document.querySelectorAll('th').forEach(el => el.classList.remove('focused'))
-          document.querySelectorAll('td').forEach(el => el.classList.remove('focused'))
-          thEl.classList.toggle('focused');
-        }
-         //@ts-ignore
-        const tdEl = e.target.closest('td');
-        if(tdEl){
-          document.querySelectorAll('th').forEach(el => el.classList.remove('focused'))
-          document.querySelectorAll('td').forEach(el => el.classList.remove('focused'))
-          tdEl.classList.toggle('focused')
-        }
+    if (editorRef && editorRef.current) {
+      document.addEventListener("click", (e) => {
+
+          //@ts-ignore
+          const txtRemark = e.target.closest(".txt-remark");
+          if(!txtRemark){
+            document.querySelector(".txt-remark")?.classList.remove("txt-remark");
+          }
+          //@ts-ignore
+          const sourceCode = e.target.closest(".source-code");
+          if(sourceCode){
+            SourceCode(sourceCode);
+          }
+          //@ts-ignore
+          const imageModal = e.target.closest('[data-image="true"]');
+          if(imageModal){
+
+            imgRemark(e.target)
+            imgModal(e); 
+          }
+          //@ts-ignore
+          const contentEditable = e.target.closest('[contenteditable="true"]');
+          if(contentEditable){
+            textRemark(e)   
+          }    
+          //@ts-ignore
+          const removeRowBtn = e.target.closest(".remove-row");
+          if(removeRowBtn){
+            deleteRow(removeRowBtn);
+          }
+          //@ts-ignore
+          const thEl = e.target.closest('th');
+          if(thEl){
+            // console.log(thEl)
+            document.querySelectorAll('th').forEach(el => el.classList.remove('focused'))
+            document.querySelectorAll('td').forEach(el => el.classList.remove('focused'))
+            thEl.classList.toggle('focused');
+          }
+          //@ts-ignore
+          const tdEl = e.target.closest('td');
+          if(tdEl){
+            document.querySelectorAll('th').forEach(el => el.classList.remove('focused'))
+            document.querySelectorAll('td').forEach(el => el.classList.remove('focused'))
+            tdEl.classList.toggle('focused')
+          }
 
 
-      // console.log(thEl)
+        // console.log(thEl)
 
-    });
+      });
+    }
 
     // getAllImages();
 
@@ -832,17 +846,21 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
       editorRef.current = false;
       document.removeEventListener("click",setCodeStateHandler);
     }
-  },[state]);
+  },[state,editorRef]);
   
   return (
-    <div key={key}>
+    <div key={key} ref={editorRef}>
       <ModalDialog
+        id={`dialogMOdal-${EditorId}`}
+        key={key}
         visible={visible}
         closeHandler={closeHandler}
         select={{ row, handleSetSelect, createRow, EditorId }}
         title="Add Row"
       />
       <ImageModal
+        id={`imageMoodal-${EditorId}`}
+        key={key}
         imgVisible={imgVisible}
         closeImgHandler={closeImgHandler}
         dataId={dataId}
@@ -869,6 +887,8 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
         title="Image"
       />
       <SourceCodeModal
+        id={`sourceCodeModal-${EditorId}`}
+        key={key}
         codeVisible={codeVisible}
         sourceCode={sourceCode}
         setSourceCode={setSourceCode}
@@ -1274,7 +1294,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
             aria-disabled="false"
             tabIndex={-1}
             spellCheck="false"
-            ref={editorRef}
+            
             //@ts-ignore
             
           >
