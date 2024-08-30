@@ -54,7 +54,7 @@ export default function AddressRecord({
             <div className="h-[80px]">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_URL}${i?.image}`}
-                alt={i?.imageAlt}
+                alt={i?.nameTH}
                 height={100}
                 width={100}
                 className="h-full w-full object-cover"
@@ -91,7 +91,7 @@ export default function AddressRecord({
             <div className="h-[80px]">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_URL}${i?.image}`}
-                alt={i?.imageAlt}
+                alt={i?.nameTH}
                 height={100}
                 width={100}
                 className="h-full w-full object-cover"

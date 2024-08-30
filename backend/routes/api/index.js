@@ -14,6 +14,7 @@ router.use("/page/calendar", require("./page/calendarPage"));
 router.use("/page/banner", require("./page/bannerPage"));
 router.use("/page/logo", require("./page/logoPage"));
 router.use("/page/about-us", require("./page/aboutUsPage"));
+router.use("/page/contact-forms", require("./page/contactFormPage"));
 
 //////////////
 
@@ -33,6 +34,7 @@ router.use("/webpanel/banner", require("./webpanel/bannerPanel"));
 router.use("/webpanel/media", require("./webpanel/mediaPanel"));
 router.use("/webpanel/logo", require("./webpanel/logoPanel"));
 router.use("/webpanel/about-us", require("./webpanel/aboutUsPanel"));
+router.use("/webpanel/contact-forms", require("./webpanel/contactFormPanel"));
 
 //////////////
 
