@@ -259,6 +259,10 @@ export default function FetchProvider({ children, user, token }: any) {
       } else if (method?.toUpperCase() == "POST") {
         route = `${aboutUsRoute}?type=home`;
       }
+    } else if (type == "about-us") {
+      if (method.toUpperCase() === "PUT") {
+        route = aboutUsRoute;
+      }
     }
 
     const swalWithBootstrapButtons = Swal.mixin({

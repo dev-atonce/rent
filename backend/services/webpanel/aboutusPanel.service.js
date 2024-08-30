@@ -15,6 +15,7 @@ const methods = {
   },
 
   async update(req, res) {
+    console.log(req.body.type);
     try {
       const obj = await AboutUs.findOne({ type: req.body.type });
       if (!obj) {
