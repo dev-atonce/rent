@@ -6,16 +6,12 @@ import Link from "next/link";
 import SidebarLinkGroup from "./SidebarLinkGroup";
 import { LogInContext } from "@/contexts/LogInContext";
 import { MdPowerSettingsNew } from "react-icons/md";
-import {
-  FaCalendarAlt,
-  FaHome,
-  FaPeopleArrows,
-  FaShippingFast,
-} from "react-icons/fa";
+import { FaCalendarAlt, FaHome, FaShoppingCart } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
-import { IoMdImages } from "react-icons/io";
-import { SlEnvolope } from "react-icons/sl";
+import { IoIosMail, IoMdImages } from "react-icons/io";
 import { RiContactsBook2Fill } from "react-icons/ri";
+import { IoPeopleSharp } from "react-icons/io5";
+import { BsFillWalletFill } from "react-icons/bs";
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -156,7 +152,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes("project") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  <FaShippingFast />
+                  <BsFillWalletFill />
                   Project
                 </Link>
               </li>
@@ -170,7 +166,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes("product") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  <FaPeopleArrows />
+                  <FaShoppingCart />
                   Product
                 </Link>
               </li>
@@ -184,7 +180,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     pathname.includes("career") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
-                  <SlEnvolope />
+                  <IoPeopleSharp />
                   Career
                 </Link>
               </li>
@@ -215,6 +211,20 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 >
                   <RiContactsBook2Fill />
                   Address
+                </Link>
+              </li>
+              {/* <!-- Menu Item Contact List --> */}
+
+              {/* <!-- Menu Item Contact List --> */}
+              <li>
+                <Link
+                  href="/webpanel/contact"
+                  className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                    pathname.includes("contact") && "bg-graydark dark:bg-meta-4"
+                  }`}
+                >
+                  <IoIosMail />
+                  Mailbox
                 </Link>
               </li>
               {/* <!-- Menu Item Contact List --> */}

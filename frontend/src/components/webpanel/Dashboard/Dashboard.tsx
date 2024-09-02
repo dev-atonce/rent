@@ -1,20 +1,15 @@
 "use client";
 import React from "react";
 import CardDataStats from "../CardDataStats";
-import {
-  FaCalendarAlt,
-  FaHome,
-  FaPeopleArrows,
-  FaShippingFast,
-} from "react-icons/fa";
+import { FaCalendarAlt, FaHome, FaShoppingCart } from "react-icons/fa";
 import { ImProfile } from "react-icons/im";
-import { IoMdImages } from "react-icons/io";
-import { SlEnvolope } from "react-icons/sl";
+import { IoIosMail, IoMdImages } from "react-icons/io";
 import { RiContactsBook2Fill } from "react-icons/ri";
-import { IoSettings } from "react-icons/io5";
+import { IoPeopleSharp, IoSettings } from "react-icons/io5";
 import { FaUserGear } from "react-icons/fa6";
 import { useContext } from "react";
 import { LogInContext } from "@/contexts/LogInContext";
+import { BsFillWalletFill } from "react-icons/bs";
 
 const Dashboard: React.FC = () => {
   const { user }: any = useContext(LogInContext);
@@ -31,20 +26,23 @@ const Dashboard: React.FC = () => {
         <CardDataStats title="Banner" link="/webpanel/cover">
           <IoMdImages size={20} />
         </CardDataStats>
-        <CardDataStats title="Career" link="/webpanel/career">
-          <FaPeopleArrows size={20} />
-        </CardDataStats>
         <CardDataStats title="Project" link="/webpanel/project">
-          <FaShippingFast size={20} />
+          <BsFillWalletFill size={20} />
         </CardDataStats>
         <CardDataStats title="Product" link="/webpanel/product">
-          <SlEnvolope size={20} />
+          <FaShoppingCart size={20} />
+        </CardDataStats>
+        <CardDataStats title="Career" link="/webpanel/career">
+          <IoPeopleSharp size={20} />
         </CardDataStats>
         <CardDataStats title="Training" link="/webpanel/training">
           <FaCalendarAlt size={20} />
         </CardDataStats>
         <CardDataStats title="Address" link="/webpanel/contact">
           <RiContactsBook2Fill size={20} />
+        </CardDataStats>
+        <CardDataStats title="Mailbox" link="/webpanel/mailbox">
+          <IoIosMail size={20} />
         </CardDataStats>
         {user?.role !== "user" && (
           <>
