@@ -29,7 +29,7 @@ import {
   RxDividerHorizontal,
 } from "react-icons/rx";
 import { CgUndo, CgRedo } from "react-icons/cg";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import ModalDialog from "../main/Modal";
 import ImageModal from "../main/Modal/ImageModal";
 import SourceCodeModal from "../main/Modal/SourceCodeModal";
@@ -168,7 +168,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
   const [sortActive, setSortActive] = useState<Boolean>(false);
   const [color, setColor] = useState("#000000");
 
-  const editorRef = useRef<any>(null);
+  // const editorRef = useRef<any>(null);
 
   // const { onOpen, onOpenChange} = useDisclosure();
 
@@ -781,14 +781,13 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
     
   }
 
-
+  
   useEffect(()=>{
-
-    const myFunction = () => console.log('do something')
-
-    if (editorRef && editorRef.current) {
-      document.addEventListener("click", (e) => {
-
+    
+    const Editor = document.getElementById(EditorId);
+    //@ts-ignore
+    Editor.addEventListener("click", (e) => {
+        // console.log(e.currentTarget)
           //@ts-ignore
           const txtRemark = e.target.closest(".txt-remark");
           if(!txtRemark){
@@ -814,6 +813,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
           //@ts-ignore
           const removeRowBtn = e.target.closest(".remove-row");
           if(removeRowBtn){
+            console.log(removeRowBtn)
             deleteRow(removeRowBtn);
           }
           //@ts-ignore
@@ -836,20 +836,19 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
         // console.log(thEl)
 
       });
-    }
+    // }
 
     // getAllImages();
 
     if(prop && state[prop]) setSubState();
-    editorRef.current = true;
+
     return () => {
-      editorRef.current = false;
       document.removeEventListener("click",setCodeStateHandler);
     }
-  },[state,editorRef]);
+  },[state]);
   
   return (
-    <div key={key} ref={editorRef}>
+    <div key={key}>
       <ModalDialog
         id={`dialogMOdal-${EditorId}`}
         key={key}

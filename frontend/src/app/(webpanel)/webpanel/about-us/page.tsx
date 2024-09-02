@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState, useRef } from "react";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import TextEditor from "@/components/TextEditor";
 import { FetchContext } from "@/contexts/FetchContext";
@@ -19,6 +19,7 @@ export default function AboutPage() {
   const [langState, setLangState] = useState(
     process.env.NEXT_PUBLIC_MAIN_LANGUAGE
   );
+  const editorRefs = useRef([]);
   const envLangs = process.env.NEXT_PUBLIC_LANGUAGES;
   const { onSave, onFetchOne }: any = useContext(FetchContext);
   // @ts-ignore
@@ -49,7 +50,7 @@ export default function AboutPage() {
     const document = await onFetchOne("about-us", "document");
     const payment = await onFetchOne("about-us", "payment");
     const rts = await onFetchOne("about-us", "rts");
-    console.log(condition)
+    // console.log(condition)
     setHistoryState({ ...history });
     setOrganizationState({ ...organization });
     setConditionState({ ...condition });
@@ -143,6 +144,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
+                  ref={editorRefs.current[1]}
                   id={`aboutUs${i.toUpperCase()}${k}-History`}
                   setState={onChangeHistory}
                   state={historyState}
@@ -171,6 +173,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
+                  ref={editorRefs.current[2]}
                   id={`aboutUs${i.toUpperCase()}${k}-Organization`}
                   setState={onChangeOrganization}
                   state={organizationState}
@@ -199,6 +202,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
+                  ref={editorRefs.current[3]}
                   id={`aboutUs${i.toUpperCase()}${k}-Condition`}
                   setState={onChangeCondition}
                   state={conditionState}
@@ -227,6 +231,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
+                  ref={editorRefs.current[4]}
                   id={`aboutUs${i.toUpperCase()}${k}-Insurance`}
                   setState={onChangeInsurance}
                   state={insuranceState}
@@ -255,6 +260,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
+                  ref={editorRefs.current[5]}
                   id={`aboutUs${i.toUpperCase()}${k}-Document`}
                   setState={onChangeDocument}
                   state={documentState}
@@ -283,6 +289,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
+                  ref={editorRefs.current[6]}
                   id={`aboutUs${i.toUpperCase()}${k}-Payment`}
                   setState={onChangePayment}
                   state={paymentState}
@@ -311,6 +318,7 @@ export default function AboutPage() {
               i?.toLowerCase() === langState && (
                 <TextEditor
                   key={k}
+                  ref={editorRefs.current[7]}
                   id={`aboutUs${i.toUpperCase()}${k}-Rts`}
                   setState={onChangeRts}
                   state={rtsState}
