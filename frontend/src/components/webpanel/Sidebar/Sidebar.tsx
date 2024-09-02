@@ -215,19 +215,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               </li>
               {/* <!-- Menu Item Contact List --> */}
 
-              {/* <!-- Menu Item Contact List --> */}
+              {/* <!-- Menu Item mailbox List --> */}
               <li>
                 <Link
-                  href="/webpanel/contact"
+                  href="/webpanel/mailbox"
                   className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes("contact") && "bg-graydark dark:bg-meta-4"
+                    pathname.includes("mailbox") && "bg-graydark dark:bg-meta-4"
                   }`}
                 >
                   <IoIosMail />
                   Mailbox
                 </Link>
               </li>
-              {/* <!-- Menu Item Contact List --> */}
+              {/* <!-- Menu Item mailbox List --> */}
             </ul>
           </div>
 

@@ -1,9 +1,6 @@
 "use client";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import AddressForm from "@/components/webpanel/AddressForm/AddressForm";
 import Breadcrumb from "@/components/webpanel/Breadcrumbs/Breadcrumb";
-import PositionForm from "@/components/webpanel/PositionForm/PositionForm";
-import SubjectForm from "@/components/webpanel/SubjectForm/SubjectForm";
 import TrainingForm from "@/components/webpanel/TrainingForm/TrainingForm";
 import { FetchContext } from "@/contexts/FetchContext";
 import { useContext, useEffect, useState } from "react";

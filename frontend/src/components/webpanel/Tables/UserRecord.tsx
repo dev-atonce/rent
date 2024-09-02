@@ -25,20 +25,20 @@ export default function UserRecord({ i, index, modal, onDelete }: any) {
 
   return (
     <tr key={index}>
-      <td className="text-center border-b border-[#eee] ">{index + 1}</td>
-      <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+      <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">{index + 1}</td>
+      <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
         <h5 className="font-medium text-black dark:text-white">
           {i?.username}
         </h5>
         <p className="text-sm">{i?.role}</p>
       </td>
-      <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+      <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
         <p className="text-black dark:text-white">{i?.email}</p>
       </td>
-      <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+      <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
         <p>{createdDate}</p>
       </td>
-      <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+      <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
         <div className="flex items-center gap-1">
           <Link
             className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"

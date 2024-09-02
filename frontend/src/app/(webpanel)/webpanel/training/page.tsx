@@ -44,7 +44,7 @@ export default function TrainingPage() {
       />
       <>
         <div className="flex justify-end  item-center">
-          <div className="flex items-center gap-1">
+          <div className="flex items-center gap-1 py-1">
             <button
               onClick={() => setDragState(!dragState)}
               className={`${!dragState ? "border-yellow-400 text-yellow-600" : "border-green-400 text-green-600"} bg-white border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}

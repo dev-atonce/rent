@@ -47,9 +47,9 @@ export default function ProjectPage() {
           data={data}
           setData={setData}
           col={[
-            { title: "Email", minWidth: "" },
-            { title: "Contact name", minWidth: "" },
-            { title: "Telephone", minWidth: "" },
+            { title: "Branch", minWidth: "" },
+            { title: "Contact", minWidth: "" },
+            { title: "Place", minWidth: "" },
             { title: "Detail", minWidth: "180px" },
             { title: "Date", minWidth: "" },
             { title: "Status", minWidth: "" },

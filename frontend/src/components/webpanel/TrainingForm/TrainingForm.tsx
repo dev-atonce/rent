@@ -1,12 +1,6 @@
 import { useContext, useEffect, useState } from "react";
 import FormGroup from "../FormGroup/FormGroup";
-import ImageComponent from "@/components/common/ImageComponent/ImageComponent";
-import SelectGroupOne from "../SelectGroup/SelectGroupOne";
 import { FetchContext } from "@/contexts/FetchContext";
-import Jodit from "../Editor/Jodit";
-import Image from "next/image";
-import { MdDeleteForever } from "react-icons/md";
-import Link from "next/link";
 import TableThree from "../Tables/TableThree";
 import AntCollapse from "../AntCollapse/AntCollapse";
 import type { CollapseProps } from "antd";
@@ -19,21 +13,11 @@ export default function TrainingForm({
   onSave,
   languages,
   onChangeState,
-  id,
-  onSaveSeo,
-  onChangeSeoState,
-  mainCat,
-  onDeleteImageGallery,
   tableData,
   onFetchCalendar,
   edit,
 }: any) {
-  const {
-    onFetchOne,
-    onDeleteGallery,
-    onSave: onSaveData,
-    onDelete,
-  }: any = useContext(FetchContext);
+  const { onSave: onSaveData, onDelete }: any = useContext(FetchContext);
   const [newCalendar, setNewCalendar] = useState({});
 
   const dateConverter = (fullDate: any) => {

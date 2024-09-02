@@ -40,13 +40,16 @@ export default function ContactFormRecord({
             (index + 1)}
         </td>
         <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
-          {i?.email}
+          {i?.branch}
         </td>
         <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
-          {i?.contactName}
+          <p>{i?.companyName}</p>
+          <p>{i?.contactName}</p>
+          <p>{i?.email}</p>
+          <p>{i?.telephone}</p>
         </td>
-        <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
-          {i?.telephone}
+        <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs truncate">
+          {i?.place}
         </td>
         <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs truncate">
           {i?.detail}

@@ -3,7 +3,6 @@ const router = require("express").Router();
 //// page ////
 router.use("/page/project", require("./page/projectPage"));
 router.use("/page/seo", require("./page/seoPage"));
-router.use("/page/email", require("./page/emailPage"));
 router.use("/page/position", require("./page/positionPage"));
 router.use("/page/address", require("./page/addressPage"));
 router.use("/page/product", require("./page/productPage"));
