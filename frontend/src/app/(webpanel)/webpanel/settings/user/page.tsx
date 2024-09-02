@@ -2,22 +2,16 @@
 
 import Breadcrumb from "@/components/webpanel/Breadcrumbs/Breadcrumb";
 
-import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import FormGroup from "@/components/webpanel/FormGroup/FormGroup";
 import { useContext, useEffect, useState } from "react";
 import TableThree from "@/components/webpanel/Tables/TableThree";
-import Modal from "@/components/webpanel/Modal/Modal";
 import Link from "next/link";
 import { LogInContext } from "@/contexts/LogInContext";
 import { FetchContext } from "@/contexts/FetchContext";
 
 export default function UserPage() {
   const { onFetchOne, onDelete }: any = useContext(FetchContext);
-  const envLangs = process.env.NEXT_PUBLIC_LANGUAGES;
-  const { user, onLogOut, noAuth }: any = useContext(LogInContext);
-  //   @ts-ignore
-  const languages = envLangs.split(",").map((i: any) => i.toUpperCase());
+  const { user, noAuth }: any = useContext(LogInContext);
   const [data, setData] = useState([]);
 
   const initialModalState = {};
@@ -49,9 +43,8 @@ export default function UserPage() {
         pageName="User Settings"
         prevPage={{ pageName: "Settings", url: null }}
       />
-
       <>
-        <div className="flex items-cente justify-end gap-1 mb-2">
+        <div className="flex items-cente justify-end gap-1 py-1">
           <Link
             href="user/create"
             className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
@@ -67,7 +60,6 @@ export default function UserPage() {
           data={data}
           col={[
             { title: "Name", minWidth: "" },
-
             { title: "E-Mail", minWidth: "" },
             { title: "Created On", minWidth: "" },
             { title: "Action", minWidth: "" },

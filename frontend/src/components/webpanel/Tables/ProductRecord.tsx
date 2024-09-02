@@ -46,7 +46,7 @@ export default function ServiceRecord({
 
   return (
     <>
-      {drag ? (
+      {/* {drag ? (
         <tr
           key={index}
           draggable
@@ -110,75 +110,74 @@ export default function ServiceRecord({
             </div>
           </td>
         </tr>
-      ) : (
-        <tr key={index}>
-          <td className="text-center border-b border-[#eee]">
-            {(currentPage - 1) *
-              Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE) +
-              (index + 1)}
-          </td>
-          <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
-            <h5 className="font-semibold text-black  dark:text-white text-xs">
-              {i?.productNameTH}
-            </h5>
-            <span className="text-xs border border-yellow-500 rounded-full px-2 py-1">
-              {i?.subCategory?.nameTH}
-            </span>
-          </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark text-sm">
-            <p className="text-black dark:text-white text-xs">
-              {i?.mainCategory?.nameTH}
-            </p>
-          </td>
+      ) : ( */}
+      <tr key={index}>
+        <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
+          {(currentPage - 1) * Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE) +
+            (index + 1)}
+        </td>
+        <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
+          <h5 className="font-semibold my-2 text-black  dark:text-white text-xs">
+            {i?.productNameTH}
+          </h5>
+          <span className="text-xs border border-yellow-500 rounded-full px-2 py-1">
+            {i?.subCategory?.nameTH}
+          </span>
+        </td>
+        <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
+          <p className="text-black dark:text-white text-xs">
+            {i?.mainCategory?.nameTH}
+          </p>
+        </td>
 
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark text-xs">
-            {i?.type && (
-              <span
-                className={`
+        <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
+          {i?.type && (
+            <span
+              className={`
               ${i?.type == "rent" ? "bg-blue-500" : i?.type == "both" ? "bg-slate-500" : "bg-green-500"} text-xs uppercase px-4 text-white rounded-md`}
-              >
-                {i?.type}
-              </span>
-            )}
-          </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-            <div className="flex items-center gap-1">
-              <Link
-                href={
-                  i?.type == "rent"
-                    ? `/rental-product/product/${i?._id}`
-                    : `/sale-product/product/${i?._id}`
-                }
-                className="hover:text-white hover:bg-blue-400 text-blue-400 border-blue-400 border p-2 rounded-full"
-              >
-                <MdOutlineRemoveRedEye size={20} />
-              </Link>
-              <Link
-                className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"
-                href={`/webpanel/product/edit/${i?._id}`}
-              >
-                <BiEdit size={20} />
-              </Link>
-              <button
-                onClick={() => onDelete(i?._id)}
-                className="hover:text-white hover:bg-red text-red border-red border p-2 rounded-full"
-              >
-                <RiDeleteBinLine size={20} />
-              </button>
-            </div>
-          </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
-            <div className=" text-center">
-              <SwitcherThree
-                id={i?.id}
-                enabled={enabled}
-                setEnabled={setEnabled}
-                onChange={onChangeStatus}
-              />
-            </div>
-          </td>
-        </tr>
-      )}
+            >
+              {i?.type}
+            </span>
+          )}
+        </td>
+        <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
+          <div className="flex items-center gap-1">
+            <Link
+              href={
+                i?.type == "rent"
+                  ? `/rental-product/product/${i?._id}`
+                  : `/sale-product/product/${i?._id}`
+              }
+              className="hover:text-white hover:bg-blue-400 text-blue-400 border-blue-400 border p-2 rounded-full"
+            >
+              <MdOutlineRemoveRedEye size={20} />
+            </Link>
+            <Link
+              className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"
+              href={`/webpanel/product/edit/${i?._id}`}
+            >
+              <BiEdit size={20} />
+            </Link>
+            <button
+              onClick={() => onDelete(i?._id)}
+              className="hover:text-white hover:bg-red text-red border-red border p-2 rounded-full"
+            >
+              <RiDeleteBinLine size={20} />
+            </button>
+          </div>
+        </td>
+        <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
+          <div className=" text-center">
+            <SwitcherThree
+              id={i?.id}
+              enabled={enabled}
+              setEnabled={setEnabled}
+              onChange={onChangeStatus}
+            />
+          </div>
+        </td>
+      </tr>
+      {/* )} */}
     </>
   );
 }

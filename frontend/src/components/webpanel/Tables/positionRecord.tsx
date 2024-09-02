@@ -47,20 +47,20 @@ export default function PositionRecord({
           onDragEnd={onDragEnd}
           onDragOver={(e: any) => e.preventDefault()}
         >
-          <td className="hover:cursor-move text-center border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <RxDragHandleHorizontal size={25} />
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11 text-start">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-xs">{i?.nameEN}</p>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11 text-start">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-xs">{i?.nameTH}</p>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11 text-start">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-xs">{createdDate}</p>
           </td>
 
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <div className="flex items-center gap-1">
               <Link
                 className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"
@@ -79,18 +79,20 @@ export default function PositionRecord({
         </tr>
       ) : (
         <tr key={index}>
-          <td className="text-center border-b border-[#eee] ">{index + 1}</td>
-          <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11 text-start">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
+            {index + 1}
+          </td>
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-xs">{i?.nameEN}</p>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11 text-start">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-xs">{i?.nameTH}</p>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11 text-start">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-xs">{createdDate}</p>
           </td>
 
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <div className="flex items-center gap-1">
               <Link
                 className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"

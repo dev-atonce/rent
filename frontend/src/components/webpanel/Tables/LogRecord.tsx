@@ -4,19 +4,19 @@ export default function LogRecord({ i, index, modal }: any) {
 
   return (
     <tr key={index}>
-      <td className="border-b border-[#eee] px-4 py-5  text-start">
+      <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
         {index + 1}
       </td>
-      <td className="border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+      <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
         <p className="text-xs">{date}</p>
       </td>
-      <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+      <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
         <p className="text-black dark:text-white text-xs">{i?.activity}</p>
       </td>
-      <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+      <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
         <p className="text-sm">{i?.type}</p>
       </td>
-      <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+      <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
         <div className="flex items-center space-x-3.5">
           <button
             className="hover:text-primary"

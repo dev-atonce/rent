@@ -56,7 +56,6 @@ export default function SeoSettingPage() {
           ]}
         />
       </>
-      {/* <Jodit /> */}
 
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-3 ">
         {data?.map((i: any, key: number) => (

@@ -55,19 +55,19 @@ export default function ProjectRecord({
           onDragEnd={onDragEnd}
           onDragOver={(e: any) => e.preventDefault()}
         >
-          <td className="hover:cursor-move text-center border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <RxDragHandleHorizontal size={25} />
           </td>
 
-          <td className="border-b  border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <h5 className="font-medium text-black dark:text-white">
               {i?.projectNameTH}
             </h5>
           </td>
-          <td className="border-b  border-[#eee] px-4 py-5 dark:border-strokedark text-xs">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-black dark:text-white">{createdDate}</p>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <div className="flex items-center gap-1">
               <Link
                 href={`/project/${i?.id}`}
@@ -89,7 +89,7 @@ export default function ProjectRecord({
               </button>
             </div>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <div className=" text-center">
               <SwitcherThree
                 id={i?.id}
@@ -102,18 +102,18 @@ export default function ProjectRecord({
         </tr>
       ) : (
         <tr key={index}>
-          <td className="text-start pl-12 border-b border-[#eee]">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             {index + 1}
           </td>
-          <td className="border-b  border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <h5 className="font-medium text-black dark:text-white">
               {i?.projectNameTH}
             </h5>
           </td>
-          <td className="border-b  border-[#eee] px-4 py-5 dark:border-strokedark text-xs">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-black dark:text-white">{createdDate}</p>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <div className="flex items-center gap-1">
               <Link
                 href={`/project/${i?.id}`}
@@ -135,7 +135,7 @@ export default function ProjectRecord({
               </button>
             </div>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <div className=" text-center">
               <SwitcherThree
                 id={i?.id}

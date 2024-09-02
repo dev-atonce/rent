@@ -3,13 +3,10 @@ import ForeignBranch from "@/components/main/ForeignBranch/ForeignBranch";
 import Loading from "@/components/main/Loading/Loading";
 import Contact from "@/components/main/Contact/page";
 import Image from "next/image";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata } from "next";
 
 const pageName = "contact";
-export async function generateMetadata(
-  { params, searchParams }: any,
-  parent: ResolvingMetadata
-): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   // read route params
   const lng = "TH";
 

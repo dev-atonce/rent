@@ -90,7 +90,7 @@ export default function ProductPage() {
       <div className="grid grid-cols-1 gap-9 sm:grid-cols-2">
         <div className="flex flex-col gap-9">
           <div>
-            <div className="flex justify-between py-4">
+            <div className="flex justify-between py-1">
               <h4 className=" text-xl">Main Category</h4>
               <div className="flex items-center justify-end gap-1">
                 <button
@@ -126,7 +126,7 @@ export default function ProductPage() {
 
         <div className="flex flex-col gap-9">
           <div className="">
-            <div className="flex justify-between py-4">
+            <div className="flex justify-between py-1">
               <h4 className=" text-xl">Sub-Category</h4>
               <div className="flex items-center justify-end gap-1">
                 <button
@@ -163,14 +163,18 @@ export default function ProductPage() {
       </div>
       <>
         <h4 className="text-xl">Type Of product</h4>
-        <Link 
-          href="product/type/rent" 
+        <Link
+          href="product/type/rent"
           className="bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700"
-        >RENT</Link>
-        <Link 
-          href="product/type/sell" 
+        >
+          RENT
+        </Link>
+        <Link
+          href="product/type/sell"
           className="bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700"
-        >SELL</Link>
+        >
+          SELL
+        </Link>
       </>
       <>
         <h2 className="text-2xl mt-6">All Product</h2>
@@ -253,17 +257,16 @@ export default function ProductPage() {
             { title: "Status", minWidth: "" },
           ]}
         />
-        { total > Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE) &&
+        {total > Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE) && (
           <AntPagination
             total={total}
             currentPage={pageState}
             setCurrentPage={setPageState}
             pageSize={Number(process.env.NEXT_PUBLIC_PRODUCT_PERPAGE)}
           />
-        }
+        )}
       </>
-      
-      {/* <Jodit /> */}
+
     </DefaultLayout>
   );
 }

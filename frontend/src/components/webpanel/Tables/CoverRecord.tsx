@@ -56,11 +56,11 @@ export default function SubjectRecord({
           onDragEnd={onDragEnd}
           onDragOver={(e: any) => e.preventDefault()}
         >
-          <td className="hover:cursor-move text-center border-b border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <RxDragHandleHorizontal size={25} />
           </td>
 
-          <td className="border-b  border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <div className="h-[50px]">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_URL}${i?.image}`}
@@ -71,7 +71,7 @@ export default function SubjectRecord({
               />
             </div>
           </td>
-          <td className="border-b  border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="font-medium text-xs text-black dark:text-white">
               {i?.title}
             </p>
@@ -79,10 +79,10 @@ export default function SubjectRecord({
               {i?.link}
             </p>
           </td>
-          <td className="border-b  border-[#eee] px-4 py-5 dark:border-strokedark text-xs">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-black dark:text-white">{createdDate}</p>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <div className="flex items-center gap-1">
               <Link
                 className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"
@@ -98,7 +98,7 @@ export default function SubjectRecord({
               </button>
             </div>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <div className=" text-center">
               <SwitcherThree
                 id={i?.id}
@@ -111,10 +111,10 @@ export default function SubjectRecord({
         </tr>
       ) : (
         <tr key={index}>
-          <td className="text-start pl-12 border-b border-[#eee]">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             {index + 1}
           </td>
-          <td className="border-b  border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <div className="h-[50px]">
               <Image
                 src={`${process.env.NEXT_PUBLIC_BASE_URL}${i?.image}`}
@@ -125,7 +125,7 @@ export default function SubjectRecord({
               />
             </div>
           </td>
-          <td className="border-b  border-[#eee] px-4 py-5 pl-9 dark:border-strokedark xl:pl-11">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="font-medium text-xs text-black dark:text-white">
               {i?.title}
             </p>
@@ -133,10 +133,10 @@ export default function SubjectRecord({
               {i?.link}
             </p>
           </td>
-          <td className="border-b  border-[#eee] px-4 py-5 dark:border-strokedark text-xs">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-black dark:text-white">{createdDate}</p>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <div className="flex items-center gap-1">
               <Link
                 className="hover:text-white hover:bg-yellow-400 text-yellow-400 border-yellow-400 border p-2 rounded-full"
@@ -152,7 +152,7 @@ export default function SubjectRecord({
               </button>
             </div>
           </td>
-          <td className="border-b border-[#eee] px-4 py-5 dark:border-strokedark">
+          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <div className=" text-center">
               <SwitcherThree
                 id={i?.id}
