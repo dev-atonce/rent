@@ -44,14 +44,14 @@ const methods = {
           const rows = item;
           const obj = new AboutUs(rows);
           const inserted = await obj.save();
-          return inserted;
+          // return inserted;
         } else {
           const rows = item;
-          await AboutUs.updateOne({ _id: item._id }, rows, {
+          await AboutUs.updateOne({ _id: item.id }, rows, {
             runValidators: true,
             new: true,
           });
-          return Object.assign(obj, rows);
+          // return Object.assign(obj, rows);
         }
       });
     } catch (error) {
