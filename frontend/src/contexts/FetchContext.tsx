@@ -433,6 +433,10 @@ export default function FetchProvider({ children, user, token }: any) {
                       setTimeout(() => {
                         router.push("/webpanel/project");
                       }, 2000);
+                    } else if (type == "banner") {
+                      setTimeout(() => {
+                        router.push("/webpanel/cover");
+                      }, 2000);
                     }
                   } else if (method?.toUpperCase() === "PUT") {
                     if (type === "user") {
