@@ -137,7 +137,7 @@ const CreateTable = (el: any) => {
 
 
 //================= Begin: Main Component =================//
-const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, editor}: any) => 
+const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: any) => 
 {
 
   const EditorId = id ? id : new Date().getTime();
@@ -858,10 +858,10 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
   },[refsById, state]);
   
   return (
-    <div id={EditorId} key={key} ref={refsById[EditorId]}>
+    <div id={EditorId} ref={refsById[EditorId]}>
       <ModalDialog
         id={`dialogMOdal-${EditorId}`}
-        key={key}
+      
         visible={visible}
         closeHandler={closeHandler}
         select={{ row, handleSetSelect, createRow, EditorId }}
@@ -869,7 +869,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
       />
       <ImageModal
         id={`imageMoodal-${EditorId}`}
-        key={key}
+      
         imgVisible={imgVisible}
         closeImgHandler={closeImgHandler}
         dataId={dataId}
@@ -897,7 +897,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
       />
       <SourceCodeModal
         id={`sourceCodeModal-${EditorId}`}
-        key={key}
+      
         codeVisible={codeVisible}
         sourceCode={sourceCode}
         setSourceCode={setSourceCode}
@@ -909,7 +909,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
         <textarea 
           className="hidden"
           name={prop}
-          value={state && state[prop]}
+          defaultValue={state && state[prop]}
           placeholder={placeholder}
         ></textarea>
         <div className="text-editor relative" onBlur={setCodeStateHandler}>

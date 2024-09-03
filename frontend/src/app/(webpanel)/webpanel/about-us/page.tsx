@@ -1,5 +1,5 @@
 "use client";
-import { useCallback, useContext, useEffect, useState, useMemo, useRef } from "react";
+import { useContext, useEffect, useState, useMemo, useRef } from "react";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
 import TextEditor from "@/components/TextEditor";
 import { FetchContext } from "@/contexts/FetchContext";
@@ -19,28 +19,10 @@ export default function AboutPage() {
   const [langState, setLangState] = useState(
     process.env.NEXT_PUBLIC_MAIN_LANGUAGE
   );
-  const editorRefs = useRef([]);
   const envLangs = process.env.NEXT_PUBLIC_LANGUAGES;
   const { onSave, onFetchOne }: any = useContext(FetchContext);
   // @ts-ignore
   const languages = envLangs.split(",").map((i: any) => i.toUpperCase());
-
-  // const fetchData = useCallback(async () => {
-  //   const history = await onFetchOne("about-us", "history");
-  //   const organization = await onFetchOne("about-us", "organization");
-  //   const condition = await onFetchOne("about-us", "condition");
-  //   const insurance = await onFetchOne("about-us", "insurance");
-  //   const document = await onFetchOne("about-us", "document");
-  //   const payment = await onFetchOne("about-us", "payment");
-  //   const rts = await onFetchOne("about-us", "rts");
-  //   setHistoryState({ ...history });
-  //   setOrganizationState({ ...organization });
-  //   setConditionState({ ...condition });
-  //   setRtsState({ ...rts });
-  //   setInsuranceState({ ...insurance });
-  //   setDocumentState({ ...document });
-  //   setPaymentState({ ...payment });
-  // }, []);
 
   const fetchData = async () => {
     const history = await onFetchOne("about-us", "history");
@@ -50,7 +32,6 @@ export default function AboutPage() {
     const document = await onFetchOne("about-us", "document");
     const payment = await onFetchOne("about-us", "payment");
     const rts = await onFetchOne("about-us", "rts");
-    // console.log(condition)
     setHistoryState({ ...history });
     setOrganizationState({ ...organization });
     setConditionState({ ...condition });
@@ -114,20 +95,12 @@ export default function AboutPage() {
       paymentState,
       rtsState,
     ];
-    console.log(state)
     onSave(state, "PUT", null, "about-us-all", "update about-us");
-
-  };
-
-  const onChange = (key: string) => {
-    console.log(key);
   };
 
   useEffect(() => {
     fetchData();
   }, []);
-
-
 
   const items: TabsProps["items"] = [
     {
@@ -327,21 +300,18 @@ export default function AboutPage() {
       ),
     },
   ];
-  
 
   return (
     <DefaultLayout>
       <Breadcrumb
         pageName="About Us"
         prevPage={{ pageName: "Dashboard", url: "/webpanel" }}
-        // prevPage={{ pageName: "About Us", url: "/webpanel/about-us" }}
       />
       <div className="grid grid-cols-1 gap-y-9 sm:grid-cols-1 ">
         <div className="col-span-2">
           <div className="bg-white rounded-lg p-2">
             <div className="col-span-2">
               <div className="bg-white rounded-lg p-2">
-                {/* <h5 className="text-bold">Detail</h5> */}
                 <Tabs defaultActiveKey="1" items={items} />
               </div>
             </div>
