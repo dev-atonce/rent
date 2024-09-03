@@ -29,7 +29,7 @@ import {
   RxDividerHorizontal,
 } from "react-icons/rx";
 import { CgUndo, CgRedo } from "react-icons/cg";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useMemo, useRef, createRef } from "react";
 import ModalDialog from "../main/Modal";
 import ImageModal from "../main/Modal/ImageModal";
 import SourceCodeModal from "../main/Modal/SourceCodeModal";
@@ -780,14 +780,17 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
   const removeTable = () => {
     
   }
-
+  const refsById = useMemo(() => {
+		const refs:any = {}
+    refs[EditorId] = createRef();
+		return refs
+	}, [])
   
   useEffect(()=>{
-    
-    const Editor = document.getElementById(EditorId);
-    //@ts-ignore
-    Editor.addEventListener("click", (e) => {
-        // console.log(e.currentTarget)
+
+    if (refsById[EditorId] && refsById[EditorId].current) {
+      refsById[EditorId].current.addEventListener("click", function(e:any)
+      {
           //@ts-ignore
           const txtRemark = e.target.closest(".txt-remark");
           if(!txtRemark){
@@ -796,7 +799,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
           //@ts-ignore
           const sourceCode = e.target.closest(".source-code");
           if(sourceCode){
-            SourceCode(sourceCode);
+            sourceCode.SourceCode(sourceCode);
           }
           //@ts-ignore
           const imageModal = e.target.closest('[data-image="true"]');
@@ -813,7 +816,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
           //@ts-ignore
           const removeRowBtn = e.target.closest(".remove-row");
           if(removeRowBtn){
-            console.log(removeRowBtn)
+
             deleteRow(removeRowBtn);
           }
           //@ts-ignore
@@ -833,22 +836,29 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
           }
 
 
-        // console.log(thEl)
-
       });
+    
+      // return () => {
+      //   refsById[EditorId].current?.removeEventListener("click")
+      // }
+    }
+
+    //@ts-ignore
+    
     // }
 
     // getAllImages();
 
     if(prop && state[prop]) setSubState();
-
+    // refsById[EditorId].current = true;
     return () => {
+      // refsById[EditorId].current = false;
       document.removeEventListener("click",setCodeStateHandler);
     }
-  },[state]);
+  },[refsById, state]);
   
   return (
-    <div key={key}>
+    <div id={EditorId} key={key} ref={refsById[EditorId]}>
       <ModalDialog
         id={`dialogMOdal-${EditorId}`}
         key={key}
@@ -895,10 +905,7 @@ const TextEditor = ({ key, id, dataId, state, setState, prop, placeholder, edito
         saveSourceCode={saveSourceCode}
         title="Source Code"
       />
-      <div
-        id={EditorId}
-        className="rounded-lg bg-white dark:border-strokedark dark:bg-boxdark h-full"
-      >
+      <div className="rounded-lg bg-white dark:border-strokedark dark:bg-boxdark h-full">
         <textarea 
           className="hidden"
           name={prop}

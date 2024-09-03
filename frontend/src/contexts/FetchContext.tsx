@@ -267,6 +267,10 @@ export default function FetchProvider({ children, user, token }: any) {
       if (method.toUpperCase() === "PUT") {
         route = aboutUsRoute;
       }
+    } else if (type == "about-us-all") {
+      if (method.toUpperCase() === "PUT") {
+        route = `${aboutUsRoute}/all`;
+      }
     } else if (type == "product-sell") {
       if (method.toUpperCase() == "PUT") {
         route = `${aboutUsRoute}?type=product-sell`;
