@@ -37,9 +37,9 @@ const Training = () => {
   return (
     <>
       <div>
-        <h1 className="font-bold pb-4 text-xl">
+        <h2 className="font-bold pb-4 text-xl">
           1. คอร์สอบรมการใช้งานเครื่องจักรอย่างปลอดภัย Machine Safety Training
-        </h1>
+        </h2>
         <div>
           <p>
             บริษัทเร้นท์ (ประเทศไทย) จำกัด
@@ -57,7 +57,7 @@ const Training = () => {
           </ul>
         </div>
 
-        <h2 className="font-bold mt-5 text-lg">เนื้อหาการอบรม</h2>
+        <h3 className="font-bold mt-5 text-lg">เนื้อหาการอบรม</h3>
         <div>
           <ul className="list-inside list-disc">
             <li>สอนการใช้งาน ขับขี่พื้นฐาน การซ่อมบำรุงพื้นฐาน</li>
@@ -69,7 +69,7 @@ const Training = () => {
             เท่านั้น)
           </p>
         </div>
-        <h2 className="font-bold mt-5 text-lg">รายละเอียดคอร์ส</h2>
+        <h3 className="font-bold mt-5 text-lg">รายละเอียดคอร์ส</h3>
         <div className="w-full ">
           <Image
             src={"/img/course1.png"}
@@ -80,7 +80,7 @@ const Training = () => {
           />
         </div>
 
-        <h2 className="font-bold mt-5 text-lg">หมายเหตุ</h2>
+        <h3 className="font-bold mt-5 text-lg">หมายเหตุ</h3>
         <div>
           <ul className="list-inside list-disc">
             <li>
@@ -116,10 +116,10 @@ const Training = () => {
         </div>
       </div>
       <div className="py-4">
-        <h1 className="font-bold pb-4 text-xl">
+        <h2 className="font-bold pb-4 text-xl">
           2. คอร์สอบรมการใช้งานเครนชนิดเคลื่อนที่
           (ปั้นจั่น)ตามหลักสูตรที่กฏกระทรวงแรงงานกำหนด
-        </h1>
+        </h2>
         <div>
           <h2 className="font-bold mt-5 text-lg">เนื้อหาการอบรม</h2>
           <p>
@@ -142,7 +142,7 @@ const Training = () => {
             <li>รถมินิเครน (Mini-Crawler Crane)</li>
           </ul>
         </div>
-        <h2 className="font-bold mt-5 text-lg">รายละเอียดคอร์ส</h2>
+        <h3 className="font-bold mt-5 text-lg">รายละเอียดคอร์ส</h3>
         <div className="w-full ">
           <Image
             src={"/img/course2.png"}
@@ -153,7 +153,7 @@ const Training = () => {
           />
         </div>
 
-        <h2 className="font-bold mt-5 text-lg">หมายเหตุ</h2>
+        <h3 className="font-bold mt-5 text-lg">หมายเหตุ</h3>
         <div>
           <ul className="list-inside list-disc">
             <li>
@@ -166,6 +166,7 @@ const Training = () => {
       </div>
 
       <div className="py-4">
+        <h2 className="font-bold my-4 text-lg">บรรยากาศการอบรม</h2>
         {gallery && (
           <div className="grid grid-cols-12 w-full gap-4 pb-4">
             {gallery?.map((v: any, i: number) => {
@@ -187,7 +188,7 @@ const Training = () => {
           </div>
         )}
       </div>
-
+      <h2 className="font-bold my-4 text-lg">ตารางการอบรม</h2>
       <Row gutter={[16, 16]} className="mt-10">
         <TrainingCourseCard data={courseList} />
       </Row>

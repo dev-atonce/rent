@@ -18,8 +18,8 @@ export default function ContactCard({ data, type }: BlogCardProps) {
             cover={
               <Image
                 className="w-full aspect-[4/2] object-cover"
-                alt={item?.branch}
-                src={item?.thumbnail}
+                alt={item?.nameTH}
+                src={item?.image || "/img/logo.png"}
                 width={311}
                 height={188}
                 quality={100}

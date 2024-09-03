@@ -101,7 +101,7 @@ export default function ProductPage() {
                 </button>
 
                 <Link
-                  href="product/maincat/create"
+                  href="/webpanel/product/maincat/create"
                   className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
                 >
                   CREATE MAIN-CATEGORY
@@ -137,7 +137,7 @@ export default function ProductPage() {
                 </button>
 
                 <Link
-                  href="product/subcat/create"
+                  href="/webpanel/product/subcat/create"
                   className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
                 >
                   CREATE SUB-CATEGORY
@@ -162,18 +162,18 @@ export default function ProductPage() {
         </div>
       </div>
       <>
-        <h4 className="text-xl">Type Of product</h4>
+        <h4 className="text-xl py-3">Product Page Content </h4>
         <Link
-          href="product/type/rent"
-          className="bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700"
+          href="/webpanel/product/type/rent"
+          className="bg-white mr-2 text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700"
         >
           RENT
         </Link>
         <Link
-          href="product/type/sell"
+          href="/webpanel/product/type/sale"
           className="bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700"
         >
-          SELL
+          SALE
         </Link>
       </>
       <>
@@ -234,7 +234,7 @@ export default function ProductPage() {
               )}
 
             <Link
-              href="product/create"
+              href="/webpanel/product/create"
               className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
             >
               CREATE PRODUCT
@@ -266,7 +266,6 @@ export default function ProductPage() {
           />
         )}
       </>
-
     </DefaultLayout>
   );
 }

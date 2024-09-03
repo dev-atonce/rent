@@ -277,31 +277,31 @@ export default function FetchProvider({ children, user, token }: any) {
       } else if (method?.toUpperCase() == "POST") {
         route = `${aboutUsRoute}?type=product-sell`;
       }
-    }  else if (type == "product-rent") {
+    } else if (type == "product-rent") {
       if (method.toUpperCase() == "PUT") {
         route = `${aboutUsRoute}?type=product-rent`;
       } else if (method?.toUpperCase() == "POST") {
         route = `${aboutUsRoute}?type=product-rent`;
       }
-    }  else if (type == "product-sale") {
+    } else if (type == "product-sale") {
       if (method.toUpperCase() == "PUT") {
         route = `${aboutUsRoute}?type=product-sale`;
       } else if (method?.toUpperCase() == "POST") {
         route = `${aboutUsRoute}?type=product-sale`;
       }
-    }  else if (type == "other-training") {
+    } else if (type == "other-training") {
       if (method.toUpperCase() == "PUT") {
         route = `${aboutUsRoute}?type=other-training`;
       } else if (method?.toUpperCase() == "POST") {
         route = `${aboutUsRoute}?type=other-training`;
       }
-    }  else if (type == "other-inspection") {
+    } else if (type == "other-inspection") {
       if (method.toUpperCase() == "PUT") {
         route = `${aboutUsRoute}?type=other-inspection`;
       } else if (method?.toUpperCase() == "POST") {
         route = `${aboutUsRoute}?type=other-inspection`;
       }
-    } 
+    }
 
     const swalWithBootstrapButtons = Swal.mixin({
       customClass: {
@@ -510,6 +510,9 @@ export default function FetchProvider({ children, user, token }: any) {
       const response = await fetch(`${route}`, {
         method: method,
         body: formData,
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
       });
       if (!response.ok) {
         throw new Error("Failed to Upload Image");
@@ -546,6 +549,7 @@ export default function FetchProvider({ children, user, token }: any) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
 
         body: JSON.stringify({ status: status }),
@@ -581,6 +585,7 @@ export default function FetchProvider({ children, user, token }: any) {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
 
         body: JSON.stringify({ sort: order }),
@@ -609,6 +614,7 @@ export default function FetchProvider({ children, user, token }: any) {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${token}`,
         },
 
         body: JSON.stringify(data),
@@ -665,7 +671,13 @@ export default function FetchProvider({ children, user, token }: any) {
       .then(async (result) => {
         if (result.isConfirmed) {
           // try {
-          const response = await fetch(route, { method: "DELETE" });
+          const response = await fetch(route, {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              authorization: `Bearer ${token}`,
+            },
+          });
 
           const res = await response.json();
 
@@ -770,7 +782,13 @@ export default function FetchProvider({ children, user, token }: any) {
       .then(async (result) => {
         if (result.isConfirmed) {
           try {
-            const response = await fetch(route, { method: "DELETE" });
+            const response = await fetch(route, {
+              method: "DELETE",
+              headers: {
+                "Content-Type": "application/json",
+                authorization: `Bearer ${token}`,
+              },
+            });
             const res = await response.json();
 
             if (res?.error) {

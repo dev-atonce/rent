@@ -41,9 +41,9 @@ export default function ProductContent({ data }: any) {
         </div>
       </div>
       <div className="py-10 ">
-        <h4 className="text-2xl font-semibold text-[#0DA1DB] mb-4">
+        <h2 className="text-2xl font-semibold text-[#0DA1DB] mb-4">
           รายละเอียด
-        </h4>
+        </h2>
         <div className=" overflow-x-scroll rounded-xl  bg-slate-100/40 px-4 py-4">
           <DynamicContent content={data?.productDescriptionTH} />
           <DynamicContent content={data?.productDetailTH} />

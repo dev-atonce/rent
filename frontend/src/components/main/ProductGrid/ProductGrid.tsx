@@ -9,9 +9,9 @@ export default function ProductGrid({
 }: any) {
   return (
     <div className="py-10">
-      <h6 className="text-[#0DA1DB] text-2xl font-semibold pb-6">
+      <h2 className="text-[#0DA1DB] text-2xl font-semibold pb-6">
         {title || "สินค้า"}
-      </h6>
+      </h2>
       <div className="grid grid-cols-12 gap-4">
         {data?.map((item: any, key: any) => (
           <ProductCard

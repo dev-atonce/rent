@@ -24,9 +24,9 @@ export default function Footer({ services, lng }: any) {
           <div className="flex flex-col justify-center items-center lg:items-start lg:basis-1/2  ">
             <div className="flex-col flex items-center lg:items-start gap-3 md:border-b pb-6 border-white/35 ">
               <Logo color={"white"} />
-              <h3 className="uppercase font-semibold">
+              <span className="uppercase font-semibold">
                 บริษัท เร้นท์ (ประเทศไทย) จำกัด (สำนักงานใหญ่)
-              </h3>
+              </span>
               <p className="text-sm">
                 9/222-224, UM Tower, ถนนรามคำแหง, แขวงสวนหลวง, เขตสวนหลวง,
                 กรุงเทพฯ 10250
@@ -51,7 +51,7 @@ export default function Footer({ services, lng }: any) {
             <div className="xl:basis-1/4 w-full sm:basis-2/5 ">
               <div className="flex items-center gap-2 pb-4 justify-around sm:justify-start">
                 <div>
-                  <h6 className="font-semibold">Social Media</h6>
+                  <span className="font-semibold">Social Media</span>
 
                   <div className="flex flex-col gap-1">
                     <a

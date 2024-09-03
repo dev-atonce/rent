@@ -15,9 +15,9 @@ export default function ProjectSwiper({ projectData }: any) {
   return (
     <div className="py-10 container mx-auto project">
       <div className="w-full flex justify-center text-2xl font-semibold text-slate-600  py-8">
-        <h4>
+        <h2>
           ตัวอย่าง <span className="text-[#0DA1DB]">ผลงานที่เรามีส่วนร่วม</span>
-        </h4>
+        </h2>
       </div>
       <div className="w-full header-cover">
         <Swiper
