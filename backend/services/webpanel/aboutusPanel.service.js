@@ -15,7 +15,6 @@ const methods = {
   },
 
   async update(req, res) {
-    console.log(req.body.type);
     try {
       const obj = await AboutUs.findOne({ type: req.body.type });
       if (!obj) {
@@ -31,6 +30,30 @@ const methods = {
         });
         return Object.assign(obj, data);
       }
+    } catch (error) {
+      return Promise.reject(ErrorBadRequest(error.message));
+    }
+  },
+
+  async updateAll(req, res) {
+    try {
+      const data = req.body;
+      data.map(async (item) => {
+        const obj = await AboutUs.findOne({ type: item.type });
+        if (!obj) {
+          const rows = item;
+          const obj = new AboutUs(rows);
+          const inserted = await obj.save();
+          return inserted;
+        } else {
+          const rows = item;
+          await AboutUs.updateOne({ _id: item._id }, rows, {
+            runValidators: true,
+            new: true,
+          });
+          return Object.assign(obj, rows);
+        }
+      });
     } catch (error) {
       return Promise.reject(ErrorBadRequest(error.message));
     }

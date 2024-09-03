@@ -18,6 +18,15 @@ const methods = {
       res.error(error);
     }
   },
+
+  async onUpdateAll(req, res){
+    try {
+      const result = await About.updateAll(req, res);
+      res.success(result);
+    } catch (error) {
+      res.error(error);
+    }
+  }
 };
 
 module.exports = { ...methods };

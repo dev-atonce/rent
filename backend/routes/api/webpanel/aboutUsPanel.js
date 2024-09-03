@@ -6,4 +6,6 @@ router.get("/", auth.required, controllers.onGetOne);
 
 router.put("/", auth.required, controllers.onUpdate);
 
+router.put("/all", controllers.onUpdateAll);
+
 module.exports = router;
