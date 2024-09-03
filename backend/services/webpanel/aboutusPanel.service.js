@@ -37,23 +37,22 @@ const methods = {
 
   async updateAll(req, res) {
     try {
+      let newData = [];
       const data = req.body;
-      data.map(async (item) => {
-        const obj = await AboutUs.findOne({ type: item.type });
+      for (let index = 0; index < Object.keys(data).length; index++) {
+        const obj = await AboutUs.findOne({ type: data[index].type });
         if (!obj) {
-          const rows = item;
+          const rows = data[index];
           const obj = new AboutUs(rows);
           const inserted = await obj.save();
-          // return inserted;
+          newData = [...newData, inserted];
         } else {
-          const rows = item;
-          await AboutUs.updateOne({ _id: item.id }, rows, {
-            runValidators: true,
-            new: true,
-          });
-          // return Object.assign(obj, rows);
+          const rows = data[index];
+          const inserted = await AboutUs.findOneAndUpdate({ _id: data[index].id }, rows, { new: true });
+          newData = [...newData, inserted];
         }
-      });
+      }
+      return newData;
     } catch (error) {
       return Promise.reject(ErrorBadRequest(error.message));
     }
