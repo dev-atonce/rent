@@ -171,6 +171,11 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
   // const editorRef = useRef<any>(null);
 
   // const { onOpen, onOpenChange} = useDisclosure();
+  const refsById = useMemo(() => {
+		const refs:any = {}
+    refs[EditorId] = createRef();
+		return refs
+	}, [])
 
   const handler = () => setVisible(true);
   const closeHandler = () => setVisible(false);
@@ -192,12 +197,12 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
   }
 
   const setCodeStateHandler = () => {
-    const editorBody = document.getElementById(EditorId);
-    if(editorBody?.querySelector('.editor-body'))
+    // const refsById[EditorId].current = document.getElementById(EditorId);
+    if(refsById[EditorId].current?.querySelector('.editor-body'))
     {
       let makeElement = document.createElement('div');
       //@ts-ignore
-      makeElement.innerHTML = editorBody.querySelector('.editor-body').innerHTML;
+      makeElement.innerHTML = refsById[EditorId].current.querySelector('.editor-body').innerHTML;
       makeElement.querySelectorAll('.row-panel').forEach((el:any)=>el.remove());
       makeElement.querySelectorAll('[contenteditable="true"]').forEach((el:any)=>el.removeAttribute('contenteditable'));
       makeElement.querySelectorAll('[draggable="true"]').forEach((el:any)=>{
@@ -218,10 +223,10 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
   }
   const fetchSubState = () => {
     //@ts-ignore
-    const textareaEl:any = document.getElementById(EditorId).querySelector(`textarea[name="${prop}"]`);
+    const textareaEl:any = refsById[EditorId].current.querySelector(`textarea[name="${prop}"]`);
     if(textareaEl.value)
     {
-      const editorBody:any = document.getElementById(EditorId)?.querySelector('.editor-body');
+      const editorBody:any = refsById[EditorId].current?.querySelector('.editor-body');
       const makeElement = document.createElement('div');
       //
       makeElement.innerHTML = textareaEl.value;
@@ -457,12 +462,13 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
       setCodeStateHandler();
     }
   };
-  const deleteRow = (e: any) => {
+  function deleteRow(e: any)
+  {
     e.closest(".grid").remove();
-    setCodeStateHandler();
+    // setCodeStateHandler();
   };
 
-  const SourceCode = (el:any) => 
+  function SourceCode(el:any)
   { 
     let editor = document.getElementById(EditorId);
     // @ts-ignore
@@ -766,25 +772,8 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
       }
       return nodes;
   }
-  const removeRemark = () => {
-    let Editor = document.getElementById(EditorId);
-    Editor?.querySelectorAll('.txt-remark').forEach((el:any) => el.remove());
-    Editor?.querySelectorAll('.img-remark').forEach((el:any) => el.remove());
-    Editor?.querySelectorAll('.focused').forEach((el:any) => el.remove());
-  }
-  const removeTableRemark = () => {
-    let Editor:any = document.getElementById(EditorId);
-    Editor?.querySelectorAll('.focused').forEach((el:any) => el.remove());
 
-  }
-  const removeTable = () => {
-    
-  }
-  const refsById = useMemo(() => {
-		const refs:any = {}
-    refs[EditorId] = createRef();
-		return refs
-	}, [])
+  
   
   useEffect(()=>{
 
@@ -794,44 +783,44 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
           //@ts-ignore
           const txtRemark = e.target.closest(".txt-remark");
           if(!txtRemark){
-            document.querySelector(".txt-remark")?.classList.remove("txt-remark");
+            refsById[EditorId].current.querySelector(".txt-remark")?.classList.remove("txt-remark");
           }
           //@ts-ignore
           const sourceCode = e.target.closest(".source-code");
-          if(sourceCode){
-            sourceCode.SourceCode(sourceCode);
+          if(sourceCode && refsById[EditorId].current){
+            SourceCode(sourceCode);
           }
           //@ts-ignore
           const imageModal = e.target.closest('[data-image="true"]');
-          if(imageModal){
+          if(imageModal && refsById[EditorId].current){
 
-            imgRemark(e.target)
+            imgRemark(e.target);
             imgModal(e); 
           }
           //@ts-ignore
           const contentEditable = e.target.closest('[contenteditable="true"]');
-          if(contentEditable){
+          if(contentEditable && refsById[EditorId].current){
             textRemark(e)   
           }    
           //@ts-ignore
           const removeRowBtn = e.target.closest(".remove-row");
-          if(removeRowBtn){
-
+          if(removeRowBtn && refsById[EditorId].current){
+            
             deleteRow(removeRowBtn);
           }
           //@ts-ignore
           const thEl = e.target.closest('th');
-          if(thEl){
+          if(thEl && refsById[EditorId].current){
             // console.log(thEl)
-            document.querySelectorAll('th').forEach(el => el.classList.remove('focused'))
-            document.querySelectorAll('td').forEach(el => el.classList.remove('focused'))
+            refsById[EditorId].current.querySelectorAll('th').forEach((el:any) => el.classList.remove('focused'))
+            refsById[EditorId].current.querySelectorAll('td').forEach((el:any) => el.classList.remove('focused'))
             thEl.classList.toggle('focused');
           }
           //@ts-ignore
           const tdEl = e.target.closest('td');
-          if(tdEl){
-            document.querySelectorAll('th').forEach(el => el.classList.remove('focused'))
-            document.querySelectorAll('td').forEach(el => el.classList.remove('focused'))
+          if(tdEl && refsById[EditorId].current){
+            refsById[EditorId].current.querySelectorAll('th').forEach((el:any) => el.classList.remove('focused'))
+            refsById[EditorId].current.querySelectorAll('td').forEach((el:any) => el.classList.remove('focused'))
             tdEl.classList.toggle('focused')
           }
 
