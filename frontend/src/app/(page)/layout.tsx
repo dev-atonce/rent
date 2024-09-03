@@ -8,6 +8,8 @@ import Footer from "@/components/main/Footer/Footer";
 import { Noto_Sans_Thai_Looped } from "next/font/google";
 import type { Metadata, ResolvingMetadata } from "next";
 import Favicon from "../../../public/icon.ico";
+import { GoogleAnalytics } from "@next/third-parties/google";
+
 const roboto = Noto_Sans_Thai_Looped({
   weight: ["300", "400", "500", "600", "700", "800"],
   style: ["normal"],
@@ -70,6 +72,7 @@ export default function RootLayout({
               {children}
               <Footer />
             </body>
+            <GoogleAnalytics gaId="G-4VVH1K82VE" />
           </PageSettingProvider>
         </FetchProvider>
       </ConfigProvider>

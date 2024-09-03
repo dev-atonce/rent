@@ -61,13 +61,13 @@ const BlogCard = ({ data, type }: BlogCardProps) => {
                     {formatDate(item?.publish)}
                   </span>
                 ))}
-              <h3
+              <span
                 className={`${!type?.includes("recruitment") ? "line-clamp-1" : "line-clamp-2"}  font-bold  text-slate-800 mb-2`}
               >
                 {type?.includes("project")
                   ? item?.projectNameTH
                   : item?.titleTH}
-              </h3>
+              </span>
               {/* <Divider className="mt-3 mb-2" /> */}
               {!type?.includes("recruitment") && (
                 <p className="line-clamp-2 h-11 text-slate-600">

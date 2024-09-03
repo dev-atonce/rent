@@ -34,7 +34,7 @@ const methods = {
       res.error(error);
     }
   },
-  
+
   async onUpdate(req, res) {
     try {
       const result = await Address.update(req, res);
@@ -47,7 +47,7 @@ const methods = {
   async onUpdateSort(req, res) {
     try {
       checkAllowFields(req.body, allowFields.updateSort);
-      const result = await Address.update(req.params.id, req.body);
+      const result = await Address.update(req, res);
       res.success(result);
     } catch (error) {
       res.error(error);

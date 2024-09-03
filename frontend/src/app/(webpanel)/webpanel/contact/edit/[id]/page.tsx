@@ -25,7 +25,7 @@ export default function AddressEdit({
   const onFetch = async () => {
     const data = await onFetchOne("address", id);
 
-    setData({ ...data });
+    setData({ ...data, initialName: data?.nameTH });
   };
 
   const onEdit = async () => {

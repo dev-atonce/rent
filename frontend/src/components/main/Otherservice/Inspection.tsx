@@ -3,9 +3,9 @@ import Image from "next/image";
 const Inspection = () => {
   return (
     <>
-      <h1 className="font-bold pb-4 text-xl">
+      <h2 className="font-bold pb-4 text-xl">
         บริการรับทดสอบรอกโซ่และออกใบปจ.1
-      </h1>
+      </h2>
       <p>
         บริษัทเร้นท์ ประเทศไทย จำกัด
         มีบริการตรวจสอบอุปกรณ์รอกโซ่ให้กับลูกค้าตรวจสอบด้วยเครื่องมือที่ทันสมัยและแม่นยำ

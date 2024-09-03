@@ -24,9 +24,9 @@ export default function TermsPage() {
   const tab1 = () => {
     return (
       <>
-        <h1 className="font-bold text-2xl mb-6">
+        <h2 className="font-bold text-2xl mb-6">
           ข้อกำหนดและเงื่อนไขในการเช่า
-        </h1>
+        </h2>
         <ol className="list-decimal list-inside">
           <li>
             โดยปกติ อัตราค่าเช่าของ RTC และราคาจะไม่รวมถึงรายการต่อไปนี้
@@ -75,9 +75,9 @@ export default function TermsPage() {
   const tab2 = () => {
     return (
       <>
-        <h1 className="w-full text-2xl font-bold mb-6">
+        <h2 className="w-full text-2xl font-bold mb-6">
           ความคุ้มครองเครื่องจักร
-        </h1>
+        </h2>
         <Image
           src="/1-forweb.jpg"
           className="w-full"
@@ -116,9 +116,9 @@ export default function TermsPage() {
   const tab3 = () => {
     return (
       <div className="min-h-100 w-full">
-        <h1 className="w-full text-2xl font-bold mb-6">
+        <h2 className="w-full text-2xl font-bold mb-6">
           ขั้นตอนและเอกสารสำหรับลูกค้าใหม่
-        </h1>
+        </h2>
         <p className="indent-10 mb-4">
           ลูกค้าที่ประสงค์จะเช่าเครื่องจักรกับบริษัท เร้นท์ (ประเทศไทย) จำกัด
           ในการเช่าครั้งแรก จะต้องชำระเงินเป็นเงินสด
@@ -155,7 +155,7 @@ export default function TermsPage() {
   const tab4 = () => {
     return (
       <>
-        <h1 className="font-bold text-2xl mb-6">ช่องทางการชำระเงิน</h1>
+        <h2 className="font-bold text-2xl mb-6">ช่องทางการชำระเงิน</h2>
         <p>
           ลูกค้าเงินสดสามารถโอนเงินผ่านบัญชี ธนาคารไทยพาณิชย์
           ตามเลขบัญชีของแต่ละสาขาดังนี้

@@ -26,14 +26,15 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const fetchData = async () => {
   const data = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/contact/`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/address/`
   );
   const json = await data.json();
   return json.rows;
 };
 
 export default async function ContactPage() {
-  const data = await fetchData();
+  const adresses = await fetchData();
+
   return (
     <>
       <Loading />
@@ -42,7 +43,7 @@ export default async function ContactPage() {
         prevPage={{ pageName: "หน้าแรก", url: "/" }}
       />
       <div className="container mx-auto">
-        <Contact data={data} />
+        <Contact data={adresses} />
         <ForeignBranch title="สาขาต่างประเทศ" color="#0EA3DC" />
         <div className="mt-5 flex justify-center p-6 border-t-2 border-slate-200">
           <Image

@@ -52,7 +52,7 @@ export default function TrainingPage() {
               {!dragState ? "SORT" : "DONE"}
             </button>
             <Link
-              href="training/create"
+              href="/webpanel/training/create"
               className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
             >
               CREATE NEW COURSE

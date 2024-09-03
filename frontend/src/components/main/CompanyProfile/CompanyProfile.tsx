@@ -22,7 +22,7 @@ export default function CompanyProfile({ lng }: any) {
               ชื่อบริษัท
             </div>
             <div className="col-span-5 md:col-span-4">
-              <h1 className="font-semibold">บริษัท เร้นท์ (ประเทศไทย) จำกัด</h1>
+              <h2 className="font-semibold">บริษัท เร้นท์ (ประเทศไทย) จำกัด</h2>
             </div>
           </div>
           <div className="grid gap-4 grid-cols-1 md:grid-cols-6 grid-rows-1   border border-slate-400 px-4 py-6 rounded-lg shadow-md">

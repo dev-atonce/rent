@@ -21,18 +21,18 @@ export default function TrainingBanner() {
       </div>
       <div className="container mx-auto flex flex-col items-center gap-10 relative">
         <div className="flex flex-col items-center gap-4">
-          <h5
+          <h2
             className="text-2xl font-semibold text-slate-600"
             style={{ textShadow: "white 1px 1px 1px" }}
           >
             การฝึกอบรมความปลอดภัยในการใช้เครื่องจักร
-          </h5>
-          <h5
+          </h2>
+          <span
             className="text-2xl font-semibold text-red"
             style={{ textShadow: "white 1px 1px 1px" }}
           >
             Safety Training for Machine
-          </h5>
+          </span>
         </div>
         <Link
           href="/other-service/training"

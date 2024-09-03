@@ -303,17 +303,18 @@ export default function ProductForm({
         <div className="col-span-2">
           <div className="rounded-lg bg-white p-2">
             <label className="p-3">Detail</label>
-            {languages?.map((i: any, k: any) =>
-              <TextEditor 
-                id= {`productDescription${i?.toUpperCase()}`} 
-                dataType="project" 
-                dataId={id} 
+            {languages?.map((i: any, k: any) => (
+              <TextEditor
+                key={k}
+                id={`productDescription${i?.toUpperCase()}`}
+                dataType="product"
+                dataId={id}
                 setState={onChangeState}
                 state={data}
                 prop={data && `productDescription${i?.toUpperCase()}`}
                 placeholder="Detail"
               />
-            )}
+            ))}
           </div>
         </div>
         <div className="w-full  sm:col-span-2 py-2 flex flex-col">
