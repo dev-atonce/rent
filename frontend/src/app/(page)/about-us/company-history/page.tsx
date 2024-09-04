@@ -27,7 +27,18 @@ export async function generateMetadata(
   };
 }
 
-export default function historyPage() {
+const fetchAbout = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/about-us/history`,
+    { cache: "no-store" }
+  );
+  const data = await res.json();
+
+  return data;
+};
+
+export default async function historyPage() {
+  const data = await fetchAbout();
   return (
     <>
       <Loading />
@@ -36,7 +47,7 @@ export default function historyPage() {
         prevPage={{ pageName: "หน้าแรก", url: "/" }}
       />
       <div className="container mx-auto pb-10">
-        <CompanyProfile />
+        <CompanyProfile data={data} />
       </div>
     </>
   );

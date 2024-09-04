@@ -53,7 +53,7 @@ export default function index() {
         pageName={`Other Service: ${toUcFirst(params.get("type"))}`}
         prevPage={[
           { pageName: "Dashboard", url: "/webpanel" },
-          { pageName: "Service", url: "/webpanel/service" },
+          { pageName: "About-Us", url: "/webpanel/about-us" },
         ]}
       />
       <div className="grid grid-cols-1 gap-9">

@@ -7,6 +7,7 @@ import Breadcrumb from "@/components/webpanel/Breadcrumbs/Breadcrumb";
 import React from "react";
 import { Tabs } from "antd";
 import type { TabsProps } from "antd";
+import Link from "next/link";
 
 export default function AboutPage() {
   const [historyState, setHistoryState] = useState({} as any);
@@ -312,6 +313,22 @@ export default function AboutPage() {
           <div className="bg-white rounded-lg p-2">
             <div className="col-span-2">
               <div className="bg-white rounded-lg p-2">
+                <div className=" flex gap-1 items-center border-b border-slate-300">
+                  <span className="font-bold text-xl">Other Service: </span>
+                  <Link
+                    href={"/webpanel/service/other?type=training"}
+                    className=" hover:text-blue-700 text-slate-800   text-sm rounded-lg p-2"
+                  >
+                    การอบรมความปลอดภัยในการใช้เครื่องจักร
+                  </Link>
+                  <Link
+                    href={"/webpanel/service/other?type=inspection"}
+                    className="hover:text-blue-700   text-slate-800 rounded-lg p-2 text-sm "
+                  >
+                    การตรวจสอบอุปกรณ์
+                  </Link>
+                </div>
+
                 <Tabs defaultActiveKey="1" items={items} />
               </div>
             </div>
