@@ -34,6 +34,8 @@ export default function FetchProvider({ children, user, token }: any) {
   const logoRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/logo`;
   const contactFormRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact-forms`;
   const contactFormStatusRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/contact-forms/status`;
+  const youtubeRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/youtube`;
+  const youtubeSortRoute = `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/webpanel/youtube/sort`;
 
   const onFetchOne = async (type: any, id: any) => {
     let route = "";
@@ -62,7 +64,9 @@ export default function FetchProvider({ children, user, token }: any) {
         route = `${logoRoute}/${id}`;
       } else if (type === "about-us") {
         route = `${aboutUsRoute}?type=${id}`;
-      }
+      } else if (type === "youtube") {
+        route = `${youtubeRoute}/${id}`;
+      } 
     } else {
       if (type === "user") {
         route = userRoute;
@@ -301,6 +305,12 @@ export default function FetchProvider({ children, user, token }: any) {
       } else if (method?.toUpperCase() == "POST") {
         route = `${aboutUsRoute}?type=other-inspection`;
       }
+    } else if (type == "youtube") {
+      if (method.toUpperCase() == "PUT") {
+        route = `${youtubeRoute}`;
+      } else if (method?.toUpperCase() == "POST") {
+        route = `${youtubeRoute}`;
+      }
     }
 
     const swalWithBootstrapButtons = Swal.mixin({
@@ -436,6 +446,10 @@ export default function FetchProvider({ children, user, token }: any) {
                     } else if (type == "banner") {
                       setTimeout(() => {
                         router.push("/webpanel/cover");
+                      }, 2000);
+                    } else if (type == "youtube") {
+                      setTimeout(() => {
+                        router.push("/webpanel/home");
                       }, 2000);
                     }
                   } else if (method?.toUpperCase() === "PUT") {
@@ -582,6 +596,8 @@ export default function FetchProvider({ children, user, token }: any) {
       route = `${projectSortRoute}/${id}`;
     } else if (type == "banner") {
       route = `${bannerSortRoute}/${id}`;
+    } else if (type == "youtube") {
+      route = `${youtubeSortRoute}/${id}`;
     }
 
     try {
@@ -651,6 +667,8 @@ export default function FetchProvider({ children, user, token }: any) {
       route = `${calendarRoute}/${id}`;
     } else if (type === "banner") {
       route = `${bannerRoute}/${id}`;
+    } else if (type === "youtube") {
+      route = `${youtubeRoute}/${id}`;
     }
 
     const swalWithBootstrapButtons = Swal.mixin({

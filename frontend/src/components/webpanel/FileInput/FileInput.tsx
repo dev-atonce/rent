@@ -74,15 +74,15 @@ export default function FileInput({
             {selectedImage ? (
               <img
                 src={URL.createObjectURL(selectedImage)}
-                className="h-full w-full object-cover"
+                className="h-[100px] w-full object-contain"
               />
             ) : state[keyProp] ? (
               <img
                 src={`${process.env.NEXT_PUBLIC_BASE_URL}${state[keyProp]}`}
-                className="h-full w-full object-cover"
+                className="h-[100px] w-full object-contain"
               />
             ) : (
-              <div className="h-full w-full bg-slate-200 flex">
+              <div className="h-[100px] w-full bg-slate-200 flex">
                 <h5 className="text-center my-auto mx-auto text-slate-400 text-3xl">
                   {label}
                 </h5>

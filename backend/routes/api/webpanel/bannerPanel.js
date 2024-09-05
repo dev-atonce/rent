@@ -3,18 +3,18 @@ const controllers = require("../../../controllers/webpanel/bannerPanel.controlle
 const auth = require("../../auth");
 const validator = require("../../../validators");
 
-router.get("/all/", controllers.onGetAll);
+router.get("/all/", auth.required, controllers.onGetAll);
 
-router.get("/:id", [validator.banner.findById, validator.check], controllers.onGetById);
+router.get("/:id", [auth.required, validator.banner.findById, validator.check], controllers.onGetById);
 
-router.post("/", controllers.onInsert);
+router.post("/", auth.required, controllers.onInsert);
 
-router.put("/:id", controllers.onUpdate);
+router.put("/:id", [auth.required, validator.banner.findById, validator.check], controllers.onUpdate);
 
-router.put("/sort/:id", [validator.banner.sort, validator.check], controllers.onUpdateSort);
+router.put("/sort/:id", [auth.required, validator.banner.sort, validator.check], controllers.onUpdateSort);
 
-router.put("/status/:id", [validator.banner.status, validator.check], controllers.onUpdateStatus);
+router.put("/status/:id", [auth.required, validator.banner.status, validator.check], controllers.onUpdateStatus);
 
-router.delete("/:id", [validator.banner.deleteById, validator.check], controllers.onDelete);
+router.delete("/:id", [auth.required, validator.banner.deleteById, validator.check], controllers.onDelete);
 
 module.exports = router;

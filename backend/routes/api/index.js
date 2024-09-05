@@ -34,6 +34,7 @@ router.use("/webpanel/media", require("./webpanel/mediaPanel"));
 router.use("/webpanel/logo", require("./webpanel/logoPanel"));
 router.use("/webpanel/about-us", require("./webpanel/aboutUsPanel"));
 router.use("/webpanel/contact-forms", require("./webpanel/contactFormPanel"));
+router.use("/webpanel/youtube", require("./webpanel/youtubePanel"));
 
 //////////////
 
