@@ -9,7 +9,7 @@ const nextConfig = {
       },
       {
         protocol: "https",
-        hostname: "cdn.dummyjson.com",
+        hostname: "img.youtube.com",
         port: "",
       },
       {
