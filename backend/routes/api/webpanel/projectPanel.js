@@ -3,39 +3,39 @@ const controllers = require("../../../controllers/webpanel/projectPanel.controll
 const auth = require("../../auth");
 const validator = require("../../../validators");
 
-router.get("/all/", controllers.onGetAll);
+router.get("/all/", auth.required, controllers.onGetAll);
 
 router.get(
   "/:id",
-  [validator.project.findById, validator.check],
+  [auth.required, validator.project.findById, validator.check],
   controllers.onGetById
 );
 
-router.post("/", controllers.onInsert);
+router.post("/", auth.required, controllers.onInsert);
 
-router.put("/:id", controllers.onUpdate);
+router.put("/:id", auth.required, controllers.onUpdate);
 
 router.put(
   "/sort/:id",
-  [validator.project.sort, validator.check],
+  [auth.required, validator.project.sort, validator.check],
   controllers.onUpdateSort
 );
 
 router.put(
   "/status/:id",
-  [validator.project.status, validator.check],
+  [auth.required, validator.project.status, validator.check],
   controllers.onUpdateStatus
 );
 
 router.delete(
   "/:id",
-  [validator.project.deleteById, validator.check],
+  [auth.required, validator.project.deleteById, validator.check],
   controllers.onDelete
 );
 
 router.delete(
   "/gallery/:position/:id",
-  [validator.project.deleteGallery, validator.check],
+  [auth.required, validator.project.deleteGallery, validator.check],
   controllers.onDeleteGallery
 );
 

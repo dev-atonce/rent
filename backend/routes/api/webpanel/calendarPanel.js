@@ -3,16 +3,12 @@ const controllers = require("../../../controllers/webpanel/calendarPanel.control
 const auth = require("../../auth");
 const validator = require("../../../validators");
 
-router.get("/:id", controllers.onGetAll);
+router.get("/:id", auth.required, controllers.onGetAll);
 
-router.post("/", controllers.onInsert);
+router.post("/", auth.required, controllers.onInsert);
 
-router.put("/:id", controllers.onUpdate);
+router.put("/:id", auth.required, controllers.onUpdate);
 
-router.delete(
-  "/:id",
-  [validator.calendar.deleteById, validator.check],
-  controllers.onDelete
-);
+router.delete("/:id", [auth.required, validator.calendar.deleteById, validator.check], controllers.onDelete);
 
 module.exports = router;

@@ -3,16 +3,16 @@ const controllers = require("../../../controllers/webpanel/youtubePanel.controll
 const auth = require("../../auth");
 const validator = require("../../../validators");
 
-router.get("/all",  controllers.onGetAll);
+router.get("/all", auth.required, controllers.onGetAll);
 
-router.get("/:id", [ validator.banner.findById, validator.check], controllers.onGetById);
+router.get("/:id", [auth.required, validator.banner.findById, validator.check], controllers.onGetById);
 
-router.post("/",  controllers.onInsert);
+router.post("/", auth.required, controllers.onInsert);
 
-router.put("/:id", [validator.banner.findById, validator.check], controllers.onUpdate);
+router.put("/:id", [auth.required, validator.banner.findById, validator.check], controllers.onUpdate);
 
-router.put("/sort/:id", [validator.banner.sort, validator.check], controllers.onUpdateSort);
+router.put("/sort/:id", [auth.required, validator.banner.sort, validator.check], controllers.onUpdateSort);
 
-router.delete("/:id", [validator.banner.deleteById, validator.check], controllers.onDelete);
+router.delete("/:id", [auth.required, validator.banner.deleteById, validator.check], controllers.onDelete);
 
 module.exports = router;
