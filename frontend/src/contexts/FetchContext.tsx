@@ -120,7 +120,7 @@ export default function FetchProvider({ children, user, token }: any) {
       } else if (type === "address") {
         route = `${addressRoute}/${id}`;
       } else if (type === "position") {
-        route = `${positionRoute}/${id}`;
+        route = `${positionRoute}/${id}?page=${page}&${query}`;
       } else if (type === "product") {
         route = `${productRoute}/${id}?page=${page}&${query}`;
       } else if (type === "mainCategory") {

@@ -12,7 +12,7 @@ const YouTubeEmbed = ({ list, width, height }: any) => {
             .then((res) => res.json())
             .then((data) => {
                 const dataList = data.rows;
-                setVideo(dataList[0].link);
+                setVideo(dataList[0]?.link);
                 setData(dataList);
             })
     }, [])

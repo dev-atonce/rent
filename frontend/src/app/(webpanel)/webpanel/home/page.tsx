@@ -179,7 +179,7 @@ export default function EditHomePage() {
                 />
               </div>
             </div>
-            <div className="col-span-1 md:col-span-2 xl:col-span-1 rounded-lg p-4 border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark h-full">
+            <div className="max-h-[81vh] overflow-y-scroll col-span-1 md:col-span-2 xl:col-span-1 rounded-lg p-4 border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark h-full">
               <div>
                 <div className="pb-4">
                   <div className="w-full">
@@ -207,7 +207,7 @@ export default function EditHomePage() {
       <div className="grid grid-cols-1 gap-5 mt-5">
         <div className="col-span-1">
           <FormGroup
-            onSave={() => onCreateHome("home", youtubeState, "home")}
+            onSave={() => onCreateHome("home", homeState, "home")}
             formLabel="Home Detail"
             inputBox={[
               {

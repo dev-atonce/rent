@@ -109,6 +109,7 @@ const TableThree = ({
                   onChangeStatus={onChangeStatus}
                   key={key}
                   onDelete={onDelete}
+                  currentPage={currentPage}
                 />
               ))}
             {type === "banner" &&
@@ -250,6 +251,7 @@ const TableThree = ({
                     dragItem={dragItem}
                     dragOverItem={dragOverItem}
                     onChangeStatus={onChangeStatus}
+                    currentPage={currentPage}
                   />
                 );
               })}

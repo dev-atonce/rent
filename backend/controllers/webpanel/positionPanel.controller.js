@@ -22,7 +22,7 @@ const allowFields = {
 const methods = {
   async onGetAll(req, res) {
     try {
-      let result = await Subject.find(req);
+      let result = await Subject.findAll(req);
       res.success(result);
     } catch (error) {
       res.error(error);
