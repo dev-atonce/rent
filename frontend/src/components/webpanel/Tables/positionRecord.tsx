@@ -52,9 +52,6 @@ export default function PositionRecord({
             <RxDragHandleHorizontal size={25} />
           </td>
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
-            <p className="text-xs">{i?.nameEN}</p>
-          </td>
-          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-xs">{i?.nameTH}</p>
           </td>
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
