@@ -3,7 +3,7 @@ const controllers = require("../../../controllers/webpanel/youtubePanel.controll
 const auth = require("../../auth");
 const validator = require("../../../validators");
 
-router.get("/all", auth.required, controllers.onGetAll);
+router.get("/all", controllers.onGetAll);
 
 router.get("/:id", [auth.required, validator.banner.findById, validator.check], controllers.onGetById);
 
