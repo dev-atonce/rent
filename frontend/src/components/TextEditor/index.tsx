@@ -198,8 +198,9 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
 
   const setCodeStateHandler = () => {
     // const refsById[EditorId].current = document.getElementById(EditorId);
-    if(refsById[EditorId].current?.querySelector('.editor-body'))
-    {
+    if (refsById[EditorId] && refsById[EditorId].current) {
+    // if(refsById[EditorId].current?.querySelector('.editor-body'))
+    // {
       let makeElement = document.createElement('div');
       //@ts-ignore
       makeElement.innerHTML = refsById[EditorId].current.querySelector('.editor-body').innerHTML;
@@ -211,8 +212,7 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
           el.classList.remove('on-drag');
         }
       });
-      let newString = makeElement.innerHTML;
-      setState(newString,prop);
+      setState(makeElement.innerHTML, prop);
     }
   }
   const setSubState = () => {
@@ -224,6 +224,7 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
   const fetchSubState = () => {
     //@ts-ignore
     const textareaEl:any = refsById[EditorId].current.querySelector(`textarea[name="${prop}"]`);
+    console.log(textareaEl.value)
     if(textareaEl.value)
     {
       const editorBody:any = refsById[EditorId].current?.querySelector('.editor-body');
@@ -250,6 +251,9 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
         removeBtn.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" enable-background="new 0 0 15 15" height="15px" id="Layer_1" version="1.0" viewBox="0 0 512 512" width="15px" xml:space="preserve"><polygon points="445.2,109.2 402.8,66.8 256,213.6 109.2,66.8 66.8,109.2 213.6,256 66.8,402.8 109.2,445.2 256,298.4 402.8,445.2   445.2,402.8 298.4,256 "/></svg>`;
         controlElement.append(removeBtn)
         row.prepend(controlElement);
+        // row.querySelectorAll('.remove-row').forEach((e:any)=>{
+        //   e.click = deleteRow(e)
+        // })
         row.querySelectorAll('[data-image="true"]').forEach((el:any)=> el.click = imgRemark);
         row.querySelectorAll('[data-text="text"]')?.forEach((el:any)=>{
           el.setAttribute('contenteditable', 'true');
@@ -459,13 +463,14 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
           editorBody.append(rowElement);
         }
       })
-      setCodeStateHandler();
+      // setCodeStateHandler();
     }
   };
   function deleteRow(e: any)
   {
+    // console.log(e)
     e.closest(".grid").remove();
-    // setCodeStateHandler();
+    setCodeStateHandler();
   };
 
   function SourceCode(el:any)
@@ -805,7 +810,7 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
           //@ts-ignore
           const removeRowBtn = e.target.closest(".remove-row");
           if(removeRowBtn && refsById[EditorId].current){
-            
+
             deleteRow(removeRowBtn);
           }
           //@ts-ignore
@@ -823,28 +828,18 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
             refsById[EditorId].current.querySelectorAll('td').forEach((el:any) => el.classList.remove('focused'))
             tdEl.classList.toggle('focused')
           }
-
-
       });
-    
-      // return () => {
-      //   refsById[EditorId].current?.removeEventListener("click")
-      // }
+      document.addEventListener('click',function(){
+
+      })
     }
-
-    //@ts-ignore
-    
-    // }
-
-    // getAllImages();
 
     if(prop && state[prop]) setSubState();
-    // refsById[EditorId].current = true;
+    
     return () => {
-      // refsById[EditorId].current = false;
-      document.removeEventListener("click",setCodeStateHandler);
+      refsById[EditorId].current.removeEventListener("click",deleteRow);
     }
-  },[refsById, state]);
+  },[setState]);
   
   return (
     <div id={EditorId} ref={refsById[EditorId]}>
@@ -927,14 +922,12 @@ const TextEditor = ({ id, dataId, state, setState, prop, placeholder, editor}: a
                     <BsTypeBold onClick={TextBold} />
                   </div>
                   <div
-                    type="button"
                     title="Italic"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                   >
                     <BsTypeItalic onClick={TextItalic} />
                   </div>
                   <div
-                    type="button"
                     title="Underline"
                     className="tools-item rounded bg-white text-slate-700 hover:bg-slate-200 hover:text-slate-900 p-2"
                   >
