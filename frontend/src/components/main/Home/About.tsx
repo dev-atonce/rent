@@ -1,7 +1,7 @@
 import Link from "next/link";
 import Image from "next/image";
 
-export default function About() {
+export default function About({ description }: any) {
   function getRandomNumber() {
     return Math.floor(Math.random() * 5) + 1;
   }
@@ -26,13 +26,7 @@ export default function About() {
             บริษัท เร้นท์ (ประเทศไทย) จำกัด บริการ ให้เช่าเครื่องจักร
             งานก่อสร้าง
           </h1>
-          <p className="text-slate-700 text-sm sm:text-base">
-            หากคุณต้องการ เช่าเครื่องจักร และเครื่องมือสำหรับใช้ในงานก่อสร้าง
-            เราคือ บริษัทให้บริการเช่าเครื่องจักร งานก่อสร้าง
-            ที่มีสินค้าให้เช่ากว่า 460 ประเภท เป็นจำนวนกว่า 5,000 ชิ้น
-            และสามารถนำเครื่องจักรที่ยังไม่เป็นที่รู้จักในประเทศไทยเข้ามาปล่อยเช่าได้อย่างรวดเร็ว
-            ในฐานะผู้บุกเบิกตลาดงานเช่า
-          </p>
+          <p className="text-slate-700 text-sm sm:text-base">{description}</p>
         </div>
         <Link
           href="/about-us/company-history"

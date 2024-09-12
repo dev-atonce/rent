@@ -3,34 +3,18 @@ const controllers = require("../../../controllers/webpanel/categoryMainPanel.con
 const auth = require("../../auth");
 const validator = require("../../../validators");
 
-router.get("/", controllers.onGetAll);
+router.get("/", auth.required, controllers.onGetAll);
 
-router.get(
-  "/:id",
-  [validator.category.findById, validator.check],
-  controllers.onGetById
-);
+router.get("/:id", [auth.required, validator.category.findById, validator.check], controllers.onGetById);
 
-router.post("/", controllers.onInsert);
+router.post("/", auth.required, controllers.onInsert);
 
-router.put("/:id", controllers.onUpdate);
+router.put("/:id", auth.required, controllers.onUpdate);
 
-router.delete(
-  "/:id",
-  [validator.category.deleteById, validator.check],
-  controllers.onDelete
-);
+router.delete("/:id", [auth.required, validator.category.deleteById, validator.check], controllers.onDelete);
 
-router.put(
-  "/sort/:id",
-  [validator.category.sort, validator.check],
-  controllers.onUpdateSort
-);
+router.put("/sort/:id", [auth.required, validator.category.sort, validator.check], controllers.onUpdateSort);
 
-router.put(
-  "/status/:id",
-  [validator.category.status, validator.check],
-  controllers.onUpdateStatus
-);
+router.put("/status/:id", [auth.required, validator.category.status, validator.check], controllers.onUpdateStatus);
 
 module.exports = router;

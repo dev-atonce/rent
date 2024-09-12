@@ -18,6 +18,7 @@ import TrainingRecord from "./TrainingRecord";
 import CalendarRecord from "./CalendarRecord";
 import CoverRecord from "./CoverRecord";
 import ContactFormRecord from "./ContactFormRecord";
+import YoutubeRecord from "./YoutubeRecord";
 
 const TableThree = ({
   onFetchCalendar,
@@ -65,7 +66,7 @@ const TableThree = ({
     setData(__data);
   };
   return (
-    <div className="rounded-sm border border-stroke bg-white px-5 pb-2.5 pt-6 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-7.5 xl:pb-10">
+    <div className="rounded-lg border border-stroke bg-white p-5 shadow-default dark:border-strokedark dark:bg-boxdark sm:px-5 xl:pb-5">
       <div className="max-w-full overflow-x-auto">
         <table className="w-full table-auto">
           <thead>
@@ -108,6 +109,7 @@ const TableThree = ({
                   onChangeStatus={onChangeStatus}
                   key={key}
                   onDelete={onDelete}
+                  currentPage={currentPage}
                 />
               ))}
             {type === "banner" &&
@@ -249,6 +251,7 @@ const TableThree = ({
                     dragItem={dragItem}
                     dragOverItem={dragOverItem}
                     onChangeStatus={onChangeStatus}
+                    currentPage={currentPage}
                   />
                 );
               })}
@@ -265,6 +268,17 @@ const TableThree = ({
             {type === "contact-form" &&
               data?.map((i: any, key: any) => (
                 <ContactFormRecord
+                  i={i}
+                  index={key}
+                  onChangeStatus={onChangeStatus}
+                  key={key}
+                  onDelete={onDelete}
+                  currentPage={currentPage}
+                />
+              ))}
+            {type === "youtube" &&
+              data?.map((i: any, key: any) => (
+                <YoutubeRecord
                   i={i}
                   index={key}
                   onChangeStatus={onChangeStatus}

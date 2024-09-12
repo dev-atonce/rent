@@ -8,7 +8,7 @@ import Footer from "@/components/main/Footer/Footer";
 import { Noto_Sans_Thai_Looped } from "next/font/google";
 import type { Metadata, ResolvingMetadata } from "next";
 import Favicon from "../../../public/icon.ico";
-import { GoogleAnalytics } from "@next/third-parties/google";
+import { GoogleTagManager } from "@next/third-parties/google";
 
 const roboto = Noto_Sans_Thai_Looped({
   weight: ["300", "400", "500", "600", "700", "800"],
@@ -38,9 +38,13 @@ export async function generateMetadata(
   );
 
   return {
+    metadataBase: new URL("https://rent.co.th"),
     title: response[`seoTitle${lng}`],
     description: response[`seoDescription${lng}`],
     keywords: response[`seoKeyword${lng}`],
+    alternates: {
+      canonical: "./",
+    },
   };
 }
 
@@ -72,7 +76,7 @@ export default function RootLayout({
               {children}
               <Footer />
             </body>
-            <GoogleAnalytics gaId="G-4VVH1K82VE" />
+            <GoogleTagManager gtmId="GTM-NBKXDS4T" />
           </PageSettingProvider>
         </FetchProvider>
       </ConfigProvider>

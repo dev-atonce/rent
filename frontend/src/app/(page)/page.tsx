@@ -25,10 +25,21 @@ const fetchBanner = async () => {
   const data = await res.json();
   return data.rows;
 };
+
+const fetchDescription = async () => {
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/about-us/home`,
+    { cache: "no-store" }
+  );
+  const data = await res.json();
+  return data;
+};
+
 export default async function Home() {
   const subjectColor = "#455A64";
   const data = await fetchProject();
   const banner = await fetchBanner();
+  const description = await fetchDescription();
 
   return (
     <>
@@ -37,7 +48,7 @@ export default async function Home() {
       {/* @ts-ignore */}
       <CoverSwiper banner={banner} />
       {/* About Us */}
-      <About />
+      <About description={description?.aboutUsTH} />
       {/* Project Swiper */}
       <ProjectSwiper projectData={data} />
       {/* Safety Training */}

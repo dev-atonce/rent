@@ -14,6 +14,7 @@ export default function PositionRecord({
   dragItem,
   dragOverItem,
   onDelete,
+  currentPage,
 }: any) {
   const options = {
     timeZone: "Asia/Bangkok", // GMT+7 (Indochina Time)
@@ -51,9 +52,6 @@ export default function PositionRecord({
             <RxDragHandleHorizontal size={25} />
           </td>
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
-            <p className="text-xs">{i?.nameEN}</p>
-          </td>
-          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-xs">{i?.nameTH}</p>
           </td>
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
@@ -80,10 +78,8 @@ export default function PositionRecord({
       ) : (
         <tr key={index}>
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
-            {index + 1}
-          </td>
-          <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
-            <p className="text-xs">{i?.nameEN}</p>
+            {(currentPage - 1) * Number(process.env.NEXT_PUBLIC_PERPAGE) +
+              (index + 1)}
           </td>
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-xs">{i?.nameTH}</p>

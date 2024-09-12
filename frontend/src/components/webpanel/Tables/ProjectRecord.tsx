@@ -17,6 +17,7 @@ export default function ProjectRecord({
   dragItem,
   dragOverItem,
   onDelete,
+  currentPage
 }: any) {
   const [enabled, setEnabled] = useState(false);
   const options = {
@@ -103,7 +104,7 @@ export default function ProjectRecord({
       ) : (
         <tr key={index}>
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
-            {index + 1}
+              {(currentPage - 1) * Number(process.env.NEXT_PUBLIC_PERPAGE) + (index + 1)}
           </td>
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <h5 className="font-medium text-black dark:text-white">

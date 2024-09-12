@@ -1,26 +1,25 @@
 "use client";
 
 import Breadcrumb from "@/components/webpanel/Breadcrumbs/Breadcrumb";
-
-import { Metadata } from "next";
 import DefaultLayout from "@/components/Layouts/DefaultLayout";
-import FormGroup from "@/components/webpanel/FormGroup/FormGroup";
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import TableThree from "@/components/webpanel/Tables/TableThree";
-import Modal from "@/components/webpanel/Modal/Modal";
 import Link from "next/link";
-import { LogInContext } from "@/contexts/LogInContext";
 import { FetchContext } from "@/contexts/FetchContext";
+import AntPagination from "@/components/common/AntPagination/AntPagination";
 
 export default function UserPage() {
   const [sort, setSort] = useState(false);
-  const { onFetchOne, onDelete }: any = useContext(FetchContext);
+  const { onFetchPage, onDelete }: any = useContext(FetchContext);
   const [data, setData] = useState([]);
+  const [pageState, setPageState] = useState(1);
+  const [total, setTotal] = useState(0);
 
-  async function fetchData() {
-    const data = await onFetchOne("position", null);
+  const fetchData = useCallback(async () => {
+    const data = await onFetchPage("position", "all", pageState);
+    setTotal(data?.total);
     setData(data?.rows);
-  }
+  }, [onFetchPage, pageState]);
 
   const onDeleteItem = async (id: any) => {
     try {
@@ -35,7 +34,7 @@ export default function UserPage() {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [fetchData]);
 
   return (
     <DefaultLayout>
@@ -45,12 +44,12 @@ export default function UserPage() {
       />
       <>
         <div className="flex items-center justify-end gap-1 py-1">
-          <button
+          {/* <button
             onClick={() => setSort(!sort)}
             className={`${!sort ? "border-yellow-400 text-yellow-600" : "border-green-400 text-green-600"} bg-white border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
           >
             {!sort ? "SORT" : "DONE"}
-          </button>
+          </button> */}
           <Link
             href="career/create"
             className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
@@ -60,18 +59,26 @@ export default function UserPage() {
         </div>
 
         <TableThree
+          currentPage={pageState}
           onDelete={onDeleteItem}
           drag={sort}
           type="position"
           data={data}
           setData={setData}
           col={[
-            { title: "Title (English)", minWidth: "" },
             { title: "Title (Thai)", minWidth: "" },
             { title: "Created On", minWidth: "" },
             { title: "Action", minWidth: "" },
           ]}
         />
+        {total > Number(process.env.NEXT_PUBLIC_PERPAGE) && (
+          <AntPagination
+            total={total}
+            currentPage={pageState}
+            setCurrentPage={setPageState}
+            pageSize={Number(process.env.NEXT_PUBLIC_PERPAGE)}
+          />
+        )}
       </>
     </DefaultLayout>
   );

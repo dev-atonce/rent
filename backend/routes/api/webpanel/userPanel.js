@@ -3,25 +3,25 @@ const controllers = require("../../../controllers/webpanel/userPanel.controller"
 const auth = require("../../auth");
 const validator = require("../../../validators");
 
-router.get("/", controllers.onGetAll);
+router.get("/", auth.required, controllers.onGetAll);
 
 router.get("/:id", auth.required, controllers.onGetById);
 
 router.post(
   "/",
-  [validator.user.create, validator.check],
+  [auth.required, validator.user.create, validator.check],
   controllers.onInsert
 );
 
 router.put(
   "/:id",
-  [validator.user.update, validator.check],
+  [auth.required, validator.user.update, validator.check],
   controllers.onUpdate
 );
 
 router.delete(
   "/:id",
-  [validator.user.deleteById, validator.check],
+  [auth.required, validator.user.deleteById, validator.check],
   controllers.onDelete
 );
 

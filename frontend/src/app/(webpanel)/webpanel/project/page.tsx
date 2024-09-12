@@ -60,6 +60,7 @@ export default function ProjectPage() {
           </div>
         </div>
         <TableThree
+          currentPage={pageState}
           onDelete={onDeleteItem}
           drag={dragState}
           type="project"

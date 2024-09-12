@@ -6,7 +6,7 @@ import { FetchContext } from "@/contexts/FetchContext";
 import TextEditor from "@/components/TextEditor";
 import { useSearchParams } from "next/navigation";
 
-export default function index() {
+export default function OtherService() {
   // const { onFetchPage }: any = useContext(FetchContext);
   const [filterState, setFilterState] = useState({ type: "" });
   const { onFetchOne, onSave }: any = useContext(FetchContext);
@@ -53,7 +53,7 @@ export default function index() {
         pageName={`Other Service: ${toUcFirst(params.get("type"))}`}
         prevPage={[
           { pageName: "Dashboard", url: "/webpanel" },
-          { pageName: "Service", url: "/webpanel/service" },
+          { pageName: "About-Us", url: "/webpanel/about-us" },
         ]}
       />
       <div className="grid grid-cols-1 gap-9">

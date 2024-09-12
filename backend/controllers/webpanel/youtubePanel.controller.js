@@ -1,28 +1,14 @@
-const Subject = require("../../services/webpanel/positionPanel.service");
-
+const Youtube = require("../../services/webpanel/youtubePanel.service");
 const { checkAllowFields } = require("../../helpers/field.helper");
 
 const allowFields = {
-  update: [
-    "serviceNameTH",
-    "serviceNameEN",
-    "serviceDescriptionTH",
-    "serviceDescriptionEN",
-    "serviceDetailTH",
-    "serviceDetailEN",
-    "serviceUrl",
-  ],
-
-  updateSeo: ["serviceSeo"],
-
-  updateStatus: ["status"],
-
   updateSort: ["sort"],
 };
+
 const methods = {
   async onGetAll(req, res) {
     try {
-      let result = await Subject.findAll(req);
+      let result = await Youtube.findAll(req, res);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -31,7 +17,7 @@ const methods = {
 
   async onGetById(req, res) {
     try {
-      let result = await Subject.findById(req.params.id);
+      let result = await Youtube.findById(req.params.id);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -39,17 +25,17 @@ const methods = {
   },
 
   async onInsert(req, res) {
-    console.log(req.body);
     try {
-      let result = await Subject.insert(req, res);
+      let result = await Youtube.insert(req, res);
       res.success(result, 201);
     } catch (error) {
       res.error(error);
     }
   },
+
   async onUpdate(req, res) {
     try {
-      const result = await Subject.update(req?.params?.id, req.body);
+      const result = await Youtube.update(req, res);
       res.success(result);
     } catch (error) {
       res.error(error);
@@ -59,16 +45,16 @@ const methods = {
   async onUpdateSort(req, res) {
     try {
       checkAllowFields(req.body, allowFields.updateSort);
-      const result = await Subject.update(req.params.id, req.body);
+      const result = await Youtube.update(req, res);
       res.success(result);
     } catch (error) {
       res.error(error);
     }
   },
+
   async onDelete(req, res) {
     try {
-      const result = await Subject.delete(req.params.id);
-
+      const result = await Youtube.delete(req.params.id);
       res.success(result);
     } catch (error) {
       res.error(error);
