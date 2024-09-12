@@ -78,7 +78,8 @@ export default function PositionRecord({
       ) : (
         <tr key={index}>
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
-            {(currentPage - 1) * Number(process.env.NEXT_PUBLIC_PERPAGE) + (index + 1)}
+            {(currentPage - 1) * Number(process.env.NEXT_PUBLIC_PERPAGE) +
+              (index + 1)}
           </td>
           <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
             <p className="text-xs">{i?.nameTH}</p>

@@ -44,12 +44,12 @@ export default function UserPage() {
       />
       <>
         <div className="flex items-center justify-end gap-1 py-1">
-          <button
+          {/* <button
             onClick={() => setSort(!sort)}
             className={`${!sort ? "border-yellow-400 text-yellow-600" : "border-green-400 text-green-600"} bg-white border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}
           >
             {!sort ? "SORT" : "DONE"}
-          </button>
+          </button> */}
           <Link
             href="career/create"
             className={`bg-white text-primary border-primary border-2 px-6 py-1 rounded-lg font-bold transition-all duration-700`}

@@ -75,7 +75,8 @@ export default function ServiceForm({
               keyProp: "imageAlt",
               type: "input",
               required: true,
-            },{
+            },
+            {
               label: "Detail TH",
               placeHolder: "Detail TH",
               state: serviceState,
@@ -83,7 +84,7 @@ export default function ServiceForm({
               keyProp: "projectDetailTH",
               type: "textarea",
               required: true,
-            }
+            },
           ]}
         />
       </div>
@@ -143,26 +144,28 @@ export default function ServiceForm({
           />
         </div>
       </div>
-      {editor.editor ==true && 
-        (<div className="col-span-2">
+      {editor?.editor == true && (
+        <div className="col-span-2">
           <div className="rounded-lg bg-white p-2">
             <label className="p-3">Detail</label>
-            {languages?.map((i: any, k: any) =>
-              i?.toLowerCase() === langState && (
-              <TextEditor 
-                id= {`${editor.name}${i}`} 
-                dataType="project" 
-                dataId={id} 
-                setState={onChangeState}
-                state={serviceState}
-                prop={serviceState && `${editor.name}${i}`}
-                placeholder="Detail"
-                editor={editor}
-              />
-            ))}
+            {languages?.map(
+              (i: any, k: any) =>
+                i?.toLowerCase() === langState && (
+                  <TextEditor
+                    id={`${editor.name}${i}`}
+                    dataType="project"
+                    dataId={id}
+                    setState={onChangeState}
+                    state={serviceState}
+                    prop={serviceState && `${editor.name}${i}`}
+                    placeholder="Detail"
+                    editor={editor}
+                  />
+                )
+            )}
           </div>
-        </div>)
-      }
+        </div>
+      )}
       {/* <div className="col-span-2 ">
         <div className="flex gap-[1px] translate-y-2 translate-x-2 relative z-0">
           {languages.map((i: any, k: any) => (

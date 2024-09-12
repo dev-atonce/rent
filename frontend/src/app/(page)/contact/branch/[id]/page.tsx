@@ -48,9 +48,9 @@ export default async function BranchPage({ params: { id } }: any) {
       <div className="container mx-auto">
         <div className="flex lg:flex-row flex-col lg:justify-between">
           <div className="flex flex-col gap-2">
-            <h4 className="text-2xl  font-semibold text-[#0DA1DB]">
+            <h2 className="text-2xl  font-semibold text-[#0DA1DB]">
               {data?.nameTH}
-            </h4>
+            </h2>
             <div className="flex flex-col gap-2 text-sm">
               <p>{data?.addressTH}</p>
               <div className="flex items-center gap-2">
@@ -84,16 +84,16 @@ export default async function BranchPage({ params: { id } }: any) {
             loading="lazy"
           />
           <div className="col-span-2 lg:col-span-1 ">
-            <h6 className="text-xl font-semibold text-slate-600">
+            <h3 className="text-xl font-semibold text-slate-600">
               ฟอร์มติดต่อ <span className="text-[#0DA1DB]">{data?.nameTH}</span>
-            </h6>
+            </h3>
             <Contactform branch={data?.nameTH} />
           </div>
         </div>
         <div className="py-6">
-          <h6 className="text-xl font-semibold text-slate-600">
+          <h2 className="text-xl font-semibold text-slate-600">
             พื้นที่บริการเช่าเครื่องจักรก่อสร้างและอุปกรณ์ต่าง ๆ
-          </h6>
+          </h2>
           <div className="text-sm">
             เราพร้อมให้บริการท่านครอบคลุม
             โดยเน้นบริเวณภาคตะวันออกและภาคกลางเป็นหลักไม่ว่าจะเป็น

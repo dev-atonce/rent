@@ -4,7 +4,8 @@ import Calendar from "@/components/main/Otherservice/Calendar";
 
 const fetchCalendar = async (id: string) => {
   const res = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/calendar/${id}`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/calendar/${id}`,
+    { cache: "no-store" }
   );
   const data = await res.json();
 
