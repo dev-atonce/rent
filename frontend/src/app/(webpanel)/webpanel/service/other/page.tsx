@@ -6,7 +6,7 @@ import { FetchContext } from "@/contexts/FetchContext";
 import TextEditor from "@/components/TextEditor";
 import { useSearchParams } from "next/navigation";
 
-export default function index() {
+export default function OtherService() {
   // const { onFetchPage }: any = useContext(FetchContext);
   const [filterState, setFilterState] = useState({ type: "" });
   const { onFetchOne, onSave }: any = useContext(FetchContext);

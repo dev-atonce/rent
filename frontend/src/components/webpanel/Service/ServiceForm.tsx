@@ -152,6 +152,7 @@ export default function ServiceForm({
               (i: any, k: any) =>
                 i?.toLowerCase() === langState && (
                   <TextEditor
+                    key={k}
                     id={`${editor.name}${i}`}
                     dataType="project"
                     dataId={id}
