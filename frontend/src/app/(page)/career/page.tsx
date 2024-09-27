@@ -37,8 +37,8 @@ export default function CareerPage() {
       <div className="container mx-auto">
         <BlogSection
           limit={8}
-          // typeBlog={["recruitment"]}
-          typeBlog={["recruitment"]}
+          // typeBlog={["recruitment"]}8
+          typeBlog={["recruitment", "job-search"]}
           home={false}
         />
       </div>

@@ -19,7 +19,15 @@ export default function ContactCard({ data, type }: BlogCardProps) {
               <Image
                 className="w-full aspect-[4/2] object-cover"
                 alt={item?.nameTH}
-                src={item?.image || "/img/logo.png"}
+                src={
+                  item?.nameTH == "บริษัท เร้นท์ เทรด แอนด์ เซอร์วิส"
+                    ? item?.image
+                    : `${process.env.NEXT_PUBLIC_BASE_URL}${item?.image}`
+                }
+                // src={
+                //   item?.image ||
+                //   `${process.env.NEXT_PUBLIC_BASE_URL}${item?.image}`
+                // }
                 width={311}
                 height={188}
                 quality={100}

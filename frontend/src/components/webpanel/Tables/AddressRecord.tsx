@@ -94,7 +94,7 @@ export default function AddressRecord({
                 alt={i?.nameTH}
                 height={100}
                 width={100}
-                className="h-full w-full object-cover"
+                className="h-full w-full object-contain"
               />
             </div>
           </td>

@@ -69,7 +69,7 @@ export default function FileInput({
         {!multiple ? (
           <div
             className={`bg-slate-100  mb-2  rounded-md overflow-hidden`}
-            style={{ height: height, aspectRatio: ratio }}
+            // style={{ height: height, aspectRatio: ratio }}
           >
             {selectedImage ? (
               <img

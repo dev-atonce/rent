@@ -26,7 +26,8 @@ export async function generateMetadata(): Promise<Metadata> {
 
 const fetchData = async () => {
   const data = await fetch(
-    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/address/`
+    `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/address/`,
+    { cache: "no-store" }
   );
   const json = await data.json();
   return json.rows;

@@ -211,9 +211,9 @@ const TextEditor = ({
   const setCodeStateHandler = () => {
     // const refsById[EditorId].current = document.getElementById(EditorId);
     if (refsById[EditorId] && refsById[EditorId].current) {
-    // if(refsById[EditorId].current?.querySelector('.editor-body'))
-    // {
-      let makeElement = document.createElement('div');
+      // if(refsById[EditorId].current?.querySelector('.editor-body'))
+      // {
+      let makeElement = document.createElement("div");
       //@ts-ignore
       makeElement.innerHTML =
         refsById[EditorId].current.querySelector(".editor-body").innerHTML;
@@ -240,12 +240,14 @@ const TextEditor = ({
   };
   const fetchSubState = () => {
     //@ts-ignore
-    const textareaEl:any = refsById[EditorId].current.querySelector(`textarea[name="${prop}"]`);
-    console.log(textareaEl.value)
-    if(textareaEl.value)
-    {
-      const editorBody:any = refsById[EditorId].current?.querySelector('.editor-body');
-      const makeElement = document.createElement('div');
+    const textareaEl: any = refsById[EditorId].current.querySelector(
+      `textarea[name="${prop}"]`
+    );
+    console.log(textareaEl.value);
+    if (textareaEl.value) {
+      const editorBody: any =
+        refsById[EditorId].current?.querySelector(".editor-body");
+      const makeElement = document.createElement("div");
       //
       makeElement.innerHTML = textareaEl.value;
       makeElement.querySelectorAll(".grid")?.forEach((row: any) => {
@@ -271,9 +273,11 @@ const TextEditor = ({
         // row.querySelectorAll('.remove-row').forEach((e:any)=>{
         //   e.click = deleteRow(e)
         // })
-        row.querySelectorAll('[data-image="true"]').forEach((el:any)=> el.click = imgRemark);
-        row.querySelectorAll('[data-text="text"]')?.forEach((el:any)=>{
-          el.setAttribute('contenteditable', 'true');
+        row
+          .querySelectorAll('[data-image="true"]')
+          .forEach((el: any) => (el.click = imgRemark));
+        row.querySelectorAll('[data-text="text"]')?.forEach((el: any) => {
+          el.setAttribute("contenteditable", "true");
         });
       });
       editorBody.innerHTML = makeElement.innerHTML;
@@ -506,16 +510,15 @@ const TextEditor = ({
           });
           editorBody.append(rowElement);
         }
-      })
+      });
       // setCodeStateHandler();
     }
   };
-  function deleteRow(e: any)
-  {
+  function deleteRow(e: any) {
     // console.log(e)
     e.closest(".grid").remove();
     // setCodeStateHandler();
-  };
+  }
 
   function SourceCode(el: any) {
     let editor = document.getElementById(EditorId);
@@ -872,64 +875,69 @@ const TextEditor = ({
 
   useEffect(() => {
     if (refsById[EditorId] && refsById[EditorId].current) {
-      refsById[EditorId].current.addEventListener("click", function(e:any)
-      {
-          //@ts-ignore
-          const txtRemark = e.target.closest(".txt-remark");
-          if(!txtRemark){
-            refsById[EditorId].current.querySelector(".txt-remark")?.classList.remove("txt-remark");
-          }
-          //@ts-ignore
-          const sourceCode = e.target.closest(".source-code");
-          if(sourceCode && refsById[EditorId].current){
-            SourceCode(sourceCode);
-          }
-          //@ts-ignore
-          const imageModal = e.target.closest('[data-image="true"]');
-          if(imageModal && refsById[EditorId].current){
-
-            imgRemark(e.target);
-            imgModal(e); 
-          }
-          //@ts-ignore
-          const contentEditable = e.target.closest('[contenteditable="true"]');
-          if(contentEditable && refsById[EditorId].current){
-            textRemark(e)   
-          }    
-          //@ts-ignore
-          const removeRowBtn = e.target.closest(".remove-row");
-          if(removeRowBtn && refsById[EditorId].current){
-
-            deleteRow(removeRowBtn);
-          }
-          //@ts-ignore
-          const thEl = e.target.closest('th');
-          if(thEl && refsById[EditorId].current){
-            // console.log(thEl)
-            refsById[EditorId].current.querySelectorAll('th').forEach((el:any) => el.classList.remove('focused'))
-            refsById[EditorId].current.querySelectorAll('td').forEach((el:any) => el.classList.remove('focused'))
-            thEl.classList.toggle('focused');
-          }
-          //@ts-ignore
-          const tdEl = e.target.closest('td');
-          if(tdEl && refsById[EditorId].current){
-            refsById[EditorId].current.querySelectorAll('th').forEach((el:any) => el.classList.remove('focused'))
-            refsById[EditorId].current.querySelectorAll('td').forEach((el:any) => el.classList.remove('focused'))
-            tdEl.classList.toggle('focused')
-          }
+      refsById[EditorId].current.addEventListener("click", function (e: any) {
+        //@ts-ignore
+        const txtRemark = e.target.closest(".txt-remark");
+        if (!txtRemark) {
+          refsById[EditorId].current
+            .querySelector(".txt-remark")
+            ?.classList.remove("txt-remark");
+        }
+        //@ts-ignore
+        const sourceCode = e.target.closest(".source-code");
+        if (sourceCode && refsById[EditorId].current) {
+          SourceCode(sourceCode);
+        }
+        //@ts-ignore
+        const imageModal = e.target.closest('[data-image="true"]');
+        if (imageModal && refsById[EditorId].current) {
+          imgRemark(e.target);
+          imgModal(e);
+        }
+        //@ts-ignore
+        const contentEditable = e.target.closest('[contenteditable="true"]');
+        if (contentEditable && refsById[EditorId].current) {
+          textRemark(e);
+        }
+        //@ts-ignore
+        const removeRowBtn = e.target.closest(".remove-row");
+        if (removeRowBtn && refsById[EditorId].current) {
+          deleteRow(removeRowBtn);
+        }
+        //@ts-ignore
+        const thEl = e.target.closest("th");
+        if (thEl && refsById[EditorId].current) {
+          // console.log(thEl)
+          refsById[EditorId].current
+            .querySelectorAll("th")
+            .forEach((el: any) => el.classList.remove("focused"));
+          refsById[EditorId].current
+            .querySelectorAll("td")
+            .forEach((el: any) => el.classList.remove("focused"));
+          thEl.classList.toggle("focused");
+        }
+        //@ts-ignore
+        const tdEl = e.target.closest("td");
+        if (tdEl && refsById[EditorId].current) {
+          refsById[EditorId].current
+            .querySelectorAll("th")
+            .forEach((el: any) => el.classList.remove("focused"));
+          refsById[EditorId].current
+            .querySelectorAll("td")
+            .forEach((el: any) => el.classList.remove("focused"));
+          tdEl.classList.toggle("focused");
+        }
       });
-      document.addEventListener('click',function(){
-
-      })
+      document.addEventListener("click", function () {});
     }
 
-    if(prop && state[prop]) setSubState();
-    
+    if (prop && state[prop]) setSubState();
+
     return () => {
-      refsById[EditorId].current.removeEventListener("click",deleteRow);
-    }
-  },[setState]);
-  
+      refsById[EditorId]?.current?.removeEventListener("click", deleteRow);
+    };
+  }, [setState]);
+
   return (
     <div id={EditorId} ref={refsById[EditorId]}>
       <ModalDialog

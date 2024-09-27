@@ -19,6 +19,7 @@ import CalendarRecord from "./CalendarRecord";
 import CoverRecord from "./CoverRecord";
 import ContactFormRecord from "./ContactFormRecord";
 import YoutubeRecord from "./YoutubeRecord";
+import { LogInContext } from "@/contexts/LogInContext";
 
 const TableThree = ({
   onFetchCalendar,
@@ -38,6 +39,9 @@ const TableThree = ({
   }: any = useContext(FetchContext);
   const dragItem = useRef(null);
   const dragOverItem = useRef(null);
+  const { user, noAuth }: any = useContext(LogInContext);
+
+  const usersForAdmin = data?.filter((i: any) => i?.role !== "super");
 
   const onUpdateSort = async (id: any, order: any) => {
     onSort(order, id, type, `${type} Sort `);
@@ -256,7 +260,19 @@ const TableThree = ({
                 );
               })}
             {type === "user" &&
+              user?.role === "super" &&
               data?.map((i: any, key: any) => (
+                <UserRecord
+                  key={key}
+                  i={i}
+                  index={key}
+                  modal={modal}
+                  onDelete={onDelete}
+                />
+              ))}
+            {type === "user" &&
+              user?.role === "admin" &&
+              usersForAdmin?.map((i: any, key: any) => (
                 <UserRecord
                   key={key}
                   i={i}

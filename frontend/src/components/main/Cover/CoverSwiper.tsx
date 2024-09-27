@@ -140,7 +140,7 @@ export default function CoverSwiper({ banner }: any) {
             {banner.map((v: any, i: any) => {
               return (
                 <SwiperSlide key={`${i}`} className="ralative ">
-                  <Link href={"/rental-product"}>
+                  <Link href={v?.link || "/"}>
                     <Image
                       src={`${process.env.NEXT_PUBLIC_BASE_URL}${v?.image}`}
                       alt={v.imageAlt}
