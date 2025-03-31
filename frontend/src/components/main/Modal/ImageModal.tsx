@@ -179,7 +179,7 @@ export default function ImageModal({id,imgVisible, closeImgHandler, title, selec
                         <div className="tabs justify-start ">
                           <Button 
                               className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7" 
-                              onClick={()=>select.setImgTab('upload')}><MdCloudUpload/>Upload
+                              onClick={()=>{select.setImgTab('upload'),setSelectedImage('')}}><MdCloudUpload/>Upload
                           </Button>
                           <Button 
                             className="bg-slate-50 hover:bg-slate-200 rounded-lg px-3 h-7"

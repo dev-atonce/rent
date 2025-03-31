@@ -5,6 +5,8 @@ const schema = new mongoose.Schema(
   {
     nameTH: { type: String },
     nameEN: { type: String },
+    positionDetailTH: { type: String },
+    image: { type: String },
     sort: { type: Number },
   },
   { timestamps: true }
@@ -18,6 +20,8 @@ schema.methods.toJSON = function () {
     id: this._id,
     nameTH: this.nameTH,
     nameEN: this.nameEN,
+    positionDetailTH: this.positionDetailTH,
+    image: this.image,
 
     sort: this.sort,
     createdAt: this.createdAt,

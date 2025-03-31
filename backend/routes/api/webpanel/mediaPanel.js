@@ -15,6 +15,12 @@ router.get("/project/:id", [auth.required, validator.project.findById, validator
 router.post("/project/:id", [auth.required, validator.project.findById, validator.check], controllers.onInsertProject);
 /////// ///////////// ///////
 
+///// About us Image ///////
+router.get("/about-us", auth.required, controllers.onGetAboutUsById);
+
+router.post("/about-us", auth.required, controllers.onInsertAboutUs);
+/////// ///////////// ///////
+
 router.delete("/", controllers.onDeleteMedia);
 
 module.exports = router;

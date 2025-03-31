@@ -26,12 +26,12 @@ const BlogCard = ({ data, type }: BlogCardProps) => {
         xs={24}
         sm={12}
         md={12}
-        lg={type?.includes("recruitment") ? 6 : 8}
+        lg={type?.includes("recruitment") || type.includes("position") ? 6 : 8}
         key={key}
       >
         <a
           // @ts-ignore
-          href={type.includes("project") ? `/project/${item?.id}` : item?.url}
+          href={type.includes("project") ? `/project/${item?.id}` : type.includes("position") ? `/career/${item?.id}` : item?.url}
         >
           <Card
             hoverable
@@ -40,7 +40,7 @@ const BlogCard = ({ data, type }: BlogCardProps) => {
                 className="w-full aspect-[3/2] object-cover"
                 alt="example"
                 src={
-                  type?.includes("project")
+                  ( type?.includes("project") || type?.includes("position") ) && item?.image != null
                     ? // @ts-ignore
                       `${process.env.NEXT_PUBLIC_BASE_URL}${item?.image}`
                     : item?.thumbnail
@@ -66,7 +66,9 @@ const BlogCard = ({ data, type }: BlogCardProps) => {
               >
                 {type?.includes("project")
                   ? item?.projectNameTH
-                  : item?.titleTH}
+                  : type?.includes("position")
+                    ? item?.nameTH
+                    : item?.titleTH}
               </span>
               {/* <Divider className="mt-3 mb-2" /> */}
               {!type?.includes("recruitment") && (

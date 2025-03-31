@@ -7,7 +7,7 @@ const methods = {
         const limit = +(config.pageLimit);
         const offset = +(limit * ((req.query.page || 1) - 1));
         try {
-            const rows = await ContactForm.find().sort({ sort: "asc" })
+            const rows = await ContactForm.find().sort({ createdAt: -1 })
                 .limit(limit)
                 .skip(offset);
             const count = await ContactForm.countDocuments();

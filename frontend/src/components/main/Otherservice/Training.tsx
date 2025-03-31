@@ -51,7 +51,7 @@ const Training = () => {
     <>
       <DynamicContent content={training?.aboutUsTH} />
 
-      <div className="py-4">
+      {/* <div className="py-4">
         <h2 className="font-bold my-4 text-lg">บรรยากาศการอบรม</h2>
         {gallery && (
           <div className="grid grid-cols-12 w-full gap-4 pb-4">
@@ -73,7 +73,7 @@ const Training = () => {
             })}
           </div>
         )}
-      </div>
+      </div> */}
       <h2 className="font-bold my-4 text-lg">ตารางการอบรม</h2>
       <Row gutter={[16, 16]} className="mt-10">
         <TrainingCourseCard data={courseList} />

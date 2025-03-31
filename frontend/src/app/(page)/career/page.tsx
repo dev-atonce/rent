@@ -1,5 +1,6 @@
 import BlogSection from "@/components/main/BlogSection/BlogSection";
 import Cover from "@/components/main/Cover/Cover";
+import JobPosition from "@/components/main/JobPosition/JobPosition";
 import Loading from "@/components/main/Loading/Loading";
 import { Metadata, ResolvingMetadata } from "next";
 
@@ -35,6 +36,13 @@ export default function CareerPage() {
         prevPage={{ pageName: "หน้าแรก", url: "/" }}
       />
       <div className="container mx-auto">
+        <JobPosition
+          limit={8}
+          home={false}
+        />
+      </div>
+      <div className="h-0.5 mx-auto w-3/4 bg-[#11A3DD]"/>
+      <div className="container mx-auto bott mt-8">
         <BlogSection
           limit={8}
           // typeBlog={["recruitment"]}8

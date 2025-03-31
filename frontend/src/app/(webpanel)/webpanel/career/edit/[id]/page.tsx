@@ -22,7 +22,7 @@ export default function PositionEdit({
 
     setData({ ...data, initialName: data?.nameEN });
   };
-
+  
   const onEdit = async () => {
     //   @ts-ignore
     onSave(data, "PUT", id, "position", `Edit Job Title ${data?.nameEN}`);
@@ -50,6 +50,14 @@ export default function PositionEdit({
         data={data}
         onChangeState={onChangeState}
         id={id}
+        editor={{
+          editor: true,
+          name:'positionDetail',
+          images: {
+            getPath: `position/${id}`,
+            uploadPath: `position/${id}`,
+          }
+        }}
       />
     </DefaultLayout>
   );

@@ -553,12 +553,12 @@ const TextEditor = ({
   };
 
   const upload = async (e: any) => {
-    let editor = document.getElementById(EditorId);
-    //@ts-ignore
-    const setSelectedImage = editor
-      .querySelector(".modal-content")
-      ?.querySelectorAll("img");
-    if (setSelectedImage) {
+    // let editor = document.getElementById(EditorId);
+    // //@ts-ignore
+    // const setSelectedImage = editor
+    //   .querySelector(".modal-content")
+    //   ?.querySelectorAll("img");
+    // if (setSelectedImage) {
       let formData = new FormData();
       let files = e.currentTarget
         .closest(".modal-content")
@@ -584,7 +584,7 @@ const TextEditor = ({
         if (uploadAmount == response.image.length) {
           setImgTab("select");
           // alert("Images uploaded successfully");
-          Array.from(setSelectedImage).map((el: any) => el.remove());
+          // Array.from(setSelectedImage).map((el: any) => el.remove());
           //@ts-ignore
           document
             .querySelector(".modal-content")
@@ -595,7 +595,7 @@ const TextEditor = ({
           alert("Some images not uploaded");
         }
       }
-    }
+    // }
   };
   const removeImage = async (e: any) => {
     if (confirm("Are you sure you want to remove this image?") === true) {
@@ -621,8 +621,9 @@ const TextEditor = ({
           alert(`${request.status} ${request.statusText}`);
         } else {
           const response = await request.json();
-          if (response.status == "success") {
-            setSelectedImage?.forEach((c: any) => c.remove());
+          if (response.message == "Deleted Successfully !") {
+            getAllImages();
+            // setSelectedImage?.forEach((c: any) => c.remove());
           } else {
             alert(`${response.status} ${response.message}`);
           }

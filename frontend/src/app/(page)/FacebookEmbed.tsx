@@ -73,15 +73,21 @@ export default function FacebookEmbed({url}:any) {
                         <span className="ml-1">Facebook</span>
                     </div>
                 </h3>
-                <div className="rounded-lg overflow-hidden iframe-content">
-                    <div 
+                <div className="rounded-lg overflow-hidden">
+                    {/* <div 
                         className="fb-page" 
                         data-href={url}
                         data-width={`${screenWidth}`}
                         data-height="700"
                         data-tabs="timeline"
                         data-show-facepile="true"
-                    ></div>
+                        ></div> */}
+                  <iframe 
+                    src={`https://www.facebook.com/plugins/post.php?href=${url}`}
+                    width={`${screenWidth}`}
+                    height="700"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  ></iframe>
                 </div>
             </div>
             <div className="col-span-6" id="youtube-content">

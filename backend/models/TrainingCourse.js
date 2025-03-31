@@ -5,7 +5,7 @@ const schema = new mongoose.Schema(
   {
     titleTH: { type: String },
     url: { type: String },
-    price: { type: Number },
+    price: { type: String },
     duration: { type: String },
     place: { type: String },
     time: { type: String },

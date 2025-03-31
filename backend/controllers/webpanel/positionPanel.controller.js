@@ -49,7 +49,7 @@ const methods = {
   },
   async onUpdate(req, res) {
     try {
-      const result = await Subject.update(req?.params?.id, req.body);
+      const result = await Subject.update(req, res);
       res.success(result);
     } catch (error) {
       res.error(error);

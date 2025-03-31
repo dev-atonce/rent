@@ -41,10 +41,30 @@ const methods = {
     },  
     /////// ///////////// ///////
 
+    /////// About us Image ///////
+    async onGetAboutUsById(req, res) {
+        try {
+            let result = await Media.findAboutUs();
+            res.success(result);
+        } catch (error) {
+            res.error(error);
+        }
+    },
+
+    async onInsertAboutUs(req, res) {
+        try {
+            let result = await Media.insertAboutUs(req, res);
+            res.success(result, 201);
+        } catch (error) {
+            res.error(error);
+        }
+    },  
+    /////// ///////////// ///////
+
     async onDeleteMedia(req, res) {
         try {
-            await Media.deleteMedia(req, res);
-            res.success("success", 204);
+            let result = await Media.deleteMedia(req, res);
+            res.success(result, 201);
         } catch (error) {
             res.error(error);
         }
