@@ -169,7 +169,7 @@ export default function ServiceRecord({
         <td className="border-b border-[#eee] px-4 pl-7 py-5 dark:border-strokedark text-xs">
           <div className=" text-center">
             <SwitcherThree
-              id={i?.id}
+              id={i?._id}
               enabled={enabled}
               setEnabled={setEnabled}
               onChange={onChangeStatus}
