@@ -33,7 +33,9 @@ export default function NewsPage() {
       <Cover
         pageName={"ข่าวสาร / กิจกรรม"}
         prevPage={{ pageName: "หน้าแรก", url: "/" }}
+        hidden={true}
       />
+      <h1 className="container mx-auto py-6 text-2xl font-semibold text-slate-700">ข่าวสาร</h1>
       <div className="container mx-auto">
         {/* <div className="flex justify-center sm:justify-end sm:translate-y-[-55px] pb-4 sm:pb-0 ">
           <div className="flex gap-[2px] items-center">
@@ -48,8 +50,16 @@ export default function NewsPage() {
           </div>
         </div> */}
         <BlogSection
-          limit={12}
+          limit={6}
           typeBlog={["general", "customer", "selfedit"]}
+          home={false}
+        />
+      </div>
+      <h1 className="container mx-auto py-6 text-2xl font-semibold text-slate-700">กิจกรรม</h1>
+      <div className="container mx-auto">
+        <BlogSection
+          limit={6}
+          typeBlog={["review"]}
           home={false}
         />
       </div>

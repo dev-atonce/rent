@@ -1,6 +1,6 @@
 import Image from "next/image";
 import Breadcrumb from "../Breadcrumb/Breadcrumb";
-export default function Cover({ pageName, prevPage }: any) {
+export default function Cover({ pageName, prevPage, hidden }: any) {
   return (
     <div className="w-full  ">
       <Image
@@ -16,7 +16,7 @@ export default function Cover({ pageName, prevPage }: any) {
         <div className="border-b-2 border-slate-200 py-4 hidden md:block">
           <Breadcrumb pageName={pageName} prevPage={prevPage} />
         </div>
-        <h1 className="py-6 text-2xl font-semibold text-slate-700">
+        <h1 className={`py-6 text-2xl font-semibold text-slate-700 ${hidden ? 'hidden' : ''}`}>
           {pageName}
         </h1>
       </div>
