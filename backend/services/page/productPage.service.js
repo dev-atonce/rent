@@ -48,7 +48,7 @@ const methods = {
       const obj = await Product.find({
         subCategory: req.params.id,
         type: req.params.type,
-        status: true
+        // status: true
       }).populate({
         path: "subCategory",
         select: "nameTH mainCategory",

@@ -16,18 +16,22 @@ export default async function SaleSubCatPage({ params: { id } }: any) {
     <>
       <Loading />
       <Cover
-        pageName={data[0].subCategory.nameTH}
-        prevPage={{
-          pageName: data[0].subCategory.mainCategory.nameTH,
-          url: `/sale-product/main-category/${data[0].subCategory.mainCategory.id}`,
-        }}
+        pageName={data[0]?.subCategory.nameTH ?? ""}
+        prevPage={data[0] ? {
+            pageName: data[0].subCategory.mainCategory.nameTH,
+            url: `/sale-product/main-category/${data[0].subCategory.mainCategory.id}`,
+          } : { 
+            pageName: "สินค้าเช่า",
+            url: "/rental-product" 
+          }
+        }
       />
 
       <div className="container mx-auto">
         <ProductGrid
           data={data}
           type={"sale"}
-          urlPre={"/sub-category"}
+          urlPre={""}
           product={true}
         />
       </div>
