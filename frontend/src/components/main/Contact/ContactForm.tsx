@@ -1,7 +1,9 @@
 "use client";
-import { useEffect } from "react";
+import { useEffect, useState, useRef } from "react";
 import { useForm } from "react-hook-form";
 import Swal from "sweetalert2";
+
+import ReCAPTCHA from "react-google-recaptcha";
 
 export default function Contactform({ branch }: { branch: string }) {
   const {
@@ -11,9 +13,23 @@ export default function Contactform({ branch }: { branch: string }) {
     formState: { errors, isSubmitSuccessful },
   } = useForm();
 
-  const onSubmit = async (data: any) => {
-    const contactData = { ...data, branch: branch };
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+  const recaptchaRef = useRef<ReCAPTCHA | null>(null); 
 
+  const onSubmit = async (data: any) => {
+
+    if (!captchaVerified) {
+      Swal.fire({
+        position: "top",
+        toast: true,
+        icon: "error",
+        title: "กรุณายืนยันตัวตนก่อนส่งข้อมูล",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+      return;
+    }
+    const contactData = { ...data, branch: branch };
     const response = await fetch(
       `${process.env.NEXT_PUBLIC_BACK_END_URL}/api/v1/page/contact-forms`,
       {
@@ -44,13 +60,27 @@ export default function Contactform({ branch }: { branch: string }) {
         timer: 2000,
       });
     }
+    reset();
+    setCaptchaVerified(false);
+    recaptchaRef.current?.reset();     
+
   };
 
-  useEffect(() => {
-    if (isSubmitSuccessful) {
-      reset();
-    }
-  }, [isSubmitSuccessful, reset]);
+  // const onChange = (value: any) => {
+  //   // setCaptchaVerified(!!value);
+  //   // setCaptchaVerified(true);  // เมื่อผู้ใช้ตรวจสอบ CAPTCHA แล้ว
+  //   setCaptchaVerified(true);  // ตรวจสอบว่ามีการกรอก captcha หรือไม่
+  // };
+
+  const onCaptchaChange = (value: string | null) => {
+    setCaptchaVerified(!!value);
+  };
+
+  // useEffect(() => {
+  //   if (isSubmitSuccessful) {
+  //     reset();
+  //   }
+  // }, [isSubmitSuccessful, reset]);
 
   return (
     <div className="flex flex-col gap-4">
@@ -132,6 +162,13 @@ export default function Contactform({ branch }: { branch: string }) {
           {errors?.detail?.type === "required" && (
             <p className="text-xs text-red text-end">กรุณกรอกข้อมูล.</p>
           )}
+        </div>
+        <div className="col-span-2">
+          <ReCAPTCHA
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY as string}
+            onChange={onCaptchaChange}
+            ref={recaptchaRef} // ใช้ ref เพื่อเข้าถึง ReCAPTCHA component
+          />
         </div>
         <div className="flex justify-start gap-4 col-span-2 ">
           <button
