@@ -14,7 +14,7 @@ export default function Contactform({ branch }: { branch: string }) {
   } = useForm();
 
   const [captchaVerified, setCaptchaVerified] = useState(false);
-  const recaptchaRef = useRef<ReCAPTCHA | null>(null); 
+  const recaptchaRef = useRef<ReCAPTCHA | null>(null);
 
   const onSubmit = async (data: any) => {
 
@@ -23,7 +23,7 @@ export default function Contactform({ branch }: { branch: string }) {
         position: "top",
         toast: true,
         icon: "error",
-        title: "กรุณายืนยันตัวตนก่อนส่งข้อมูล",
+        title: "กรุณายืนยันตัวตน",
         showConfirmButton: false,
         timer: 2000,
       });
@@ -62,15 +62,9 @@ export default function Contactform({ branch }: { branch: string }) {
     }
     reset();
     setCaptchaVerified(false);
-    recaptchaRef.current?.reset();     
+    recaptchaRef.current?.reset();
 
   };
-
-  // const onChange = (value: any) => {
-  //   // setCaptchaVerified(!!value);
-  //   // setCaptchaVerified(true);  // เมื่อผู้ใช้ตรวจสอบ CAPTCHA แล้ว
-  //   setCaptchaVerified(true);  // ตรวจสอบว่ามีการกรอก captcha หรือไม่
-  // };
 
   const onCaptchaChange = (value: string | null) => {
     setCaptchaVerified(!!value);
@@ -180,7 +174,11 @@ export default function Contactform({ branch }: { branch: string }) {
           <button
             type="button"
             className="uppercase px-12 font-bold py-2 bg-[#db0d40] rounded-full  text-white"
-            onClick={() => reset()}
+            onClick={() => {
+              reset();
+              setCaptchaVerified(false);
+              recaptchaRef.current?.reset();
+            }}
           >
             รีเซ็ต
           </button>
