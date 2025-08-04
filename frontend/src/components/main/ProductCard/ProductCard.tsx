@@ -33,7 +33,7 @@ export default function ProductCard({ item, type, urlPre, product }: any) {
                 : ""
       }
       className={`group shadow-md  border border-slate-100 pb-4 transition-all duration-500 col-span-12 md:col-span-6 lg:col-span-4 
-        xl:col-span-3 rounded-lg overflow-hidden relative ${isComingZoon ? "pointer-events-none" : ""}`}
+        xl:col-span-3 rounded-lg overflow-hidden relative ${isComingZoon ? "pointer-events-none hidden" : ""}`}
     >
       <img
         src={
