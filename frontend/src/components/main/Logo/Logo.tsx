@@ -21,7 +21,7 @@ export function Logo({ color }: any) {
             fill="#009FDE"
           ></path>
         </svg> */}
-        <Image src="/img/rent_logo.png" alt="rent" width={200} height={100} />
+        <Image src="/logoRENT_THAILAND-202509.png" alt="rent" width={200} height={100} />
       </Link>
     </div>
   );
