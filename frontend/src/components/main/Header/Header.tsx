@@ -188,7 +188,7 @@ export default function Header() {
                 </div>
               </div>
               <div className="logo">
-                <Logo color={primaryColor} />
+                <Logo color={primaryColor} type="header" />
               </div>
               <div className="hidden md:flex items-center social-icon">
                 <LanguageSwitcher

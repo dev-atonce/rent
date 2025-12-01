@@ -23,7 +23,7 @@ export default function Footer({ services, lng }: any) {
         <div className="flex justify-start  flex-col lg:flex-row  border-t-[4px]  py-8 border-[#11A3DD]">
           <div className="flex flex-col justify-center items-center lg:items-start lg:basis-1/2  ">
             <div className="flex-col flex items-center lg:items-start gap-3 md:border-b pb-6 border-white/35 ">
-              <Logo color={"white"} />
+              <Logo color={"white"} type="footer" />
               <span className="uppercase font-semibold">
                 บริษัท เร้นท์ (ประเทศไทย) จำกัด (สำนักงานใหญ่)
               </span>

@@ -5,7 +5,7 @@ export default function Cover({ pageName, prevPage, hidden }: any) {
     <div className="w-full  ">
       <Image
         className="w-full shadow-sm"
-        src="/img/banner.png"
+        src="/img/banner_new.png"
         width={2000}
         height={500}
         quality={80}
