@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
 import Image from "next/image";
 
-export default function ProductCard({ item, type, urlPre, product }: any) {
+export default function ProductCard({ item, type, urlPre, product, productsMap }: any) {
   const [productInSub, setProductInSub] = useState([]);
   const fetchProduct = async (id: any) => {
     const subCat = await fetch(
@@ -15,8 +15,12 @@ export default function ProductCard({ item, type, urlPre, product }: any) {
     setProductInSub(res.filter((i: any) => i.status === true));
   };
   useEffect(() => {
-    fetchProduct(item.id);
-  }, []);
+    if (productsMap && productsMap[item.id]) {
+      setProductInSub(productsMap[item.id]);
+    } else if (!productsMap) {
+      fetchProduct(item.id);
+    }
+  }, [item.id, productsMap]);
 
   const isComingZoon = (productInSub.length === 0 && urlPre === "/sub-category") || (item.status === false && urlPre === "");
   return (

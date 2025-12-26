@@ -6,6 +6,7 @@ export default function ProductGrid({
   type,
   product,
   title,
+  productsMap,
 }: any) {
   return (
     <div className="py-10">
@@ -20,6 +21,7 @@ export default function ProductGrid({
             type={type}
             product={product}
             urlPre={urlPre}
+            productsMap={productsMap}
           />
         ))}
       </div>
