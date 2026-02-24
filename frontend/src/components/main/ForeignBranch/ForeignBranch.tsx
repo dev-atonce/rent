@@ -7,16 +7,20 @@ export default function ForeignBranch({ title, color, home }: any) {
       image: "/img/rent-japan.jpeg",
       url: "https://www.rent.co.jp/",
     },
-    { name: "rts", image: "/img/rent-rts.jpeg", url: "/contact/branch/rts" },
+    { 
+      name: "rts", 
+      image: "/img/rent-rts.jpeg", 
+      url: "/contact/branch/rts" 
+    },
     {
       name: "vietnam",
-      image: "/img/rent-vietnam.jpeg",
+      image: "/img/rent_vietnam2.png",
       url: "https://maxrent.vn/en/home/",
     },
     {
       name: "indonesia",
-      image: "/img/rent-indo.jpeg",
-      url: "https://maxrent.id/",
+      image: "/img/rent_indo2.png",
+      url: "https://www.rentcorp.co.id/",
     },
   ];
   const data2 = [
@@ -27,13 +31,13 @@ export default function ForeignBranch({ title, color, home }: any) {
     },
     {
       name: "vietnam",
-      image: "/img/rent-vietnam.jpeg",
+      image: "/img/rent_vietnam2.png",
       url: "https://maxrent.vn/en/home/",
     },
     {
       name: "indonesia",
-      image: "/img/rent-indo.jpeg",
-      url: "https://maxrent.id/",
+      image: "/img/rent_indo2.png",
+      url: "https://www.rentcorp.co.id/",
     },
   ];
   return (
